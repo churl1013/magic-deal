@@ -1,9 +1,24 @@
-﻿apply plugin: 'java'
+apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
-apply plugin: 'war' 
+apply plugin: 'war'
 compileJava {
-  options.encoding = "UTF-8"  sourceCompatibility = 1.8  }eclipse {  wtp {  facet {  facet name: 'jst.web', version: '3.1'  facet name: 'jst.java', version: '1.8'  }  }  }  
-repositories {    mavenCentral() 	}
+  options.encoding = "UTF-8"  
+  sourceCompatibility = 1.8  
+}
+
+eclipse {  
+	wtp {  
+		facet {  
+			facet name: 'jst.web', 
+			version: '3.1'  
+			facet name: 'jst.java', 
+			version: '1.8'  
+		}  
+	}  
+}
+repositories {    
+mavenCentral() 	
+}
 dependencies {
   compile 'mysql:mysql-connector-java:5.1.37'
   compile 'org.mybatis:mybatis:3.3.0'
@@ -14,7 +29,7 @@ dependencies {
   compile 'commons-dbcp:commons-dbcp:1.4'
   compile 'jstl:jstl:1.2'
   compile 'commons-fileupload:commons-fileupload:1.3.1'
-  // 이미지 썸내일 생성용 라이브러리 
+  // 이미지 썸내일 생성용 라이브러리
   compile 'net.coobird:thumbnailator:0.4.8'
   // 이미지 썸내일 생성용 라이브러리
   compile 'org.imgscalr:imgscalr-lib:4.2'
@@ -25,4 +40,4 @@ dependencies {
   providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
   // 오라클용
   // runtime fileTree(dir: 'lib', include: '*.jar')
-  }  
+  }
