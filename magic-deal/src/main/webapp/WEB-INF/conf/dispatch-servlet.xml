@@ -12,7 +12,7 @@
   
   <!-- 페이지 컨트롤러를 찾아 객체를 생성한다.
        단, DAO와 Service 관련 객체는 제외해야 한다. -->
-  <context:component-scan base-package="bitcamp.java77.controller"/>
+  <context:component-scan base-package="kr.co.mdeal.controller"/>
   
   <!-- @RequestMapping 등 웹 관련 애노테이션을 처리할 객체를 등록한다. -->
 	<mvc:annotation-driven/>

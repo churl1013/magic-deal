@@ -24,7 +24,6 @@
     "sources": {
       "jquery": "bower_components/jquery/dist/**",
       "blueimp-file-upload": "bower_components/blueimp-file-upload/**"
-      
     }
   }
 }

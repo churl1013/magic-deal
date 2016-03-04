@@ -20,19 +20,19 @@
        즉 @Controller 애노테이션이 붙은 것은 제외하자!
        @Controller?
        스프링에서 페이지 컨트롤러와 DAO와 서비스 객체를 구분하기 위해 정의한 애노테이션이다.-->
-  <context:component-scan base-package="bitcamp.java77">
+  <context:component-scan base-package="kr.co.mdeal">
     <!-- bitcamp.java77.controller 패키지의 모든 클래스를 제외한다. -->
     <context:exclude-filter type="regex" 
-                            expression="bitcamp.java77.controller.*"/>
+                            expression="kr.co.mdeal.controller.*"/>
   </context:component-scan>
     
   <bean id="sqlSessionFactory" 
         class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource" />
     <property name="mapperLocations" 
-              value="classpath*:bitcamp/java77/dao/*Dao.xml" />
+              value="classpath*:kr/co/dao/*Dao.xml" />
     <property name="typeAliasesPackage" 
-              value="bitcamp.java77.domain" />          
+              value="kr.co.mdeal.domain" />          
   </bean>
   <!-- 
   <jee:jndi-lookup id="dataSource" 
@@ -49,7 +49,7 @@
   
   <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
   	<!-- DAO 인터페이스가 선언된 패키지 지정한다.-->
-  	<property name="basePackage" value="bitcamp.java77.dao" />
+  	<property name="basePackage" value="kr.co.mdeal.dao" />
   </bean>
   
   <!-- 트랜잭션 관리 객체 등록 -->

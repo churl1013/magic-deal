@@ -6,6 +6,14 @@ compileJava {
   sourceCompatibility = 1.8  
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDir "src/main/resources-appcontext" // resources-appcontext가 소스 디렉토리로 추가됨
+        }
+    }
+}
+
 eclipse {  
 	wtp {  
 		facet {  
