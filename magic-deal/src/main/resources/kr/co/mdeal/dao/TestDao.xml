@@ -5,4 +5,12 @@
 
 <mapper namespace="kr.co.mdeal.dao.TestDao">
 
+	<select id="selectList" resultType="test">
+		select * from test_table
+	</select>
+
+
+	<insert id="insert" parameterType="test">
+		insert into test_table (name) values (#{name})
+	</insert>
 </mapper>
