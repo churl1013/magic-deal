@@ -30,4 +30,10 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		dao.insertMember(member);
 	}
+	
+	@Override
+	public Member login(Member member) {
+		// TODO Auto-generated method stub
+		return dao.selectMember(member);
+	}
 }

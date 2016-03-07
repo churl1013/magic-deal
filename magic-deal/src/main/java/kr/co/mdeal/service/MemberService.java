@@ -6,4 +6,5 @@ public interface MemberService {
 	int checkId(String id);
 	int checkNick(String nick);
 	void signUp(Member member);
+	Member login(Member member);
 }

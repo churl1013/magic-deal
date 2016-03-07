@@ -4,6 +4,8 @@ var contextPath = "/magic-deal";
 var nav_flag = false;
 var popup_layer;
 
+var u_info = null;
+
 var joinChkObj = {
 	id : false,
 	password : false,
@@ -15,6 +17,8 @@ var joinChkObj = {
 };
 
 $(function() {
+	// 로그인 체크 함수 실행
+	loginCheck();
 	// nav버튼 처리
 	popup_layer = document.getElementById('popupLayer');
 	$("#navBtn").on("click", function() {
@@ -37,32 +41,6 @@ $(function() {
 		}
 	});
 
-	
-	// 로그인 및 회원가입 버튼 처리
-	$("#loginNsignupBtn").on("click", function() {
-		$('.loginModal').modal({
-			onDeny : function() {
-				alert('login');
-				// false 리턴하면 모달창 안닫힘
-				// true 리턴 or 아무것도 리턴 안하면 모달창 닫힘
-				return false;
-			},
-			onApprove : function() {
-				$(".signUpModal").modal({
-					closable : false,
-					onDeny : function() {
-						return true;
-					},
-					onApprove : function() {
-						var signFlag = signUpSubmitChk();
-						signUpCommit(signFlag);
-						return false;
-					}
-				}).modal('show');
-			}
-		}).modal('setting', 'transition', 'scale').modal('show');
-	});
-	
 	$("#signIdChkBtn").on("click", checkSignUpId);
 	$("#signNickNameBtn").on("click", checkSignUpNickName);
 });
@@ -249,13 +227,13 @@ var signUpCommit = function(flag) {
 			nickName : nick,
 			mAddr : addr,
 			mLat : lat,
-			mLng : lng
+			mLon : lon
 		}, function(resultObj) {
 			var result = resultObj.ajaxResult;
 			if(result.msg == 'success') {
 				joinSuccessMsg("환영합니다!!<br/> 사용을 위해 로그인해주세요!", "확인");
 			}
-		});
+		}, "json");
 	}
 };
 
@@ -266,12 +244,15 @@ var joinSuccessMsg = function(msg, btn) {
 		allowMultiple : true,
 		closable : false,
 		onApprove : function() {
-			$("#signUpCloseBtn").trigger("click");
-			clearSignUpForm();
+			signUpClose();
 		}
 	}).modal('show');
 };
 
+var signUpClose = function() {
+	$("#signUpCloseBtn").trigger("click");
+	clearSignUpForm();
+};
 
 var clearSignUpForm = function() {
 	joinChkObj.id = false;
@@ -306,4 +287,104 @@ var clearSignUpForm = function() {
 	$("#signIdChkBtn").text("중복검사");
 	$("#signIdChkBtn").removeClass("olive");
 	$("#signIdChkBtn").prop("disabled", false);
+};
+
+var loginSubmit = function() {
+	var id = $("#loginId").val();
+	var pass = $("#loginPass").val();
+	
+	$.post(contextPath + "/member/login.do", {
+		id : id,
+		password : pass
+	}, function(resultObj) {
+		var result = resultObj.ajaxResult;
+		if(result.msg == 'success') {
+			loginSuccess(result.data);
+			$("#loginCloseBtn").trigger("click");
+		}else {
+			alertMsg('로그인 정보가 틀렸습니다.<br/>다시 확인해주세요!', "확인");
+			$("#loginId").focus();
+		}
+	}, "json");
+};
+
+var loginSuccess = function(data) {
+	u_info = data;
+	loginBoxDraw();
+};
+
+var loginClose = function() {
+	$("#loginId").val("");
+	$("#loginPass").val("");
+};
+
+var loginCheck = function() {
+	$.get(contextPath + "/member/loginCheck.do", function(resultObj) {
+		var result = resultObj.ajaxResult;
+		u_info = result.data;
+		loginBoxDraw();
+	}, "json");
+};
+
+var logout = function() {
+	$.get(contextPath + "/member/logout.do", function() {
+		u_info = null;
+		loginBoxDraw();
+	},"json");
+};
+
+var loginBoxDraw = function() {
+	var logBoxWrap = $("#loginStatusWrap");
+	var loginBox;
+	if(u_info) {
+		// 로그인 상태
+		loginBox = '<div id="chatBtn" class="ui icon label">';
+		loginBox += '<i class="comment icon"></i> 3';
+		loginBox += '</div>';
+		loginBox += '<div id="alarmBtn" class="ui icon label">';
+		loginBox += '<i class="alarm icon"></i> 3';
+		loginBox += '</div>';
+		loginBox += '<img class="ui avatar image" src="../img/sample-test/profile-exam.JPG">';
+		loginBox += '<span>'+u_info.nickName+'</span>';
+		loginBox +=  '<div id="logoutBtn" class="ui icon label">';
+		loginBox += '<i class="sign out violet icon"></i>';
+		loginBox += '<a class="detail">로그아웃</a></div>';
+	}else {
+		// 로그아웃 상태
+		loginBox =  '<div id="loginNsignupBtn" class="ui icon label">';
+		loginBox += '<i class="user violet icon"></i>';
+		loginBox += '<a class="detail">로그인 및 회원가입</a></div>';
+	}
+	logBoxWrap.html(loginBox);
+	
+	if(u_info) {
+		logBoxWrap.find("#logoutBtn").on("click", function() {
+			logout();
+		});
+	}else {
+		logBoxWrap.find("#loginNsignupBtn").on("click", function() {
+			$('.loginModal').modal({
+				closable : false,
+				onDeny : function() {
+					loginSubmit();
+					// false 리턴하면 모달창 안닫힘
+					// true 리턴 or 아무것도 리턴 안하면 모달창 닫힘
+					return false;
+				},
+				onApprove : function() {
+					$(".signUpModal").modal({
+						closable : false,
+						onDeny : function() {
+							return true;
+						},
+						onApprove : function() {
+							var signFlag = signUpSubmitChk();
+							signUpCommit(signFlag);
+							return false;
+						}
+					}).modal('show');
+				}
+			}).modal('setting', 'transition', 'scale').modal('show');
+		});
+	}
 };

@@ -31,6 +31,12 @@
 		 where nname = #{nname}
 	</select>
 	
+	<select id="selectMember" resultMap="memberResultMap" parameterType="member">
+		select *
+		  from member
+		 where id = #{id} and password = #{password}
+	</select>
+	
 	<insert id="insertMember" parameterType="member">
 		insert into member
 		       (id, nname, password, join_date, m_addr, m_lat, m_lon)

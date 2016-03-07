@@ -6,4 +6,5 @@ public interface MemberDao {
 	int selectIdCount(String id);
 	int selectNickCount(String nick);
 	int insertMember(Member member);
+	Member selectMember(Member member);
 }
