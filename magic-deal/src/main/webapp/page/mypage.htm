@@ -1,0 +1,588 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/profileTab.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/activityTab.css">
+<style>
+.scrollWrap {
+	width: 100%;
+	min-height: 100%;
+	height: 100%;
+	padding-top: 70px;
+	overflow: auto;
+	background-color: #ebebeb;
+}
+
+section {
+	width: 100%;
+	min-height: 95%; 
+	padding-top : 50px;
+	padding-bottom: 20px;
+	padding-top: 50px;
+}
+
+.contentBox {
+	margin: 0px auto;
+	width: 800px;
+	position: relative;
+}
+
+.horizontal-tab {
+	width: 100%;
+	height: 50px;
+	background-color: #f9f9f9;
+	font-size: 0px;
+	line-height: 0px;
+	margin-bottom: 10px;
+	box-shadow: 2px 2px 8px #999;
+}
+
+.tab-title {
+	width: 33.3%;
+	height: 50px;
+	display: inline-block;
+	text-align: center;
+	font-size: 14px;
+	line-height: 50px;
+	cursor: pointer;
+}
+
+.tab-title:nth-child(2) {
+	border-left: 1px solid #d8d8d8;
+	border-right: 1px solid #d8d8d8;
+}
+
+.tab-title:hover {
+	background-color: #fff;
+}
+
+.tab-content-box {
+	width: 100%; box-shadow : 2px 2px 8px #999;
+	border-radius: 4px;
+	background-color: #f9f9f9;
+	position: relative;
+	box-shadow: 2px 2px 8px #999
+}
+
+.selectBox {
+	outline: none;
+	font-size: 12px;
+	border-radius: 3px;
+	padding: 7px;
+	margin-right: 5px;
+	border: 1px solid #888;
+	width: 130px;
+}
+
+footer {
+	width: 100%;
+	height: 50px;
+	background: #242628;
+	background: -moz-linear-gradient(top, #242628 0%, #000000 100%);
+	background: -webkit-linear-gradient(top, #242628 0%, #000000 100%);
+	background: linear-gradient(to bottom, #242628 0%, #000000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#242628',
+		endColorstr='#000000', GradientType=0);
+	line-height: 50px;
+	text-align: center;
+	color: white;
+	font-weight: 300;
+}
+</style>
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
+<script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
+<script src="/magic-deal/js/common.js"></script>
+<script>
+	$(function() {
+		$(".scrollWrap").niceScroll();
+		$(".profileInfo").niceScroll();
+		
+		$('.special.card .image').dimmer({
+			on: 'hover'
+		});
+		
+		$(".product-card").hover(function() {
+			$(this).find(".product-card-info")
+				   .toggleClass("product-card-info-open");
+		});
+		
+		//profile-tab-box
+		//activity-tab-box
+		//alarm-tab-box
+		$("#profileTabBtn").click(function() {
+			$(".tab-title").css("background-color","#f9f9f9");
+			$(this).css("background-color", "#fff");
+			$("#activity-tab-box").css("display", "none");
+			$("#alarm-tab-box").css("display", "none");
+			$("#profile-tab-box").css("display", "block");
+		});
+		
+		$("#activityTabBtn").click(function() {
+			$(".tab-title").css("background-color","#f9f9f9");
+			$(this).css("background-color", "#fff");
+			$("#alarm-tab-box").css("display", "none");
+			$("#profile-tab-box").css("display", "none");
+			$("#activity-tab-box").css("display", "block");
+		});
+		
+		$("#alarmTabBtn").click(function() {
+			$(".tab-title").css("background-color","#f9f9f9");
+			$(this).css("background-color", "#fff");
+			$("#activity-tab-box").css("display", "none");
+			$("#profile-tab-box").css("display", "none");
+			$("#alarm-tab-box").css("display", "block");
+		});
+		
+	});
+</script>
+</head>
+<body>
+<header>
+	<div class="ui search">
+  		<div class="ui icon input">
+    		<input class="prompt" type="text" placeholder="원하는 지역을 검색하세요" style="font-size:12px; width:200px;"/>
+   			 <i class="search icon"></i>
+  		</div>
+  	<div class="results"></div>
+	</div>
+	<div>
+		<div id="loginNsignupBtn" class="ui icon label">
+			<i class="user violet icon"></i>
+			<a class="detail">로그인 및 회원가입</a>
+		</div>
+	</div>
+	<img src="../img/logo1.png"/>
+</header>
+<div id="navBtn" class="ui icon button small black">
+	<i class="sidebar icon"></i>
+</div>
+<nav class="ui vertical menu">
+	<a class="item">
+      <i class="home large orange icon"></i>메인
+    </a>
+    <a class="item">
+      <i class="gift large orange icon"></i>물품등록
+    </a>
+    <a class="item">
+      <i class="child large orange icon"></i>마이페이지
+    </a>
+    <a class="item">
+      <i class="info circle large orange icon"></i>고객센터
+    </a>
+</nav>
+<div class="scrollWrap">
+	<section>
+		<div class="contentBox">
+			
+			<!-- 마이페이지 내용부 -->
+				<div class="horizontal-tab">
+					<span id="profileTabBtn" class="tab-title"
+						style="background-color: #fff;"> <i class="user brown icon"></i>프로필
+					</span> <span id="activityTabBtn" class="tab-title"> <i
+						class="quote left teal icon"></i>활동 관리
+					</span> <span id="alarmTabBtn" class="tab-title"> <i
+						class="alarm red icon"></i>알람 관리
+					</span>
+				</div>
+
+				<div class="tab-content-box">
+					<div id="profile-tab-box">
+						<div class="profileImg">
+							<div class="ui centered special card">
+								<div class="blurring dimmable image">
+									<div class="ui dimmer">
+										<div class="content">
+											<div class="center">
+												<div class="ui inverted red icon button">
+													<i class="heart icon"></i>&nbsp;&nbsp;
+													LIKE
+												</div>
+											</div>
+										</div>
+									</div>
+									<img src="../img/sample-test/profile-exam.JPG">
+								</div>
+								<div class="content">
+									<a class="header">김흥국</a>
+									<div class="meta">
+										<span class="date">Joined in 2016. 02. 27</span>
+									</div>
+								</div>
+								<div class="extra content">
+									<i class="heart red icon"></i> 
+									5,550 likes
+								</div>
+							</div>
+							<div class="ui mini icon black button info-update-btn">
+								정보 업데이트</div>
+						</div>
+
+						<div class="profileInfo">
+							<div class="ui top attached tabular menu">
+								<div class="item">
+									<b>자기소개</b>
+								</div>
+							</div>
+							<div class="ui bottom attached active tab segment">
+								<p>
+									안녕하세요 김흥국입니다. 
+									<br /> 안전거래 신용거래 확실합니다!!! 
+									<br /> 서울, 경기, 인천지역 환영입니다.
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<div id="activity-tab-box" style="display: none">
+						<div class="activity-search-bar">
+							<select class="selectBox">
+								<option value="">전체물품</option>
+								<option value="1">거래대기</option>
+								<option value="2">거래완료</option>
+							</select>
+
+							<div class="ui action small input">
+								<input type="text" placeholder="키워드를 입력하세요!"
+									style="width: 350px;" />
+								<button class="ui small brown right labeled icon button">
+									<i class="search icon"></i> 검색
+								</button>
+							</div>
+						</div>
+
+						<div class="activity-content">
+							<div class="product-card">
+								<a class="ui left corner red label"> <i class="cube icon"></i>
+								</a>
+								<div class="product-card-img"
+									style="background-image: url('../img/sample-test/test.JPG');">
+
+								</div>
+								<div class="product-card-info">
+									<div class="product-card-info-wrap">
+										<div class="info-title">
+											<span>2016. 02. 29</span> <span style="color: #db2828;">거래완료</span>
+										</div>
+										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
+											들어가게 됩니다.</div>
+										<div class="info-button-box">
+											<button class="ui circular mini icon inverted olive button"
+												title="수정" style="font-size: 13px;">
+												<i class="write icon"></i>
+											</button>
+
+											<button class="ui circular mini icon inverted red button"
+												title="삭제" style="font-size: 13px;">
+												<i class="trash icon"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="product-card">
+								<a class="ui left corner green label"> <i
+									class="in cart icon"></i>
+								</a>
+								<div class="product-card-img"
+									style="background-image: url('../img/sample-test/sample2.JPG');">
+
+								</div>
+								<div class="product-card-info">
+									<div class="product-card-info-wrap">
+										<div class="info-title">
+											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
+										</div>
+										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
+											들어가게 됩니다.</div>
+										<div class="info-button-box">
+											<button class="ui circular mini icon inverted olive button"
+												title="수정" style="font-size: 13px;">
+												<i class="write icon"></i>
+											</button>
+
+											<button class="ui circular mini icon inverted red button"
+												title="삭제" style="font-size: 13px;">
+												<i class="trash icon"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="product-card">
+								<a class="ui left corner green label"> <i
+									class="in cart icon"></i>
+								</a>
+								<div class="product-card-img"
+									style="background-image: url('../img/sample-test/sample1.JPG');">
+
+								</div>
+								<div class="product-card-info">
+									<div class="product-card-info-wrap">
+										<div class="info-title">
+											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
+										</div>
+										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
+											들어가게 됩니다.</div>
+										<div class="info-button-box">
+											<button class="ui circular mini icon inverted olive button"
+												title="수정" style="font-size: 13px;">
+												<i class="write icon"></i>
+											</button>
+
+											<button class="ui circular mini icon inverted red button"
+												title="삭제" style="font-size: 13px;">
+												<i class="trash icon"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="product-card">
+								<a class="ui left corner green label"> <i
+									class="in cart icon"></i>
+								</a>
+								<div class="product-card-img"
+									style="background-image: url('../img/sample-test/sample3.JPG');">
+
+								</div>
+								<div class="product-card-info">
+									<div class="product-card-info-wrap">
+										<div class="info-title">
+											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
+										</div>
+										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
+											들어가게 됩니다.</div>
+										<div class="info-button-box">
+											<button class="ui circular mini icon inverted olive button"
+												title="수정" style="font-size: 13px;">
+												<i class="write icon"></i>
+											</button>
+
+											<button class="ui circular mini icon inverted red button"
+												title="삭제" style="font-size: 13px;">
+												<i class="trash icon"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="product-card">
+								<a class="ui left corner green label"> <i
+									class="in cart icon"></i>
+								</a>
+								<div class="product-card-img"
+									style="background-image: url('../img/sample-test/sample4.JPG');">
+
+								</div>
+								<div class="product-card-info">
+									<div class="product-card-info-wrap">
+										<div class="info-title">
+											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
+										</div>
+										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
+											들어가게 됩니다.</div>
+										<div class="info-button-box">
+											<button class="ui circular mini icon inverted olive button"
+												title="수정" style="font-size: 13px;">
+												<i class="write icon"></i>
+											</button>
+
+											<button class="ui circular mini icon inverted red button"
+												title="삭제" style="font-size: 13px;">
+												<i class="trash icon"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="product-card">
+								<a class="ui left corner green label"> <i
+									class="in cart icon"></i>
+								</a>
+								<div class="product-card-img"
+									style="background-image: url('../img/sample-test/sample5.JPG');">
+
+								</div>
+								<div class="product-card-info">
+									<div class="product-card-info-wrap">
+										<div class="info-title">
+											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
+										</div>
+										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
+											들어가게 됩니다.</div>
+										<div class="info-button-box">
+											<button class="ui circular mini icon inverted olive button"
+												title="수정" style="font-size: 13px;">
+												<i class="write icon"></i>
+											</button>
+
+											<button class="ui circular mini icon inverted red button"
+												title="삭제" style="font-size: 13px;">
+												<i class="trash icon"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="product-card">
+								<a class="ui left corner green label"> <i
+									class="in cart icon"></i>
+								</a>
+								<div class="product-card-img"
+									style="background-image: url('../img/sample-test/sample6.JPG');">
+
+								</div>
+								<div class="product-card-info">
+									<div class="product-card-info-wrap">
+										<div class="info-title">
+											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
+										</div>
+										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
+											들어가게 됩니다.</div>
+										<div class="info-button-box">
+											<button class="ui circular mini icon inverted olive button"
+												title="수정" style="font-size: 13px;">
+												<i class="write icon"></i>
+											</button>
+
+											<button class="ui circular mini icon inverted red button"
+												title="삭제" style="font-size: 13px;">
+												<i class="trash icon"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="product-card">
+								<a class="ui left corner green label"> <i
+									class="in cart icon"></i>
+								</a>
+								<div class="product-card-img"
+									style="background-image: url('../img/sample-test/sample7.JPG');">
+
+								</div>
+								<div class="product-card-info">
+									<div class="product-card-info-wrap">
+										<div class="info-title">
+											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
+										</div>
+										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
+											들어가게 됩니다.</div>
+										<div class="info-button-box">
+											<button class="ui circular mini icon inverted olive button"
+												title="수정" style="font-size: 13px;">
+												<i class="write icon"></i>
+											</button>
+
+											<button class="ui circular mini icon inverted red button"
+												title="삭제" style="font-size: 13px;">
+												<i class="trash icon"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="product-card">
+								<a class="ui left corner green label"> <i
+									class="in cart icon"></i>
+								</a>
+								<div class="product-card-img"
+									style="background-image: url('../img/sample-test/sample8.JPG');">
+
+								</div>
+								<div class="product-card-info">
+									<div class="product-card-info-wrap">
+										<div class="info-title">
+											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
+										</div>
+										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
+											들어가게 됩니다.</div>
+										<div class="info-button-box">
+											<button class="ui circular mini icon inverted olive button"
+												title="수정" style="font-size: 13px;">
+												<i class="write icon"></i>
+											</button>
+
+											<button class="ui circular mini icon inverted red button"
+												title="삭제" style="font-size: 13px;">
+												<i class="trash icon"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="activity-paging">
+							<a class="ui mini icon button"> <i
+								class="angle double left icon"></i>
+							</a> <a class="ui mini icon button"> <i class="angle left icon"></i>
+							</a> &nbsp;&nbsp;1 &nbsp;&nbsp;2 &nbsp;&nbsp;3 &nbsp;&nbsp;4
+							&nbsp;&nbsp;5 &nbsp;&nbsp;6 &nbsp;&nbsp;7 &nbsp;&nbsp;8
+							&nbsp;&nbsp;9 &nbsp;&nbsp;10&nbsp;&nbsp; <a
+								class="ui mini icon button"> <i
+								class="angle double right icon"></i>
+							</a> <a class="ui mini icon button"> <i class="angle right icon"></i>
+							</a>
+						</div>
+					</div>
+
+					<div id="alarm-tab-box" style="display: none">
+						<div></div>
+					</div>
+				</div>
+
+				<!-- 마이페이지 내용부 끝-->
+			
+		</div>
+	</section>
+	
+	<footer>
+		© 2016 Respond404 // republic of korea
+	</footer>
+</div>
+
+<div class="ui modal loginModal">
+  <i class="close icon"></i>
+  <div class="header">
+    <div class="ui orange ribbon label">
+    	Log in / Sign up
+    </div>
+  </div>
+  <div class="content" style="text-align:center;">
+        <div class="ui small left icon input" style="margin-bottom:15px;">
+			<input type="text" placeholder="아이디를 입력하세요"/>
+			<i class="user icon"></i>
+		</div>
+		<div class="ui small left icon input">
+			<input type="password" placeholder="비밀번호를 입력하세요"/>
+			<i class="privacy icon"></i>
+		</div>
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Log in
+    </div>
+    <div class="ui positive right labeled icon button">
+      Sign up
+      <i class="sign in icon"></i>
+    </div>
+  </div>
+</div>
+</body>
+</html>

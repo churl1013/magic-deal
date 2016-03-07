@@ -1,0 +1,244 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="/g3/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/g3/css/global.css">
+<link rel="stylesheet" type="text/css" href="/g3/css/header.css">
+<link rel="stylesheet" type="text/css" href="/g3/css/nav.css">
+<style>
+.scrollWrap {
+	width: 100%;
+	min-height: 100%;
+	height: 100%;
+	padding-top: 70px;
+	overflow: auto;
+	background-color: #f0f0f0;
+}
+
+section {
+	width: 100%;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-image : url("../img/joinbackImg.jpg");
+}
+
+.contentWrap {
+  padding-top : 50px;
+  padding-bottom : 100px;
+  width : 100%;
+  min-height : 100%;
+  background-size : 100% 100%;
+}
+
+.contentBox {
+  margin : 0px auto;
+  width : 600px;
+  height : 700px;
+  background-color : rgba(22,22,22,0.6);
+  border-radius : 8px;
+  padding : 15px;
+}
+
+.contentBox>.titleLabel {
+  color : white;
+  font-size : 16px;
+  display : block;
+  height : 50px;
+  border-bottom : 1px solid #d8d8d8;
+}
+
+.joinFormWrap {
+  width : 100%;
+  height : 620px;
+  padding-top : 35px;
+  color : white;
+}
+
+.joinFormWrap>label {
+  display : block;
+  color : snow;
+  margin-bottom : 5px;
+}
+
+.joinFormWrap>div {
+	margin-bottom : 15px;
+}
+
+.submitCheckWrap {
+  margin-bottom : 15px;
+}
+
+footer {
+	width : 100%;
+	height : 50px;
+	background: #242628;
+	background: -moz-linear-gradient(top,  #242628 0%, #000000 100%);
+	background: -webkit-linear-gradient(top,  #242628 0%,#000000 100%);
+	background: linear-gradient(to bottom,  #242628 0%,#000000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#242628', endColorstr='#000000',GradientType=0 );
+	line-height : 50px;
+	text-align : center;
+	color : white;
+	font-weight : 300;
+}
+</style>
+
+<script src="/g3/custom_lib/jquery-1.11.2.js"></script>
+<script src="/g3/semantic/semantic.min.js"></script>
+<script src="/g3/custom_lib/jquery.nicescroll.js"></script>
+<script src="/g3/js/common.js"></script>
+
+<script>
+	$(function() {
+		$(".scrollWrap").niceScroll();
+	});
+</script>
+
+</head>
+<body>
+<header>
+	<div class="ui search">
+  		<div class="ui icon input">
+    		<input class="prompt" type="text" placeholder="원하는 지역을 검색하세요" style="font-size:12px; width:200px;"/>
+   			 <i class="search icon"></i>
+  		</div>
+  	<div class="results"></div>
+	</div>
+	<div>
+		<div id="loginNsignupBtn" class="ui icon label">
+			<i class="user violet icon"></i>
+			<a class="detail">로그인 및 회원가입</a>
+		</div>
+	</div>
+	<img src="../img/logo1.png"/>
+</header>
+<div id="navBtn" class="ui icon button small black">
+	<i class="sidebar icon"></i>
+</div>
+<nav class="ui vertical menu">
+	<a class="item">
+      <i class="home large orange icon"></i>메인
+    </a>
+    <a class="item">
+      <i class="gift large orange icon"></i>물품등록
+    </a>
+    <a class="item">
+      <i class="child large orange icon"></i>마이페이지
+    </a>
+    <a class="item">
+      <i class="info circle large orange icon"></i>고객센터
+    </a>
+</nav>
+
+<div class="scrollWrap">
+	<section>
+	  <div class="contentWrap">
+	    <div class="contentBox">
+	    	 <a class="ui red ribbon label">Sign up</a>
+	      <div class="joinFormWrap">
+	        <label>아이디
+	          <span style="font-size:12px; color:seashell">
+	            (영문, 숫자 혼합 8자리 이상)
+	          </span>
+	        </label>
+	        <div class="ui small input">
+	  			<input type="text" placeholder="id" style="width:150px;"/>
+			</div>
+	
+	        <label>비밀번호
+	          <span style="font-size:12px; color:seashell">
+	            (숫자, 특수문자 포함 8자 이상)
+	          </span>
+	        </label>
+	        <div class="ui small input">
+	  			<input type="password" placeholder="id" style="width:200px;"/>
+			</div>
+	
+	        <label>비밀번호 확인</label>
+	        <div class="ui small input">
+	  			<input type="password" placeholder="id" style="width:200px;"/>
+			</div>
+	
+	        <label>이름</label>
+	        <div class="ui small input">
+	  			<input type="text" placeholder="id" style="width:150px;"/>
+			</div>
+	
+	        <label>이메일</label>
+			<div class="ui small input">
+	  			<input type="email" placeholder="you@example.com" style="width:300px;"/>
+			</div>
+			
+	        <label>휴대폰번호</label>
+	        <div class="ui small input">
+	  			<input type="email" placeholder="- 없이 입력해주세요" style="width:200px;"/>
+			</div>
+	
+	        <div class="submitCheckWrap">
+	         <div class="ui label left icon" style="display:block; margin-bottom : 3px;">
+	         	<i class="sun icon"></i>
+	         	<a class="detail">약관 1.</a>
+	         </div>
+	         
+	         <div class="ui label left icon" style="display:block; margin-bottom : 3px;">
+	         	<i class="sun icon"></i>
+	         	<a class="detail">약관 2.</a>
+	         </div>
+	         
+	         <div class="ui label left icon" style="display:block; margin-bottom : 3px;">
+	         	<i class="sun icon"></i>
+	         	<a class="detail">약관 3.</a>
+	         </div>
+	          
+	         <div class="ui checkbox">
+	  			<input type="checkbox" name="example">
+	  			<label style="color:white; font-size:13px;">모두 동의</label>
+			 </div>
+	        </div>
+	        <button class="ui button positive">
+	        	등록
+	        </button>
+	        <button class="ui button negative">
+	        	취소
+	        </button>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+	
+	<footer>
+		© 2016 Respond404 // republic of korea
+	</footer>
+</div>
+<div class="ui modal loginModal">
+  <i class="close icon"></i>
+  <div class="header">
+    <div class="ui orange ribbon label">
+    	Log in / Sign up
+    </div>
+  </div>
+  <div class="content" style="text-align:center;">
+        <div class="ui small left icon input" style="margin-bottom:15px;">
+			<input type="text" placeholder="아이디를 입력하세요"/>
+			<i class="user icon"></i>
+		</div>
+		<div class="ui small left icon input">
+			<input type="password" placeholder="비밀번호를 입력하세요"/>
+			<i class="privacy icon"></i>
+		</div>
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Log in
+    </div>
+    <div class="ui positive right labeled icon button">
+      Sign up
+      <i class="sign in icon"></i>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

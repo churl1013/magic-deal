@@ -1,0 +1,564 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<style>
+	body {
+		background-color : #fff;
+	}
+
+	aside {
+		width : 250px;
+		height : 100%;
+		background-color : #f8f8f8;
+		border-right : 1px solid #d8d8d8;
+		float : left;
+		padding-top : 70px;
+	}	
+	section {
+		background-color : #f8f8f8;
+		height : 100%;
+		width : 100%;
+		padding : 70px 0px 0px 250px;
+	}
+	
+	#chartViewWrap {
+		width : 100%;
+		height : 100%;
+		position : relative;
+		background-color : #fff;
+	}
+	
+	#defineField {
+		width : 0px;
+		height : 0px;
+		position : absolute;
+	}
+	
+	.node {
+		position : absolute;
+		transition : all 0.5;
+		cursor : pointer;
+		z-index : 1;
+	}
+	
+	.circleNode {
+		border-radius : 50%;
+		background-size : 100% 100%;
+		border : 1px solid rgba(0,0,0,0.3);
+	}
+	
+	.rectBar {
+		fill : #333;
+		stroke-width : 1;
+		stroke-opacity : 1;
+	}
+	
+	.circleBtnBox {
+		z-index : -1;
+		width : 90px;
+		height : 90px;
+		border-radius : 50%;
+		position : absolute;
+		line-height : 90px;
+		font-size : 12px;
+		color : white;
+		text-align : center;
+		cursor : default;
+		background: rgb(69,72,77);
+		background: -moz-radial-gradient(center, ellipse cover,  rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%);
+		background: -webkit-radial-gradient(center, ellipse cover,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);
+		background: radial-gradient(ellipse at center,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=1 );
+		box-shadow : 0px 3px 4px #999;
+		transition : all 0.5s;
+		opacity : 0;
+	}
+	
+	#drawField {
+		width : 100%;
+		height : 100%;
+	}
+	
+	/* 인포메이션 박스 시작 */
+	#informationBox {
+		width : 300px;
+		height : 200px;
+		position : absolute;
+		display : none;
+		z-index : 2;
+	}
+	
+	#popup-header {
+		height : 40px;
+		padding : 5px;
+		width : 100%;
+	}
+	
+	#popup-header>.right.floated.meta {
+		margin-top : 5px;
+	}
+	
+	#popup-content {
+		width : 100%;
+		height : 160px;
+		padding : 5px;
+	}
+	
+	#popup-content>div {
+		display : inline-block;
+		float : left;
+	}
+	
+	.content-image {
+		margin-right : 5px;
+		width : 150px;
+		height : 150px;
+	}
+	
+	.content-info {
+		font-size : 12px;
+		position : relative;
+		height : 100%;
+		width : 135px;
+		height : 150px;
+	}
+	
+	.content-info>.info-title {
+		font-size : 14px;
+	}
+		
+	.content-info>.info-btn-box {
+		position : absolute;
+		bottom : 0px;
+		width : 100%;
+	}
+	
+	.product-owner {
+		display : inline-block;
+		margin-right : 10px;
+	}
+	
+	.like-rating {
+		color : #888;
+		font-size : 12px;
+	}
+	/* 인포메이션 박스 끝 */
+	
+	#favorite-tooltip-box {
+		position : absolute;
+		bottom : 30px;
+		right : 0px;
+		width : 400px;
+		z-index : 1;
+		text-align : right;
+		font-size : 11px;
+		line-height : 13px;
+		color : #222;
+	}
+	
+	footer {
+		position : absolute;
+		bottom : -155px;
+		left : 0px;
+		width : 100%;
+		height : 175px;
+		z-index : 4;
+		transition : all 0.5s;
+		font-size : 0px;
+		line-height : 0px;
+		overflow : hidden;
+	}
+		
+	.favorite-content-wrap::-webkit-scrollbar {
+    	width: 12px;
+    	height : 7px;
+	}
+	.favorite-content-wrap::-webkit-scrollbar-track {
+	    background-color: #eaeaea;
+	    border-left: 1px solid #ccc;
+	}
+	.favorite-content-wrap::-webkit-scrollbar-thumb {
+	    background-color: #555;
+	}
+	.favorite-content-wrap::-webkit-scrollbar-thumb:hover {
+	    background-color: #777;
+	}
+		
+	.favorite-open-btn-wrap {
+		width : 50px;
+		height : 15px;
+		margin : 0px auto;
+		background-color : #383838;
+		border : 1px solid #222;
+		border-top-right-radius : 50%;
+		border-top-left-radius : 50%;
+		position : relative;
+		top : 3px;
+		cursor : pointer;
+		z-index : -1;
+		transition : all 0.4s;
+	}
+	
+	.favorite-content-wrap {
+		width : 100%;
+		height : 165px;
+		overflow-x : auto;
+		overflow-y : hidden;
+		background-color : #383838;
+		text-align : center;
+		position : relative;
+	}
+	
+	.favorite-content-wrap>h1 {
+		width : 100%;
+		position : absolute;
+		width : 100%;
+		vertical-align: middle;
+		height :100%;
+		line-height : 165px;
+		color : #555;
+		font-size : 32px;
+		z-index : 0;
+	}
+	
+	.favorite-content-wrap>div {
+		width : 20px;
+		height : 100%;
+		font-size : 0px;
+		line-height : 0px;
+		padding : 10px;
+		background-color : #383838;
+	}
+	
+	.favoriteBox {
+		width : 250px;
+		height : 140px;
+		display : inline-block;
+		float : left;
+		font-size : 14px;
+		line-height : 16px;
+		background-color : #fafafa;
+		border-radius : 5px;
+		border : 1px solid #f0f0f0;
+		margin-right : 10px;
+		text-align : center;
+		background-size : 100% 100%;
+		color : white;
+		position : relative;
+		vertical-align: middle;
+		background-color : #222;
+	}
+	
+	.favoriteBox>.image {
+		width : 100%;
+		height : 100%;
+	}
+	
+	.favoriteBox>.image>.favorite-img {
+		width : 100%;
+		height : 100%;
+		opacity : 0.2;
+		position : absolute;
+		top : 0px;
+		left : 0px;
+	}
+	
+	/*필터 다시 짠 스타일*/
+	aside>div {
+		margin-bottom : 5px;
+	}
+	.filterMarginBox {
+		width : 100%;
+		height : 50px;
+		background-color : #1b1c1d;
+		position : relative;
+	}	
+	
+	.filterAxis {
+	}
+	
+	#filterList {
+		width : 230px;
+		height : 300px;
+		border-radius : 3px;
+		background-color : #fcfcfc;
+		border : 1px solid #d8d8d8;
+		overflow-y : auto;
+		overflow-x : hidden;
+	}
+	
+	#filterList>.filterList-node {
+		width : 220px;
+		height : 20px;
+		border : 1px solid #e8e8e8;
+		margin : 2px 0px 2px 2px;
+		background-color : #fff;
+		border-radius : 3px;
+		padding-right : 5px;
+		line-height : 20px;
+		font-size : 12px;
+		overflow : hidden;
+		white-space: nowrap;
+		text-overflow : ellipsis;
+		transition : all 0.4s;
+		cursor : default;
+		font-weight : bold;
+	}
+	
+	#filterList>.filterList-node:hover {
+		border : 1px solid #fbbd08;
+	}
+	
+	#filterList::-webkit-scrollbar {
+    	width: 5px;
+	}
+	#filterList::-webkit-scrollbar-track {
+	    background-color: #fff;
+	    border-left: 1px solid #ccc;
+	}
+	#filterList::-webkit-scrollbar-thumb {
+	    background-color: #999;
+	    border-radius : 5px;
+	}
+	#filterList::-webkit-scrollbar-thumb:hover {
+	    background-color: #777;
+	}
+	
+	.addBox {
+		width : 25px;
+		height : 100%;
+		display : inline-block;
+		cursor : pointer;
+		background-color : #666;
+		border-left-top-radius : 3px;
+		border-right-top-radius : 3px;
+		text-align : center;
+		transition : all 0.3s;
+	}
+</style>
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/custom_lib/jquery-ui.min.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
+<script src="/magic-deal/js/common.js"></script>
+<script>
+	$(function() {
+		var c_width = parseInt($("#chartViewWrap").css("width"));
+		var c_height = parseInt($("#chartViewWrap").css("height"));
+		
+		$('.ui.checkbox').checkbox();
+		
+		$("#extendBtn").css({
+			"left" : ((c_width)/2-45)+250+"px",
+			"top" :  ((c_height)/2-45)+70+"px"
+		});
+		
+		$("#chartViewWrap").on("contextmenu", function(event) {
+			event.preventDefault();
+			return false;
+		});
+		
+		$(".favorite-content-wrap").on("mousewheel", function(event) {
+			var delta = event.originalEvent.wheelDelta;
+			var currPos = $(this).scrollLeft();
+			if(delta > 0) {
+				$(this).scrollLeft(currPos-60);
+			}else if(delta < 0) {
+				$(this).scrollLeft(currPos+60);
+			}
+		});
+		
+		$("#informationBox").draggable();
+		
+		$("footer").hover(function(){
+			$("footer").css("bottom","0px");
+		}, function(){
+			$("footer").css("bottom","-155px");
+		});
+	});
+</script>
+</head>
+
+<body>
+<header>
+	<div class="ui search">
+  		<div class="ui icon input">
+    		<input class="prompt" type="text" placeholder="원하는 지역을 검색하세요" style="font-size:12px; width:200px;"/>
+   			 <i class="search icon"></i>
+  		</div>
+  	<div class="results"></div>
+	</div>
+	<div>
+		<div id="loginNsignupBtn" class="ui icon label">
+			<i class="user violet icon"></i>
+			<a class="detail">로그인 및 회원가입</a>
+		</div>
+	</div>
+	<img src="../img/logo1.png"/>
+</header>
+<div id="navBtn" class="ui icon button small black">
+	<i class="sidebar icon"></i>
+</div>
+<nav class="ui vertical menu">
+	<a class="item">
+      <i class="home large orange icon"></i>메인
+    </a>
+    <a class="item">
+      <i class="gift large orange icon"></i>물품등록
+    </a>
+    <a class="item">
+      <i class="child large orange icon"></i>마이페이지
+    </a>
+    <a class="item">
+      <i class="info circle large orange icon"></i>고객센터
+    </a>
+</nav>
+
+<aside>
+	<div class="filterMarginBox">
+		<label class="ui teal right corner label">
+        	<i class="area chart icon"></i>
+      	</label>
+	</div>
+	<div class="filterCategorieInfo">
+		<label>상위</label>
+		<label>하위</label>
+		<label>키워드</label>
+	</div>
+	<div class="filterSearch">
+		<select>
+			<option>상위</option>
+		</select>
+		<select>
+			<option>하위</option>
+		</select>
+		<input type="text" placeholder="키워드"/>
+		<input type="submit" value="검색" />
+	</div>
+	<div class="filterAxis">
+		<input type="radio" value="all" name="axis" checked/> 축 모두 적용 <br/>
+		<input type="radio" value="distance" name="axis"/> 거리만 적용 <br/>
+		<input type="radio" value="price" name="axis"/> 가격만 적용 <br/>
+		<input type="checkbox" id="qualityFlag" checked/> 품질 on / off <br/>
+	</div>
+	
+	<div class="filterListWrap">
+		<input type="text" placeholder="keyword filter"/>
+		<div id="filterList">
+		</div>
+	</div>
+</aside>
+
+<section>
+	<div id="favorite-tooltip-box">
+	</div>
+	<div id="chartViewWrap">
+		<svg id="defineField">
+			<defs>
+			    <linearGradient id="grdbar"
+			                    x1="0%" y1="100%"
+			                    x2="100%" y2="100%"
+			                    spreadMethod="pad">
+			      <stop offset="0%"   stop-color="rgb(219, 40, 40)" stop-opacity="0.6"/>
+			      <stop offset="100%" stop-color="rgb(219, 40, 40)" stop-opacity="0.1"/>
+			    </linearGradient>
+			    <linearGradient id="grdback"
+			                    x1="0%" y1="0%"
+			                    x2="0%" y2="100%"
+			                    gradientTransform="rotate(45)"
+			                    spreadMethod="pad">
+			      <stop offset="0%" stop-color="rgb(219, 40, 40)" stop-opacity="0"/>
+			      <stop offset="20%" stop-color="rgb(219, 40, 40)" stop-opacity="0.1"/>
+			      <stop offset="100%"   stop-color="rgb(219, 40, 40)" stop-opacity="0.9"/>
+			    </linearGradient>
+			</defs>
+		</svg>
+		<svg id="drawField" xmlns="http://www.w3.org/2000/svg" 
+     						xmlns:xlink="http://www.w3.org/1999/xlink">
+			
+		</svg>
+	</div>
+	<div id="extendBtn" class="circleBtnBox">
+		거리 넓히기
+	</div>
+</section>
+<footer>
+	<div class="favorite-open-btn-wrap"></div>
+	<div class="favorite-content-wrap">
+		<h1><i class="frown icon"></i>empty</h1>
+		<div></div>
+	</div>
+</footer>
+
+<div id="informationBox" class="ui card">
+	<div id="popup-header" class="content">
+		<div class="right floated meta">
+			<a id="popup-close-btn"><i class="close icon"></i></a>
+		</div>
+		<img class="ui avatar image" src="../img/sample-test/profile-exam.JPG"/>
+		<span class="product-owner">김흥국</span>
+		<span class="like-rating">
+			<i class="heart red outline mini icon"></i>
+			<span class="like-count">124</span> likes
+		</span>
+	</div>
+	<div id="popup-content" class="content">
+		<div class="content-image">
+			<img src="../img/cimg/cimg14.JPG" width="150px" height="150px" style="border-radius:5px;"/>
+		</div>
+		
+		<div class="content-info">
+			<p class="info-title">
+				<i class="cube red icon"></i>
+				<span id="info-product-name">
+					<b>칼하트 후드집업</b>
+				</span>
+			</p>
+			<p id="info-price"></p>
+			<p id="info-distance"></p>
+			<p id="info-quality"></p>
+			<div class="info-btn-box">
+				<button class="ui tiny black button" style="width:100%;">
+					<i class="zoom icon"></i> 상세보기
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="ui modal loginModal">
+  <i class="close icon"></i>
+  <div class="header">
+    <div class="ui orange ribbon label">
+    	Log in / Sign up
+    </div>
+  </div>
+  <div class="content" style="text-align:center;">
+        <div class="ui small left icon input" style="margin-bottom:15px;">
+			<input type="text" placeholder="아이디를 입력하세요"/>
+			<i class="user icon"></i>
+		</div>
+		<div class="ui small left icon input">
+			<input type="password" placeholder="비밀번호를 입력하세요"/>
+			<i class="privacy icon"></i>
+		</div>
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Log in
+    </div>
+    <div class="ui positive right labeled icon button">
+      Sign up
+      <i class="sign in icon"></i>
+    </div>
+  </div>
+</div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="../custom_lib/chartTest.js"></script>
+</body>
+</html>

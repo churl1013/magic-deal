@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.mdeal.dao.MemberDao">
+	
+	<resultMap type="member" id="memberResultMap">
+		<result column="m_no" property="mNo" />
+		<result column="id" property="id" />
+		<result column="nname" property="nickName" />
+		<result column="password" property="password" />
+		<result column="m_info" property="mInfo" />
+		<result column="join_date" property="joinDate" />
+		<result column="m_photo" property="mPhoto" />
+		<result column="like_cnt" property="likeCnt" />
+		<result column="m_addr" property="mAddr" />
+		<result column="m_lat" property="mLat" />
+		<result column="m_lng" property="mLng" />
+	</resultMap>
+	
+	<select id="selectIdCount" resultType="int" parameterType="string">
+		select count(*) 
+		  from member
+		 where id = #{id}
+	</select>
+	
+	<select id="selectNickCount" resultType="int" parameterType="string">
+		select count(*) 
+		  from member
+		 where nname = #{nname}
+	</select>
+	
+	<insert id="insertMember" parameterType="member">
+		insert into member
+		       (id, nname, password, join_date, m_addr, m_lat, m_lon)
+		values (#{id}, #{nickName}, #{password}, now(), #{mAddr}, #{mLat}, #{mLon})
+	</insert>
+</mapper>

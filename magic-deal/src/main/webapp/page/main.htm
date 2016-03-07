@@ -1,0 +1,603 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<style>
+section {
+	position : relative;
+	left : 0px;
+	width : 100%;
+	height : 100%;
+	-webkit-transition : all 0.8s;
+	-webkit-perspective: 100;
+	-webkit-transform-style: preserve-3d;
+	overflow : auto;
+}
+
+section>div {
+	height : 100%;
+	padding-top : 70px;
+	box-shadow : 14px 4px 7px #222;
+}
+
+
+#categorieWrap {
+	background-color : #222;
+}
+
+#categorieWrap>div {
+	min-width : 200px;
+	width : 16.66%;
+	height : 33.4%;
+	float : left;
+	position : relative;
+	overflow : hidden;
+	border-right : 1px solid #666;
+	border-bottom : 1px solid #666;
+}
+
+.cateBox {
+	background-color : #111;
+	background-size : 100% 100%;
+	background-repeat : no-repeat;
+	background-position : center;
+}
+
+.imgChangeBox {
+	background-color : white;
+	transition : background-color 0.5s;
+}
+
+#boxLabel {
+	position : absolute; 
+	top : 15px; 
+	left : 15px;
+	z-index:1;
+}
+
+.hoverLabel {
+	position : absolute;
+	text-align : center;
+	width : 100%;
+	height : 100%;
+	padding-top : 10px;
+	top : -100%;
+	font-family:Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+	background-color : rgba(0,0,0,0.5);
+	color : #f0f0f0;
+	z-index : 1;
+	transition : all 0.3s ease-in-out;
+}
+.hoverLabel>div {
+	width : 100%;
+	height : 100%;
+	position : relative;
+}
+
+.hoverLabel>div>div {
+	position : absolute;
+	bottom : 20px;
+	width : 100%;
+}
+
+.hoverLabelOpen {
+	top : 0%;
+}
+
+#cateBox1 {
+	background-image : url("../img/cboximg/sample1.jpg");
+	background-size : 100% 100%;
+}
+#cateBox2 {
+	background-image : url("../img/cboximg/sample2.jpg");
+	background-size : 100% 100%;
+}
+#cateBox3 {
+	background-image : url("../img/cboximg/sample3.jpg");
+	background-size : 100% 100%;
+}
+#cateBox4 {
+	background-image : url("../img/cboximg/sample4.jpg");
+	background-size : 100% 100%;
+}
+</style>
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
+<script src="/magic-deal/custom_lib/imagechange.js"></script>
+<script src="/magic-deal/custom_lib/imageSample.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
+
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
+<script src="/magic-deal/js/common.js"></script>
+<script>
+	var imageChange;
+	var lastChangeBox = -1;
+
+	$(function() {
+		$("section").niceScroll();
+		
+		imageChange = $("#categorieWrap").imagechange();
+		imageChange.initImg(imgs);
+
+		$(".imgChangeBox").hover(function() {
+			$(this).find(".hoverLabel").toggleClass("hoverLabelOpen");
+		});
+		
+		
+		$(".imgChangeBox").dimmer({
+			on : "hover"
+		});
+		
+		// 이미지 체인저 시간값 설정
+		setTimeout(randomImgChange, 2000);
+		setTimeout(randomImgChange, 4000);
+	});
+
+	var randomImgChange = function() {
+		// 9~16초 사이
+		var randomTime = parseInt(Math.random()*3)+3;
+		while(true) {
+			var idx = parseInt(Math.random()*14);
+			if(idx!=lastChangeBox) {
+				lastChangeBox = idx;
+				break;
+			}
+		}
+
+		//sample용 변수
+		var imageIdx = parseInt(Math.random()*24)+1;
+
+		imageChange.changeImg(idx, "/magic-deal/img/cimg/cimg"+imageIdx+".JPG");
+		setTimeout(randomImgChange, randomTime*1000);
+	}
+</script>
+</head>
+<body>
+<header>
+	<div class="ui search">
+  		<div class="ui icon input">
+    		<input class="prompt" type="text" placeholder="원하는 지역을 검색하세요" style="font-size:12px; width:200px;"/>
+   			 <i class="search icon"></i>
+  		</div>
+  	<div class="results"></div>
+	</div>
+	<div>
+		<div id="loginNsignupBtn" class="ui icon label">
+			<i class="user violet icon"></i>
+			<a class="detail">로그인 및 회원가입</a>
+		</div>
+	</div>
+	<img src="../img/logo1.png"/>
+</header>
+<div id="navBtn" class="ui icon button small black">
+	<i class="sidebar icon"></i>
+</div>
+<nav class="ui vertical menu">
+	<a class="item">
+      <i class="home large orange icon"></i>메인
+    </a>
+    <a class="item">
+      <i class="gift large orange icon"></i>물품등록
+    </a>
+    <a class="item" onclick="document.location.href='./mypage.htm'">
+      <i class="child large orange icon"></i>마이페이지
+    </a>
+    <a class="item">
+      <i class="info circle large orange icon"></i>고객센터
+    </a>
+</nav>
+<section>
+	<!-- 전체상품 안내 박스 -->
+	<div id="categorieWrap">
+		<div id="cateBox1"></div>
+
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+        		신발&nbsp;&nbsp;
+				가방&nbsp;&nbsp;
+				잡화
+      		</div>
+		</div>
+
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+        		휴대폰&nbsp;&nbsp;태블릿
+      		</div>
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+        		여성의류
+      		</div>
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+        		남성의류
+      		</div>
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+        		뷰티
+      		</div>
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+        		컴퓨터&nbsp;&nbsp;주변기기
+      		</div>
+		</div>
+		<div id="cateBox2">
+
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+        		디지털&nbsp;&nbsp;가전
+      		</div>
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+        		유아동&nbsp;&nbsp;
+				출산
+      		</div>
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+				가구&nbsp;&nbsp;
+				홈 데코
+      		</div>
+		</div>
+		<div id="cateBox3">
+
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+				CD&nbsp;&nbsp;
+				DVD
+      		</div>
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+				스포츠&nbsp;&nbsp;
+				레저
+      		</div>
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+				도서&nbsp;&nbsp;
+				문구
+      		</div>
+		</div>
+		<div id="cateBox4">
+
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+				음향기기&nbsp;&nbsp;
+				악기
+      		</div>
+		</div>
+		<div class="imgChangeBox blurring dimmable">
+			<div class="ui dimmer">
+				<div class="content">
+					<div class="center">
+						<div class="ui yellow small inverted statistic" style="display:block;">
+							<div class="value">
+								<i class="cubes icon"></i>
+								5,550
+							</div>
+							<div class="label">Products</div>
+						</div>
+						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
+						<div class="ui inverted button">지도검색</div>
+					</div>
+				</div>
+			</div>
+			<div id="boxLabel" class="ui black tag label">
+        		애완
+      		</div>
+		</div>
+	</div>
+</section> 
+
+<div class="ui modal loginModal">
+  <i class="close icon"></i>
+  <div class="header">
+    <div class="ui orange ribbon label">
+    	Log in / Sign up
+    </div>
+  </div>
+  <div class="content" style="text-align:center;">
+        <div class="ui small left icon input" style="margin-bottom:15px;">
+			<input type="text" placeholder="아이디를 입력하세요"/>
+			<i class="user icon"></i>
+		</div>
+		<div class="ui small left icon input">
+			<input type="password" placeholder="비밀번호를 입력하세요"/>
+			<i class="privacy icon"></i>
+		</div>
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Log in
+    </div>
+    <div class="ui positive right labeled icon button">
+      Sign up
+      <i class="sign in icon"></i>
+    </div>
+  </div>
+</div>
+
+
+<div class="ui modal signUpModal">
+  <div id="signUpHeader" class="header">
+	  <i class="large icons">
+		  <i class="user icon"></i>
+		  <i class="add corner orange icon"></i>
+	  </i>
+  	Welcome Magic Deal !!!
+  </div>
+  <div class="content">
+	<label>아이디
+       <span style="font-size:12px; color:#444">
+         (영문, 숫자 혼합 8자리 이상)
+       </span>
+     </label>
+     <div class="ui small input">
+		<input type="text" id="signId" style="width:150px;"/>&nbsp;
+		<button class="ui button" id="signIdChkBtn">중복검사</button>
+	</div>
+      <label>비밀번호
+         <span style="font-size:12px; color:#444">
+           (숫자, 특수문자 포함 8자 이상)
+         </span>
+       </label>
+       <div class="ui small input">
+ 			<input type="password" id="signPass" style="width:200px;"/>
+	</div>
+
+       <label>비밀번호 확인</label>
+       <div class="ui small input">
+ 			<input type="password" id="signPassChk" style="width:200px;"/>
+	</div>
+
+       <label>닉네임</label>
+       <div class="ui small input">
+ 			<input type="text" id="signNickName" style="width:150px;"/> &nbsp;
+ 			<button class="ui button" id="signNickNameBtn">중복검사</button>
+	</div>
+	
+	<label>주소</label>
+       <div class="ui small input">
+ 			<input type="text" id="signAddr" style="width:350px;" readonly/>&nbsp;
+ 			<button class="ui orange button" onclick="execDaumPostcode()">주소검색</button>
+ 			<input type="hidden" id="signLat" value=""/>
+ 			<input type="hidden" id="signLng" value=""/>
+	</div>
+	<div id="popupLayer" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+	<img src="http://i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	</div>
+  </div>
+  <div id="signUpFooter" class="actions">
+  	<button class="ui red deny inverted icon button" id="signUpCloseBtn">
+  		<i class="close icon"></i> 닫기
+  	</button>
+    <button class="ui violet ok inverted right labeled icon button" onclick="signUpSubmitChk();">
+      	회원가입
+      <i class="sign in icon"></i>
+    </button>
+  </div>
+</div>
+
+<div class="ui modal alertModal">
+  <i class="close icon"></i>
+  <div class="header">
+    	알림
+  </div>
+  <div id="alertMsg" class="content" style="text-align:center;">
+        
+  </div>
+  <div class="actions">
+     <div id="alertBtn" class="ui ok right grey labeled icon button">
+    </div>
+  </div>
+</div>
+</body>
+</html>

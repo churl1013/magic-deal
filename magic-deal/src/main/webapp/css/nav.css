@@ -1,0 +1,26 @@
+.ui.vertical.menu {
+	width : 200px;
+	height : 100%;
+	background-color : #fafafa;
+	border-right : 1px solid #e8e8e8;
+	position : fixed;
+	z-index : 2;
+	top : 0px;
+	left : -200px;
+	padding-top : 130px;
+	-webkit-transition : all 0.5s;
+}
+
+.ui.vertical.menu>.item{
+	font-size : 13px;
+	font-weight : bold;
+}
+
+#navBtn {
+	z-index : 3;
+	position : fixed;
+	left : 10px;
+	top : 80px;
+	cursor : pointer;
+	-webkit-transition : all 0.5s;
+}

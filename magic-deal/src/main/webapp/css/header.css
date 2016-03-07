@@ -1,0 +1,73 @@
+header {
+	z-index : 4;
+	width : 100%;
+	height : 70px;
+	position : absolute;
+	top : 0px;
+	box-shadow : 0px 1px 3px #222;
+	line-height : 70px;
+	padding-left : 15px;
+	padding-right : 15px;
+	text-align : center;
+	background: #ffffff;
+	background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+	background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 );
+}
+
+@media screen and (min-width:680px) {
+	header>img {
+		width : 300px;
+		height : 70px;
+	}
+}
+
+@media screen and (max-width:680px) {
+	header>img {
+		display : none;
+	}
+}
+
+header>div:first-child {
+	float : left;
+}
+
+header>div:nth-child(2) {
+	float : right;
+}
+
+
+.ui.modal.loginModal{
+	width : 300px;
+	margin-left : -150px;
+}
+
+.ui.modal.signUpModal {
+	width : 500px;
+	margin-left : -250px;
+	text-align : left;
+	background-color : rgba(50,50,50,0.8);
+	z-index : 2;
+}
+
+.ui.modal.signUpModal>#signUpHeader {
+	background-color : rgba(50,50,50,0.8);
+	color : white;
+}
+
+.ui.modal.signUpModal>#signUpFooter {
+	background-color : rgba(50,50,50,0.8);
+	color : white;
+}
+
+.ui.modal.signUpModal>.content>label {
+	display : block;
+	margin : 10px 0px 5px 0px;
+	font-weight : bold;
+}
+
+.ui.modal.alertModal {
+	width : 300px;
+	margin-left : -150px;
+}
