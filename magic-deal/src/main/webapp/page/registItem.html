@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -7,99 +7,29 @@
 <link href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" >
 <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
+<link rel="stylesheet" href="../css/basic.css" />
 <script>
-	function selectCategory(obj) {
-		var ag_idx = obj.value;
-		var ag_depth = obj.getAttribute("depth");
-
-		var felm = getObjectFormAuthGroup();
-		for (var i = 0; i < felm.ag_parent.length; i++) {
-			if (ag_depth < felm.ag_parent[i].getAttribute("depth")) {
-				felm.ag_parent[i].remove();
-			} else {
-				if (ag_idx)
-					felm.ag_parent[i].disabled = true;
-			}
-		}
-
-		if (ag_idx) {
-			ag_depth++;
-			getAuthGroupChildren(ag_idx, ag_depth);
-		}
+function go_sec() {
+	var s1 = document.all.s1;
+	var s2 = document.all.s2;
+	var s3 = document.all.s3;
+	var s4 = document.all.s4;
+	if (s1.value == "가구") {
+		s2.style.display = "none";
+		s3.value = "";
+		s3.style.display = "";
+		s4.style.display = "none";
+	} else if (s1.value == "PC") {
+		s2.style.display = "none";
+		s3.style.display = "none";
+		s4.value = "";
+		s4.style.display = "";
+	} else if (s1.value == ""){
+		s2.style.display = "";
+		s3.style.display = "none";
+		s4.style.display = "none";
 	}
-
-	function getAuthGroupChildren(ag_idx, ag_depth) {
-		var response = {
-			"1" : {
-				"5" : "노트북",
-				"6" : "데스크탑"
-			},
-			"2" : {
-				"7" : "의자",
-				"8" : "책상",
-				"9" : "소파"
-			},
-			"3" : {
-				"10" : "가디건",
-				"11" : "청바지"
-			},
-			"4" : {
-				"12" : "원피스",
-				"13" : "패딩"
-			}
-		};
-
-		var felm = getObjectFormAuthGroup();
-		for (var i = 0; i < felm.ag_parent.length; i++) {
-			felm.ag_parent[i].disabled = false;
-		}
-
-		console.log(response[ag_idx]);
-		if (typeof (response[ag_idx]) == "undefined")
-			return;
-
-		var selectbox = document.createElement('select');
-		selectbox.name = "ag_parent[]";
-		selectbox.setAttribute("depth", ag_depth);
-		selectbox.onchange = function() {
-			selectCategory(this);
-		};
-
-		selectbox.options.length = 0;
-		selectbox.options[0] = new Option("하위 카테고리", "");
-
-		var lists = response[ag_idx];
-		for ( var key in lists) {
-			var val = lists[key];
-			selectbox.options[selectbox.options.length] = new Option(val, key);
-		}
-
-		var div_category = document.getElementById('div_category');
-		div_category.appendChild(selectbox);
-	}
-
-	function getObjectFormAuthGroup() {
-		var f = document.frmCategoryTest;
-		var obj = {};
-
-		for (var i = 0; i < f.elements.length; i++) {
-			var type = f.elements[i].type;
-			var elName = f.elements[i].name;
-
-			if (/(text|textarea|select|hidden)/.test(type)) {
-				if (/(\[|\])/g.test(elName)) {
-					elName = elName.replace(/(\[|\])/g, "");
-					if (typeof (obj[elName]) == 'undefined') {
-						obj[elName] = [];
-					}
-					obj[elName].push(f.elements[i]);
-				} else {
-					obj[elName] = f.elements[i];
-				}
-			}
-		}
-		return obj;
-	}
+}
 
 	function checkNumber() {
 		var objEv = event.srcElement;
@@ -113,7 +43,7 @@
 		}
 	}
 	function cmaComma(obj) {
-		var str = "" + obj.value.replace(/,/gi, ''); // 콤마 제거
+		var str = "" + obj.value.replace(/,/gi, '');
 		var regx = new RegExp(/(-?\d+)(\d{3})/);
 		var bExists = str.indexOf(".", 0);
 		var strArr = str.split('.');
@@ -127,93 +57,28 @@
 			obj.value = strArr[0];
 		}
 	}
+$(function(){
+	if(!window.File || !window.FileReader)
+		return alert('error');
+	$('#upImg1 > input').bind('change', function(){
+		var imgFile = this.files[0],
+			reader = new FileReader();
+			reader.onload = function(e){
+			$('.testImg').attr('src',e.target.result);
+			$('#upImg1 > input').attr('type','hidden');
+		};
+		reader.readAsDataURL(imgFile);
+	});
+
+	$('#upImg1 > img').click(function(){
+		$('#upImg1 > img').removeAttr('src');
+	});
+});
+
+var rbinfo = $(':radio[name="rbinfo"]:checked').val();
+$('input:radio[name=rbinfo]:input[value='+rbinfo+']').attr("checked", true);
 </script>
 <style>
-*{
-	padding : 0px;
-	margin : 0px;
-	box-sizing : border-box;
-}
-
-html, body {
-	width : 100%;
-  height : 100%;
-  min-height : 100%;
-	font-family : 'hanna', 'Nanum Gothic', sans-serif;
-	color : #222;
-}
-
-header {
-	z-index : 3;
-	width : 100%;
-	height : 70px;
-	font-size : 15px;
-	position : absolute;
-	top : 0px;
-	box-shadow : 0px 1px 3px #222;
-	background-position : center;
-	background-size : 130px 60px;
-	background-repeat : no-repeat;
-	background-image : url('./img/logo.png');
-	font-family : 'hanna', 'Nanum Gothic', sans-serif;
-	background-color: #ffffff;
-}
-
-header>span {
-	line-height : 70px;
-	display : inline-block;
-	padding-left : 15px;
-}
-
-header>#searchBarWrap {
-	position : absolute;
-	line-height : 75px;
-	width : 290px;
-	height : 100%;
-	font-size : 0px;
-}
-
-header>#searchBarWrap>input[type="text"] {
-	width : 230px;
-	height : 30px;
-	background-color : #d8d8d8;
-	border : none;
-	border-top-left-radius : 3px;
-	border-bottom-left-radius : 3px;
-	color : #222;
-	outline : none;
-	font-size : 12px;
-	padding-left : 5px;
-}
-
-header>#searchBarWrap>input[type="button"] {
-	width : 30px;
-	height : 30px;
-	border : none;
-	background-image : url('./img/search.svg');
-	background-size : 80% 80%;
-	background-repeat : no-repeat;
-	background-position : center;
-	background-color : #222;
-	outline : none;
-	cursor : pointer;
-	border-top-right-radius : 5px;
-	border-bottom-right-radius : 5px;
-}
-
-
-header>#loginInfoWrap {
-	float : right;
-	padding-right : 10px;
-	line-height : 70px;
-}
-
-header>#loginInfoWrap>a {
-	display : inline-block;
-	padding : 0 15px 0 15px;
-	margin-right : -3px;
-	cursor : pointer;
-}
 #content1 {
 	position: absolute;
 	left: 27%;
@@ -231,7 +96,7 @@ header>#loginInfoWrap>a {
 
 #content3 {
 	position: absolute;
-	top: 33%;
+	top: 30%;
 	width: 950px;
 	height: 500px;
 	margin: 20px 20px;
@@ -240,7 +105,7 @@ header>#loginInfoWrap>a {
 #content4 {
 	position: absolute;
 	width: 150px;
-	left: 15%;
+	left: 10%;
 	height: 450px;
 	margin: 20px 50px;
 }
@@ -262,36 +127,114 @@ select {
 	margin: 3px 3px;
 	height: 30px;
 }
+.boximg {
+	position: relative;
+	float: left
+}
+.testImg {
+	position: relative;
+	margin-top: 10px;
+	width:160px;
+	height:160px;
+	margin-right: 30px; 
+	border: 1px solid #ddd;
+}
+.boximg > input {
+	position: absolute;
+	margin:0;
+	margin-top:-150px;
+ 	margin-right: 20px; 
+	width:160px;
+	height:160px;
+	border: 1px solid #ddd;
+	opacity: 0;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
-	<header>
-		<span><label>물품 찾기</label></span>
-		<span id="searchBarWrap">
-				<input type="text" name="search" size="15"/>
-				<input type="button" value=" " onclick="document.location.href='./mapSearch.htm'" />
-		</span>
-		<span id="loginInfoWrap">
-			<a id="loginNsignupBtn">로그인 및 회원가입</a>
-		</span>
-	</header>
-	<section>
+			<form id='form1' action="#" method="post">
 	<div id="content1">
 		<div id="content2">
 			<h2 align="center">아이템 판매 / 구매</h2>
 			<hr>
-			<input type="button" value=" 이미지 추가 " onclick="make()"> <input
-				type="button" value=" 이미지 전체제거 " onclick="del()">
-
+			<div id="upImg1" class="boximg">
+				<img class="testImg" src="http://semantic-ui.com/images/wireframe/image.png" />
+				<input type='file' />
+			</div>
+			<div id="upImg2" class="boximg">
+				<img class="testImg" src="http://semantic-ui.com/images/wireframe/image.png" />
+				<input type='file' />
+			</div>
+			<div id="upImg3" class="boximg">
+				<img class="testImg"src="http://semantic-ui.com/images/wireframe/image.png"/>
+				<input type='file' />
+			</div>
+			<div id="upImg4" class="boximg">
+				<img class="testImg" src="http://semantic-ui.com/images/wireframe/image.png" />
+				<input type='file' />
+			</div>
+			<div id="upImg5" class="boximg">
+				<img class="testImg" src="http://semantic-ui.com/images/wireframe/image.png" />
+				<input type='file' />
+			</div>
+			
 			<div id="board" style="width: 720"></div>
 		</div>
 		<div id="content3">
 			<div id="content4">
-				<table width="600" border="0">
+				<table width="700" border="0">
+				<tr>
+						<th><h3>카테고리</h3></th>
+						<td>
+						<select name="s1" onchange="go_sec()">
+		<option value="">상위 카테고리</option>
+		<option value="가구">가구</option>
+		<option value="PC">PC</option>
+	</select>
+	<select name="s2">
+		<option value="">하위 카테고리</option>
+	</select>
+	<select name="s3" style="display: none">
+		<option value="">하위 카테고리</option>
+		<option value="소파">소파</option>
+		<option value="의자">의자</option>
+		<option value="책상">책상</option>
+	</select>
+	<select name="s4" style="display: none">
+		<option value="">하위 카테고리</option>
+		<option value="노트북">노트북</option>
+		<option value="데스크탑">데스크탑</option>
+		<option value="태블릿PC">태블릿PC</option>
+	</select>
+									<input type="text" name="item" id="item"
+							placeholder="키워드" style="height: 30px; font-size: 15pt; text-align:center">
+						</td>
+					</tr>
 					<tr>
-						<th><h3>제목</h3></th>
-						<td><input type="text" name="item" id="item" size="58"
-							placeholder="제목을 입력하세요" style="height: 30px; font-size: 15pt"></td>
+						<th><h3>거래 종류</h3></th>
+						<td>
+						<label for="sell"><input type="radio" id="sell" name="rbinfo" value="판매" 
+								checked="checked">판매</label>&nbsp 
+						<label for="buy"><input type="radio" id="buy" name="rbinfo" value="구매">구매</label></td>
+					</tr>
+					<tr>
+						<th><h3>희망 거래 가격</h3></th>
+						<td><input type="text" name="price" id="price" size="18"
+							placeholder="0" onchange="checkNumber()"
+							onkeyup="cmaComma(this);"
+							style="height: 30px; text-align: right; font-size: 15pt"
+							maxlength="10">&nbsp원</td>
+					</tr>
+					<tr>
+						<th><h3>아이템 상태</h3></th>
+						<td><label for="radio1"><input type="radio"
+								name="condition" id="radio1" value="new" checked="checked">미사용</label>&nbsp
+							<label for="radio2"><input type="radio" name="condition"
+								id="radio2" value="clean">거의 새것</label>&nbsp <label for="radio3"><input
+								type="radio" name="condition" id="radio3" value="old">사용감
+								있음</label>&nbsp <label for="radio4"><input type="radio"
+								name="condition" id="radio4" value="problem">하자있음</label></td>
 					</tr>
 					<tr>
 						<th><h3>내용</h3></th>
@@ -299,55 +242,12 @@ select {
 								placeholder="내용을 입력하세요" style="resize: none; font-size: 14pt"></textarea></td>
 					</tr>
 					<tr>
-						<th><h3>카테고리</h3></th>
+						<th><h3>희망 거래주소</h3></th>
 						<td>
-							<form name="frmCategoryTest">
-								<div id="div_category">
-									<select name="ag_parent[]" depth="0"
-										onchange="selectCategory(this);">
-										<option value="">상위 카테고리</option>
-										<option value="1">PC</option>
-										<option value="2">가구</option>
-										<option value="3">남성 의류</option>
-										<option value="4">여성 의류</option>
-									</select>
-								</div>
-							</form>
-						</td>
-					</tr>
-					<tr>
-						<th><h3>아이템 상태</h3></th>
-						<td><label for="radio1"><input type="radio"
-								name="condition" id="radio1" value="new" checked="checked">미사용</label>&nbsp;
-							<label for="radio2"><input type="radio" name="condition"
-								id="radio2" value="clean">거의 새것</label>&nbsp; <label for="radio3"><input
-								type="radio" name="condition" id="radio3" value="old">사용감
-								있음</label>&nbsp; <label for="radio4"><input type="radio"
-								name="condition" id="radio4" value="problem">하자있음</label></td>
-					</tr>
-					<tr>
-						<th><h3>판매 금액</h3></th>
-						<td><input type="text" name="price" id="price" size="18"
-							placeholder="0" onchange="checkNumber()"
-							onkeyup="cmaComma(this);"
-							style="height: 30px; text-align: right; font-size: 15pt"
-							maxlength="10">&nbsp;원</td>
-					</tr>
-					<tr>
-						<th><h3>거래 종류</h3></th>
-						<td><label for="sell"><input type="radio" id="sell"
-								name="trade" value="sell" checked="checked">판매</label>&nbsp; <label
-							for="buy"><input type="radio" id="buy" name="trade"
-								value="buy">구매</label></td>
-					</tr>
-					<tr>
-						<th><h3>판매주소</h3></th>
-						<td>
-							<div id="getjson"></div> <input type="button" name="map"
+							<span id="getjson"></span> <input type="button" name="map"
 							value="지도 표시" style="height: 30px" /> <input type="button"
 							onclick="getLocation()" name="currentMap" value="현위치"
 							style="height: 30px" />
-							<div id="getjson"></div>
 							<script>
 
 								function getLocation() {
@@ -383,8 +283,8 @@ select {
 											+ epsg;
 									console.log(url);
 									send2(url);
-									//    	z.innerHTML = "Latitude: " + x +
-									//     "<br>Longitude: " + y;
+									//    	z.innerHTML = "Latitude: " + x + 
+									//     "<br>Longitude: " + y;	
 								}
 								//좌표를 주소로 표현
 								function send2(url) {
@@ -407,7 +307,8 @@ select {
 					</tr>
 					<tr>
 						<td colspan="2" align="center">
-							<button style="height: 30px; width: 50px">Regist</button>
+						
+							<button class="ui button">Regist</button>
 
 						</td>
 					</tr>
@@ -415,6 +316,6 @@ select {
 			</div>
 		</div>
 	</div>
-</section>
+</form>
 </body>
 </html>

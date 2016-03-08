@@ -1,0 +1,128 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Bangers);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
+
+* {
+	font-family : '맑은 고딕', sans-serif;
+}
+
+input, .basic_anchor_bt {
+	font-family : 'Hanna', '맑은 고딕', sans-serif;
+}
+
+/* input global style */
+input {
+	border : 1px solid #ddd;
+	background-color : snow;
+	border-radius : 3px;
+	outline : none;
+	color : black;
+	transition : background-color 0.6s;
+}
+
+/*기본 textbox 모델 */
+input[type="text"] {
+	height : 21px;
+}
+
+/* 기본 button 모델 */
+input[type="button"] {
+	height : 21px;
+	padding : 2px 5px;
+	cursor : pointer;
+}
+
+input:active {
+	background-color : #b19972;
+}
+
+/*기본 박스모델 */
+.box_des {
+	border : 1px solid #ddd;
+	background-color : white;
+	border-radius : 3px;
+	color : black;
+}
+
+/* 기본 textarea 모델 */
+textarea {
+	border : 1px solid #ddd;
+	background-color : white;
+	border-radius : 3px;
+	resize : none;
+	outline : none;
+	transition : background-color 0.6s;
+}
+
+textarea:active {
+	background-color : #b19972;
+}
+
+hr {
+	border : 1px solid #ddd;
+	margin-top : 3px;
+}
+
+table {
+	border-collapse : collapse;
+	border : 1px solid #ddd;
+	text-align : center;
+	font-size : 14px;
+}
+
+th {
+	background-color : snow;
+	width: 150px;
+}
+
+/**************************** 파일 버튼용 패키지 */
+/*input file에 트릭 적용 css */
+.basic_file_text {
+	float:left;
+	margin-right:5px;
+}
+.basic_file_bt {
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	font-size : 100px;
+	opacity : 0;
+}
+
+/*파일버튼 wrapper div*/
+.basic_file_bt_wrap {
+	width:70px;
+	height : 21px;
+	overflow:hidden;
+	position : relative;
+}
+
+/*파일버튼 꾸미기 */
+.basic_trick_bt {
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	width : 70px;
+	height : 21px;
+}
+/****************************************************/
+
+/* anchor 버튼 */
+
+.basic_anchor_bt {
+	text-decoration : none;
+	box-sizing : border-box;
+	padding : 3px;
+	border : 1px solid #ddd;
+	background-color : snow;
+	border-radius : 3px;
+	outline : none;
+	color : black;
+	font-size : 13px;
+	cursor : pointer;
+	transition : background-color 0.6s;
+}
+
+.basic_anchor_bt:active {
+	background-color : #b19972;
+}
