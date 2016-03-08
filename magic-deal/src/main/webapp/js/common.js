@@ -17,9 +17,30 @@ var joinChkObj = {
 };
 
 $(function() {
+	headerPosition();
 	// 로그인 체크 함수 실행
 	loginCheck();
 	// nav버튼 처리
+	$("#headerLogo").on("click", function() {
+		document.location.href = contextPath+'/page/main.htm';
+	});
+	
+	$("#navMainDirectBtn").on("click", function() {
+		document.location.href = contextPath+'/page/main.htm';
+	});
+	
+	$("#navRegDirectBtn").on("click", function() {
+		document.location.href = contextPath+'/page/regPro.htm';		
+	});
+	
+	$("#navMyPageDirectBtn").on("click", function() {
+		document.location.href = contextPath+'/page/mypage.htm';				
+	});
+	
+	$("#navBoardDirectBtn").on("click", function() {
+		
+	});
+	
 	popup_layer = document.getElementById('popupLayer');
 	$("#navBtn").on("click", function() {
 		if (!nav_flag) {
@@ -44,6 +65,12 @@ $(function() {
 	$("#signIdChkBtn").on("click", checkSignUpId);
 	$("#signNickNameBtn").on("click", checkSignUpNickName);
 });
+
+var headerPosition = function() {
+	var wWidth = $(window).width();
+	var left = (wWidth/2-parseInt($("#headerLogo").css("width"))/2);
+	$("#headerLogo").css("left", left+"px");
+};
 
 var alertMsg = function(msg, btn) {
 	$("#alertMsg").html(msg);
@@ -105,7 +132,7 @@ var execDaumPostcode = function() {
                     var lng = result.addr[0].lng;
                     
                     $("#signLat").val(lat);
-                    $("#signLng").val(lng);
+                    $("#signLon").val(lng);
                 }
             });
             
@@ -217,9 +244,9 @@ var signUpCommit = function(flag) {
 		var nick = $("#signNickName").val();
 		var addr = $("#signAddr").val();
 		var lat = $("#signLat").val();
-		var lng = $("#signLng").val();
+		var lon = $("#signLon").val();
 		
-		console.log(id, pass, nick, addr, lat, lng);
+		console.log(id, pass, nick, addr, lat, lon);
 		
 		$.post(contextPath+"/member/signUp.do", {
 			id : id,
@@ -244,14 +271,10 @@ var joinSuccessMsg = function(msg, btn) {
 		allowMultiple : true,
 		closable : false,
 		onApprove : function() {
-			signUpClose();
+			$("#signUpCloseBtn").trigger("click");
+			return true;
 		}
 	}).modal('show');
-};
-
-var signUpClose = function() {
-	$("#signUpCloseBtn").trigger("click");
-	clearSignUpForm();
 };
 
 var clearSignUpForm = function() {
@@ -260,13 +283,13 @@ var clearSignUpForm = function() {
 	joinChkObj.nick = false;
 	joinChkObj.addr = false;
 	
-	var id = $("#signId").val("");
-	var pass = $("#signPass").val("");
-	var pass = $("#signPassChk").val("");
-	var nick = $("#signNickName").val("");
-	var addr = $("#signAddr").val("");
-	var lat = $("#signLat").val("");
-	var lng = $("#signLng").val("");
+	$("#signId").val("");
+	$("#signPass").val("");
+	$("#signPassChk").val("");
+	$("#signNickName").val("");
+	$("#signAddr").val("");
+	$("#signLat").val("");
+	$("#signLon").val("");
 	
 	$("#signNickName").prop("readonly", false);
 	$("#signNickName").css({
@@ -338,22 +361,35 @@ var loginBoxDraw = function() {
 	var loginBox;
 	if(u_info) {
 		// 로그인 상태
-		loginBox = '<div id="chatBtn" class="ui icon label">';
-		loginBox += '<i class="comment icon"></i> 3';
+		loginBox = '<div id="chatBtn">';
+		loginBox += '<i class="large icons">';
+		loginBox += '<i class="comments teal icon"></i>';
+		loginBox += '<i class="corner red add icon"></i>';
+		loginBox += '</i>';
+		loginBox += '<span class="smallTextLabel">채팅</span>';
 		loginBox += '</div>';
-		loginBox += '<div id="alarmBtn" class="ui icon label">';
-		loginBox += '<i class="alarm icon"></i> 3';
+		loginBox += '<div id="alarmBtn">';
+		loginBox += '<i class="large icons">';
+		loginBox += '<i class="alarm orange icon"></i>';
+		loginBox += '<i class="corner red add icon"></i>';
+		loginBox += '</i>';
+		loginBox += '<span class="smallTextLabel">알람</span>';
 		loginBox += '</div>';
-		loginBox += '<img class="ui avatar image" src="../img/sample-test/profile-exam.JPG">';
-		loginBox += '<span>'+u_info.nickName+'</span>';
-		loginBox +=  '<div id="logoutBtn" class="ui icon label">';
-		loginBox += '<i class="sign out violet icon"></i>';
-		loginBox += '<a class="detail">로그아웃</a></div>';
+		loginBox += '<div id="logUserBtn">';
+		loginBox += '<img class="ui image avatar" src="../img/sample-test/profile-exam.JPG">';
+		loginBox += '<span class="smallTextLabel">'+u_info.nickName+'</span></div>';
+		loginBox +=  '<div id="logoutBtn" data-content="로그아웃">';
+		loginBox += '<i class="sign out large black icon"></i>';
+		loginBox += '<span class="smallTextLabel">로그아웃</span></div>';
+		
+		// 로그인시 바뀌는 버튼 이벤트들 등록해야함.
 	}else {
 		// 로그아웃 상태
-		loginBox =  '<div id="loginNsignupBtn" class="ui icon label">';
-		loginBox += '<i class="user violet icon"></i>';
-		loginBox += '<a class="detail">로그인 및 회원가입</a></div>';
+		loginBox =  '<div id="loginNsignupBtn">';
+		loginBox += '<i class="user black icon"></i>';
+		loginBox += '<span class="smallTextLabel">로그인 및 회원가입</span></div>';
+		
+		// 로그아웃시 바뀌는 버튼 이벤트들 등록해야함.
 	}
 	logBoxWrap.html(loginBox);
 	
@@ -372,9 +408,11 @@ var loginBoxDraw = function() {
 					return false;
 				},
 				onApprove : function() {
+					loginClose();
 					$(".signUpModal").modal({
 						closable : false,
 						onDeny : function() {
+							clearSignUpForm();
 							return true;
 						},
 						onApprove : function() {

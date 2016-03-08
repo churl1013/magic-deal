@@ -2,10 +2,14 @@
 <html>
 <head>
 <meta charset="UTF-8" />
+
+<!-- 기본 임폴트 css 파일 -->
 <link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<!-- 기본 임폴트 css 파일 끝-->
+
 <style>
 section {
 	position : relative;
@@ -29,15 +33,40 @@ section>div {
 	background-color : #222;
 }
 
-#categorieWrap>div {
-	min-width : 200px;
-	width : 16.66%;
-	height : 33.4%;
-	float : left;
-	position : relative;
-	overflow : hidden;
-	border-right : 1px solid #666;
-	border-bottom : 1px solid #666;
+@media (max-width:767px) {
+	#categorieWrap>div {
+		width : 50%;
+		height : 33.4%;
+		float : left;
+		position : relative;
+		overflow : hidden;
+		border-right : 1px solid #666;
+		border-bottom : 1px solid #666;
+	}
+}
+
+@media (min-width:768px) and (max-width:1024px) {
+	#categorieWrap>div {
+		width : 25%;
+		height : 33.4%;
+		float : left;
+		position : relative;
+		overflow : hidden;
+		border-right : 1px solid #666;
+		border-bottom : 1px solid #666;
+	}
+}
+
+@media (min-width : 1025px) {
+	#categorieWrap>div {
+		width : 16.66%;
+		height : 33.4%;
+		float : left;
+		position : relative;
+		overflow : hidden;
+		border-right : 1px solid #666;
+		border-bottom : 1px solid #666;
+	}
 }
 
 .cateBox {
@@ -105,15 +134,19 @@ section>div {
 	background-size : 100% 100%;
 }
 </style>
-<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
-<script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
-<script src="/magic-deal/custom_lib/imagechange.js"></script>
-<script src="/magic-deal/custom_lib/imageSample.js"></script>
-<script src="/magic-deal/semantic/semantic.min.js"></script>
 
+<!-- 기본 임폴트 js -->
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
+<script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
 <script src="/magic-deal/js/common.js"></script>
+<!-- 기본 임폴트 js -->
+
+<script src="/magic-deal/custom_lib/imagechange.js"></script>
+<script src="/magic-deal/custom_lib/imageSample.js"></script>
+
 <script>
 	var imageChange;
 	var lastChangeBox = -1;
@@ -158,6 +191,8 @@ section>div {
 </script>
 </head>
 <body>
+
+<!-- 헤더부 -->
 <header>
 	<div class="ui search">
   		<div class="ui icon input">
@@ -169,25 +204,33 @@ section>div {
 	<div id="loginStatusWrap">
 		<!-- 로그인 관련 내용 헤더 -->
 	</div>
-	<img src="../img/logo1.png"/>
+	<div id="headerLogo">
+		<img src="../img/logo1.png"/>
+	</div>
 </header>
+<!-- 헤더끝 -->
+
+<!-- 네비게이션 -->
 <div id="navBtn" class="ui icon button small black">
 	<i class="sidebar icon"></i>
 </div>
 <nav class="ui vertical menu">
-	<a class="item">
+	<a id="navMainDirectBtn" class="item">
       <i class="home large orange icon"></i>메인
     </a>
-    <a class="item">
+    <a id="navRegDirectBtn" class="item">
       <i class="gift large orange icon"></i>물품등록
     </a>
-    <a class="item" onclick="document.location.href='./mypage.htm'">
+    <a id="navMyPageDirectBtn" class="item">
       <i class="child large orange icon"></i>마이페이지
     </a>
-    <a class="item">
-      <i class="info circle large orange icon"></i>고객센터
+    <a id="navBoardDirectBtn" class="item">
+      <i class="info circle large orange icon"></i>커뮤니티
     </a>
 </nav>
+<!-- 네비게이션 끝 -->
+
+<!-- 페이지 내용 -->
 <section>
 	<!-- 전체상품 안내 박스 -->
 	<div id="categorieWrap">
@@ -493,13 +536,15 @@ section>div {
 		</div>
 	</div>
 </section> 
+<!-- 페이지 내용 끝 -->
 
+
+<!-- 헤더 관련 팝업 모달 -->
+<!-- 로그인 모달 -->
 <div class="ui modal loginModal">
   <i class="close icon" id="loginCloseBtn" onclick="loginClose();"></i>
   <div class="header">
-    <div class="ui orange ribbon label">
-    	Log in / Sign up
-    </div>
+    	로그인 및 회원가입
   </div>
   <div class="content" style="text-align:center;">
         <div class="ui small left icon input" style="margin-bottom:15px;">
@@ -512,17 +557,18 @@ section>div {
 		</div>
   </div>
   <div class="actions">
-    <div class="ui black deny button">
-      Log in
-    </div>
-    <div class="ui positive right labeled icon button">
+    <div class="ui ok orange button">
       Sign up
+    </div>
+    <div class="ui teal deny icon button">
+      Log in
       <i class="sign in icon"></i>
     </div>
   </div>
 </div>
+<!-- 로그인 모달 끝 -->
 
-
+<!-- 회원가입 모달 -->
 <div class="ui modal signUpModal">
   <div id="signUpHeader" class="header">
 	  <i class="large icons">
@@ -573,7 +619,7 @@ section>div {
 	</div>
   </div>
   <div id="signUpFooter" class="actions">
-  	<button class="ui red deny inverted icon button" id="signUpCloseBtn" onclick="signUpClose();">
+  	<button class="ui red deny inverted icon button" id="signUpCloseBtn">
   		<i class="close icon"></i> 닫기
   	</button>
     <button class="ui violet ok inverted right labeled icon button" onclick="signUpSubmitChk();">
@@ -582,7 +628,9 @@ section>div {
     </button>
   </div>
 </div>
+<!-- 회원가입 모달 끝 -->
 
+<!-- 알림창 모달 -->
 <div class="ui modal alertModal">
   <i class="close icon"></i>
   <div class="header">
@@ -596,5 +644,8 @@ section>div {
     </div>
   </div>
 </div>
+<!-- 알림창 모달 끝 -->
+<!-- 헤더 관련 팝업 모달 끝-->
+
 </body>
 </html>

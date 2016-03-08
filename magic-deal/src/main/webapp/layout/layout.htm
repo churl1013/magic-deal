@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>매직딜</title>
+
+<!-- 기본 임폴트 css 파일 -->
+<link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<!-- 기본 임폴트 css 파일 끝-->
+
+<!-- 기본 임폴트 js -->
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
+<script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
+<script src="/magic-deal/js/common.js"></script>
+<!-- 기본 임폴트 js -->
+
+<style>
+.scrollWrap {
+	width: 100%;
+	min-height: 100%;
+	height: 100%;
+	padding-top: 70px;
+	overflow: auto;
+	background-color: #ebebeb;
+}
+
+section {
+	width: 100%;
+	min-height: 95%; 
+	padding-top : 50px;
+	padding-bottom: 20px;
+	padding-top: 50px;
+}	
+
+.contentBox {
+	margin: 0px auto;
+	width: 800px;
+	position: relative;
+	box-shadow : 2px 2px 8px #999;
+	border-radius: 4px;
+	background-color: #f9f9f9;
+}
+
+footer {
+	width: 100%;
+	height: 50px;
+	background: #242628;
+	background: -moz-linear-gradient(top, #242628 0%, #000000 100%);
+	background: -webkit-linear-gradient(top, #242628 0%, #000000 100%);
+	background: linear-gradient(to bottom, #242628 0%, #000000 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#242628',
+		endColorstr='#000000', GradientType=0);
+	line-height: 50px;
+	text-align: center;
+	color: white;
+	font-weight: 300;
+}
+</style>
+
+<script>
+$(function() {
+	$(".scrollWrap").niceScroll();
+});
+</script>
+</head>
+<body>
+
+<!-- 헤더부 -->
+<header>
+	<div class="ui search">
+  		<div class="ui icon input">
+    		<input class="prompt" type="text" placeholder="원하는 지역을 검색하세요" style="font-size:12px; width:200px;"/>
+   			 <i class="search icon"></i>
+  		</div>
+  	<div class="results"></div>
+	</div>
+	<div id="loginStatusWrap">
+		<!-- 로그인 관련 내용 헤더 -->
+	</div>
+	<div id="headerLogo">
+		<img src="../img/logo1.png"/>
+	</div>
+</header>
+<!-- 헤더끝 -->
+
+<!-- 네비게이션 -->
+<div id="navBtn" class="ui icon button small black">
+	<i class="sidebar icon"></i>
+</div>
+<nav class="ui vertical menu">
+	<a id="navMainDirectBtn" class="item">
+      <i class="home large orange icon"></i>메인
+    </a>
+    <a id="navRegDirectBtn" class="item">
+      <i class="gift large orange icon"></i>물품등록
+    </a>
+    <a id="navMyPageDirectBtn" class="item">
+      <i class="child large orange icon"></i>마이페이지
+    </a>
+    <a id="navBoardDirectBtn" class="item">
+      <i class="info circle large orange icon"></i>커뮤니티
+    </a>
+</nav>
+<!-- 네비게이션 끝 -->
+
+
+<!-- 내용부 -->
+
+<div class="scrollWrap">
+	<section>
+		<div class="contentBox">
+			<!-- 실질적인 내용 삽입부 -->
+			
+			
+		</div>
+	</section>
+	
+	<footer>
+		© 2016 Respond404 // republic of korea
+	</footer>
+</div>
+
+<!-- 내용부 끝 -->
+
+
+
+
+<!-- 헤더 관련 팝업 모달 -->
+<!-- 로그인 모달 -->
+<div class="ui modal loginModal">
+  <i class="close icon" id="loginCloseBtn" onclick="loginClose();"></i>
+  <div class="header">
+    	로그인 및 회원가입
+  </div>
+  <div class="content" style="text-align:center;">
+        <div class="ui small left icon input" style="margin-bottom:15px;">
+			<input type="text" id="loginId" placeholder="아이디를 입력하세요"/>
+			<i class="user icon"></i>
+		</div>
+		<div class="ui small left icon input">
+			<input type="password" id="loginPass" placeholder="비밀번호를 입력하세요"/>
+			<i class="privacy icon"></i>
+		</div>
+  </div>
+  <div class="actions">
+    <div class="ui ok orange button">
+      Sign up
+    </div>
+    <div class="ui teal deny icon button">
+      Log in
+      <i class="sign in icon"></i>
+    </div>
+  </div>
+</div>
+<!-- 로그인 모달 끝 -->
+
+<!-- 회원가입 모달 -->
+<div class="ui modal signUpModal">
+  <div id="signUpHeader" class="header">
+	  <i class="large icons">
+		  <i class="user icon"></i>
+		  <i class="add corner orange icon"></i>
+	  </i>
+  	Welcome Magic Deal !!!
+  </div>
+  <div class="content">
+	<label>아이디
+       <span style="font-size:12px; color:#444">
+         (영문, 숫자 혼합 8자리 이상)
+       </span>
+     </label>
+     <div class="ui small input">
+		<input type="text" id="signId" style="width:150px;"/>&nbsp;
+		<button class="ui button" id="signIdChkBtn">중복검사</button>
+	</div>
+      <label>비밀번호
+         <span style="font-size:12px; color:#444">
+           (숫자, 특수문자 포함 8자 이상)
+         </span>
+       </label>
+       <div class="ui small input">
+ 			<input type="password" id="signPass" style="width:200px;"/>
+	</div>
+
+       <label>비밀번호 확인</label>
+       <div class="ui small input">
+ 			<input type="password" id="signPassChk" style="width:200px;"/>
+	</div>
+
+       <label>닉네임</label>
+       <div class="ui small input">
+ 			<input type="text" id="signNickName" style="width:150px;"/> &nbsp;
+ 			<button class="ui button" id="signNickNameBtn">중복검사</button>
+	</div>
+	
+	<label>주소</label>
+       <div class="ui small input">
+ 			<input type="text" id="signAddr" style="width:350px;" readonly/>&nbsp;
+ 			<button class="ui orange button" onclick="execDaumPostcode()">주소검색</button>
+ 			<input type="hidden" id="signLat" value=""/>
+ 			<input type="hidden" id="signLon" value=""/>
+	</div>
+	<div id="popupLayer" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+	<img src="http://i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	</div>
+  </div>
+  <div id="signUpFooter" class="actions">
+  	<button class="ui red deny inverted icon button" id="signUpCloseBtn">
+  		<i class="close icon"></i> 닫기
+  	</button>
+    <button class="ui violet ok inverted right labeled icon button" onclick="signUpSubmitChk();">
+      	회원가입
+      <i class="sign in icon"></i>
+    </button>
+  </div>
+</div>
+<!-- 회원가입 모달 끝 -->
+
+<!-- 알림창 모달 -->
+<div class="ui modal alertModal">
+  <i class="close icon"></i>
+  <div class="header">
+    	알림
+  </div>
+  <div id="alertMsg" class="content" style="text-align:center;">
+        
+  </div>
+  <div class="actions">
+     <div id="alertBtn" class="ui ok right grey labeled icon button">
+    </div>
+  </div>
+</div>
+<!-- 알림창 모달 끝 -->
+<!-- 헤더 관련 팝업 모달 끝-->
+</body>
+</html>
