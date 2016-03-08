@@ -412,7 +412,11 @@ function cmaComma(obj) {
 	});
 	
 	$("#navMyPageDirectBtn").on("click", function() {
-		document.location.href = contextPath+'/page/mypage.htm';				
+		if(u_info) {
+			document.location.href = contextPath+'/page/mypage.htm#'+u_info.id;
+		}else {
+			alertMsg("먼저 로그인 해주세요!", "확인");
+		}
 	});
 	
 	$("#navBoardDirectBtn").on("click", function() {

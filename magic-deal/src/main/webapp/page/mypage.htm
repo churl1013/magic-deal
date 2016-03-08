@@ -97,6 +97,14 @@ footer {
 	color: white;
 	font-weight: 300;
 }
+
+#mypageProfileJoinDate::before{
+	content : "Joined in ";
+}
+
+#mypageProfileLikeCount::after{
+	content : " likes";
+}
 </style>
 </head>
 <body>
@@ -168,17 +176,17 @@ footer {
 											</div>
 										</div>
 									</div>
-									<img src="../img/sample-test/profile-exam.JPG">
+									<img id="mypageProfieImg" src="../img/sample-test/profile-exam.JPG">
 								</div>
 								<div class="content">
-									<a class="header">김흥국</a>
+									<a id="mypageProfileNickName" class="header">김흥국</a>
 									<div class="meta">
-										<span class="date">Joined in 2016. 02. 27</span>
+										<span id="mypageProfileJoinDate" class="date">2016. 02. 27</span>
 									</div>
 								</div>
 								<div class="extra content">
 									<i class="heart red icon"></i> 
-									5,550 likes
+									<span id="mypageProfileLikeCount">5,550</span>
 								</div>
 							</div>
 							<div class="ui mini icon black button info-update-btn">
@@ -192,7 +200,7 @@ footer {
 								</div>
 							</div>
 							<div class="ui bottom attached active tab segment">
-								<p>
+								<p id="mypageProfileInfo">
 									안녕하세요 김흥국입니다. 
 									<br /> 안전거래 신용거래 확실합니다!!! 
 									<br /> 서울, 경기, 인천지역 환영입니다.
@@ -289,7 +297,8 @@ footer {
 								<div class="product-card-info">
 									<div class="product-card-info-wrap">
 										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
+											<span>2016. 02. 29</span> 
+											<span style="color: #21ba45;">거래대기</span>
 										</div>
 										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
 											들어가게 됩니다.</div>
@@ -636,28 +645,54 @@ footer {
 <!-- 기본 임폴트 js -->
 
 <script>
-	var pageOwner = {
-			
-	};
+	var pageOwner;
 	
 	var loginCheck = function() {
-		$.get(contextPath + "/member/loginCheck.do", function(resultObj) {
+		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
 			var result = resultObj.ajaxResult;
 			u_info = result.data;
-			console.dir(u_info);
 			loginBoxDraw();
-			mypageLoginDraw();
-		}, "json");
+			
+			if(u_info&&u_info.id==pageOwner) {
+				// 로그인한 사용자가 마이페이지 주인
+				mypageLoginDraw();
+			}
+			else {
+				$.post(contextPath + "/member/mypage.do", {
+					id : pageOwner
+				}, function(resultObj) {
+					
+				})
+			}
+		});
+	};
+	
+	var getPageOwner = function() {
+		var url = document.location.href;
+		var param = url.substr(url.lastIndexOf("#")+1, url.length);
+		console.log(param);
+		pageOwner = param;
 	};
 	
 	var mypageLoginDraw = function() {
 		console.dir(u_info);
-	}
+		$("#mypageProfieImg").attr("src", "../img/sample-test/profile-exam.JPG");
+		$("#mypageProfileNickName").text(u_info.nickName);
+		$("#mypageProfileJoinDate").text(u_info.joinDate);
+		$("#mypageProfileLikeCount").text(u_info.likeCnt);
+		$("#mypageProfileInfo").html(u_info.mInfo);
+		
+		var btnObj = '<div class="ui inverted teal icon button">';
+			btnObj += '<i class="user icon"></i>&nbsp;&nbsp;';
+			btnObj += '프로필 사진 수정</div>';
+		
+		$("#profilePhotoBtnBox").html(btnObj);
+	};
 	
 	
 	// mypage 실행부
+	getPageOwner();
 	loginCheck();
-	mypageLoginDraw();
 	$(".scrollWrap").niceScroll();
 	$(".profileInfo").niceScroll();
 	
