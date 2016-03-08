@@ -71,4 +71,5 @@ public class MemberController {
 		session.setAttribute("userLoginInfo", null);
 		return new AjaxResult("success", null);
 	}
+	
 }

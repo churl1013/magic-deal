@@ -341,46 +341,6 @@
 		transition : all 0.3s;
 	}
 </style>
-<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
-<script src="/magic-deal/custom_lib/jquery-ui.min.js"></script>
-<script src="/magic-deal/semantic/semantic.min.js"></script>
-<script src="/magic-deal/js/common.js"></script>
-<script>
-	$(function() {
-		var c_width = parseInt($("#chartViewWrap").css("width"));
-		var c_height = parseInt($("#chartViewWrap").css("height"));
-		
-		$('.ui.checkbox').checkbox();
-		
-		$("#extendBtn").css({
-			"left" : ((c_width)/2-45)+250+"px",
-			"top" :  ((c_height)/2-45)+70+"px"
-		});
-		
-		$("#chartViewWrap").on("contextmenu", function(event) {
-			event.preventDefault();
-			return false;
-		});
-		
-		$(".favorite-content-wrap").on("mousewheel", function(event) {
-			var delta = event.originalEvent.wheelDelta;
-			var currPos = $(this).scrollLeft();
-			if(delta > 0) {
-				$(this).scrollLeft(currPos-60);
-			}else if(delta < 0) {
-				$(this).scrollLeft(currPos+60);
-			}
-		});
-		
-		$("#informationBox").draggable();
-		
-		$("footer").hover(function(){
-			$("footer").css("bottom","0px");
-		}, function(){
-			$("footer").css("bottom","-155px");
-		});
-	});
-</script>
 </head>
 
 <body>
@@ -558,6 +518,47 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/custom_lib/jquery-ui.min.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
+<script src="/magic-deal/js/common.js"></script>
+<script>
+	$(function() {
+		var c_width = parseInt($("#chartViewWrap").css("width"));
+		var c_height = parseInt($("#chartViewWrap").css("height"));
+		
+		$('.ui.checkbox').checkbox();
+		
+		$("#extendBtn").css({
+			"left" : ((c_width)/2-45)+250+"px",
+			"top" :  ((c_height)/2-45)+70+"px"
+		});
+		
+		$("#chartViewWrap").on("contextmenu", function(event) {
+			event.preventDefault();
+			return false;
+		});
+		
+		$(".favorite-content-wrap").on("mousewheel", function(event) {
+			var delta = event.originalEvent.wheelDelta;
+			var currPos = $(this).scrollLeft();
+			if(delta > 0) {
+				$(this).scrollLeft(currPos-60);
+			}else if(delta < 0) {
+				$(this).scrollLeft(currPos+60);
+			}
+		});
+		
+		$("#informationBox").draggable();
+		
+		$("footer").hover(function(){
+			$("footer").css("bottom","0px");
+		}, function(){
+			$("footer").css("bottom","-155px");
+		});
+	});
+</script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="../custom_lib/chartTest.js"></script>
 </body>

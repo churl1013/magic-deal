@@ -338,10 +338,6 @@
 		background-image : url("../img/boardlist.svg");
 	}
 </style>
-
-<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
-<script src="/magic-deal/js/common.js"></script>
-<script src="/magic-deal/semantic/semantic.min.js"></script>
 </head>
 <body>
 <aside>
@@ -468,9 +464,23 @@
 	$("#loadingContainer").css("top", mHeight/2-50);
 </script>
 
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/js/common.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
 <script type="text/javascript" src="/magic-deal/custom_lib/jsonData.js"></script>
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services,clusterer"></script>
+<script>
+var loginCheck = function() {
+	$.get(contextPath + "/member/loginCheck.do", function(resultObj) {
+		var result = resultObj.ajaxResult;
+		u_info = result.data;
+		console.dir(u_info);
+		loginBoxDraw();
+	}, "json");
+};
 
+loginCheck();
+</script>
 <script>
 	// custom variable
 	var levelVal = 4;

@@ -16,56 +16,6 @@ var joinChkObj = {
 	}
 };
 
-$(function() {
-	headerPosition();
-	// 로그인 체크 함수 실행
-	loginCheck();
-	// nav버튼 처리
-	$("#headerLogo").on("click", function() {
-		document.location.href = contextPath+'/page/main.htm';
-	});
-	
-	$("#navMainDirectBtn").on("click", function() {
-		document.location.href = contextPath+'/page/main.htm';
-	});
-	
-	$("#navRegDirectBtn").on("click", function() {
-		document.location.href = contextPath+'/page/regPro.htm';		
-	});
-	
-	$("#navMyPageDirectBtn").on("click", function() {
-		document.location.href = contextPath+'/page/mypage.htm';				
-	});
-	
-	$("#navBoardDirectBtn").on("click", function() {
-		
-	});
-	
-	popup_layer = document.getElementById('popupLayer');
-	$("#navBtn").on("click", function() {
-		if (!nav_flag) {
-			// nav_ 안열린 상태
-			$("nav").css("left", "0px");
-			nav_flag = true;
-			if(mainflag) {
-				$("section").addClass("sectionOpen");
-				$(".disabledWrap").css("display", "block");
-			}
-		} else {
-			// nav_ 열린상태
-			$("nav").css("left", "-200px");
-			nav_flag = false;
-			if(mainflag) {
-				$("section").removeClass("sectionOpen");
-				$(".disabledWrap").css("display", "none");
-			}
-		}
-	});
-
-	$("#signIdChkBtn").on("click", checkSignUpId);
-	$("#signNickNameBtn").on("click", checkSignUpNickName);
-});
-
 var headerPosition = function() {
 	var wWidth = $(window).width();
 	var left = (wWidth/2-parseInt($("#headerLogo").css("width"))/2);
@@ -322,8 +272,9 @@ var loginSubmit = function() {
 	}, function(resultObj) {
 		var result = resultObj.ajaxResult;
 		if(result.msg == 'success') {
-			loginSuccess(result.data);
+			u_info = result.data;
 			$("#loginCloseBtn").trigger("click");
+			location.href = location.href;
 		}else {
 			alertMsg('로그인 정보가 틀렸습니다.<br/>다시 확인해주세요!', "확인");
 			$("#loginId").focus();
@@ -331,28 +282,15 @@ var loginSubmit = function() {
 	}, "json");
 };
 
-var loginSuccess = function(data) {
-	u_info = data;
-	loginBoxDraw();
-};
-
 var loginClose = function() {
 	$("#loginId").val("");
 	$("#loginPass").val("");
 };
 
-var loginCheck = function() {
-	$.get(contextPath + "/member/loginCheck.do", function(resultObj) {
-		var result = resultObj.ajaxResult;
-		u_info = result.data;
-		loginBoxDraw();
-	}, "json");
-};
-
 var logout = function() {
 	$.get(contextPath + "/member/logout.do", function() {
 		u_info = null;
-		loginBoxDraw();
+		location.href = location.href;
 	},"json");
 };
 
@@ -426,3 +364,51 @@ var loginBoxDraw = function() {
 		});
 	}
 };
+
+	// 헤더에서 사용될 코드들 먼저 실행
+	headerPosition();
+	// 로그인 체크 함수 실행
+	// nav버튼 처리
+	$("#headerLogo").on("click", function() {
+		document.location.href = contextPath+'/page/main.htm';
+	});
+	
+	$("#navMainDirectBtn").on("click", function() {
+		document.location.href = contextPath+'/page/main.htm';
+	});
+	
+	$("#navRegDirectBtn").on("click", function() {
+		document.location.href = contextPath+'/page/regPro.htm';		
+	});
+	
+	$("#navMyPageDirectBtn").on("click", function() {
+		document.location.href = contextPath+'/page/mypage.htm';				
+	});
+	
+	$("#navBoardDirectBtn").on("click", function() {
+		
+	});
+	
+	popup_layer = document.getElementById('popupLayer');
+	$("#navBtn").on("click", function() {
+		if (!nav_flag) {
+			// nav_ 안열린 상태
+			$("nav").css("left", "0px");
+			nav_flag = true;
+			if(mainflag) {
+				$("section").addClass("sectionOpen");
+				$(".disabledWrap").css("display", "block");
+			}
+		} else {
+			// nav_ 열린상태
+			$("nav").css("left", "-200px");
+			nav_flag = false;
+			if(mainflag) {
+				$("section").removeClass("sectionOpen");
+				$(".disabledWrap").css("display", "none");
+			}
+		}
+	});
+
+	$("#signIdChkBtn").on("click", checkSignUpId);
+	$("#signNickNameBtn").on("click", checkSignUpNickName);

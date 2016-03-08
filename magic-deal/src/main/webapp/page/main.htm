@@ -134,61 +134,6 @@ section>div {
 	background-size : 100% 100%;
 }
 </style>
-
-<!-- 기본 임폴트 js -->
-<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
-<script src="/magic-deal/semantic/semantic.min.js"></script>
-<script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
-<script src="/magic-deal/js/common.js"></script>
-<!-- 기본 임폴트 js -->
-
-<script src="/magic-deal/custom_lib/imagechange.js"></script>
-<script src="/magic-deal/custom_lib/imageSample.js"></script>
-
-<script>
-	var imageChange;
-	var lastChangeBox = -1;
-		
-	$(function() {
-		$("section").niceScroll();
-		
-		imageChange = $("#categorieWrap").imagechange();
-		imageChange.initImg(imgs);
-
-		$(".imgChangeBox").hover(function() {
-			$(this).find(".hoverLabel").toggleClass("hoverLabelOpen");
-		});
-		
-		
-		$(".imgChangeBox").dimmer({
-			on : "hover"
-		});
-		
-		// 이미지 체인저 시간값 설정
-		setTimeout(randomImgChange, 2000);
-		setTimeout(randomImgChange, 4000);
-	});
-
-	var randomImgChange = function() {
-		// 9~16초 사이
-		var randomTime = parseInt(Math.random()*3)+3;
-		while(true) {
-			var idx = parseInt(Math.random()*14);
-			if(idx!=lastChangeBox) {
-				lastChangeBox = idx;
-				break;
-			}
-		}
-
-		//sample용 변수
-		var imageIdx = parseInt(Math.random()*24)+1;
-
-		imageChange.changeImg(idx, "/magic-deal/img/cimg/cimg"+imageIdx+".JPG");
-		setTimeout(randomImgChange, randomTime*1000);
-	}
-</script>
 </head>
 <body>
 
@@ -646,6 +591,68 @@ section>div {
 </div>
 <!-- 알림창 모달 끝 -->
 <!-- 헤더 관련 팝업 모달 끝-->
+
+<!-- 기본 임폴트 js -->
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
+<script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
+<script src="/magic-deal/js/common.js"></script>
+<!-- 기본 임폴트 js -->
+
+<script src="/magic-deal/custom_lib/imagechange.js"></script>
+<script src="/magic-deal/custom_lib/imageSample.js"></script>
+
+<script>
+	var imageChange;
+	var lastChangeBox = -1;
+	
+	var loginCheck = function() {
+		$.get(contextPath + "/member/loginCheck.do", function(resultObj) {
+			var result = resultObj.ajaxResult;
+			u_info = result.data;
+			console.dir(u_info);
+			loginBoxDraw();
+		}, "json");
+	};
+	
+	var randomImgChange = function() {
+		// 9~16초 사이
+		var randomTime = parseInt(Math.random()*3)+3;
+		while(true) {
+			var idx = parseInt(Math.random()*14);
+			if(idx!=lastChangeBox) {
+				lastChangeBox = idx;
+				break;
+			}
+		}
+
+		//sample용 변수
+		var imageIdx = parseInt(Math.random()*24)+1;
+
+		imageChange.changeImg(idx, "/magic-deal/img/cimg/cimg"+imageIdx+".JPG");
+		setTimeout(randomImgChange, randomTime*1000);
+	}
+	
+	loginCheck();
+	$("section").niceScroll();
+	imageChange = $("#categorieWrap").imagechange();
+	imageChange.initImg(imgs);
+
+	$(".imgChangeBox").hover(function() {
+		$(this).find(".hoverLabel").toggleClass("hoverLabelOpen");
+	});
+	
+	
+	$(".imgChangeBox").dimmer({
+		on : "hover"
+	});
+	
+	// 이미지 체인저 시간값 설정
+	setTimeout(randomImgChange, 2000);
+	setTimeout(randomImgChange, 4000);
+</script>
 
 </body>
 </html>
