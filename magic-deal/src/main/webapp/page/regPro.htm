@@ -18,6 +18,7 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
 <script src="/magic-deal/js/common.js"></script>
+<script src="/magic-deal/js/cate.js"></script>
 <!-- 기본 임폴트 js -->
 
 <style>
@@ -194,12 +195,6 @@ footer {
 	outline : none;
 	text-align : right;
 	font-size : 12px;
-}
-
-#price::-webkit-inner-spin-button, 
-#price::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
 }
 
 .ui.checkbox {
@@ -442,6 +437,71 @@ var getAddr = function(lat, lon) {
 var closeSelectAddrWrap = function() {
 	$(addrSearchWrap).css("display", "none");
 };
+$(document).ready(function(){
+$("#parent_selection").change(function() {
+    var parent = $(this).val(); 
+    
+    switch(parent){ 
+          case 'opt1':
+            list(opt1);
+            break;
+          case 'opt2':
+            list(opt2);
+            break;              
+          case 'opt3':
+            list(opt3);
+            break;  
+          case 'opt4':
+            list(opt4);
+            break;  
+          case 'opt5':
+            list(opt5);
+            break;  
+          case 'opt6':
+            list(opt6);
+            break;  
+          case 'opt7':
+            list(opt7);
+            break;  
+          case 'opt8':
+            list(opt8);
+            break;  
+          case 'opt9':
+            list(opt9);
+            break;  
+          case 'opt10':
+            list(opt10);
+            break;  
+          case 'opt11':
+            list(opt11);
+            break;  
+          case 'opt12':
+            list(opt12);
+            break;  
+          case 'opt13':
+            list(opt13);
+            break;  
+          case 'opt14':
+            list(opt14);
+            break;  
+          case 'opt15':
+            list(opt15);
+            break;  
+        default:
+            $("#child_selection").html('');  
+            break;
+       }
+});
+
+function list(array_list)
+{
+$("#child_selection").html(""); 
+$(array_list).each(function (i) { 
+    $("#child_selection").append("<option value=\""+array_list[i].value+"\">"+array_list[i].display+"</option>");
+});
+}
+});
+
 </script>
 </head>
 <body>
@@ -537,24 +597,24 @@ var closeSelectAddrWrap = function() {
 							카테고리
 						</div>
 						<div class="column columnContent">
-							<select class="regSelectBox">
-								<option>상위 카테고리</option>
-								<option>신발, 가방, 잡화</option>
-								<option>휴대폰, 태블릿</option>
-								<option>여성의류</option>
-								<option>남성의류</option>
-								<option>뷰티</option>
-								<option>컴퓨터, 주변기기</option>
-								<option>디지털, 가전</option>
-								<option>유아동, 출산</option>
-								<option>가구, 홈데코</option>
-								<option>CD, DVD</option>
-								<option>스포츠, 레저</option>
-								<option>도서, 문구</option>
-								<option>음향기기, 악기</option>
-								<option>애완</option>
+							<select class="regSelectBox" id="parent_selection" style="width:150px;">
+								<option value='opt1'>상위 카테고리</option>
+								<option value='opt2'>신발, 가방, 잡화</option>
+								<option value='opt3'>휴대폰, 태블릿</option>
+								<option value='opt4'>여성의류</option>
+								<option value='opt5'>남성의류</option>
+								<option value='opt6'>뷰티</option>
+								<option value='opt7'>컴퓨터, 주변기기</option>
+								<option value='opt8'>디지털, 가전</option>
+								<option value='opt9'>유아동, 출산</option>
+								<option value='opt10'>가구, 홈데코</option>
+								<option value='opt11'>CD, DVD</option>
+								<option value='opt12'>스포츠, 레저</option>
+								<option value='opt13'>도서, 문구</option>
+								<option value='opt14'>음향기기, 악기</option>
+								<option value='opt15'>애완</option>
 							</select>
-							<select class="regSelectBox">
+							<select class="regSelectBox" id="child_selection" style="width:150px;">
 								<option>하위 카테고리</option>
 							</select>
 							<div class="dropdownTextInput">
@@ -570,7 +630,8 @@ var closeSelectAddrWrap = function() {
 						</div>
 						<div class="column columnContent">
 							<div class="ui right labeled input">
-								<input type="number" id="price" min="0" placeholder="0" />
+								<input type="text" id="price"placeholder="0" maxlength="10" onchange="checkNumber()"
+							onkeyup="cmaComma(this);"/>
 								<div class="ui basic label">
 									원
 								</div>

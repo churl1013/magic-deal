@@ -426,3 +426,32 @@ var loginBoxDraw = function() {
 		});
 	}
 };
+// 숫자만 체크
+function checkNumber() {
+	var objEv = event.srcElement;
+	var numPattern = /([^0-9])/;
+	var numPattern = objEv.value.match(numPattern);
+	if (numPattern != null) {
+		alert("숫자만 입력해주세요!");
+		objEv.value = "";
+		objEv.focus();
+		return false;
+	}
+}
+
+// 3자리 콤마 찍기
+function cmaComma(obj) {
+	var str = "" + obj.value.replace(/,/gi, '');
+	var regx = new RegExp(/(-?\d+)(\d{3})/);
+	var bExists = str.indexOf(".", 0);
+	var strArr = str.split('.');
+
+	while (regx.test(strArr[0])) {
+		strArr[0] = strArr[0].replace(regx, "$1,$2");
+	}
+	if (bExists > -1) {
+		obj.value = strArr[0] + "." + strArr[1];
+	} else {
+		obj.value = strArr[0];
+	}
+}
