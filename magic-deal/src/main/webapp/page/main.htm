@@ -163,11 +163,8 @@ section>div {
 	<a id="navMainDirectBtn" class="item">
       <i class="home large orange icon"></i>메인
     </a>
-    <a id="navRegDirectBtn" class="item">
-      <i class="gift large orange icon"></i>물품등록
-    </a>
-    <a id="navMyPageDirectBtn" class="item">
-      <i class="child large orange icon"></i>마이페이지
+    <a id="navProductRegistBtn" class="item">
+      <i class="cubes large orange icon"></i>물품등록
     </a>
     <a id="navBoardDirectBtn" class="item">
       <i class="info circle large orange icon"></i>커뮤니티
@@ -611,9 +608,7 @@ section>div {
 	var loginCheck = function() {
 		$.get(contextPath + "/member/loginCheck.do", function(resultObj) {
 			var result = resultObj.ajaxResult;
-			u_info = result.data;
-			console.dir(u_info);
-			loginBoxDraw();
+			loginBoxDraw(result.data);
 		}, "json");
 	};
 	

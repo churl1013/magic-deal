@@ -31,15 +31,29 @@
 		 where nname = #{nname}
 	</select>
 	
-	<select id="selectMember" resultMap="memberResultMap" parameterType="member">
-		select *
+	<select id="selectMemberByIdAndPass" resultMap="memberResultMap" parameterType="member">
+		select m_no, id, nname, m_info, m_photo, m_addr, m_lat, m_lon, like_cnt,
+		       date_format(join_date, "%Y. %e %b") join_date 
 		  from member
 		 where id = #{id} and password = #{password}
 	</select>
 	
+	<select id="selectMemberById" resultMap="memberResultMap" parameterType="member">
+		select m_no, id, nname, m_info, m_photo, m_addr, m_lat, m_lon, like_cnt,
+		       date_format(join_date, "%Y. %e %b") join_date
+		  from member
+		 where id = #{id}
+	</select>
+	
 	<insert id="insertMember" parameterType="member">
 		insert into member
-		       (id, nname, password, join_date, m_addr, m_lat, m_lon)
-		values (#{id}, #{nickName}, #{password}, now(), #{mAddr}, #{mLat}, #{mLon})
+		       (id, nname, password, join_date, m_addr, m_lat, m_lon, m_photo)
+		values (#{id}, #{nickName}, #{password}, now(), #{mAddr}, #{mLat}, #{mLon}, #{mPhoto})
 	</insert>
+	
+	<update id="updateMemberPhoto" parameterType="member">
+		update member
+		   set m_photo = #{mPhoto}
+		 where id = #{id}
+	</update>
 </mapper>

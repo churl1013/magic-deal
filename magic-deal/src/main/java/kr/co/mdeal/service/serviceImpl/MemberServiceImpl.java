@@ -14,13 +14,13 @@ public class MemberServiceImpl implements MemberService{
 	private MemberDao dao;
 	
 	@Override
-	public int checkId(String id) {
+	public int getCheckId(String id) {
 		// TODO Auto-generated method stub
 		return dao.selectIdCount(id);
 	}
 	
 	@Override
-	public int checkNick(String nick) {
+	public int getCheckNick(String nick) {
 		// TODO Auto-generated method stub
 		return dao.selectNickCount(nick);
 	}
@@ -32,8 +32,21 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public Member login(Member member) {
+	public Member selectLogin(Member member) {
 		// TODO Auto-generated method stub
-		return dao.selectMember(member);
+		return dao.selectMemberByIdAndPass(member);
+	}
+	
+	@Override
+	public Member getMemberInfo(Member member) {
+		// TODO Auto-generated method stub
+		member = dao.selectMemberById(member);
+		return member;
+	}
+	
+	@Override
+	public void updateProfilePhoto(Member member) {
+		// TODO Auto-generated method stub
+		dao.updateMemberPhoto(member);
 	}
 }

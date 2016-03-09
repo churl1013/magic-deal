@@ -8,7 +8,7 @@ public class Member {
 	private String password;
 	private String nickName;
 	private String mInfo;
-	private Date joinDate;
+	private String joinDate;
 	private String mPhoto;
 	private int likeCnt;
 	private String mAddr;
@@ -45,10 +45,10 @@ public class Member {
 	public void setmInfo(String mInfo) {
 		this.mInfo = mInfo;
 	}
-	public Date getJoinDate() {
+	public String getJoinDate() {
 		return joinDate;
 	}
-	public void setJoinDate(Date joinDate) {
+	public void setJoinDate(String joinDate) {
 		this.joinDate = joinDate;
 	}
 	public String getmPhoto() {

@@ -1,49 +1,63 @@
 package kr.co.mdeal.controller;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.mdeal.domain.AjaxResult;
 import kr.co.mdeal.domain.Member;
 import kr.co.mdeal.service.MemberService;
+import kr.co.mdeal.util.FileUtils;
 import kr.co.mdeal.util.OneWayCipherSHA256;
 
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
 	
+	static Logger logger = Logger.getLogger(MemberController.class);
+	
+	public static final String SAVED_DIR = "/upload";
 	@Autowired
 	private MemberService service;
+	@Autowired
+	private ServletContext servletContext;
 	
 	@RequestMapping("checkId.do")
-	public Object checkId(String id) {
-		int chkCnt = service.checkId(id);
+	public AjaxResult checkId(String id) {
+		int chkCnt = service.getCheckId(id);
 		return new AjaxResult(chkCnt+"", null);
 	}
 	
 	@RequestMapping("checkNick.do")
-	public Object checkNick(String nick) {
-		int chkCnt = service.checkNick(nick);
+	public AjaxResult checkNick(String nick) {
+		int chkCnt = service.getCheckNick(nick);
 		return new AjaxResult(chkCnt+"", null);
 	}
 	
 	@RequestMapping("signUp.do")
-	public Object checkNick(Member member) {
+	public AjaxResult checkNick(Member member) {
 		member.setPassword(
 				OneWayCipherSHA256.getSHA256(member.getPassword()));
+		member.setmPhoto("/default.svg");
 		service.signUp(member);
 		return new AjaxResult("success", null);
 	}
 	
 	@RequestMapping("login.do")
-	public Object login(Member member, HttpSession session) {
+	public AjaxResult login(Member member, HttpSession session) {
 		member.setPassword(
 				OneWayCipherSHA256.getSHA256(member.getPassword()));
-		Member login = service.login(member);
+		Member login = service.selectLogin(member);
 		if(login != null) {
 			// 로그인 성공 (세션에 로그인 정보 등록 및 로그인 객체 반환)
 			session.setAttribute("userLoginInfo", login);
@@ -55,7 +69,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("loginCheck.do")
-	public Object loginCheck(HttpSession session) {
+	public AjaxResult loginCheck(HttpSession session) {
 		Member login = (Member)session.getAttribute("userLoginInfo");
 		if(login != null) {
 			// 로그인 성공 (세션에 로그인 정보 등록 및 로그인 객체 반환)
@@ -67,9 +81,52 @@ public class MemberController {
 	}
 	
 	@RequestMapping("logout.do")
-	public Object logout(HttpSession session) {
+	public AjaxResult logout(HttpSession session) {
 		session.setAttribute("userLoginInfo", null);
 		return new AjaxResult("success", null);
 	}
 	
+	@RequestMapping("ownerinfo.do")
+	public AjaxResult ownerInfo(Member member) {
+		member = service.getMemberInfo(member);
+		if(member != null)
+			return new AjaxResult("success", member);
+		else
+			return new AjaxResult("fail", null);
+	}
+	
+	// 프로필 사진을 업로드하고 Member의 mPhoto에 경로 삽입
+		@RequestMapping(value="profilephoto.do", method=RequestMethod.POST)
+		public AjaxResult profilePhotoChange( Member member, HttpSession session,
+			      @RequestParam("file") MultipartFile file) throws Exception {
+			String realPath = servletContext.getRealPath("/upload/");
+			String oriFileName = file.getOriginalFilename();
+			int extPos = oriFileName.lastIndexOf(".");
+			String ext = "";
+			if(extPos != -1) {
+				ext = oriFileName.substring(extPos+1, oriFileName.length());
+			}
+			
+			String fileName = member.getId()+"."+ext;
+			String filePath = realPath + "profile/";
+			
+			member.setmPhoto(fileName);
+			File oriFile = new File(filePath + fileName);
+			file.transferTo(oriFile);
+			
+			FileUtils.imageResize(filePath+fileName, filePath+"mp_"+fileName, ext, 250, 200);
+			FileUtils.imageResize(filePath+fileName, filePath+"log_"+fileName, ext, 30, 30);
+			
+			oriFile.delete();
+			
+			// update 진행
+			service.updateProfilePhoto(member);
+			
+			// session 새로고침
+			Member login = (Member)session.getAttribute("userLoginInfo");
+			login.setmPhoto(fileName);
+			logger.debug("Profile Photo Change : USER ID = " + member.getId());
+			
+			return new AjaxResult("success", null);
+		}
 }

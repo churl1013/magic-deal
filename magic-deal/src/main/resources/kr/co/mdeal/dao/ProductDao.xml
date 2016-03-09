@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.mdeal.dao.ProductDao">
+
+	<resultMap type="categorie" id="categorieMap">
+		<result column="p_cate_no" property="pCategorieNo"/>
+		<result column="p_keyword" property="pKeyword"/>
+		<result column="p_high_cate" property="pHighCate"/>
+		<result column="p_low_cate" property="pLowCate"/>
+	</resultMap>
+
+	<select id="selectCategories" parameterType="categorie" resultMap="categorieMap">
+		select * 
+		  from pro_categorie
+		 where p_high_cate = #{pHighCate} and p_low_cate = #{pLowCate}
+		 order by p_keyword asc
+	</select>
+
+</mapper>

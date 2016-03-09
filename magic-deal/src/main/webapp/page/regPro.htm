@@ -11,16 +11,6 @@
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
 <!-- 기본 임폴트 css 파일 끝-->
 
-<!-- 기본 임폴트 js -->
-<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
-<script src="/magic-deal/semantic/semantic.min.js"></script>
-<script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
-<script src="/magic-deal/js/common.js"></script>
-<script src="/magic-deal/js/cate.js"></script>
-<!-- 기본 임폴트 js -->
-
 <style>
 .scrollWrap {
 	width: 100%;
@@ -172,11 +162,45 @@ footer {
 
 .dropdownTextInput {
 	display : inline-block;
-	height : 25px;
-	overflow : hidden;
 	font-size : 0px;
 	line-height : 0px;
 	vertical-align : middle;
+	position : relative;
+}
+
+.filterResult {
+	position : absolute;
+	top : 25px;
+	width : 200px;
+	height : 100px;
+	overflow-y : auto;
+	background-color : #fdfdfd;
+	border : 1px solid #c8c8c8;
+	border-top : none;
+	color : black;
+	font-size : 12px;
+	border-bottom-left-radius : 4px;
+	border-bottom-right-radius : 4px;
+	color : #333;
+	z-index : 1;
+	text-align : center;
+	line-height : 150px;
+	display : none;
+}
+
+.filterResult>div {
+	width : 100%;
+	margin : 1px 0px 1px 0px;
+	padding : 0px 5px 0px 5px;
+	height : 20px;
+	line-height : 20px;
+	border-bottom : 1px solid #d8d8d8;
+	cursor : pointer;
+	text-align : left;
+}
+
+.filterResult>div:hover {
+	background-color : #a8a8a8;
 }
 
 .regTextInput {
@@ -238,270 +262,6 @@ footer {
 }
 
 </style>
-
-<script>
-var imgLength = 0;
-var cloneBox;
-var label;
-var mapContainer;
-var map;
-var marker;
-var geocoder;
-var addrSearchWrap;
-
-$(function() {
-	label = $("#thumbImgLabel");
-	cloneBox = $(".photoRegBox").find(">div").eq(1).clone();
-	
- 	mapContainer = document.getElementById("selectLoc");
- 	var mapOption = {
- 		center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-        level: 4, // 지도의 확대 레벨
- 	};
- 	
- 	map = new daum.maps.Map(mapContainer, mapOption);
- 	
- 	marker = new daum.maps.Marker({
-    	position: new daum.maps.LatLng(37.537187, 127.005476),
-    	map: map
-    });
- 	
-	geocoder = new daum.maps.services.Geocoder();
-	addrSearchWrap = document.getElementById("selectAddrwrap");
-	
- 	$('.ui.checkbox').checkbox();
-	$('.ui.radio.checkbox').checkbox();
-	
-	$(".photoRegBox").on("click", ">div>.fileInputHide", function(event) {
-		var box = $(this).parent();
-		var flag = box.attr("data-chk");
-		if(flag) {
-			// 이미 파일이 올라간 박스라면 삭제하고 새로 추가함
-			box.remove();
-			cloneBox.clone().appendTo(".photoRegBox");
-			imgLength--;
-			event.preventDefault();
-		}
-		appendLabel();
-	});
-	
-	$(".photoRegBox").on("change", ">div>.fileInputHide", function(event) {
-		var input = event.target;
-		var reader = new FileReader();
-		
-		var box = $(this).parent();
-		var flag = box.attr("data-chk");
-		if(!flag) {
-			// 빈 이미지 박스
-			box.attr("data-chk", "true");
-			$(".photoRegBox").find(">div").eq(imgLength).before(box);
-			imgLength++;
-			reader.onload = function() {
-				var dataURL = reader.result;
-				$(box).find(".fileInputOverlapBox").css("background-image", "url('"+dataURL+"')");
-			};
-			
-			reader.readAsDataURL(input.files[0]);
-		}		
-		appendLabel();
-	});
-	
-	// dealflag에 따라 구매, 판매 폼상태 변경
-	// 사진, 가격, 상태 사용불가
-	$("#dealFlag").on("change", function() {
-		if(this.checked) {
-			// 판매
-			$("#price").prop("disabled", false);
-			$("input[name=quality]").prop("disabled", false);
-			$("input[type=file]").prop("disabled", false);
-			
-			cloneBox.clone().appendTo(".photoRegBox");
-			cloneBox.clone().appendTo(".photoRegBox");
-			cloneBox.clone().appendTo(".photoRegBox");
-			cloneBox.clone().appendTo(".photoRegBox");
-			appendLabel();
-		}else {
-			// 구매
-			$("#price").val("");
-			$("#price").prop("disabled", true);
-			$("input[name=quality]").prop("checked", false);
-			$("input[name=quality]").prop("disabled", true);
-			$("input[type=file]").prop("disabled", true);
-			$("input[type=file]").prop("disabled", true);
-			$(".photoRegBox").empty();
-		}
-	});
-
-	$("#currLocBtn").on("click", function() {
-		$(addrSearchWrap).css("display", "none");
-		if("geolocation" in navigator) {
-			navigator.geolocation.getCurrentPosition(function(position) {
-				 getAddr(position.coords.latitude, position.coords.longitude);
-			});
-		}else {
-			alertMsg("위치를 불러올 수 없습니다! <br/> 위치를 직접 선택해주세요!", "확인");	
-		}
-	});
-	
-	$("#dirSelectLocBtn").on("click", function() {
-		map.setZoomable(true);
-		map.setDraggable(true);
-		$(mapContainer).css("display", "none");
-		new daum.Postcode({
-            oncomplete: function(data) {
-            	var fullAddr = data.address; // 최종 주소 변수
-                var extraAddr = ''; // 조합형 주소 변수
-
-                // 기본 주소가 도로명 타입일때 조합한다.
-                if(data.addressType === 'R'){
-                    //법정동명이 있을 경우 추가한다.
-                    if(data.bname !== ''){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있을 경우 추가한다.
-                    if(data.buildingName !== ''){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
-                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
-                }
-                
-				$(addrSearchWrap).css("display", "none");
-				getLatLon(data);
-				$("#regAddr").val(fullAddr);
-           	},
-           	width : "100%",
-           	height : "100%"
-		}).embed(addrSearchWrap);
-		
-		$(addrSearchWrap).css("display", "block");
-	});
-});
-
-var appendLabel = function() {
-	$(".photoRegBox").find(">div").eq(0).append(label);
-};
-
-var getLatLon = function(data) {
-	geocoder.addr2coord(data.address, function(status, result) {
-        // 정상적으로 검색이 완료됐으면
-        if (status === daum.maps.services.Status.OK) {
-            // 해당 주소에 대한 좌표를 받아서
-            var lat = result.addr[0].lat;
-            var lon = result.addr[0].lng;
-            var coord = new daum.maps.LatLng(lat, lon);
-            $("#regLat").val(lat);
-            $("#regLon").val(lon);
-            
-            $(mapContainer).css("display", "block");
-            map.relayout();
-			map.setCenter(coord);
-			marker.setPosition(coord);
-			
-			daum.maps.event.addListener(map, 'click', function(mouseEvent) {
-				var latlng = mouseEvent.latLng;
-				$("#regLat").val(latlng.getLat());
-	            $("#regLon").val(latlng.getLng());
-				var coord = new daum.maps.LatLng(latlng.getLat(), latlng.getLng());
-				marker.setPosition(coord);
-				geocoder.coord2addr(coord, function(status, result) {
-					if (status === daum.maps.services.Status.OK) {
-						$("#regAddr").val(result[0].fullName);
-					}
-				});
-			});
-        }
-    });
-};
-
-var getAddr = function(lat, lon) {
-	var coord = new daum.maps.LatLng(lat, lon);
-	$("#regLat").val(lat);
-	$("#regLon").val(lon);
-	
-	daum.maps.event.addListener(map, 'click', null);
-	
-	geocoder.coord2addr(coord, function(status, result) {
-		if (status === daum.maps.services.Status.OK) {
-			$("#regAddr").val(result[0].fullName);
-			$(mapContainer).css("display", "block");
-			map.setZoomable(false);
-			map.setDraggable(false);
-			map.relayout();
-			map.setCenter(coord);
-			marker.setPosition(coord);
-		}
-	});
-};
-
-var closeSelectAddrWrap = function() {
-	$(addrSearchWrap).css("display", "none");
-};
-$(document).ready(function(){
-$("#parent_selection").change(function() {
-    var parent = $(this).val(); 
-    
-    switch(parent){ 
-          case 'opt1':
-            list(opt1);
-            break;
-          case 'opt2':
-            list(opt2);
-            break;              
-          case 'opt3':
-            list(opt3);
-            break;  
-          case 'opt4':
-            list(opt4);
-            break;  
-          case 'opt5':
-            list(opt5);
-            break;  
-          case 'opt6':
-            list(opt6);
-            break;  
-          case 'opt7':
-            list(opt7);
-            break;  
-          case 'opt8':
-            list(opt8);
-            break;  
-          case 'opt9':
-            list(opt9);
-            break;  
-          case 'opt10':
-            list(opt10);
-            break;  
-          case 'opt11':
-            list(opt11);
-            break;  
-          case 'opt12':
-            list(opt12);
-            break;  
-          case 'opt13':
-            list(opt13);
-            break;  
-          case 'opt14':
-            list(opt14);
-            break;  
-          case 'opt15':
-            list(opt15);
-            break;  
-        default:
-            $("#child_selection").html('');  
-            break;
-       }
-});
-
-function list(array_list)
-{
-$("#child_selection").html(""); 
-$(array_list).each(function (i) { 
-    $("#child_selection").append("<option value=\""+array_list[i].value+"\">"+array_list[i].display+"</option>");
-});
-}
-});
-
 </script>
 </head>
 <body>
@@ -532,11 +292,8 @@ $(array_list).each(function (i) {
 	<a id="navMainDirectBtn" class="item">
       <i class="home large orange icon"></i>메인
     </a>
-    <a id="navRegDirectBtn" class="item">
-      <i class="gift large orange icon"></i>물품등록
-    </a>
-    <a id="navMyPageDirectBtn" class="item">
-      <i class="child large orange icon"></i>마이페이지
+    <a id="navProductRegistBtn" class="item">
+      <i class="cubes large orange icon"></i>물품등록
     </a>
     <a id="navBoardDirectBtn" class="item">
       <i class="info circle large orange icon"></i>커뮤니티
@@ -598,28 +355,30 @@ $(array_list).each(function (i) {
 						</div>
 						<div class="column columnContent">
 							<select class="regSelectBox" id="parent_selection" style="width:150px;">
-								<option value='opt1'>상위 카테고리</option>
-								<option value='opt2'>신발, 가방, 잡화</option>
-								<option value='opt3'>휴대폰, 태블릿</option>
-								<option value='opt4'>여성의류</option>
-								<option value='opt5'>남성의류</option>
-								<option value='opt6'>뷰티</option>
-								<option value='opt7'>컴퓨터, 주변기기</option>
-								<option value='opt8'>디지털, 가전</option>
-								<option value='opt9'>유아동, 출산</option>
-								<option value='opt10'>가구, 홈데코</option>
-								<option value='opt11'>CD, DVD</option>
-								<option value='opt12'>스포츠, 레저</option>
-								<option value='opt13'>도서, 문구</option>
-								<option value='opt14'>음향기기, 악기</option>
-								<option value='opt15'>애완</option>
+								<option value='0'>상위 카테고리</option>
+								<option value='1'>신발, 가방, 잡화</option>
+								<option value='2'>휴대폰, 태블릿</option>
+								<option value='3'>여성의류</option>
+								<option value='4'>남성의류</option>
+								<option value='5'>뷰티</option>
+								<option value='6'>컴퓨터, 주변기기</option>
+								<option value='7'>디지털, 가전</option>
+								<option value='8'>유아동, 출산</option>
+								<option value='9'>가구, 홈데코</option>
+								<option value='10'>CD, DVD</option>
+								<option value='11'>스포츠, 레저</option>
+								<option value='12'>도서, 문구</option>
+								<option value='13'>음향기기, 악기</option>
+								<option value='14'>애완</option>
 							</select>
 							<select class="regSelectBox" id="child_selection" style="width:150px;">
 								<option>하위 카테고리</option>
 							</select>
 							<div class="dropdownTextInput">
-								<input type="text" class="regTextInput" style="width:200px;" placeholder="키워드" />
-								<div class="filterResult"></div>
+								<input type="text" id="regKeyword" class="regTextInput" style="width:200px;" placeholder="키워드" maxLength="10"/>
+								<div class="filterResult">
+									
+								</div>
 							</div>
 						</div>
 					</div>
@@ -837,5 +596,359 @@ $(array_list).each(function (i) {
 </div>
 <!-- 알림창 모달 끝 -->
 <!-- 헤더 관련 팝업 모달 끝-->
+
+
+<!-- 기본 임폴트 js -->
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
+<script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
+<script src="/magic-deal/js/common.js"></script>
+<script src="/magic-deal/js/cate.js"></script>
+<!-- 기본 임폴트 js -->
+
+<script>
+var imgLength = 0;
+var cloneBox;
+var label;
+var mapContainer;
+var map;
+var marker;
+var geocoder;
+var addrSearchWrap;
+
+var pageParam;
+var keywords = [];
+
+var loginCheck = function() {
+	$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
+		var result = resultObj.ajaxResult;
+		loginBoxDraw(result.data);
+		if(!result.data) {
+			alert("로그인 후 이용해주세요!");
+			document.location.href = contextPath + "/page/main.htm";
+		}
+	});
+};
+
+var appendLabel = function() {
+	$(".photoRegBox").find(">div").eq(0).append(label);
+};
+
+var getLatLon = function(data) {
+	geocoder.addr2coord(data.address, function(status, result) {
+        // 정상적으로 검색이 완료됐으면
+        if (status === daum.maps.services.Status.OK) {
+            // 해당 주소에 대한 좌표를 받아서
+            var lat = result.addr[0].lat;
+            var lon = result.addr[0].lng;
+            var coord = new daum.maps.LatLng(lat, lon);
+            $("#regLat").val(lat);
+            $("#regLon").val(lon);
+            
+            $(mapContainer).css("display", "block");
+            map.relayout();
+			map.setCenter(coord);
+			marker.setPosition(coord);
+			
+        }
+    });
+};
+
+var getAddr = function(lat, lon) {
+	var coord = new daum.maps.LatLng(lat, lon);
+	$("#regLat").val(lat);
+	$("#regLon").val(lon);
+	
+	daum.maps.event.addListener(map, 'click', null);
+	
+	geocoder.coord2addr(coord, function(status, result) {
+		if (status === daum.maps.services.Status.OK) {
+			$("#regAddr").val(result[0].fullName);
+			$(mapContainer).css("display", "block");
+			map.setZoomable(false);
+			map.setDraggable(false);
+			map.relayout();
+			map.setCenter(coord);
+			marker.setPosition(coord);
+		}
+	});
+};
+
+var closeSelectAddrWrap = function() {
+	$(addrSearchWrap).css("display", "none");
+};
+
+var keywordFilter = function() {
+	var filterVal = $("#regKeyword").val();
+	var filterKeyword = keywords.filter(function(d) {
+		var i = d.pKeyword.indexOf(filterVal);
+		return i>-1;
+	});
+	
+	var height = 25*filterKeyword.length;
+	if(height > 100) height=100;
+	
+	$(".filterResult").css({
+		display : "block",
+		height : height
+	});
+	$(".filterResult").empty();
+	filterKeyword.forEach(function(d) {
+		$("<div>").attr("onclick", "filterSelect(this)")
+				  .text(d.pKeyword)
+				  .appendTo(".filterResult");
+	});
+};
+
+
+var filterSelect = function(target) {
+	var key = $(target).text();
+	$("#regKeyword").val(key);
+	$(".filterResult").css("display", "none");
+};
+
+
+$("#parent_selection").change(function() {
+    var parent = $(this).val(); 
+    $(".filterResult").css("display", "none");
+    $("#regKeyword").val("");
+    switch(parent){ 
+          case '0':
+            list(opt1);
+            break;
+          case '1':
+            list(opt2);
+            break;              
+          case '2':
+            list(opt3);
+            break;  
+          case '3':
+            list(opt4);
+            break;  
+          case '4':
+            list(opt5);
+            break;  
+          case '5':
+            list(opt6);
+            break;  
+          case '6':
+            list(opt7);
+            break;  
+          case '7':
+            list(opt8);
+            break;  
+          case '8':
+            list(opt9);
+            break;  
+          case '9':
+            list(opt10);
+            break;  
+          case '10':
+            list(opt11);
+            break;  
+          case '11':
+            list(opt12);
+            break;  
+          case '12':
+            list(opt13);
+            break;  
+          case '13':
+            list(opt14);
+            break;  
+          case '14':
+            list(opt15);
+            break;  
+        default:
+            $("#child_selection").html('');  
+            break;
+       }
+});
+
+var list = function (array_list)
+{
+	$("#child_selection").html(""); 
+	$(".filterResult").css("display", "none");
+	$(array_list).each(function (i) { 
+	    $("#child_selection")
+	    	.append("<option value=\""+array_list[i].value+"\">"+array_list[i].display+"</option>");
+	});
+}
+
+// 실행부
+
+loginCheck();
+$(".scrollWrap").niceScroll();
+label = $("#thumbImgLabel");
+cloneBox = $(".photoRegBox").find(">div").eq(1).clone();
+
+mapContainer = document.getElementById("selectLoc");
+var mapOption = {
+	center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+      level: 4, // 지도의 확대 레벨
+};
+
+map = new daum.maps.Map(mapContainer, mapOption);
+
+marker = new daum.maps.Marker({
+  	position: new daum.maps.LatLng(37.537187, 127.005476),
+  	map: map
+});
+	
+geocoder = new daum.maps.services.Geocoder();
+addrSearchWrap = document.getElementById("selectAddrwrap");
+
+$('.ui.checkbox').checkbox();
+$('.ui.radio.checkbox').checkbox();
+
+$(".photoRegBox").on("click", ">div>.fileInputHide", function(event) {
+	var box = $(this).parent();
+	var flag = box.attr("data-chk");
+	if(flag) {
+		// 이미 파일이 올라간 박스라면 삭제하고 새로 추가함
+		box.remove();
+		cloneBox.clone().appendTo(".photoRegBox");
+		imgLength--;
+		event.preventDefault();
+	}
+	appendLabel();
+});
+
+$(".photoRegBox").on("change", ">div>.fileInputHide", function(event) {
+	var input = event.target;
+	var reader = new FileReader();
+	
+	var box = $(this).parent();
+	var flag = box.attr("data-chk");
+	if(!flag) {
+		// 빈 이미지 박스
+		box.attr("data-chk", "true");
+		$(".photoRegBox").find(">div").eq(imgLength).before(box);
+		imgLength++;
+		reader.onload = function() {
+			var dataURL = reader.result;
+			$(box).find(".fileInputOverlapBox").css("background-image", "url('"+dataURL+"')");
+		};
+		
+		reader.readAsDataURL(input.files[0]);
+	}		
+	appendLabel();
+});
+
+// dealflag에 따라 구매, 판매 폼상태 변경
+// 사진, 가격, 상태 사용불가
+$("#dealFlag").on("change", function() {
+	if(this.checked) {
+		// 판매
+		$("#price").prop("disabled", false);
+		$("input[name=quality]").prop("disabled", false);
+		$("input[type=file]").prop("disabled", false);
+		
+		cloneBox.clone().appendTo(".photoRegBox");
+		cloneBox.clone().appendTo(".photoRegBox");
+		cloneBox.clone().appendTo(".photoRegBox");
+		cloneBox.clone().appendTo(".photoRegBox");
+		appendLabel();
+	}else {
+		// 구매
+		$("#price").val("");
+		$("#price").prop("disabled", true);
+		$("input[name=quality]").prop("checked", false);
+		$("input[name=quality]").prop("disabled", true);
+		$("input[type=file]").prop("disabled", true);
+		$("input[type=file]").prop("disabled", true);
+		$(".photoRegBox").empty();
+	}
+});
+
+$("#currLocBtn").on("click", function() {
+	$(addrSearchWrap).css("display", "none");
+	if("geolocation" in navigator) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			 getAddr(position.coords.latitude, position.coords.longitude);
+		});
+	}else {
+		alertMsg("위치를 불러올 수 없습니다! <br/> 위치를 직접 선택해주세요!", "확인");	
+	}
+});
+
+$("#dirSelectLocBtn").on("click", function() {
+	daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+		console.log("ok");
+		var latlng = mouseEvent.latLng;
+		$("#regLat").val(latlng.getLat());
+        $("#regLon").val(latlng.getLng());
+		var coord = new daum.maps.LatLng(latlng.getLat(), latlng.getLng());
+		marker.setPosition(coord);
+		geocoder.coord2addr(coord, function(status, result) {
+			if (status === daum.maps.services.Status.OK) {
+				$("#regAddr").val(result[0].fullName);
+			}
+		});
+	});
+	
+	map.setZoomable(true);
+	map.setDraggable(true);
+
+	$(mapContainer).css("display", "none");
+	
+	new daum.Postcode({
+           oncomplete: function(data) {
+           	var fullAddr = data.address; // 최종 주소 변수
+               var extraAddr = ''; // 조합형 주소 변수
+
+               // 기본 주소가 도로명 타입일때 조합한다.
+               if(data.addressType === 'R'){
+                   //법정동명이 있을 경우 추가한다.
+                   if(data.bname !== ''){
+                       extraAddr += data.bname;
+                   }
+                   // 건물명이 있을 경우 추가한다.
+                   if(data.buildingName !== ''){
+                       extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                   }
+                   // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                   fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+               }
+               
+			$(addrSearchWrap).css("display", "none");
+			getLatLon(data);
+			$("#regAddr").val(fullAddr);
+          	},
+          	width : "100%",
+          	height : "100%"
+	}).embed(addrSearchWrap);
+	
+	$(addrSearchWrap).css("display", "block");
+});
+
+
+// 하위 카테고리까지 선택됬을때 기존에 존재하는 해당 키워드들의 목록을 불러옴
+$("#child_selection").on("change", function() {
+	$("#regKeyword").val("");
+	var pHighCate = $("#parent_selection").val();
+	var pLowCate = $("#child_selection").val();
+	if(pLowCate!=0) {
+		$.getJSON(contextPath + "/product/categorie.do", {
+			pHighCate : pHighCate,
+			pLowCate : pLowCate
+		}, function(resultObj) {
+			keywords = resultObj.ajaxResult.data;
+		});
+	}
+});
+
+
+
+$("#regKeyword").on("keyup", keywordFilter);
+
+$("#regKeyword").on("focus", keywordFilter);
+
+$("#price").on("click", function() {
+	$(".filterResult").css("display", "none");
+});
+
+</script>
 </body>
 </html>

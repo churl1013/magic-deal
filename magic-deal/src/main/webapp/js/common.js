@@ -1,10 +1,18 @@
 var contextPath = "/magic-deal";
 
+
+var headerPosition = function() {
+	var wWidth = $(window).width();
+	var left = (wWidth/2-parseInt($("#headerLogo").css("width"))/2);
+	$("#headerLogo").css("left", left+"px");
+};
+
+// 헤더 위치 잡음
+headerPosition();
+
 // header, nav 이벤트 관련 js 파일입니다.
 var nav_flag = false;
 var popup_layer;
-
-var u_info = null;
 
 var joinChkObj = {
 	id : false,
@@ -14,12 +22,6 @@ var joinChkObj = {
 	result : function() {
 		return this.id && this.password && this.nick && this.addr;
 	}
-};
-
-var headerPosition = function() {
-	var wWidth = $(window).width();
-	var left = (wWidth/2-parseInt($("#headerLogo").css("width"))/2);
-	$("#headerLogo").css("left", left+"px");
 };
 
 var alertMsg = function(msg, btn) {
@@ -196,8 +198,6 @@ var signUpCommit = function(flag) {
 		var lat = $("#signLat").val();
 		var lon = $("#signLon").val();
 		
-		console.log(id, pass, nick, addr, lat, lon);
-		
 		$.post(contextPath+"/member/signUp.do", {
 			id : id,
 			password : pass,
@@ -272,7 +272,6 @@ var loginSubmit = function() {
 	}, function(resultObj) {
 		var result = resultObj.ajaxResult;
 		if(result.msg == 'success') {
-			u_info = result.data;
 			$("#loginCloseBtn").trigger("click");
 			location.href = location.href;
 		}else {
@@ -289,12 +288,11 @@ var loginClose = function() {
 
 var logout = function() {
 	$.get(contextPath + "/member/logout.do", function() {
-		u_info = null;
 		location.href = location.href;
 	},"json");
 };
 
-var loginBoxDraw = function() {
+var loginBoxDraw = function(u_info) {
 	var logBoxWrap = $("#loginStatusWrap");
 	var loginBox;
 	if(u_info) {
@@ -314,7 +312,7 @@ var loginBoxDraw = function() {
 		loginBox += '<span class="smallTextLabel">알람</span>';
 		loginBox += '</div>';
 		loginBox += '<div id="logUserBtn">';
-		loginBox += '<img class="ui image avatar" src="../img/sample-test/profile-exam.JPG">';
+		loginBox += '<img id="logUserPhoto" class="ui image avatar" src="'+contextPath+"/upload/profile/log_"+u_info.mPhoto+'">';
 		loginBox += '<span class="smallTextLabel">'+u_info.nickName+'</span></div>';
 		loginBox +=  '<div id="logoutBtn" data-content="로그아웃">';
 		loginBox += '<i class="sign out large black icon"></i>';
@@ -335,6 +333,9 @@ var loginBoxDraw = function() {
 		logBoxWrap.find("#logoutBtn").on("click", function() {
 			logout();
 		});
+		logBoxWrap.find("#logUserBtn").on("click", function() {
+			document.location.href = contextPath + "/page/mypage.htm?ow=" + u_info.id;
+		})
 	}else {
 		logBoxWrap.find("#loginNsignupBtn").on("click", function() {
 			$('.loginModal').modal({
@@ -365,8 +366,10 @@ var loginBoxDraw = function() {
 	}
 };
 
+
+
 // 숫자만 체크
-function checkNumber() {
+var checkNumber = function () {
 	var objEv = event.srcElement;
 	var numPattern = /([^0-9])/;
 	var numPattern = objEv.value.match(numPattern);
@@ -379,7 +382,7 @@ function checkNumber() {
 }
 
 // 3자리 콤마 찍기
-function cmaComma(obj) {
+var cmaComma = function(obj) {
 	var str = "" + obj.value.replace(/,/gi, '');
 	var regx = new RegExp(/(-?\d+)(\d{3})/);
 	var bExists = str.indexOf(".", 0);
@@ -395,10 +398,34 @@ function cmaComma(obj) {
 	}
 }
 
-	// 헤더에서 사용될 코드들 먼저 실행
-	headerPosition();
+
+// 파라미터 분리해내는 함수
+// 파라미터를 키, 벨류값으로 갖는 객체를 리턴
+var getParameter = function(url) {
+	var paramStr = url.substr(url.lastIndexOf("?")+1,url.length);
+	var params = paramStr.split("&");
+	var keyAndValue;
+	var paramObj = {};
+	var i;
+	for(i=0; i<params.length; i++) {
+		keyAndValue = params[i].split("=");
+		paramObj[keyAndValue[0]] = keyAndValue[1];
+	}
+	
+	return paramObj;
+};
+
+
+
+//헤더에서 사용될 코드들 먼저 실행
 	// 로그인 체크 함수 실행
 	// nav버튼 처리
+	$(".loginModal").on("keydown", function() {
+		if(event.code == "Enter") {
+			$(".loginModal>.actions>.deny").trigger("click");
+		}
+	});
+	
 	$("#headerLogo").on("click", function() {
 		document.location.href = contextPath+'/page/main.htm';
 	});
@@ -407,16 +434,8 @@ function cmaComma(obj) {
 		document.location.href = contextPath+'/page/main.htm';
 	});
 	
-	$("#navRegDirectBtn").on("click", function() {
-		document.location.href = contextPath+'/page/regPro.htm';		
-	});
-	
-	$("#navMyPageDirectBtn").on("click", function() {
-		if(u_info) {
-			document.location.href = contextPath+'/page/mypage.htm#'+u_info.id;
-		}else {
-			alertMsg("먼저 로그인 해주세요!", "확인");
-		}
+	$("#navProductRegistBtn").on("click", function() {
+		document.location.href = contextPath+'/page/regPro.htm';
 	});
 	
 	$("#navBoardDirectBtn").on("click", function() {
@@ -429,18 +448,10 @@ function cmaComma(obj) {
 			// nav_ 안열린 상태
 			$("nav").css("left", "0px");
 			nav_flag = true;
-			if(mainflag) {
-				$("section").addClass("sectionOpen");
-				$(".disabledWrap").css("display", "block");
-			}
 		} else {
 			// nav_ 열린상태
 			$("nav").css("left", "-200px");
 			nav_flag = false;
-			if(mainflag) {
-				$("section").removeClass("sectionOpen");
-				$(".disabledWrap").css("display", "none");
-			}
 		}
 	});
 

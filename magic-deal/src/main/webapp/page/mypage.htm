@@ -105,6 +105,22 @@ footer {
 #mypageProfileLikeCount::after{
 	content : " likes";
 }
+
+.trickFileBox {
+	position : absolute;
+	top : 0px;
+	left : 50px;
+	width : 150px;
+	height : 35px;
+	opacity : 0;
+}
+
+.trickFileWrap {
+	position : relative;
+	text-align : center;
+}
+
+
 </style>
 </head>
 <body>
@@ -134,11 +150,8 @@ footer {
 	<a id="navMainDirectBtn" class="item">
       <i class="home large orange icon"></i>메인
     </a>
-    <a id="navRegDirectBtn" class="item">
-      <i class="gift large orange icon"></i>물품등록
-    </a>
-    <a id="navMyPageDirectBtn" class="item">
-      <i class="child large orange icon"></i>마이페이지
+    <a id="navProductRegistBtn" class="item">
+      <i class="cubes large orange icon"></i>물품등록
     </a>
     <a id="navBoardDirectBtn" class="item">
       <i class="info circle large orange icon"></i>커뮤니티
@@ -169,24 +182,21 @@ footer {
 									<div class="ui dimmer">
 										<div class="content">
 											<div id="profilePhotoBtnBox" class="center">
-												<div class="ui inverted red icon button">
-													<i class="heart icon"></i>&nbsp;&nbsp;
-													LIKE
-												</div>
+												
 											</div>
 										</div>
 									</div>
-									<img id="mypageProfieImg" src="../img/sample-test/profile-exam.JPG">
+									<img id="mypageProfieImg" src="../img/default/image.png">
 								</div>
 								<div class="content">
-									<a id="mypageProfileNickName" class="header">김흥국</a>
+									<a id="mypageProfileNickName" class="header"></a>
 									<div class="meta">
-										<span id="mypageProfileJoinDate" class="date">2016. 02. 27</span>
+										<span id="mypageProfileJoinDate" class="date"></span>
 									</div>
 								</div>
 								<div class="extra content">
 									<i class="heart red icon"></i> 
-									<span id="mypageProfileLikeCount">5,550</span>
+									<span id="mypageProfileLikeCount"></span>
 								</div>
 							</div>
 							<div class="ui mini icon black button info-update-btn">
@@ -201,9 +211,7 @@ footer {
 							</div>
 							<div class="ui bottom attached active tab segment">
 								<p id="mypageProfileInfo">
-									안녕하세요 김흥국입니다. 
-									<br /> 안전거래 신용거래 확실합니다!!! 
-									<br /> 서울, 경기, 인천지역 환영입니다.
+									
 								</p>
 							</div>
 						</div>
@@ -262,217 +270,6 @@ footer {
 								</a>
 								<div class="product-card-img"
 									style="background-image: url('../img/sample-test/sample2.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-											<button class="ui circular mini icon inverted olive button"
-												title="수정" style="font-size: 13px;">
-												<i class="write icon"></i>
-											</button>
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="product-card">
-								<a class="ui left corner green label"> <i
-									class="in cart icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/sample1.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> 
-											<span style="color: #21ba45;">거래대기</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-											<button class="ui circular mini icon inverted olive button"
-												title="수정" style="font-size: 13px;">
-												<i class="write icon"></i>
-											</button>
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="product-card">
-								<a class="ui left corner green label"> <i
-									class="in cart icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/sample3.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-											<button class="ui circular mini icon inverted olive button"
-												title="수정" style="font-size: 13px;">
-												<i class="write icon"></i>
-											</button>
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="product-card">
-								<a class="ui left corner green label"> <i
-									class="in cart icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/sample4.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-											<button class="ui circular mini icon inverted olive button"
-												title="수정" style="font-size: 13px;">
-												<i class="write icon"></i>
-											</button>
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="product-card">
-								<a class="ui left corner green label"> <i
-									class="in cart icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/sample5.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-											<button class="ui circular mini icon inverted olive button"
-												title="수정" style="font-size: 13px;">
-												<i class="write icon"></i>
-											</button>
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="product-card">
-								<a class="ui left corner green label"> <i
-									class="in cart icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/sample6.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-											<button class="ui circular mini icon inverted olive button"
-												title="수정" style="font-size: 13px;">
-												<i class="write icon"></i>
-											</button>
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="product-card">
-								<a class="ui left corner green label"> <i
-									class="in cart icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/sample7.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-											<button class="ui circular mini icon inverted olive button"
-												title="수정" style="font-size: 13px;">
-												<i class="write icon"></i>
-											</button>
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="product-card">
-								<a class="ui left corner green label"> <i
-									class="in cart icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/sample8.JPG');">
 
 								</div>
 								<div class="product-card-info">
@@ -637,6 +434,11 @@ footer {
 
 <!-- 기본 임폴트 js -->
 <script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<!-- 파일 업로드 -->
+<script src="../lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
+<script src="../lib/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
+<script src="../lib/blueimp-file-upload/js/jquery.fileupload.js"></script>
+<!-- 파일 업로드 끝 -->
 <script src="/magic-deal/semantic/semantic.min.js"></script>
 <script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -645,56 +447,108 @@ footer {
 <!-- 기본 임폴트 js -->
 
 <script>
-	var pageOwner;
+	var pageParam;
 	
 	var loginCheck = function() {
 		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
 			var result = resultObj.ajaxResult;
-			u_info = result.data;
-			loginBoxDraw();
-			
-			if(u_info&&u_info.id==pageOwner) {
+			loginBoxDraw(result.data);
+			console.dir(result.data);
+			if(result.data&&result.data.id==pageParam.ow) {
 				// 로그인한 사용자가 마이페이지 주인
-				mypageLoginDraw();
-			}
-			else {
-				$.post(contextPath + "/member/mypage.do", {
-					id : pageOwner
+				mypageDraw(result.data, 0);
+			} else if(pageParam.ow){
+				$.post(contextPath + "/member/ownerinfo.do", {
+					id : pageParam.ow
 				}, function(resultObj) {
-					
-				})
+					var getData = resultObj.ajaxResult;
+					if(result.data) mypageDraw(getData.data, 1);
+					else mypageDraw(getData.data, 2);
+				},"json");
+			} else {
+				// 비 정상적인 접근
+				document.location.href = contextPath + "/page/main.htm";
 			}
 		});
 	};
 	
-	var getPageOwner = function() {
-		var url = document.location.href;
-		var param = url.substr(url.lastIndexOf("#")+1, url.length);
-		console.log(param);
-		pageOwner = param;
-	};
-	
-	var mypageLoginDraw = function() {
-		console.dir(u_info);
-		$("#mypageProfieImg").attr("src", "../img/sample-test/profile-exam.JPG");
+	var mypageDraw = function(u_info, flag) {
+		$("#mypageProfieImg").attr("src", contextPath+"/upload/profile/mp_"+u_info.mPhoto);
 		$("#mypageProfileNickName").text(u_info.nickName);
 		$("#mypageProfileJoinDate").text(u_info.joinDate);
 		$("#mypageProfileLikeCount").text(u_info.likeCnt);
 		$("#mypageProfileInfo").html(u_info.mInfo);
-		
-		var btnObj = '<div class="ui inverted teal icon button">';
+
+		var btnObj;
+		if(flag==0) {
+			// 자기 자신의 마이페이지일 경우
+			btnObj = '<div class="trickFileWrap">';
+			btnObj += '<div class="ui inverted teal icon button">';
 			btnObj += '<i class="user icon"></i>&nbsp;&nbsp;';
-			btnObj += '프로필 사진 수정</div>';
-		
-		$("#profilePhotoBtnBox").html(btnObj);
+			btnObj += '프로필 사진 수정';
+			btnObj += '</div>';
+			btnObj += '<input type="file" id="profilePhotoFile" name="file" class="trickFileBox"/>';
+			btnObj += '</div>';
+	
+			$("#profilePhotoBtnBox").html(btnObj);
+			
+			$("#profilePhotoFile").on("click", function() {
+				$(".blurring.dimmable.image").trigger("mouseout");
+			});
+			
+			$("#profilePhotoFile").fileupload({
+				url: contextPath + '/member/profilephoto.do',
+				dataType: 'json',
+				singleFileUploads: false, 
+				add: function (e, data) {
+			    console.log("파일을 추가하였음...");
+			    var uploadFile = data.files[0];
+		        var isValid = true;
+		        if (!(/png|jpe?g/i).test(uploadFile.name)) {
+		            alertMsg('png, jpg 만 가능합니다', "확인");
+		            isValid = false;
+		        } else if (uploadFile.size > 2000000) { // 2mb
+		        	alertMsg('사진의 용량은 2메가를 초과할 수 없습니다.', "확인");
+		            isValid = false;
+		        }
+		        if (isValid) {
+		        	data.formData = {
+			    		id: u_info.id
+			    	};
+		            data.submit();  
+		            editProfilePhoto(uploadFile);
+		        }
+			  },
+			  done: function (e, data) {
+				  console.log("profile img 변경");
+			  }
+			});
+			
+		}else if(flag==1){
+			// 타인의 마이페이지일 경우
+			btnObj = '<div class="ui inverted red icon button" onclick="likeCountInc();">';
+			btnObj += '<i class="heart icon"></i>&nbsp;&nbsp;';
+			btnObj += 'LIKE</div>';
+			$("#profilePhotoBtnBox").html(btnObj);
+		}else {
+			// 비 로그인 상태
+		}
 	};
 	
-	
+	var editProfilePhoto = function(uploadFile) {
+		var fileReader = new FileReader();
+		fileReader.onload = function() {
+			var dataURL = fileReader.result;
+			$("#mypageProfieImg").attr("src", dataURL);
+			$("#logUserPhoto").attr("src", dataURL);
+		};
+		fileReader.readAsDataURL(uploadFile);
+	};
+		
 	// mypage 실행부
-	getPageOwner();
+	pageParam = getParameter(document.location.href);
 	loginCheck();
 	$(".scrollWrap").niceScroll();
-	$(".profileInfo").niceScroll();
 	
 	$('.special.card .image').dimmer({
 		on: 'hover'

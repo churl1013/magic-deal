@@ -64,7 +64,7 @@
   <tx:advice id="txAdvice" transaction-manager="txManager">
     <tx:attributes>
       <tx:method name="get*" read-only="true"/>
-      <tx:method name="retrieve*" read-only="true"/>
+      <tx:method name="select*" read-only="true"/>
       <tx:method name="*"/> <!-- 그 밖의 모든 메서드에 대해 트랜잭션 적용하라! -->
     </tx:attributes>
   </tx:advice>
