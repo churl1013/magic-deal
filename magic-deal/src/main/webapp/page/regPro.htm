@@ -320,7 +320,11 @@ footer {
 					<div>
 						<label class="ui violet left tag label" id="thumbImgLabel">대표</label>
 						<div class="fileInputOverlapBox"></div>
-						<input type="file" class="fileInputHide" />
+						<input type="file" class="fileInputHide"/>
+					</div>
+					<div>
+						<div class="fileInputOverlapBox"></div>
+						<input type="file" class="fileInputHide"/>
 					</div>
 					<div>
 						<div class="fileInputOverlapBox"></div>
@@ -328,11 +332,7 @@ footer {
 					</div>
 					<div>
 						<div class="fileInputOverlapBox"></div>
-						<input type="file" class="fileInputHide" />
-					</div>
-					<div>
-						<div class="fileInputOverlapBox"></div>
-						<input type="file" class="fileInputHide" />
+						<input type="file" class="fileInputHide"/>
 					</div>
 				</div>
 				<div class="infoRegBox">
@@ -404,19 +404,19 @@ footer {
 						</div>
 						<div class="column columnContent">
 							<div class="ui radio checkbox">
-							    <input type="radio" name="qualty" tabindex="0" class="hidden">
+							    <input type="radio" name="quality" tabindex="0" class="hidden" value="A">
 							    <label>미사용</label>
 						    </div>
 							<div class="ui radio checkbox">
-							    <input type="radio" name="qualty" tabindex="0" class="hidden">
+							    <input type="radio" name="quality" tabindex="0" class="hidden" value="B">
 							    <label>거의 새것</label>
 						    </div>
 							<div class="ui radio checkbox">
-							    <input type="radio" name="qualty" tabindex="0" class="hidden">
+							    <input type="radio" name="quality" tabindex="0" class="hidden" value="C">
 							    <label>사용감 있음</label>
 						    </div>
 							<div class="ui radio checkbox">
-							    <input type="radio" name="qualty" tabindex="0" class="hidden">
+							    <input type="radio" name="quality" tabindex="0" class="hidden" value="D">
 							    <label>하자있음</label>
 						    </div>
 						</div>
@@ -427,7 +427,7 @@ footer {
 							내용
 						</div>
 						<div class="column columnContent">
-							<textarea class="regTextArea" placeholder="물품과 거래에 관한의 간략한 소개를 적어주세요!!"></textarea>
+							<textarea id="regContent" class="regTextArea" placeholder="물품과 거래에 관한의 간략한 소개를 적어주세요!!"></textarea>
 						</div>
 					</div>
 					
@@ -461,14 +461,14 @@ footer {
 						</div>
 						<div class="column columnContent">
 							<div class="ui checkbox">
-      							<input type="checkbox" tabindex="0" class="hidden">
+      							<input id="regOpt" type="checkbox" tabindex="0" class="hidden">
 						    	<label>택배거래 가능</label>
 						    </div>
 						</div>
 					</div>
 					
 					<div class="row">
-						<button class="customIconBtn" style="background-color : #f2711c;">
+						<button id="productSubmitBtn" class="customIconBtn" style="background-color : #f2711c;">
 							<i class="cube icon"></i>
 							등록하기
 						</button>
@@ -487,98 +487,6 @@ footer {
 <!-- 내용부 끝 -->
 
 
-
-
-<!-- 헤더 관련 팝업 모달 -->
-<!-- 로그인 모달 -->
-<div class="ui modal loginModal">
-  <i class="close icon" id="loginCloseBtn" onclick="loginClose();"></i>
-  <div class="header">
-    	로그인 및 회원가입
-  </div>
-  <div class="content" style="text-align:center;">
-        <div class="ui small left icon input" style="margin-bottom:15px;">
-			<input type="text" id="loginId" placeholder="아이디를 입력하세요"/>
-			<i class="user icon"></i>
-		</div>
-		<div class="ui small left icon input">
-			<input type="password" id="loginPass" placeholder="비밀번호를 입력하세요"/>
-			<i class="privacy icon"></i>
-		</div>
-  </div>
-  <div class="actions">
-    <div class="ui ok orange button">
-      Sign up
-    </div>
-    <div class="ui teal deny icon button">
-      Log in
-      <i class="sign in icon"></i>
-    </div>
-  </div>
-</div>
-<!-- 로그인 모달 끝 -->
-
-<!-- 회원가입 모달 -->
-<div class="ui modal signUpModal">
-  <div id="signUpHeader" class="header">
-	  <i class="large icons">
-		  <i class="user icon"></i>
-		  <i class="add corner orange icon"></i>
-	  </i>
-  	Welcome Magic Deal !!!
-  </div>
-  <div class="content">
-	<label>아이디
-       <span style="font-size:12px; color:#444">
-         (영문, 숫자 혼합 8자리 이상)
-       </span>
-     </label>
-     <div class="ui small input">
-		<input type="text" id="signId" style="width:150px;"/>&nbsp;
-		<button class="ui button" id="signIdChkBtn">중복검사</button>
-	</div>
-      <label>비밀번호
-         <span style="font-size:12px; color:#444">
-           (숫자, 특수문자 포함 8자 이상)
-         </span>
-       </label>
-       <div class="ui small input">
- 			<input type="password" id="signPass" style="width:200px;"/>
-	</div>
-
-       <label>비밀번호 확인</label>
-       <div class="ui small input">
- 			<input type="password" id="signPassChk" style="width:200px;"/>
-	</div>
-
-       <label>닉네임</label>
-       <div class="ui small input">
- 			<input type="text" id="signNickName" style="width:150px;"/> &nbsp;
- 			<button class="ui button" id="signNickNameBtn">중복검사</button>
-	</div>
-	
-	<label>주소</label>
-       <div class="ui small input">
- 			<input type="text" id="signAddr" style="width:350px;" readonly/>&nbsp;
- 			<button class="ui orange button" onclick="execDaumPostcode()">주소검색</button>
- 			<input type="hidden" id="signLat" value=""/>
- 			<input type="hidden" id="signLon" value=""/>
-	</div>
-	<div id="popupLayer" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
-	<img src="http://i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
-	</div>
-  </div>
-  <div id="signUpFooter" class="actions">
-  	<button class="ui red deny inverted icon button" id="signUpCloseBtn">
-  		<i class="close icon"></i> 닫기
-  	</button>
-    <button class="ui violet ok inverted right labeled icon button" onclick="signUpSubmitChk();">
-      	회원가입
-      <i class="sign in icon"></i>
-    </button>
-  </div>
-</div>
-<!-- 회원가입 모달 끝 -->
 
 <!-- 알림창 모달 -->
 <div class="ui modal alertModal">
@@ -620,6 +528,8 @@ var addrSearchWrap;
 
 var pageParam;
 var keywords = [];
+
+var uploadFiles = [];
 
 var loginCheck = function() {
 	$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
@@ -948,6 +858,84 @@ $("#regKeyword").on("focus", keywordFilter);
 $("#price").on("click", function() {
 	$(".filterResult").css("display", "none");
 });
+
+
+var checkValidate = function() {
+	return "ok";
+};
+
+$("#productSubmitBtn").on("click", function() {
+	var msg = checkValidate();
+	if(msg == 'ok') {
+		var data = new FormData();
+		var existFiles = $(".photoRegBox").find("div[data-chk='true']").find(".fileInputHide");
+		existFiles.each(function(i, file) {
+			data.append("file-"+i, file.files[0]);
+		});
+		
+		var dealType = $("#dealFlag").prop("checked");	//true = 판매
+		var price = $("#price").val();
+		var quality = $("input[name=quality]").val();
+		var content = $("#regContent").val();
+		var addr = $("#regAddr").val();
+		var lat = $("#regLat").val();
+		var lon = $("#regLon").val();
+		var opt = $("#regOpt").prop("checked");
+		
+		var hCate = $("#parent_selection").val();
+		var lCate = $("#child_selection").val();
+		var keyword = $("#regKeyword").val();
+		
+		dealType = dealType?"s":"b";
+		opt = opt?"y":"n";
+				
+		var keyNum = cateNumSearch(keyword);
+		
+		data.append("dealType", dealType);
+		data.append("price", price);
+		data.append("quality", quality);
+		data.append("content", content);
+		data.append("addr", addr);
+		data.append("lat", lat);
+		data.append("lon", lon);
+		data.append("opt", opt);
+		data.append("keyNum", keyNum);
+		if(keyNum == -1) {
+			data.append("hCate", hCate);
+			data.append("lCate", lCate);
+			data.append("keyword", keyword);
+		}
+		
+		$.ajax({
+			url : contextPath+"/product/regist.do",
+			type : "post",
+			dataType : "json",
+			data : data,
+			processData: false,
+            contentType: false,
+			success : function(resultObj) {
+				console.dir(resultObj);
+			}
+		}).done(function(resultObj) {
+			var result = resultObj.ajaxResult;
+			document.location.href = contextPath + "/page/mypage.htm?ow="+result.data;
+		});
+		
+	}else {
+		alertMsg(msg, "확인");
+	}
+	
+});
+
+var cateNumSearch = function(keyword) {
+	var i;
+	console.log(keywords.length);
+	for(i=0; i<keywords.length; i++) {
+		if(keywords[i].pKeyword == keyword)
+			return keywords[i].pCategorieNo;
+	}
+	return -1;
+};
 
 </script>
 </body>

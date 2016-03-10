@@ -101,11 +101,7 @@ public class MemberController {
 			      @RequestParam("file") MultipartFile file) throws Exception {
 			String realPath = servletContext.getRealPath("/upload/");
 			String oriFileName = file.getOriginalFilename();
-			int extPos = oriFileName.lastIndexOf(".");
-			String ext = "";
-			if(extPos != -1) {
-				ext = oriFileName.substring(extPos+1, oriFileName.length());
-			}
+			String ext = FileUtils.getExt(oriFileName);
 			
 			String fileName = member.getId()+"."+ext;
 			String filePath = realPath + "profile/";

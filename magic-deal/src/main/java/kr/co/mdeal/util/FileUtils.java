@@ -19,4 +19,14 @@ public class FileUtils {
 		BufferedImage resizeImg = Scalr.resize(oriImg,Method.BALANCED, width, height);
 		ImageIO.write(resizeImg, imageType, new File(savePath));
 	}
+	
+	public static String getExt(String fileName) {
+		int extPos = fileName.lastIndexOf(".");
+		String ext = "";
+		if(extPos != -1) {
+			ext = fileName.substring(extPos+1, fileName.length());
+		}
+		
+		return ext;
+	}
 }

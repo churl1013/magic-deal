@@ -18,5 +18,30 @@
 		 where p_high_cate = #{pHighCate} and p_low_cate = #{pLowCate}
 		 order by p_keyword asc
 	</select>
+	
+	<insert id="insertCategorie" parameterType="categorie">
+		insert into pro_categorie
+		 	   (p_keyword, p_high_cate, p_low_cate)
+		values (#{pKeyword}, #{pHighCate}, #{pLowCate})
+		<selectKey keyProperty="pCategorieNo" resultType="int">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertProduct" parameterType="product">
+		insert into product
+			   (m_no, p_c_no, price, p_content, p_reg_date, deal_type, deal_step, quality, deal_opt, p_addr, p_lat, p_lon)
+		values (#{mNo}, #{pCategorieNo}, #{price}, #{pContent}, now(), 
+				#{dealType}, #{dealStep}, #{quality}, #{dealOpt}, #{pAddr}, #{pLat}, #{pLon})
+		<selectKey keyProperty="pNo" resultType="int">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<insert id="insertProductPhoto" parameterType="productPhoto">
+		insert into pro_photo
+			   (p_no, p_ph_path, p_ph_thum, p_ph_name)
+		values (#{pNo}, #{pPhotoPath}, #{pPhotoThum}, #{pPhotoName})
+	</insert>
 
 </mapper>
