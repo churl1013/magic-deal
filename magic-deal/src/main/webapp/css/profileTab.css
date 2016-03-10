@@ -49,14 +49,7 @@
 
 #mypageProfileInfo { 
 	height : 50px;
-	text-align : justify;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: -webkit-box;
-	-webkit-line-clamp: 3; /* 라인수 */
-	-webkit-box-orient: vertical;
-	word-wrap: break-word;
+	overflow-y : auto;
 	font-size : 12px;
 }
-
 

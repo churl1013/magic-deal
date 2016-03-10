@@ -199,20 +199,20 @@ footer {
 									<span id="mypageProfileLikeCount"></span>
 								</div>
 							</div>
-							<div class="ui mini icon black button info-update-btn">
-								정보 업데이트</div>
+								<div id="profileUpdateBtnBox">
+								</div>
 						</div>
 
 						<div class="profileInfo">
 							<div class="ui top attached tabular menu">
-								<div class="item">
-									<b>자기소개</b>
+								<div class="item" id="mypageProfileUpdate">
+									<b >자기소개</b>
 								</div>
 							</div>
 							<div class="ui bottom attached active tab segment">
-								<p id="mypageProfileInfo">
+								<div id="mypageProfileInfo">
 									
-								</p>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -353,6 +353,34 @@ footer {
 </div>
 <!-- 로그인 모달 끝 -->
 
+<!-- 프로필 수정 시작 -->
+<div class="ui modal updateModal">
+  <i class="close icon" id="loginCloseBtn" onclick="loginClose();"></i>
+  <div class="header">
+    	로그인 및 회원가입
+  </div>
+  <div class="content" style="text-align:center;">
+        <div class="ui small left icon input" style="margin-bottom:15px;">
+			<input type="text" id="loginId" placeholder="아이디를 입력하세요"/>
+			<i class="user icon"></i>
+		</div>
+		<div class="ui small left icon input">
+			<input type="password" id="loginPass" placeholder="비밀번호를 입력하세요"/>
+			<i class="privacy icon"></i>
+		</div>
+  </div>
+  <div class="actions">
+    <div class="ui ok orange button">
+      Sign up
+    </div>
+    <div class="ui teal deny icon button">
+      Log in
+      <i class="sign in icon"></i>
+    </div>
+  </div>
+</div>
+<!-- 프로필 수정 끝 -->
+
 <!-- 회원가입 모달 -->
 <div class="ui modal signUpModal">
   <div id="signUpHeader" class="header">
@@ -480,6 +508,7 @@ footer {
 		$("#mypageProfileInfo").html(u_info.mInfo);
 
 		var btnObj;
+		var btnObj2;
 		if(flag==0) {
 			// 자기 자신의 마이페이지일 경우
 			btnObj = '<div class="trickFileWrap">';
@@ -523,6 +552,21 @@ footer {
 				  console.log("profile img 변경");
 			  }
 			});
+			
+			
+			// 마이페이지 수정 파트
+			btnObj2 = '<div class="ui mini icon black button info-update-btn" id="profileUpdate">';
+			btnObj2 += '정보 업데이트</div>';
+			$("#profileUpdateBtnBox").html(btnObj2);
+			$("#mypageProfileInfo").on("click", function() {
+				this.contentEditable='true';
+			});
+			
+			$("#profileUpdate").on("click", function() {
+			
+			});
+			
+			
 			
 		}else if(flag==1){
 			// 타인의 마이페이지일 경우
