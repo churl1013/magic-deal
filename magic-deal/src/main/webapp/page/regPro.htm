@@ -531,6 +531,35 @@ var keywords = [];
 
 var uploadFiles = [];
 
+
+mapContainer = document.getElementById("selectLoc");
+geocoder = new daum.maps.services.Geocoder();
+addrSearchWrap = document.getElementById("selectAddrwrap");
+var mapOption = {
+	center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+    level: 4 // 지도의 확대 레벨
+};
+
+map = new daum.maps.Map(mapContainer, mapOption);
+
+marker = new daum.maps.Marker({
+  	position: map.getCenter()
+});
+
+marker.setMap(map);
+
+daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+	var latlng = mouseEvent.latLng;
+	$("#regLat").val(latlng.getLat());
+    $("#regLon").val(latlng.getLng());
+	marker.setPosition(latlng);
+	geocoder.coord2addr(latlng, function(status, result) {
+		if (status === daum.maps.services.Status.OK) {
+			$("#regAddr").val(result[0].fullName);
+		}
+	});
+});
+
 var loginCheck = function() {
 	$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
 		var result = resultObj.ajaxResult;
@@ -571,14 +600,10 @@ var getAddr = function(lat, lon) {
 	$("#regLat").val(lat);
 	$("#regLon").val(lon);
 	
-	daum.maps.event.addListener(map, 'click', null);
-	
 	geocoder.coord2addr(coord, function(status, result) {
 		if (status === daum.maps.services.Status.OK) {
 			$("#regAddr").val(result[0].fullName);
 			$(mapContainer).css("display", "block");
-			map.setZoomable(false);
-			map.setDraggable(false);
 			map.relayout();
 			map.setCenter(coord);
 			marker.setPosition(coord);
@@ -693,22 +718,6 @@ $(".scrollWrap").niceScroll();
 label = $("#thumbImgLabel");
 cloneBox = $(".photoRegBox").find(">div").eq(1).clone();
 
-mapContainer = document.getElementById("selectLoc");
-var mapOption = {
-	center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
-      level: 4, // 지도의 확대 레벨
-};
-
-map = new daum.maps.Map(mapContainer, mapOption);
-
-marker = new daum.maps.Marker({
-  	position: new daum.maps.LatLng(37.537187, 127.005476),
-  	map: map
-});
-	
-geocoder = new daum.maps.services.Geocoder();
-addrSearchWrap = document.getElementById("selectAddrwrap");
-
 $('.ui.checkbox').checkbox();
 $('.ui.radio.checkbox').checkbox();
 
@@ -773,6 +782,7 @@ $("#dealFlag").on("change", function() {
 });
 
 $("#currLocBtn").on("click", function() {
+	
 	$(addrSearchWrap).css("display", "none");
 	if("geolocation" in navigator) {
 		navigator.geolocation.getCurrentPosition(function(position) {
@@ -784,23 +794,6 @@ $("#currLocBtn").on("click", function() {
 });
 
 $("#dirSelectLocBtn").on("click", function() {
-	daum.maps.event.addListener(map, 'click', function(mouseEvent) {
-		console.log("ok");
-		var latlng = mouseEvent.latLng;
-		$("#regLat").val(latlng.getLat());
-        $("#regLon").val(latlng.getLng());
-		var coord = new daum.maps.LatLng(latlng.getLat(), latlng.getLng());
-		marker.setPosition(coord);
-		geocoder.coord2addr(coord, function(status, result) {
-			if (status === daum.maps.services.Status.OK) {
-				$("#regAddr").val(result[0].fullName);
-			}
-		});
-	});
-	
-	map.setZoomable(true);
-	map.setDraggable(true);
-
 	$(mapContainer).css("display", "none");
 	
 	new daum.Postcode({

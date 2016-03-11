@@ -11,7 +11,15 @@
 		<result column="p_high_cate" property="pHighCate"/>
 		<result column="p_low_cate" property="pLowCate"/>
 	</resultMap>
-
+	
+	<resultMap type="productPhoto" id="productPhotoMap">
+		<result column="p_ph_no" property="pPhotoNo" />
+		<result column="p_no" property="pNo" />
+		<result column="p_ph_path" property="pPhotoPath" />
+		<result column="p_ph_name" property="pPhotoName" />
+		<result column="p_ph_thum" property="pPhotoThum" />
+	</resultMap>
+	
 	<select id="selectCategories" parameterType="categorie" resultMap="categorieMap">
 		select * 
 		  from pro_categorie
@@ -43,5 +51,39 @@
 			   (p_no, p_ph_path, p_ph_thum, p_ph_name)
 		values (#{pNo}, #{pPhotoPath}, #{pPhotoThum}, #{pPhotoName})
 	</insert>
-
+	
+	<select id="selectHighCateCount" resultType="java.util.HashMap">
+		select p_high_cate, count(*) volume
+		  from product pro, pro_categorie cate
+		 where cate.p_cate_no = pro.p_c_no  
+		 group by cate.p_high_cate
+ 		 order by cate.p_high_cate asc
+	</select>
+	
+	
+	<select id="selectCategoriesPhoto" resultType="hashMap">
+		select max(p_no) p_no, p_high_cate, p_ph_path, p_ph_name
+	 	  from (
+				select pro.p_no, cate.p_high_cate, ph.p_ph_path, ph.p_ph_name
+			  	  from pro_photo ph, product pro, pro_categorie cate
+			 	 where cate.p_cate_no = pro.p_c_no and pro.p_no = ph.p_no
+				  	   and ph.p_ph_thum='y' and pro.deal_type = 's'
+				) productall
+	  	 group by p_high_cate
+	  	 order by p_high_cate asc
+	</select>
+	
+	<select id="selectCategoriePhoto" resultMap="productPhotoMap" parameterType="categorie">
+		select * 
+		  from pro_photo 
+		 where p_ph_thum='y' and p_no in (
+											select p_no 
+											  from product 
+											 where deal_type='s' and p_c_no in (
+																				select p_cate_no 
+																				  from pro_categorie 
+																				 where p_high_cate = #{pHighCate}
+																				)
+										 ) order by rand() limit 1;
+	</select>
 </mapper>

@@ -1,5 +1,6 @@
 package kr.co.mdeal.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.co.mdeal.domain.Categorie;
@@ -12,4 +13,7 @@ public interface ProductDao {
 	void insertCategorie(Categorie cate);
 	void insertProduct(Product product);
 	void insertProductPhoto(ProductPhoto photo);
+	List<HashMap<String, Integer>> selectHighCateCount();
+	List<HashMap<String, String>> selectCategoriesPhoto();
+	ProductPhoto selectCategoriePhoto(Categorie cate);
 }

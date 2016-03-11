@@ -266,11 +266,14 @@ var loginSubmit = function() {
 	var id = $("#loginId").val();
 	var pass = $("#loginPass").val();
 	
+	console.log(id, pass);
+	
 	$.post(contextPath + "/member/login.do", {
 		id : id,
 		password : pass
 	}, function(resultObj) {
 		var result = resultObj.ajaxResult;
+		console.dir(result);
 		if(result.msg == 'success') {
 			$("#loginCloseBtn").trigger("click");
 			location.href = location.href;

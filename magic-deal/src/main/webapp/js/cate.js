@@ -72,15 +72,6 @@ var opt7 = [
             {display: "기타", value: "9" }];
 var opt8 = [
             {display: "하위 카테고리", value: "0" },
-            {display: "기저귀/분유/물티슈", value: "1" }, 
-            {display: "목욕/위생/화장품", value: "2" }, 
-            {display: "유모차/카시트/발육", value: "3" },
-            {display: "유아/출산용품", value: "4" },
-            {display: "완구/도서", value: "5" },
-            {display: "유아패션/잡화", value: "6" },
-            {display: "기타", value: "7" }];
-var opt9 = [
-            {display: "하위 카테고리", value: "0" },
             {display: "주방가전", value: "1" }, 
             {display: "생활가전", value: "2" }, 
             {display: "건강/뷰티가전", value: "3" },
@@ -89,6 +80,15 @@ var opt9 = [
             {display: "MP3", value: "6" },
             {display: "플스/XBOX/게임기", value: "7" },
             {display: "기타", value: "8" }];
+var opt9 = [
+            {display: "하위 카테고리", value: "0" },
+            {display: "기저귀/분유/물티슈", value: "1" }, 
+            {display: "목욕/위생/화장품", value: "2" }, 
+            {display: "유모차/카시트/발육", value: "3" },
+            {display: "유아/출산용품", value: "4" },
+            {display: "완구/도서", value: "5" },
+            {display: "유아패션/잡화", value: "6" },
+            {display: "기타", value: "7" }];
 var opt10 = [
             {display: "하위 카테고리", value: "0" },
             {display: "침대/침실가구", value: "1" }, 

@@ -1,6 +1,7 @@
 package kr.co.mdeal.service.serviceImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,23 @@ public class ProductServiceImpl implements ProductService{
 			dao.insertProductPhoto(pp);
 		}
 		
+	}
+	
+	@Override
+	public List<HashMap<String, Integer>> getCategorieVolume() {
+		// TODO Auto-generated method stub
+		return dao.selectHighCateCount();
+	}
+	
+	@Override
+	public List<HashMap<String, String>> getCategoriesPhoto() {
+		// TODO Auto-generated method stub
+		return dao.selectCategoriesPhoto();
+	}
+	
+	@Override
+	public ProductPhoto getCategoriePhoto(Categorie cate) {
+		// TODO Auto-generated method stub
+		return dao.selectCategoriePhoto(cate);
 	}
 }

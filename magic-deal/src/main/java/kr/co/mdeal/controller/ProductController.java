@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -147,4 +148,24 @@ public class ProductController {
 		List<Categorie> cateList = service.getCategorieKeyword(cate);
 		return new AjaxResult("success", cateList);
 	}
+	
+	@RequestMapping("categorieVolume.do")
+	public AjaxResult getCategorieVolume() {
+		List<HashMap<String, Integer>> cateVolList = service.getCategorieVolume();
+		return new AjaxResult("success", cateVolList);
+	}
+	
+	@RequestMapping("allCateImg.do")
+	public AjaxResult getCategorieImages() {
+		List<HashMap<String, String>> catePhotoList = service.getCategoriesPhoto();
+		return new AjaxResult("success", catePhotoList);
+	}
+	
+	@RequestMapping("cateImg.do")
+	public AjaxResult getCategorieImage(Categorie cate) {
+		ProductPhoto photo = service.getCategoriePhoto(cate);
+		return new AjaxResult("success", photo);
+	}
+	
+	
 }
