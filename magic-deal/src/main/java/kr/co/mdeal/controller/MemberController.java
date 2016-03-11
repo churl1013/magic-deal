@@ -32,23 +32,11 @@ public class MemberController {
 	@Autowired
 	private ServletContext servletContext;
 	
-	@RequestMapping("checkId.do")
-	public AjaxResult checkId(String id) {
-		int chkCnt = service.getCheckId(id);
-		return new AjaxResult(chkCnt+"", null);
-	}
-	
-	@RequestMapping("checkNick.do")
-	public AjaxResult checkNick(String nick) {
-		int chkCnt = service.getCheckNick(nick);
-		return new AjaxResult(chkCnt+"", null);
-	}
-	
 	@RequestMapping("signUp.do")
-	public AjaxResult checkNick(Member member) {
+	public AjaxResult signUp(Member member) {
 		member.setPassword(
 				OneWayCipherSHA256.getSHA256(member.getPassword()));
-		member.setmPhoto("/default.svg");
+		member.setmPhoto("default.svg");
 		service.signUp(member);
 		return new AjaxResult("success", null);
 	}

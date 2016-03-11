@@ -367,7 +367,7 @@ footer {
      </label>
      <div class="ui small input">
 		<input type="text" id="signId" style="width:150px;"/>&nbsp;
-		<button class="ui button" id="signIdChkBtn">중복검사</button>
+		<span id="signIdChkResult">아이디를 입력하세요!</span>
 	</div>
       <label>비밀번호
          <span style="font-size:12px; color:#444">
@@ -386,7 +386,7 @@ footer {
        <label>닉네임</label>
        <div class="ui small input">
  			<input type="text" id="signNickName" style="width:150px;"/> &nbsp;
- 			<button class="ui button" id="signNickNameBtn">중복검사</button>
+		<span id="signNickChkResult">닉네임을 입력하세요!</span>
 	</div>
 	
 	<label>주소</label>
@@ -429,7 +429,7 @@ footer {
 <!-- 알림창 모달 끝 -->
 
 <!-- 프로필 업데이트 모달 -->
-			<div id="profileUpdateModal" class="ui modal signUpModal">
+			<div id="profileUpdateModal" class="ui modal profileModal">
 			    <i class="close icon"></i>
 			    <div class="header">
 			      	프로필 수정
@@ -502,7 +502,6 @@ footer {
 		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
 			var result = resultObj.ajaxResult;
 			loginBoxDraw(result.data);
-			console.dir(result.data);
 			if(result.data&&result.data.id==pageParam.ow) {
 				// 로그인한 사용자가 마이페이지 주인
 				mypageDraw(result.data, 0);

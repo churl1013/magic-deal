@@ -1,0 +1,14 @@
+{
+  "name": "md-small",
+  "version": "1.0.0",
+  "description": "작은 작업을 위한 rest server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}

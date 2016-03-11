@@ -1,5 +1,6 @@
 var contextPath = "/magic-deal";
-
+var ip = "192.168.0.11";
+var port = "8000";
 
 var headerPosition = function() {
 	var wWidth = $(window).width();
@@ -108,68 +109,6 @@ var chkFormStatus = function(val) {
 	return status;
 };
 
-var checkSignUpId = function() {
-	var chk_id = $("#signId").val();
-	var chk = chkFormStatus(chk_id);
-	if(chk.flag) {
-		$.getJSON(contextPath+"/member/checkId.do?id="+chk_id, function(resultObj) {
-			var result = resultObj.ajaxResult;
-			if(result.msg == '0') {
-				// 중복검사 성공
-				$("#signId").prop("readonly", true);
-				$("#signId").css({
-					"font-weight" : "bold",
-					"color" : "#00b5ad"
-				});
-				$("#signIdChkBtn").text("사용가능한 아이디");
-				$("#signIdChkBtn").addClass("olive");
-				$("#signIdChkBtn").prop("disabled", true);
-
-				joinChkObj.id = true;
-				$("#signPass").focus();
-			}else {
-				// 중복검사 실패
-				alertMsg("이미 사용중인 아이디 입니다!", "확인");
-				$("#signId").attr("placeholder", "이미 사용중인 아이디");
-				$("#signId").focus();
-			}
-		});
-	}else {
-		alertMsg(chk.msg, "확인");
-	}
-};
-
-var checkSignUpNickName = function() {
-	var chk_nick = $("#signNickName").val();
-	var chk = chkFormStatus(chk_nick);
-	if(chk.flag) {
-		$.getJSON(contextPath+"/member/checkNick.do?nick="+chk_nick, function(resultObj) {
-			var result = resultObj.ajaxResult;
-			if(result.msg == '0') {
-				// 중복검사 성공
-				$("#signNickName").prop("readonly", true);
-				$("#signNickName").css({
-					"font-weight" : "bold",
-					"color" : "#00b5ad"
-				});
-				
-				$("#signNickNameBtn").text("사용가능한 닉네임");
-				$("#signNickNameBtn").addClass("olive");
-				$("#signNickNameBtn").prop("disabled", true);
-				
-				joinChkObj.nick = true;
-			}else {
-				// 중복검사 실패
-				alertMsg("이미 사용중인 닉네임입니다!", "확인");
-				$("#signNickName").attr("placeholder", "이미 사용중인 닉네임");
-				$("#signNickName").focus();
-			}
-		});
-	}else {
-		alertMsg(chk.msg, "확인");
-	}
-};
-
 var passwordChk = function() {
 	var pass1 = $("#signPass").val();
 	var pass2 = $("#signPassChk").val();
@@ -240,26 +179,8 @@ var clearSignUpForm = function() {
 	$("#signAddr").val("");
 	$("#signLat").val("");
 	$("#signLon").val("");
-	
-	$("#signNickName").prop("readonly", false);
-	$("#signNickName").css({
-		"font-weight" : "normal",
-		"color" : "black"
-	});
-	
-	$("#signNickNameBtn").text("중복검사");
-	$("#signNickNameBtn").removeClass("olive");
-	$("#signNickNameBtn").prop("disabled", false);
-
-	$("#signId").prop("readonly", false);
-	$("#signId").css({
-		"font-weight" : "normal",
-		"color" : "black"
-	});
-	
-	$("#signIdChkBtn").text("중복검사");
-	$("#signIdChkBtn").removeClass("olive");
-	$("#signIdChkBtn").prop("disabled", false);
+	$("#signIdChkResult").val("아이디를 입력하세요!");
+	$("#signNickChkResult").val("닉네임을 입력하세요!");
 };
 
 var loginSubmit = function() {
@@ -457,6 +378,44 @@ var getParameter = function(url) {
 			nav_flag = false;
 		}
 	});
-
-	$("#signIdChkBtn").on("click", checkSignUpId);
-	$("#signNickNameBtn").on("click", checkSignUpNickName);
+	
+	$("#signId").on("keyup", function() {
+		var chkId = $(this).val();
+		var ip = "192.168.0.11";
+		var port = "8000";
+		console.log('test');
+		$.getJSON(
+			"http://"+ip+":"+port+"/magic-deal/checkId?chkId="+chkId+"&callback=?", 
+			function(resultData) {
+			var result = resultData.result;
+			if(result == 'ok') {
+				$("#signIdChkResult").text("사용 가능한 아이디 입니다.");
+				$("#signIdChkResult").css("color", "#21ba45");
+				joinChkObj.id = true;
+			}else {
+				$("#signIdChkResult").text("이미 사용중인 아이디 입니다.");				
+				$("#signIdChkResult").css("color", "#db2828");
+				joinChkObj.id = false;
+			}
+		});
+	});
+	
+	$("#signNickName").on("keyup", function() {
+		var chkNick = $(this).val();
+		console.log('test');
+		$.getJSON(
+			"http://"+ip+":"+port+"/magic-deal/checkNick?chkNick="+chkNick+"&callback=?", 
+			function(resultData) {
+			var result = resultData.result;
+			if(result == 'ok') {
+				$("#signNickChkResult").text("사용 가능한 닉네임 입니다.");
+				$("#signNickChkResult").css("color", "#21ba45");
+				joinChkObj.nick = true;
+			}else {
+				$("#signNickChkResult").text("이미 사용중인 닉네임 입니다.");				
+				$("#signNickChkResult").css("color", "#db2828");
+				joinChkObj.nick = false;
+			}
+		});
+	});
+	
