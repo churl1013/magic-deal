@@ -206,13 +206,10 @@ footer {
 						<div class="profileInfo">
 							<div class="ui top attached tabular menu">
 								<div class="item" id="mypageProfileUpdate">
-									<b >자기소개</b>
+									<b>자기소개</b>
 								</div>
 							</div>
-							<div class="ui bottom attached active tab segment">
-								<div id="mypageProfileInfo">
-									
-								</div>
+							<div class="ui bottom attached active tab segment" id="mypageProfileInfo">
 							</div>
 						</div>
 					</div>
@@ -353,34 +350,6 @@ footer {
 </div>
 <!-- 로그인 모달 끝 -->
 
-<!-- 프로필 수정 시작 -->
-<div class="ui modal updateModal">
-  <i class="close icon" id="loginCloseBtn" onclick="loginClose();"></i>
-  <div class="header">
-    	로그인 및 회원가입
-  </div>
-  <div class="content" style="text-align:center;">
-        <div class="ui small left icon input" style="margin-bottom:15px;">
-			<input type="text" id="loginId" placeholder="아이디를 입력하세요"/>
-			<i class="user icon"></i>
-		</div>
-		<div class="ui small left icon input">
-			<input type="password" id="loginPass" placeholder="비밀번호를 입력하세요"/>
-			<i class="privacy icon"></i>
-		</div>
-  </div>
-  <div class="actions">
-    <div class="ui ok orange button">
-      Sign up
-    </div>
-    <div class="ui teal deny icon button">
-      Log in
-      <i class="sign in icon"></i>
-    </div>
-  </div>
-</div>
-<!-- 프로필 수정 끝 -->
-
 <!-- 회원가입 모달 -->
 <div class="ui modal signUpModal">
   <div id="signUpHeader" class="header">
@@ -458,6 +427,58 @@ footer {
   </div>
 </div>
 <!-- 알림창 모달 끝 -->
+
+<!-- 프로필 업데이트 모달 -->
+			<div id="profileUpdateModal" class="ui modal signUpModal">
+			    <i class="close icon"></i>
+			    <div class="header">
+			      	프로필 수정
+			    </div>
+			    <div class="content">
+			     <label>닉네임
+     </label>
+     <div class="ui small input">
+ 			<input type="text" id="signNickName" style="width:150px;"/> &nbsp;
+ 			<button class="ui button" id="signNickNameBtn">중복검사</button>
+	</div>
+      <label>비밀번호
+         <span style="font-size:12px; color:#444">
+           (숫자, 특수문자 포함 8자 이상)
+         </span>
+       </label>
+       <div class="ui small input">
+ 			<input type="password" id="signPass" style="width:200px;"/>
+	</div>
+
+       <label>비밀번호 확인</label>
+       <div class="ui small input">
+ 			<input type="password" id="signPassChk" style="width:200px;"/>
+	</div>
+
+	<label>주소</label>
+       <div class="ui small input">
+ 			<input type="text" id="signAddr" style="width:350px;" readonly/>&nbsp;
+ 			<button class="ui orange button" onclick="execDaumPostcode()">주소검색</button>
+ 			<input type="hidden" id="signLat" value=""/>
+ 			<input type="hidden" id="signLon" value=""/>
+	</div>
+	<div id="popupLayer" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+	<img src="http://i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	</div>
+			    </div>
+			    <div class="actions">
+			      <div class="ui positive right labeled icon button">
+			        <a class="text-white">수정 완료</a>
+			        <i class="checkmark icon"></i>
+			      </div>
+			      <div class="ui negative right labeled icon button">
+			        <a class="text-white">취소</a>
+			        <i class="remove icon"></i>
+			      </div>
+			    </div>
+			  </div>
+ <!-- 프로필 업데이트 모달 끝 -->
+
 <!-- 헤더 관련 팝업 모달 끝-->
 
 <!-- 기본 임폴트 js -->
@@ -557,13 +578,15 @@ footer {
 			// 마이페이지 수정 파트
 			btnObj2 = '<div class="ui mini icon black button info-update-btn" id="profileUpdate">';
 			btnObj2 += '정보 업데이트</div>';
+			mypageProfileUpdate
 			$("#profileUpdateBtnBox").html(btnObj2);
+			
 			$("#mypageProfileInfo").on("click", function() {
 				this.contentEditable='true';
 			});
 			
 			$("#profileUpdate").on("click", function() {
-			
+				$('#profileUpdateModal').modal('show');
 			});
 			
 			
