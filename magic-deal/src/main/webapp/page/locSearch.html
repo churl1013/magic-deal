@@ -1,0 +1,483 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8" />
+
+<!-- 기본 임폴트 css 파일 -->
+<link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<link rel="shortcut icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
+<title>Magic Deal</title>
+<!-- 기본 임폴트 css 파일 끝-->
+
+<style>
+section {
+	position : relative;
+	left : 0px;
+	width : 100%;
+	height : 100%;
+	min-width : 1024px;
+	padding-top : 70px;
+	overflow-y : hidden;
+}
+
+.locFilterWrap {
+	width : 100%;
+	min-width : 1024px;
+	height : 50px;
+	background-color : white;
+	border-bottom : 1px solid #c8c8c8;
+}
+
+.locContentWrap {
+	width : 100%;
+	min-width : 1024px;
+	background-color : #f8f8f8;
+}
+
+.locMapWrap {
+	float : left;
+	height : 100%;
+	position : relative;
+	min-width : 400px;
+}
+
+.locListWrap {
+	float : left;
+	width : 400px;
+	height : 100%;
+	position : relative;
+	border-left : 1px solid #c7c7c7;
+}
+
+#mapContainer {
+	width : 100%;
+	height : 100%;
+}
+
+.dot {
+		width : 16px;
+		height : 16px;
+		background-color : rgba(255,255,255,0.9);
+		border-radius : 8px;
+		display : inline-block;
+		border : 4px solid orange;
+}
+
+#selectNumberViewer {
+	width : 100%;
+	height : 30px;
+	background-color : #803621;
+	text-align : center;
+	font-size : 13px;
+	line-height : 30px;
+	color : white;
+	font-weight : bold;
+}
+
+#selectNumberViewer::before {
+	content : "총 ";
+}
+
+#selectNumberViewer::after {
+	content : "개의 결과";
+}
+
+#productListBox {
+	width : 100%;
+}
+
+#productListPagingBox {
+	width : 100%;
+	height : 30px;
+	background-color : #d8d8d8;
+}
+
+#distanceInfo {
+	width : 130px;
+	height : 100px;
+	text-align : center;
+}
+
+#distanceInfo>.header {
+	background-color : #f2711c;
+	height : 30px;
+	line-height : 30px;
+	font-weight : bold;
+}
+</style>
+</head>
+<body>
+<!-- 헤더부 -->
+<header>
+	<div id="samllLogo">
+		<img src="../img/smalllogo.png" style="width:70px; height:70px"/>
+	</div>
+	<div class="ui search">
+  		<div class="ui icon input">
+    		<input class="prompt" type="text" placeholder="원하는 키워드를 검색하세요" style="font-size:12px; width:200px;"/>
+   			 <i class="search icon"></i>
+  		</div>
+  	<div class="results"></div>
+	</div>
+	<div id="loginStatusWrap">
+		<!-- 로그인 관련 내용 헤더 -->
+	</div>
+	<div id="headerLogo">
+		<img src="../img/fontlogo.png"/>
+	</div>
+</header>
+<!-- 헤더끝 -->
+
+<!-- 네비게이션 -->
+<div id="navBtn" class="ui icon button small black">
+	<i class="sidebar icon"></i>
+</div>
+<nav class="ui vertical menu">
+	<a id="navMainDirectBtn" class="item">
+      <i class="home large orange icon"></i>메인
+    </a>
+    <a id="navProductRegistBtn" class="item">
+      <i class="cubes large orange icon"></i>물품등록
+    </a>
+    <a id="navBoardDirectBtn" class="item">
+      <i class="info circle large orange icon"></i>커뮤니티
+    </a>
+</nav>
+<!-- 네비게이션 끝 -->
+
+<!-- 내용부 -->
+<section>
+	<div class="locFilterWrap">
+	
+	</div>
+	<div class="locContentWrap">
+		<div class="locMapWrap">
+			<div id="mapContainer">
+			
+			</div>
+		</div>
+		
+		<div class="locListWrap">
+			<div id="selectNumberViewer"></div>
+			<div id="productListBox"></div>
+			<div id="productListPagingBox"></div>
+		</div>
+	</div>
+</section>
+<!-- 내용부 끝 -->
+
+<!-- 헤더 관련 팝업 모달 -->
+<!-- 로그인 모달 -->
+<div class="ui modal loginModal">
+  <i class="close icon" id="loginCloseBtn" onclick="loginClose();"></i>
+  <div class="header">
+    	로그인 및 회원가입
+  </div>
+  <div class="content" style="text-align:center;">
+        <div class="ui small left icon input" style="margin-bottom:15px;">
+			<input type="text" id="loginId" placeholder="아이디를 입력하세요"/>
+			<i class="user icon"></i>
+		</div>
+		<div class="ui small left icon input">
+			<input type="password" id="loginPass" placeholder="비밀번호를 입력하세요"/>
+			<i class="privacy icon"></i>
+		</div>
+  </div>
+  <div class="actions">
+    <div class="ui ok orange button">
+      Sign up
+    </div>
+    <div class="ui teal deny icon button">
+      Log in
+      <i class="sign in icon"></i>
+    </div>
+  </div>
+</div>
+<!-- 로그인 모달 끝 -->
+
+<!-- 회원가입 모달 -->
+<div class="ui modal signUpModal">
+  <div id="signUpHeader" class="header">
+	  <i class="large icons">
+		  <i class="user icon"></i>
+		  <i class="add corner orange icon"></i>
+	  </i>
+  	Welcome Magic Deal !!!
+  </div>
+  <div class="content">
+	<label>아이디
+       <span style="font-size:12px; color:#444">
+         (영문, 숫자 혼합 8자리 이상)
+       </span>
+     </label>
+     <div class="ui small input">
+		<input type="text" id="signId" style="width:150px;"/>&nbsp;
+		<span id="signIdChkResult">아이디를 입력하세요!</span>
+	</div>
+      <label>비밀번호
+         <span style="font-size:12px; color:#444">
+           (숫자, 특수문자 포함 8자 이상)
+         </span>
+       </label>
+       <div class="ui small input">
+ 			<input type="password" id="signPass" style="width:200px;"/>
+	</div>
+
+       <label>비밀번호 확인</label>
+       <div class="ui small input">
+ 			<input type="password" id="signPassChk" style="width:200px;"/>
+	</div>
+
+       <label>닉네임</label>
+       <div class="ui small input">
+ 			<input type="text" id="signNickName" style="width:150px;"/> &nbsp;
+		<span id="signNickChkResult">닉네임을 입력하세요!</span>
+	</div>
+	
+	<label>주소</label>
+       <div class="ui small input">
+ 			<input type="text" id="signAddr" style="width:350px;" readonly/>&nbsp;
+ 			<button class="ui orange button" onclick="execDaumPostcode()">주소검색</button>
+ 			<input type="hidden" id="signLat" value=""/>
+ 			<input type="hidden" id="signLon" value=""/>
+	</div>
+	<div id="popupLayer" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+	<img src="http://i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	</div>
+  </div>
+  <div id="signUpFooter" class="actions">
+  	<button class="ui red deny inverted icon button" id="signUpCloseBtn">
+  		<i class="close icon"></i> 닫기
+  	</button>
+    <button class="ui violet ok inverted right labeled icon button" onclick="signUpSubmitChk();">
+      	회원가입
+      <i class="sign in icon"></i>
+    </button>
+  </div>
+</div>
+<!-- 회원가입 모달 끝 -->
+
+<!-- 알림창 모달 -->
+<div class="ui modal alertModal">
+  <i class="close icon"></i>
+  <div class="header">
+    	알림
+  </div>
+  <div id="alertMsg" class="content" style="text-align:center;">
+        
+  </div>
+  <div class="actions">
+     <div id="alertBtn" class="ui ok right grey labeled icon button">
+    </div>
+  </div>
+</div>
+<!-- 알림창 모달 끝 -->
+<!-- 헤더 관련 팝업 모달 끝-->
+
+<!-- 스크립트 시작 -->
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
+<script>
+	var sHeight = parseInt($("section").css("height"));
+	var sWidth = parseInt($("section").css("width"));
+	
+	// 컨텐츠가가 들어갈 div의 크기 셋팅
+	$(".locContentWrap").css("height", sHeight-70-50);
+	$(".locMapWrap").css("width", sWidth-400);
+	$("#productListBox").css("height", sHeight-70-60-50);
+	
+	$(window).resize(function() {
+		sWidth = parseInt($("section").css("width"));
+		sHeight = parseInt($("section").css("height"));
+		if(sWidth>1024) {
+			$(".locMapWrap").css("width", sWidth-400);
+		}
+		$(".locContentWrap").css("height", sHeight-70-50);
+		$("#productListBox").css("height", sHeight-70-60-50);
+	});
+</script>
+
+<!-- script 용량이 크므로 화면을 그린 후에 임폴트 -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services,clusterer&autoload=false"></script>
+<script src="/magic-deal/js/common.js"></script>
+<script src="/magic-deal/js/locSearch.js"></script>
+<script>
+	var pageParam;
+	
+	pageParam = getParameter(document.location.href);
+	
+	
+	// 로그인 체크 
+	var loginCheck = function(map) {
+		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
+			var result = resultObj.ajaxResult;
+			loginBoxDraw(result.data);
+			locUtil = new LocUtil(map);
+			if(result.data!=null) {
+				locUtil.moveCenter(result.data.mLat, result.data.mLon);
+				locUtil.setLevel(6);
+			}
+			getProduct();
+		});
+	};
+	
+	// 지도 정의
+	daum.maps.load(function() {
+	    // v3가 모두 로드된 후, 이 콜백 함수가 실행됩니다.
+	    var mapContainer = $("#mapContainer").get()[0];
+	    var options = {
+    		center : new daum.maps.LatLng(37.6, 127),
+			level : 12,
+			scrollwheel : false	
+	    }
+	    
+	    map = new daum.maps.Map(mapContainer, options);
+	    loginCheck(map);
+	    locInit();
+	    
+	  // 이벤트 정의
+	  //idle : 중심 좌표, 확대수준 변경시 발생
+		daum.maps.event.addListener(map, 'idle', function() {
+			mBound = map.getBounds();
+			currCenter = map.getCenter();
+			
+			// 확대수준 변경, 중심좌표 변경 시 화면에 표시된 cluster가 바뀜
+			clusterer.redraw();
+			
+			if(resultOverlay!=null) {
+				closeDistanceOverlay();
+			}
+
+			// 최대 확대 수준에서만 역정보 제공
+			if(locUtil.getLevel()<=5&&subwayMarkers.length==0) {
+				places.categorySearch('SW8', loadStation, {
+					location : currCenter,
+					radius : 2000
+				});
+			}else if(locUtil.getLevel()>5){
+				if(subwayMarkers.length > 0) {
+					subwayMarkers.forEach(function(data) {
+						data.setMap(null);
+					});
+
+					subwayMarkers = [];
+				}
+			}
+		});
+	    
+		// 지하철 역부터 거리측정시 사용되는 이벤트
+		daum.maps.event.addListener(map, 'mousemove', function(mouseEvent) {
+			if(drawFlag) {
+				var mousePosition = mouseEvent.latLng;
+				var linePath = [centerPosition, mousePosition];
+				drawLine.setPath(linePath);
+
+				var length = drawLine.getLength();
+
+				if(length > 0) {
+					drawLine.setMap(map);
+				}else {
+					drawLine.setMap(null);
+				}
+			}
+		});
+
+		daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+			if(drawFlag) {
+				var rClickPosition = mouseEvent.latLng;
+				var distance = Math.round(drawLine.getLength());
+				var content = getTimeHTML(distance);
+
+				showDistance(content, rClickPosition);
+
+				drawLine.setMap(null);
+				drawDot.setMap(null);
+				drawFlag = false;
+			}
+		});
+
+		var showDistance = function(content, lastPosition) {
+			resultOverlay = new daum.maps.CustomOverlay({
+				content : content,
+				map : map,
+				position : lastPosition
+			});
+
+			resultOverlay.setMap(map);
+		};
+	    
+	    // 클러스터 마우스 오버 이벤트
+		daum.maps.event.addListener(clusterer, 'clusterover', function(cluster) {
+			$(cluster.getClusterMarker().Eb).css({
+				'border' : '5px solid rgba(255,210,10,1)',
+				'transform' : 'scale(1.2)'
+			});
+		});
+
+	    // 클러스터 마우스 아웃 이벤트
+		daum.maps.event.addListener(clusterer, 'clusterout', function(cluster) {
+			$(cluster.getClusterMarker().Eb).css({
+				'border' : '5px solid rgba(255,255,255,0.3)',
+				'transform' : 'scale(1.0)'
+			});
+		});
+	    
+	    
+		daum.maps.event.addListener(clusterer, 'clustered', function(clusters) {
+			currBndMarkers = getBoundNodes(clusters);
+			var totalSize = 0;
+			currBndMarkers.forEach(function(cluster) {
+				var selectMarkers = cluster.getMarkers();
+				totalSize += selectMarkers.length;
+				drawMarkerInList(selectMarkers);
+			});
+			$("#selectNumberViewer").text(totalSize);
+		});
+		
+		daum.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
+			var totalSize = 0;
+			var selectMarkers = cluster.getMarkers();
+			totalSize += selectMarkers.length;
+			$("#selectNumberViewer").text(totalSize);
+			drawMarkerInList(selectMarkers);
+		});
+	});
+	
+	// 물품 데이터 읽어오기
+	var getProduct = function(obj) {
+		var target = obj || pageParam;
+		var hc = target.hc;
+		
+		$.getJSON(contextPath + "/product/list.do", {
+				pHighCate : pageParam.hc
+			}, function(resultData) {
+				var result = resultData.ajaxResult;
+				productData = result.data;
+				addMarkers();
+				clusterer.addMarkers(markers);
+			});
+	};
+	
+	// Map Event 등록
+	$("#mapContainer").on('mousewheel', function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		if(event.originalEvent.wheelDelta > 0) {
+			// 확대
+			locUtil.downLevel();
+		}else if(event.originalEvent.wheelDelta < 0) {
+			// 축소
+			locUtil.upLevel();
+		}
+	});
+	
+	
+</script>
+
+</body>
+</html>

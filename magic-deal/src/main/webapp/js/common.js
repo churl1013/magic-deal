@@ -1,5 +1,5 @@
 var contextPath = "/magic-deal";
-var ip = "192.168.0.11";
+var ip = "192.168.0.7";
 var port = "8000";
 
 var headerPosition = function() {
@@ -381,41 +381,49 @@ var getParameter = function(url) {
 	
 	$("#signId").on("keyup", function() {
 		var chkId = $(this).val();
-		var ip = "192.168.0.11";
-		var port = "8000";
-		console.log('test');
-		$.getJSON(
-			"http://"+ip+":"+port+"/magic-deal/checkId?chkId="+chkId+"&callback=?", 
-			function(resultData) {
-			var result = resultData.result;
-			if(result == 'ok') {
-				$("#signIdChkResult").text("사용 가능한 아이디 입니다.");
-				$("#signIdChkResult").css("color", "#21ba45");
-				joinChkObj.id = true;
-			}else {
-				$("#signIdChkResult").text("이미 사용중인 아이디 입니다.");				
-				$("#signIdChkResult").css("color", "#db2828");
-				joinChkObj.id = false;
-			}
-		});
+		if(chkId.trim().length<5) {
+			$("#signIdChkResult").text("아이디는 5글자 이상입니다.");
+			$("#signIdChkResult").css("color", "#db2828");
+			joinChkObj.id = false;
+		}else {
+			$.getJSON(
+				"http://"+ip+":"+port+"/magic-deal/checkId?chkId="+chkId+"&callback=?", 
+				function(resultData) {
+				var result = resultData.result;
+				if(result == 'ok') {
+					$("#signIdChkResult").text("사용 가능한 아이디 입니다.");
+					$("#signIdChkResult").css("color", "#21ba45");
+					joinChkObj.id = true;
+				}else {
+					$("#signIdChkResult").text("이미 사용중인 아이디 입니다.");				
+					$("#signIdChkResult").css("color", "#db2828");
+					joinChkObj.id = false;
+				}
+			});
+		}
 	});
 	
 	$("#signNickName").on("keyup", function() {
 		var chkNick = $(this).val();
-		console.log('test');
-		$.getJSON(
-			"http://"+ip+":"+port+"/magic-deal/checkNick?chkNick="+chkNick+"&callback=?", 
-			function(resultData) {
-			var result = resultData.result;
-			if(result == 'ok') {
-				$("#signNickChkResult").text("사용 가능한 닉네임 입니다.");
-				$("#signNickChkResult").css("color", "#21ba45");
-				joinChkObj.nick = true;
-			}else {
-				$("#signNickChkResult").text("이미 사용중인 닉네임 입니다.");				
-				$("#signNickChkResult").css("color", "#db2828");
-				joinChkObj.nick = false;
-			}
-		});
+		if(chkNick.trim().length<2) {
+			$("#signNickChkResult").text("닉네임은 2글자 이상입니다.");
+			$("#signNickChkResult").css("color", "#db2828");
+			joinChkObj.nick = false;
+		}else {
+			$.getJSON(
+				"http://"+ip+":"+port+"/magic-deal/checkNick?chkNick="+chkNick+"&callback=?", 
+				function(resultData) {
+				var result = resultData.result;
+				if(result == 'ok') {
+					$("#signNickChkResult").text("사용 가능한 닉네임 입니다.");
+					$("#signNickChkResult").css("color", "#21ba45");
+					joinChkObj.nick = true;
+				}else {
+					$("#signNickChkResult").text("이미 사용중인 닉네임 입니다.");				
+					$("#signNickChkResult").css("color", "#db2828");
+					joinChkObj.nick = false;
+				}
+			});
+		}
 	});
 	

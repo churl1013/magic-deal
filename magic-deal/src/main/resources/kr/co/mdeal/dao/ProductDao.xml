@@ -64,7 +64,7 @@
 	   		   cate.p_keyword, cate.p_high_cate, cate.p_low_cate
   		  from product pro, pro_photo pho, pro_categorie cate
  		 where pro.p_no = pho.p_no 
- 		 	   and pro.p_c_no = cate.p_cate_no 
+ 		 	   and pro.p_c_no = cate.p_c_no 
 	   		   and pho.p_ph_thum='y' 
 	   		   and cate.p_high_cate = #{pHighCate}
 	   		   <if test="pLowCate != 0">
@@ -113,7 +113,7 @@
 	<select id="selectHighCateCount" resultType="java.util.HashMap">
 		select p_high_cate, count(*) volume
 		  from product pro, pro_categorie cate
-		 where cate.p_cate_no = pro.p_c_no  
+		 where cate.p_c_no = pro.p_c_no  
 		 group by cate.p_high_cate
  		 order by cate.p_high_cate asc
 	</select>
@@ -124,7 +124,7 @@
 	 	  from (
 				select pro.p_no, cate.p_high_cate, ph.p_ph_path, ph.p_ph_name
 			  	  from pro_photo ph, product pro, pro_categorie cate
-			 	 where cate.p_cate_no = pro.p_c_no and pro.p_no = ph.p_no
+			 	 where cate.p_c_no = pro.p_c_no and pro.p_no = ph.p_no
 				  	   and ph.p_ph_thum='y' and pro.deal_type = 's' and pro.deal_step='y'
 				) productall
 	  	 group by p_high_cate
@@ -138,7 +138,7 @@
 											select p_no 
 											  from product 
 											 where deal_type='s' and deal_step='y' and p_c_no in (
-																				select p_cate_no 
+																				select p_c_no 
 																				  from pro_categorie 
 																				 where p_high_cate = #{pHighCate}
 																				)

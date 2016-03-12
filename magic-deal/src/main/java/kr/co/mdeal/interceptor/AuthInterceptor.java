@@ -31,10 +31,10 @@ public class AuthInterceptor implements HandlerInterceptor{
 		
 		if(login != null) {			
 			req.setAttribute("auth", login);
-			System.out.println("로그인한 상태");
+			//System.out.println("로그인한 상태");
 			return true;
 		}else {
-			System.out.println("비 로그인 상태");
+			System.out.println("비 로그인 상태 - 올바르지 않은 접근");
 			return false;
 		}		
 	}
