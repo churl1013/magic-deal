@@ -33,17 +33,17 @@ import kr.co.mdeal.util.FileUtils;
 @Controller
 @RequestMapping("/product/*")
 public class ProductController {
-
+	
 	@Autowired
 	private ProductService service;
 	
 	@Autowired
 	private ServletContext servletContext;
 	
-	@RequestMapping(value="regist.do", method=RequestMethod.POST)
-	public AjaxResult registProduct(MultipartHttpServletRequest mReq, HttpSession session) throws Exception{
+	@RequestMapping(value="auth/regist.do", method=RequestMethod.POST)
+	public AjaxResult registProduct(MultipartHttpServletRequest mReq) throws Exception{
 		
-		Member login = (Member)session.getAttribute("userLoginInfo");
+		Member login = (Member)mReq.getAttribute("auth");
 		if(login!=null) {
 			int userNo = login.getmNo();
 			
@@ -167,5 +167,9 @@ public class ProductController {
 		return new AjaxResult("success", photo);
 	}
 	
-	
+	@RequestMapping("list.do")
+	public AjaxResult getProductList(Categorie cate) {
+		List<HashMap<String, Object>> productList = service.getProductList(cate);
+		return new AjaxResult("success", productList);
+	}
 }

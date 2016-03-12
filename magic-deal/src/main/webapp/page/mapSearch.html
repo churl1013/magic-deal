@@ -2,11 +2,17 @@
 <html>
 <head>
 <meta charset="UTF-8"/>
-<title>cluster map test</title>
+
+<!-- 기본 임폴트 css 파일 -->
 <link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<link rel="shortcut icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
+<title>Magic Deal</title>
+<!-- 기본 임폴트 css 파일 끝-->
+
 <style>
 	aside {
 		z-index : 1;
@@ -116,7 +122,7 @@
 		height : 100%;
 		padding-top : 120px;
 		padding-right : 400px;
-		background-color : #333;
+		background-color : white;
 		z-index : -1;
 	}
 
@@ -125,6 +131,9 @@
 		height : 100%;
 		position : relative;
 		z-index : 0;
+		background-image : url("/magic-deal/img/default/loading.gif");
+		background-position : center;
+		background-repeat : no-repeat;
 	}
 
 	.dot {
@@ -168,60 +177,6 @@
 		margin-bottom : 5px;
 		background-color : rgba(255,180,10,0.8);
 		font-size : 14px;
-	}
-
-	.loadingPointer {
-		width : 40px;
-		height : 40px;
-		border-radius : 100% 100% 0% 100%;
-		border : 2px solid snow;
-		position : relative;
-		-webkit-transform : rotate(45deg);
-		animation : loadingAni 0.5s ease-in-out 0.1s infinite alternate;
-		padding : 10px;
-	}
-
-	.loadingPointerDot {
-		background-color : tomato;
-		width : 15px;
-		height : 15px;
-		border-radius : 50%;
-	}
-
-	.loadingBottom {
-		background-color : rgba(255,255,255,0.2);
-		width : 40px;
-		height : 40px;
-		border-radius : 50%;
-		margin-bottom : -10px;
-		-webkit-transform : rotateX(73deg);
-	}
-
-	.loadingIconBox {
-		width : 40px;
-		margin : 0px auto;
-	}
-
-	#loadingContainer {
-		position : absolute;
-		width : 100%;
-		height : 100px;
-		text-align : center;
-	}
-
-	#loadingContainer>span {
-		font-size : 15px;
-		color : white;
-	}
-
-	@keyframes loadingAni {
-		from {
-			top : 0px;
-		}
-
-		to {
-			top : 7px;
-		}
 	}
 
 	#searchCondition {
@@ -338,8 +293,10 @@
 		background-image : url("../img/boardlist.svg");
 	}
 </style>
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
 </head>
 <body>
+<!-- 물품 리스트 박스 -->
 <aside>
 	<div id="asideBox">
 		<div id="resultBoxWrap">
@@ -353,39 +310,48 @@
 		</div>
 	</div>
 </aside>
+<!-- 물품 리스트 박스 끝 -->
+
+<!-- 헤더부 -->
 <header>
+	<div id="samllLogo">
+		<img src="../img/smalllogo.png" style="width:70px; height:70px"/>
+	</div>
 	<div class="ui search">
   		<div class="ui icon input">
-    		<input class="prompt" type="text" placeholder="원하는 지역을 검색하세요" style="font-size:12px; width:200px;"/>
+    		<input class="prompt" type="text" placeholder="원하는 키워드를 검색하세요" style="font-size:12px; width:200px;"/>
    			 <i class="search icon"></i>
   		</div>
   	<div class="results"></div>
 	</div>
-	<div>
-		<div id="loginNsignupBtn" class="ui icon label">
-			<i class="user violet icon"></i>
-			<a class="detail">로그인 및 회원가입</a>
-		</div>
+	<div id="loginStatusWrap">
+		<!-- 로그인 관련 내용 헤더 -->
 	</div>
-	<img src="../img/logo1.png"/>
+	<div id="headerLogo">
+		<img src="../img/fontlogo.png"/>
+	</div>
 </header>
+<!-- 헤더끝 -->
+
+<!-- 네비게이션 -->
 <div id="navBtn" class="ui icon button small black">
 	<i class="sidebar icon"></i>
 </div>
 <nav class="ui vertical menu">
-	<a class="item">
+	<a id="navMainDirectBtn" class="item">
       <i class="home large orange icon"></i>메인
     </a>
-    <a class="item">
-      <i class="gift large orange icon"></i>물품등록
+    <a id="navProductRegistBtn" class="item">
+      <i class="cubes large orange icon"></i>물품등록
     </a>
-    <a class="item">
-      <i class="child large orange icon"></i>마이페이지
-    </a>
-    <a class="item">
-      <i class="info circle large orange icon"></i>고객센터
+    <a id="navBoardDirectBtn" class="item">
+      <i class="info circle large orange icon"></i>커뮤니티
     </a>
 </nav>
+<!-- 네비게이션 끝 -->
+
+
+<!-- 내용 -->
 <div id="searchCondition">
 	<div id="tradeSelect" class="selectMenu">
 		<span>모든거래</span>
@@ -418,70 +384,172 @@
 </div>
 <div id="mapBox">
 	<div id="map">
-		<div id="loadingContainer">
-			<div class="loadingIconBox">
-				<div class="loadingPointer">
-					<div class="loadingPointerDot"></div>
-				</div>
-				<div class="loadingBottom">
-
-				</div>
-			</div>
-			<span>loading...</span>
-		</div>
+		
 	</div>
 </div>
+<!-- 내용 끝 -->
 
+<!-- 헤더 관련 팝업 모달 -->
+<!-- 로그인 모달 -->
 <div class="ui modal loginModal">
-  <i class="close icon"></i>
+  <i class="close icon" id="loginCloseBtn" onclick="loginClose();"></i>
   <div class="header">
-    <div class="ui orange ribbon label">
-    	Log in / Sign up
-    </div>
+    	로그인 및 회원가입
   </div>
   <div class="content" style="text-align:center;">
         <div class="ui small left icon input" style="margin-bottom:15px;">
-			<input type="text" placeholder="아이디를 입력하세요"/>
+			<input type="text" id="loginId" placeholder="아이디를 입력하세요"/>
 			<i class="user icon"></i>
 		</div>
 		<div class="ui small left icon input">
-			<input type="password" placeholder="비밀번호를 입력하세요"/>
+			<input type="password" id="loginPass" placeholder="비밀번호를 입력하세요"/>
 			<i class="privacy icon"></i>
 		</div>
   </div>
   <div class="actions">
-    <div class="ui black deny button">
-      Log in
-    </div>
-    <div class="ui positive right labeled icon button">
+    <div class="ui ok orange button">
       Sign up
+    </div>
+    <div class="ui teal deny icon button">
+      Log in
       <i class="sign in icon"></i>
     </div>
   </div>
 </div>
+<!-- 로그인 모달 끝 -->
+
+<!-- 회원가입 모달 -->
+<div class="ui modal signUpModal">
+  <div id="signUpHeader" class="header">
+	  <i class="large icons">
+		  <i class="user icon"></i>
+		  <i class="add corner orange icon"></i>
+	  </i>
+  	Welcome Magic Deal !!!
+  </div>
+  <div class="content">
+	<label>아이디
+       <span style="font-size:12px; color:#444">
+         (영문, 숫자 혼합 8자리 이상)
+       </span>
+     </label>
+     <div class="ui small input">
+		<input type="text" id="signId" style="width:150px;"/>&nbsp;
+		<span id="signIdChkResult">아이디를 입력하세요!</span>
+	</div>
+      <label>비밀번호
+         <span style="font-size:12px; color:#444">
+           (숫자, 특수문자 포함 8자 이상)
+         </span>
+       </label>
+       <div class="ui small input">
+ 			<input type="password" id="signPass" style="width:200px;"/>
+	</div>
+
+       <label>비밀번호 확인</label>
+       <div class="ui small input">
+ 			<input type="password" id="signPassChk" style="width:200px;"/>
+	</div>
+
+       <label>닉네임</label>
+       <div class="ui small input">
+ 			<input type="text" id="signNickName" style="width:150px;"/> &nbsp;
+		<span id="signNickChkResult">닉네임을 입력하세요!</span>
+	</div>
+	
+	<label>주소</label>
+       <div class="ui small input">
+ 			<input type="text" id="signAddr" style="width:350px;" readonly/>&nbsp;
+ 			<button class="ui orange button" onclick="execDaumPostcode()">주소검색</button>
+ 			<input type="hidden" id="signLat" value=""/>
+ 			<input type="hidden" id="signLon" value=""/>
+	</div>
+	<div id="popupLayer" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+	<img src="http://i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	</div>
+  </div>
+  <div id="signUpFooter" class="actions">
+  	<button class="ui red deny inverted icon button" id="signUpCloseBtn">
+  		<i class="close icon"></i> 닫기
+  	</button>
+    <button class="ui violet ok inverted right labeled icon button" onclick="signUpSubmitChk();">
+      	회원가입
+      <i class="sign in icon"></i>
+    </button>
+  </div>
+</div>
+<!-- 회원가입 모달 끝 -->
+
+<!-- 알림창 모달 -->
+<div class="ui modal alertModal">
+  <i class="close icon"></i>
+  <div class="header">
+    	알림
+  </div>
+  <div id="alertMsg" class="content" style="text-align:center;">
+        
+  </div>
+  <div class="actions">
+     <div id="alertBtn" class="ui ok right grey labeled icon button">
+    </div>
+  </div>
+</div>
+<!-- 알림창 모달 끝 -->
+<!-- 헤더 관련 팝업 모달 끝-->
+
 <script>
 	var mHeight = parseInt($("#map").css("height"));
 	$("#loadingContainer").css("top", mHeight/2-50);
 </script>
 
-<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
-<script src="/magic-deal/js/common.js"></script>
+
 <script src="/magic-deal/semantic/semantic.min.js"></script>
-<script type="text/javascript" src="/magic-deal/custom_lib/jsonData.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services,clusterer"></script>
+<script src="/magic-deal/js/common.js"></script>
 <script>
+//로그인 체크 및 파라미터 가져오기
+var pageParam;
+pageParam = getParameter(document.location.href);
+	
 var loginCheck = function() {
-	$.get(contextPath + "/member/loginCheck.do", function(resultObj) {
-		var result = resultObj.ajaxResult;
-		u_info = result.data;
-		console.dir(u_info);
-		loginBoxDraw();
-	}, "json");
+	$.ajax({
+		method : "GET",
+		async: false,
+		url : contextPath + "/member/loginCheck.do", 
+		dataType : "json",
+		success : function(resultObj) {
+			var result = resultObj.ajaxResult;
+			loginBoxDraw(result.data);
+			if(result.data!=null) {
+				pageParam["userLoc"] = {
+					lat : result.data.mLat,
+					lon : result.data.mLon,
+					addr : result.data.mAddr
+				};
+			}
+		}
+	});
 };
 
 loginCheck();
 </script>
 <script>
+	var addrData = [];
+
+	var productDataLoading = function() {
+		$.getJSON(contextPath + "/product/list.do",
+			{
+				pHighCate : pageParam.hc
+			},
+			function(resultData) {
+			var result = resultData.ajaxResult;
+			addrData = result.data;
+		});
+	};
+		
+	productDataLoading();
+	
 	// custom variable
 	var levelVal = 4;
 	var minLev = 4;
@@ -504,15 +572,31 @@ loginCheck();
 	var resultOverlay;
 
 	// 지도 관련 script
-	var container = $("#map").get()[0];
-	var options = {
-		center : new daum.maps.LatLng(35.20222852723306, 129.06547785358867),
-		level : levelVal,
-		scrollwheel : false
-	};
-
 	// 지도 loading
+
+
+	var container = $("#map").get()[0];
+	
+	var options; 
+	
+	if(pageParam.userLoc!=null) {
+		options = {
+			center : new daum.maps.LatLng(pageParam.userLoc.lat, pageParam.userLoc.lon),
+			level : levelVal,
+			scrollwheel : false
+		};
+	}else {
+		levelVal = 10
+		options = {
+			// 비로그인 상태면 서울을 중심점으로 표시
+			center : new daum.maps.LatLng(37.6, 127),
+			level : levelVal,
+			scrollwheel : false	
+		}
+	}
+
 	var map = new daum.maps.Map(container, options);
+	$("#map").css("background-image", "none");
 
 
 	// 클러스터 생성
@@ -558,17 +642,14 @@ loginCheck();
 	});
 
 	// 마커 생성 (불러온 data marker 생성)
-	var markers = $(addrData).map(function(i, position) {
+	var markers = $(addrData).map(function(i, product) {
         // 좌표정보로 마커 위치 지정
 		var marker = new daum.maps.Marker({
-            position : new daum.maps.LatLng(position.lat, position.lng)
+            position : new daum.maps.LatLng(product.mLat, product.mLon)
         });
 
 		// 마커에 커스텀 데이터 삽입
-		marker.pdt_info = {
-			productName : "삼성 아티브 북",
-			price : 500000
-		};
+		marker.pdt_info = product;
 
 		return marker;
     });

@@ -1,9 +1,9 @@
 package kr.co.mdeal.controller;
 
 import java.io.File;
-import java.util.UUID;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -68,7 +68,7 @@ public class MemberController {
 		}
 	}
 	
-	@RequestMapping("logout.do")
+	@RequestMapping("auth/logout.do")
 	public AjaxResult logout(HttpSession session) {
 		session.setAttribute("userLoginInfo", null);
 		return new AjaxResult("success", null);
@@ -84,8 +84,8 @@ public class MemberController {
 	}
 	
 	// 프로필 사진을 업로드하고 Member의 mPhoto에 경로 삽입
-		@RequestMapping(value="profilephoto.do", method=RequestMethod.POST)
-		public AjaxResult profilePhotoChange( Member member, HttpSession session,
+		@RequestMapping(value="auth/profilephoto.do", method=RequestMethod.POST)
+		public AjaxResult profilePhotoChange( Member member, HttpServletRequest req,
 			      @RequestParam("file") MultipartFile file) throws Exception {
 			String realPath = servletContext.getRealPath("/upload/");
 			String oriFileName = file.getOriginalFilename();
@@ -107,7 +107,7 @@ public class MemberController {
 			service.updateProfilePhoto(member);
 			
 			// session 새로고침
-			Member login = (Member)session.getAttribute("userLoginInfo");
+			Member login = (Member)req.getAttribute("auth");
 			login.setmPhoto(fileName);
 			logger.debug("Profile Photo Change : USER ID = " + member.getId());
 			

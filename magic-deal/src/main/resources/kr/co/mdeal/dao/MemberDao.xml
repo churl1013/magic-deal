@@ -16,7 +16,7 @@
 		<result column="like_cnt" property="likeCnt" />
 		<result column="m_addr" property="mAddr" />
 		<result column="m_lat" property="mLat" />
-		<result column="m_lng" property="mLng" />
+		<result column="m_lon" property="mLon" />
 	</resultMap>
 	
 	<select id="selectIdCount" resultType="int" parameterType="string">

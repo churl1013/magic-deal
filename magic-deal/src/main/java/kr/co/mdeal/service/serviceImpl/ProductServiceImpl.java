@@ -66,4 +66,10 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		return dao.selectCategoriePhoto(cate);
 	}
+	
+	@Override
+	public List<HashMap<String, Object>> getProductList(Categorie cate) {
+		// TODO Auto-generated method stub
+		return dao.selectProductList(cate);
+	}
 }

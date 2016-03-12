@@ -42,14 +42,12 @@
   </bean>  
   
   <!-- 인터셉터를 등록 -->
-  <!--  
   <mvc:interceptors>
     <mvc:interceptor>
-        <mvc:mapping path="/**"/>
-        <bean class="java76.pms.interceptor.AuthInterceptor"/>
+        <mvc:mapping path="/*/auth/*"/>
+        <bean class="kr.co.mdeal.interceptor.AuthInterceptor"/>
     </mvc:interceptor>
   </mvc:interceptors>
-  -->
 </beans>
 
 

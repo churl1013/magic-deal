@@ -20,10 +20,68 @@
 		<result column="p_ph_thum" property="pPhotoThum" />
 	</resultMap>
 	
+	<resultMap type="product" id="productMap">
+		<result column="p_no" property="pNo" />
+		<result column="m_no" property="mNo" />
+		<result column="p_c_no" property="pCategorieNo" />
+		<result column="price" property="price" />
+		<result column="p_content" property="pContent" />
+		<result column="p_reg_date" property="pRegDate" />
+		<result column="deal_type" property="dealType" />
+		<result column="deal_step" property="dealStep" />
+		<result column="quality" property="quality" />
+		<result column="deal_opt" property="dealOpt" />
+		<result column="p_addr" property="pAddr" />
+		<result column="p_lat" property="pLat" />
+		<result column="p_lon" property="pLon" />
+	</resultMap>
+	
+	<resultMap type="hashMap" id="productAllMap">
+		<result column="p_no" property="pNo" />
+		<result column="m_no" property="mNo" />
+		<result column="p_c_no" property="pCategorieNo" />
+		<result column="price" property="price" />
+		<result column="p_content" property="pContent" />
+		<result column="p_reg_date" property="pRegDate" />
+		<result column="deal_type" property="dealType" />
+		<result column="deal_step" property="dealStep" />
+		<result column="quality" property="quality" />
+		<result column="deal_opt" property="dealOpt" />
+		<result column="p_addr" property="pAddr" />
+		<result column="p_lat" property="pLat" />
+		<result column="p_lon" property="pLon" />
+		<result property="photoNo" column="p_ph_no"/>
+		<result property="photoName" column="p_ph_name"/>
+		<result property="photoPath" column="p_ph_path"/>
+		<result property="cateKeyword" column="p_keyword"/>
+		<result property="cateHigh" column="p_high_cate"/>
+		<result property="cateLow" column="p_low_cate"/>
+	</resultMap>
+	
+	
+	<select id="selectProductList" parameterType="categorie" resultMap="productAllMap">
+		select pro.*, pho.p_ph_no, pho.p_ph_path, pho.p_ph_name,
+	   		   cate.p_keyword, cate.p_high_cate, cate.p_low_cate
+  		  from product pro, pro_photo pho, pro_categorie cate
+ 		 where pro.p_no = pho.p_no 
+ 		 	   and pro.p_c_no = cate.p_cate_no 
+	   		   and pho.p_ph_thum='y' 
+	   		   and cate.p_high_cate = #{pHighCate}
+	   		   <if test="pLowCate != 0">
+	   		   and cate.p_low_cate = #{pLowCate}
+	   		   </if>
+	   		   <if test="pKeyword != null">
+	   		   and cate.p_keyword like '%'||#{pKeyword}||'%'
+	   		   </if>
+	</select>
+	
 	<select id="selectCategories" parameterType="categorie" resultMap="categorieMap">
 		select * 
 		  from pro_categorie
-		 where p_high_cate = #{pHighCate} and p_low_cate = #{pLowCate}
+		 where p_high_cate = #{pHighCate}
+		 <if test="pLowCate != null">
+		   and p_low_cate = #{pLowCate}
+		 </if>
 		 order by p_keyword asc
 	</select>
 	
@@ -38,9 +96,9 @@
 	
 	<insert id="insertProduct" parameterType="product">
 		insert into product
-			   (m_no, p_c_no, price, p_content, p_reg_date, deal_type, deal_step, quality, deal_opt, p_addr, p_lat, p_lon)
+			   (m_no, p_c_no, price, p_content, p_reg_date, deal_type, quality, deal_opt, p_addr, p_lat, p_lon)
 		values (#{mNo}, #{pCategorieNo}, #{price}, #{pContent}, now(), 
-				#{dealType}, #{dealStep}, #{quality}, #{dealOpt}, #{pAddr}, #{pLat}, #{pLon})
+				#{dealType}, #{quality}, #{dealOpt}, #{pAddr}, #{pLat}, #{pLon})
 		<selectKey keyProperty="pNo" resultType="int">
 			select last_insert_id()
 		</selectKey>
@@ -67,7 +125,7 @@
 				select pro.p_no, cate.p_high_cate, ph.p_ph_path, ph.p_ph_name
 			  	  from pro_photo ph, product pro, pro_categorie cate
 			 	 where cate.p_cate_no = pro.p_c_no and pro.p_no = ph.p_no
-				  	   and ph.p_ph_thum='y' and pro.deal_type = 's'
+				  	   and ph.p_ph_thum='y' and pro.deal_type = 's' and pro.deal_step='y'
 				) productall
 	  	 group by p_high_cate
 	  	 order by p_high_cate asc
@@ -79,7 +137,7 @@
 		 where p_ph_thum='y' and p_no in (
 											select p_no 
 											  from product 
-											 where deal_type='s' and p_c_no in (
+											 where deal_type='s' and deal_step='y' and p_c_no in (
 																				select p_cate_no 
 																				  from pro_categorie 
 																				 where p_high_cate = #{pHighCate}

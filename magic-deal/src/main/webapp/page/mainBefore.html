@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 
 <!-- 기본 임폴트 css 파일 -->
+<link rel="shortcut icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
@@ -155,7 +157,7 @@ section>div {
 		<!-- 로그인 관련 내용 헤더 -->
 	</div>
 	<div id="headerLogo">
-		<img src="../img/logo1.png"/>
+		<img src="../img/fontlogo.png"/>
 	</div>
 </header>
 <!-- 헤더끝 -->
@@ -679,7 +681,6 @@ section>div {
 	$("section").niceScroll();
 	imageChange = $("#categorieWrap").imagechange();
 	
-
 	$(".imgChangeBox").hover(function() {
 		$(this).find(".hoverLabel").toggleClass("hoverLabelOpen");
 	});
@@ -688,7 +689,6 @@ section>div {
 	$(".imgChangeBox").dimmer({
 		on : "hover"
 	});
-	
 	
 	// 이미지 체인저 시간값 설정
 	setTimeout(randomImgChange, 2000);

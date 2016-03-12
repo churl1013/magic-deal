@@ -211,7 +211,7 @@ var loginClose = function() {
 };
 
 var logout = function() {
-	$.get(contextPath + "/member/logout.do", function() {
+	$.get(contextPath + "/member/auth/logout.do", function() {
 		location.href = location.href;
 	},"json");
 };
@@ -258,7 +258,7 @@ var loginBoxDraw = function(u_info) {
 			logout();
 		});
 		logBoxWrap.find("#logUserBtn").on("click", function() {
-			document.location.href = contextPath + "/page/mypage.htm?ow=" + u_info.id;
+			document.location.href = contextPath + "/page/mypage.html?ow=" + u_info.id;
 		})
 	}else {
 		logBoxWrap.find("#loginNsignupBtn").on("click", function() {
@@ -351,15 +351,15 @@ var getParameter = function(url) {
 	});
 	
 	$("#headerLogo").on("click", function() {
-		document.location.href = contextPath+'/page/main.htm';
+		document.location.href = contextPath+'/page/main.html';
 	});
 	
 	$("#navMainDirectBtn").on("click", function() {
-		document.location.href = contextPath+'/page/main.htm';
+		document.location.href = contextPath+'/page/main.html';
 	});
 	
 	$("#navProductRegistBtn").on("click", function() {
-		document.location.href = contextPath+'/page/regPro.htm';
+		document.location.href = contextPath+'/page/regPro.html';
 	});
 	
 	$("#navBoardDirectBtn").on("click", function() {

@@ -9,6 +9,9 @@
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<link rel="shortcut icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
+<title>Magic Deal</title>
 <!-- 기본 임폴트 css 파일 끝-->
 
 <style>
@@ -268,9 +271,12 @@ footer {
 
 <!-- 헤더부 -->
 <header>
+	<div id="samllLogo">
+		<img src="../img/smalllogo.png" style="width:70px; height:70px"/>
+	</div>
 	<div class="ui search">
   		<div class="ui icon input">
-    		<input class="prompt" type="text" placeholder="원하는 지역을 검색하세요" style="font-size:12px; width:200px;"/>
+    		<input class="prompt" type="text" placeholder="원하는 키워드를 검색하세요" style="font-size:12px; width:200px;"/>
    			 <i class="search icon"></i>
   		</div>
   	<div class="results"></div>
@@ -279,7 +285,7 @@ footer {
 		<!-- 로그인 관련 내용 헤더 -->
 	</div>
 	<div id="headerLogo">
-		<img src="../img/logo1.png"/>
+		<img src="../img/fontlogo.png"/>
 	</div>
 </header>
 <!-- 헤더끝 -->
@@ -566,7 +572,7 @@ var loginCheck = function() {
 		loginBoxDraw(result.data);
 		if(!result.data) {
 			alert("로그인 후 이용해주세요!");
-			document.location.href = contextPath + "/page/main.htm";
+			document.location.href = contextPath + "/page/main.html";
 		}
 	});
 };
@@ -900,7 +906,7 @@ $("#productSubmitBtn").on("click", function() {
 		}
 		
 		$.ajax({
-			url : contextPath+"/product/regist.do",
+			url : contextPath+"/product/auth/regist.do",
 			type : "post",
 			dataType : "json",
 			data : data,
@@ -911,7 +917,7 @@ $("#productSubmitBtn").on("click", function() {
 			}
 		}).done(function(resultObj) {
 			var result = resultObj.ajaxResult;
-			document.location.href = contextPath + "/page/mypage.htm?ow="+result.data;
+			document.location.href = contextPath + "/page/mypage.html?ow="+result.data;
 		});
 		
 	}else {
