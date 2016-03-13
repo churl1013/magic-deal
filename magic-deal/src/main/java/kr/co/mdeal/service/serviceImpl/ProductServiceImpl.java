@@ -32,11 +32,7 @@ public class ProductServiceImpl implements ProductService{
 		// 카테고리 번호가 없는 카테고리면 카테고리 먼저 입력
 		// 카테고리 번호가 이미 존재한다면 바로 상품 입력
 		// 상품 입력 후 파일 입력
-		
-		System.out.println(cate.getpCategorieNo());
-		System.out.println(cate.getpHighCate());
-		System.out.println(cate.getpLowCate());
-		System.out.println(cate.getpKeyword());
+
 		if(cate.getpCategorieNo() == -1) {
 			dao.insertCategorie(cate);
 		}

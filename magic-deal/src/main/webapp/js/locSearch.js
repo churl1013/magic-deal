@@ -25,6 +25,10 @@ var subwayIcon = null;
 var subwayMarkers = [];
 var subwayCircle = null;
 
+// 리스트 표시 관련
+var pageSize = 10;
+
+
 var locInit = function() {
 	clustererInit();
 	placesInit();
@@ -204,22 +208,6 @@ var drawMarker = function(data) {
 	$(proCard).appendTo("#productListBox");
 };
 
-var drawMarkerInList = function(selectMarkers, start, last) {
-	var i;
-	var s = start||0;
-	var l = last||10;
-	
-	if(selectMarkers.length < 10) {
-		l = selectMarkers.length;
-	}
-	
-	for(i=s;i<l;i++) {
-		var data = selectMarkers[i].prodata;
-		drawMarker(data);
-	}
-};
-
-
 //근처 역 정보 불러오기 콜백함수
 var loadStation = function(status, result) {
 	if(status === daum.maps.services.Status.OK) {
@@ -273,15 +261,62 @@ var addImgMarker = function(place) {
 	});
 };
 
+var drawMarkerInList = function(page) {
+	var i;
+	var s = (page-1)*pageSize;
+	var l = page*pageSize;
+	
+	if(filterMarkers.length < l) {
+		l = filterMarkers.length;
+	}
+	$("#productListBox").empty();
+	$("#productListPagingBox").empty();
+	for(i=s;i<l;i++) {
+		var data = filterMarkers[i].prodata;
+		drawMarker(data);
+	}
+	
+	drawPageNumber(filterMarkers.length, page);
+};
 
-var drawPageNumber = function(length, pageSize, currPage) {
-	var maxSize = (length-1)/pageSize+1;
+
+var drawPageNumber = function(length, currPage) {
+	var maxSize = Math.floor((length-1)/pageSize)+1;
 	var minSize = 1;
-	var currMaxSize = ((currPage-1)/pageSize+1)*pageSize;
-	var currMinSize = ((currPage-1)/pageSize)*10+1;
+	var currMaxSize = (Math.floor((currPage-1)/pageSize)+1)*pageSize;
+	var currMinSize = (Math.floor((currPage-1)/pageSize))*10+1;
 	
 	if(currMaxSize > maxSize) {
 		currMaxSize = maxSize;
 	}
+	
+	if(currMinSize!=1) {
+		$("#productListPagingBox").append(
+				"<a class='pageBtn' onclick='drawMarkerInList("+minSize+")'>" 
+				+"<i class='angle double left teal icon'></i></a>");
+		$("#productListPagingBox").append(
+				"<a class='pageBtn' onclick='drawMarkerInList("+(currMinSize-1)+")'>" 
+				+ "<i class='angle left teal icon'></i>");
+	}
+	
+	var i;
+	for(i=currMinSize;i<=currMaxSize;i++) {
+		if(currPage==i) {
+			$("#productListPagingBox").append("<a class='pageBtn currPage' onclick='return false;'>"+i+"</a>");
+			continue;
+		}
+		$("#productListPagingBox").append(
+				"<a class='pageBtn' onclick='drawMarkerInList("+i+")'>"+i+"</a>");
+	}
+	
+	if(currMaxSize<maxSize) {
+		$("#productListPagingBox").append(
+				"<a class='pageBtn' onclick='drawMarkerInList("+(currMaxSize+1)+")'>" 
+				+ "<i class='angle right teal icon' onclick='drawMarkerInList("+currMaxSize+1+")'></i>");
+		$("#productListPagingBox").append(
+				"<a class='pageBtn' onclick='drawMarkerInList("+maxSize+")'>" 
+				+ "<i class='angle double right teal icon' onclick='drawMarkerInList("+maxSize+")'></i>");
+	}
+	
+	return false;
 };
-

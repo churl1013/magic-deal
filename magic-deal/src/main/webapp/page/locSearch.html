@@ -24,14 +24,6 @@ section {
 	overflow-y : hidden;
 }
 
-.locFilterWrap {
-	width : 100%;
-	min-width : 1024px;
-	height : 50px;
-	background-color : white;
-	border-bottom : 1px solid #c8c8c8;
-}
-
 .locContentWrap {
 	width : 100%;
 	min-width : 1024px;
@@ -56,15 +48,6 @@ section {
 #mapContainer {
 	width : 100%;
 	height : 100%;
-}
-
-.dot {
-		width : 16px;
-		height : 16px;
-		background-color : rgba(255,255,255,0.9);
-		border-radius : 8px;
-		display : inline-block;
-		border : 4px solid orange;
 }
 
 #selectNumberViewerWrap {
@@ -96,20 +79,9 @@ section {
 #productListPagingBox {
 	width : 100%;
 	height : 30px;
-	background-color : #d8d8d8;
-}
-
-#distanceInfo {
-	width : 130px;
-	height : 100px;
-	text-align : center;
-}
-
-#distanceInfo>.header {
-	background-color : #f2711c;
-	height : 30px;
+	background-color : mintcream;
 	line-height : 30px;
-	font-weight : bold;
+	text-align : center;
 }
 
 .productCard {
@@ -135,6 +107,7 @@ section {
 	width : 200px;
 	height : 140px;
 	float : left;
+	z-index : 1;
 }
 
 .productCard>.proInfo>span {
@@ -154,6 +127,143 @@ section {
 
 .productCard>.proInfo>span:nth-child(3) {
 	color : #888;
+}
+
+#productListPagingBox>.pageBtn {
+	cursor : pointer;
+	text-decoration : none;
+	color : black;
+	display : inline-block;
+	width : 28.5px;
+	font-weight : 600;
+}
+
+#productListPagingBox>.pageBtn.currPage {
+	font-weight : 800;
+	cursor : default;
+	background-color : #a333c8;
+	color : white;
+}
+
+#listLoadingWrap {
+	width : 100%;
+	height : 100%;
+	position : absolute;
+	background-color : rgba(188,156,26,0.7);
+	top : 0px;
+	left : 0px;
+	z-index : 2;
+}
+
+.sk-folding-cube {
+  margin: 0px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  -webkit-transform: rotateZ(45deg);
+          transform: rotateZ(45deg);
+}
+
+.sk-folding-cube .sk-cube {
+  float: left;
+  width: 50%;
+  height: 50%;
+  position: relative;
+  -webkit-transform: scale(1.1);
+      -ms-transform: scale(1.1);
+          transform: scale(1.1); 
+}
+.sk-folding-cube .sk-cube:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+          animation: sk-foldCubeAngle 2.4s infinite linear both;
+  -webkit-transform-origin: 100% 100%;
+      -ms-transform-origin: 100% 100%;
+          transform-origin: 100% 100%;
+}
+.sk-folding-cube .sk-cube2 {
+  -webkit-transform: scale(1.1) rotateZ(90deg);
+          transform: scale(1.1) rotateZ(90deg);
+}
+.sk-folding-cube .sk-cube3 {
+  -webkit-transform: scale(1.1) rotateZ(180deg);
+          transform: scale(1.1) rotateZ(180deg);
+}
+.sk-folding-cube .sk-cube4 {
+  -webkit-transform: scale(1.1) rotateZ(270deg);
+          transform: scale(1.1) rotateZ(270deg);
+}
+.sk-folding-cube .sk-cube2:before {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s;
+}
+.sk-folding-cube .sk-cube3:before {
+  -webkit-animation-delay: 0.6s;
+          animation-delay: 0.6s; 
+}
+.sk-folding-cube .sk-cube4:before {
+  -webkit-animation-delay: 0.9s;
+          animation-delay: 0.9s;
+}
+@-webkit-keyframes sk-foldCubeAngle {
+  0%, 10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+            transform: perspective(140px) rotateX(-180deg);
+    opacity: 0; 
+  } 25%, 75% {
+    -webkit-transform: perspective(140px) rotateX(0deg);
+            transform: perspective(140px) rotateX(0deg);
+    opacity: 1; 
+  } 90%, 100% {
+    -webkit-transform: perspective(140px) rotateY(180deg);
+            transform: perspective(140px) rotateY(180deg);
+    opacity: 0; 
+  } 
+}
+
+@keyframes sk-foldCubeAngle {
+  0%, 10% {
+    -webkit-transform: perspective(140px) rotateX(-180deg);
+            transform: perspective(140px) rotateX(-180deg);
+    opacity: 0; 
+  } 25%, 75% {
+    -webkit-transform: perspective(140px) rotateX(0deg);
+            transform: perspective(140px) rotateX(0deg);
+    opacity: 1; 
+  } 90%, 100% {
+    -webkit-transform: perspective(140px) rotateY(180deg);
+            transform: perspective(140px) rotateY(180deg);
+    opacity: 0; 
+  }
+}
+
+.locFilterWrap {
+	width : 100%;
+	min-width : 1024px;
+	height : 50px;
+	background-color : white;
+	border-bottom : 1px solid #c8c8c8;
+	padding-left : 60px;
+}
+
+#dealTypeFilter {
+	width : 180px;
+	height : 50px;
+	line-height : 50px;
+	padding : 0px;
+	margin : 0px;
+	border : none!important;
+	border-radius : 0px!important;
+}
+
+#dealTypeFilter>.menu {
+	margin-top : 0px!important;
 }
 </style>
 </head>
@@ -199,6 +309,37 @@ section {
 <!-- 내용부 -->
 <section>
 	<div class="locFilterWrap">
+		<div id="dealTypeFilter" class="ui floating labeled icon compact basic dropdown button">
+		  <i class="filter black icon"></i>
+		  <span class="text"> <i class="cubes orange icon"></i>모든 거래</span>
+		  <div class="menu" style="margin-top:0px;">
+		    <div class="item">
+		      	<i class="cubes orange icon"></i>모든 거래
+		    </div>
+		    <div class="item">
+		      	<i class="shop violet icon"></i>삽니다
+		    </div>
+		    <div class="item">
+		      	<i class="won pink icon"></i>팝니다
+		    </div>
+		  </div>
+		</div>
+		
+		<div id="searchFilter" class="ui floating labeled icon compact basic dropdown button">
+		  <i class="filter black icon"></i>
+		  <span class="text"> <i class="cubes orange icon"></i>모든 거래</span>
+		  <div class="menu" style="margin-top:0px;">
+		    <div class="item">
+		      	<i class="cubes orange icon"></i>모든 거래
+		    </div>
+		    <div class="item">
+		      	<i class="shop violet icon"></i>삽니다
+		    </div>
+		    <div class="item">
+		      	<i class="won pink icon"></i>팝니다
+		    </div>
+		  </div>
+		</div>
 		
 	</div>
 	<div class="locContentWrap">
@@ -217,6 +358,14 @@ section {
 				
 			</div>
 			<div id="productListPagingBox"></div>
+			<div id="listLoadingWrap">
+				<div class="sk-folding-cube">
+					<div class="sk-cube1 sk-cube"></div>
+					<div class="sk-cube2 sk-cube"></div>
+					<div class="sk-cube4 sk-cube"></div>
+					<div class="sk-cube3 sk-cube"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>
@@ -341,6 +490,9 @@ section {
 	$(".locContentWrap").css("height", sHeight-70-50);
 	$(".locMapWrap").css("width", sWidth-400);
 	$("#productListBox").css("height", sHeight-70-80-50);
+	$(".sk-folding-cube").css("margin-top", (sHeight-70-50)/2);
+	
+	$(".ui.dropdown").dropdown();
 	
 	$(window).resize(function() {
 		sWidth = parseInt($("section").css("width"));
@@ -350,6 +502,7 @@ section {
 		}
 		$(".locContentWrap").css("height", sHeight-70-50);
 		$("#productListBox").css("height", sHeight-70-80-50);
+		$(".sk-folding-cube").css("margin-top", (sHeight-70-50)/2);
 	});
 </script>
 
@@ -437,23 +590,24 @@ section {
 	    
 	    
 		daum.maps.event.addListener(clusterer, 'clustered', function(clusters) {
+			$("#listLoadingWrap").css("display", "block");
 			currBndMarkers = getBoundNodes(clusters);
 			var totalSize = 0;
-			$("#productListBox").empty();
 			filterMarkers = [];
 			currBndMarkers.forEach(function(cluster) {
 				var selectMarkers = cluster.getMarkers();
 				totalSize += selectMarkers.length;
 				filterMarkers = filterMarkers.concat(selectMarkers);
 			});
-			drawMarkerInList(filterMarkers);
+			drawMarkerInList(1);
 			
-			drawPageNumber(filterMarkers.length, 10, 1);
+			
 			if(totalSize<=500) {
 				$("#selectNumberViewer").text(totalSize);
 			}else {
 				$("#selectNumberViewer").text("500 +");
 			}
+			$("#listLoadingWrap").css("display", "none");
 		});
 		
 		daum.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
@@ -465,9 +619,8 @@ section {
 			}else {
 				$("#selectNumberViewer").text("500 +");
 			}
-			
-			$("#productListBox").empty();
-			drawMarkerInList(selectMarkers);
+			filterMarkers = selectMarkers;
+			drawMarkerInList(1);
 		});
 	});
 	
