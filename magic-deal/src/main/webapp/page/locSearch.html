@@ -67,27 +67,30 @@ section {
 		border : 4px solid orange;
 }
 
-#selectNumberViewer {
+#selectNumberViewerWrap {
 	width : 100%;
-	height : 30px;
-	background-color : #803621;
+	height : 50px;
+	background-color : #a333c8;
 	text-align : center;
-	font-size : 13px;
-	line-height : 30px;
+	font-size : 14px;
+	line-height : 50px;
 	color : white;
 	font-weight : bold;
 }
 
 #selectNumberViewer::before {
-	content : "총 ";
+	content : "검색결과 ";
 }
 
 #selectNumberViewer::after {
-	content : "개의 결과";
+	content : "개";
 }
 
 #productListBox {
 	width : 100%;
+	padding : 0px 10px 0px 10px;
+	overflow-x : hidden;
+	overflow-y : scroll;
 }
 
 #productListPagingBox {
@@ -107,6 +110,50 @@ section {
 	height : 30px;
 	line-height : 30px;
 	font-weight : bold;
+}
+
+.productCard {
+	width : 370px;
+	height : 150px;
+	border : 1px solid #c8c8c8;
+	padding : 5px;
+	margin-top : 5px;
+	position : relative;
+	cursor : pointer;
+}
+
+.productCard>.proPhoto {
+	width : 130px;
+	height : 140px;
+	float : left;
+	margin-right : 5px;
+	background-image : url('/magic-deal/img/default/image.png');
+	background-size : 100% 100%;
+}
+
+.productCard>.proInfo {
+	width : 200px;
+	height : 140px;
+	float : left;
+}
+
+.productCard>.proInfo>span {
+	width : 100%;
+	height : 35px;
+	line-height : 35px;
+	display : block;
+	font-size : 14px;
+	text-overflow : ellipsis;
+	white-space : nowrap;
+	overflow : hidden;
+}
+
+.productCard>.proInfo>span:first-child {
+	font-weight : bold;
+}
+
+.productCard>.proInfo>span:nth-child(3) {
+	color : #888;
 }
 </style>
 </head>
@@ -152,7 +199,7 @@ section {
 <!-- 내용부 -->
 <section>
 	<div class="locFilterWrap">
-	
+		
 	</div>
 	<div class="locContentWrap">
 		<div class="locMapWrap">
@@ -162,8 +209,13 @@ section {
 		</div>
 		
 		<div class="locListWrap">
-			<div id="selectNumberViewer"></div>
-			<div id="productListBox"></div>
+			<div id="selectNumberViewerWrap">
+				<i class="cubes icon"></i>
+				<span id="selectNumberViewer"></span>
+			</div>
+			<div id="productListBox">
+				
+			</div>
 			<div id="productListPagingBox"></div>
 		</div>
 	</div>
@@ -288,7 +340,7 @@ section {
 	// 컨텐츠가가 들어갈 div의 크기 셋팅
 	$(".locContentWrap").css("height", sHeight-70-50);
 	$(".locMapWrap").css("width", sWidth-400);
-	$("#productListBox").css("height", sHeight-70-60-50);
+	$("#productListBox").css("height", sHeight-70-80-50);
 	
 	$(window).resize(function() {
 		sWidth = parseInt($("section").css("width"));
@@ -297,7 +349,7 @@ section {
 			$(".locMapWrap").css("width", sWidth-400);
 		}
 		$(".locContentWrap").css("height", sHeight-70-50);
-		$("#productListBox").css("height", sHeight-70-60-50);
+		$("#productListBox").css("height", sHeight-70-80-50);
 	});
 </script>
 
@@ -337,6 +389,7 @@ section {
 	    }
 	    
 	    map = new daum.maps.Map(mapContainer, options);
+	    
 	    loginCheck(map);
 	    locInit();
 	    
@@ -349,10 +402,6 @@ section {
 			// 확대수준 변경, 중심좌표 변경 시 화면에 표시된 cluster가 바뀜
 			clusterer.redraw();
 			
-			if(resultOverlay!=null) {
-				closeDistanceOverlay();
-			}
-
 			// 최대 확대 수준에서만 역정보 제공
 			if(locUtil.getLevel()<=5&&subwayMarkers.length==0) {
 				places.categorySearch('SW8', loadStation, {
@@ -369,48 +418,7 @@ section {
 				}
 			}
 		});
-	    
-		// 지하철 역부터 거리측정시 사용되는 이벤트
-		daum.maps.event.addListener(map, 'mousemove', function(mouseEvent) {
-			if(drawFlag) {
-				var mousePosition = mouseEvent.latLng;
-				var linePath = [centerPosition, mousePosition];
-				drawLine.setPath(linePath);
 
-				var length = drawLine.getLength();
-
-				if(length > 0) {
-					drawLine.setMap(map);
-				}else {
-					drawLine.setMap(null);
-				}
-			}
-		});
-
-		daum.maps.event.addListener(map, 'click', function(mouseEvent) {
-			if(drawFlag) {
-				var rClickPosition = mouseEvent.latLng;
-				var distance = Math.round(drawLine.getLength());
-				var content = getTimeHTML(distance);
-
-				showDistance(content, rClickPosition);
-
-				drawLine.setMap(null);
-				drawDot.setMap(null);
-				drawFlag = false;
-			}
-		});
-
-		var showDistance = function(content, lastPosition) {
-			resultOverlay = new daum.maps.CustomOverlay({
-				content : content,
-				map : map,
-				position : lastPosition
-			});
-
-			resultOverlay.setMap(map);
-		};
-	    
 	    // 클러스터 마우스 오버 이벤트
 		daum.maps.event.addListener(clusterer, 'clusterover', function(cluster) {
 			$(cluster.getClusterMarker().Eb).css({
@@ -431,19 +439,34 @@ section {
 		daum.maps.event.addListener(clusterer, 'clustered', function(clusters) {
 			currBndMarkers = getBoundNodes(clusters);
 			var totalSize = 0;
+			$("#productListBox").empty();
+			filterMarkers = [];
 			currBndMarkers.forEach(function(cluster) {
 				var selectMarkers = cluster.getMarkers();
 				totalSize += selectMarkers.length;
-				drawMarkerInList(selectMarkers);
+				filterMarkers = filterMarkers.concat(selectMarkers);
 			});
-			$("#selectNumberViewer").text(totalSize);
+			drawMarkerInList(filterMarkers);
+			
+			drawPageNumber(filterMarkers.length, 10, 1);
+			if(totalSize<=500) {
+				$("#selectNumberViewer").text(totalSize);
+			}else {
+				$("#selectNumberViewer").text("500 +");
+			}
 		});
 		
 		daum.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
 			var totalSize = 0;
 			var selectMarkers = cluster.getMarkers();
 			totalSize += selectMarkers.length;
-			$("#selectNumberViewer").text(totalSize);
+			if(totalSize<=500) {
+				$("#selectNumberViewer").text(totalSize);
+			}else {
+				$("#selectNumberViewer").text("500 +");
+			}
+			
+			$("#productListBox").empty();
 			drawMarkerInList(selectMarkers);
 		});
 	});
@@ -476,7 +499,25 @@ section {
 		}
 	});
 	
-	
+	// product Card Event 등록
+	$("#productListBox").on('mouseenter',">.productCard", function() {
+			var lat = $(this).find("input[name=lat]").val();
+			var lon = $(this).find("input[name=lon]").val();
+			
+			var noticeMarker = new daum.maps.Marker({
+		        position : new daum.maps.LatLng(lat, lon),
+		        image : markerImg
+		    });
+			noticeMarker.setMap(map);
+			noticeMarker.setVisible(true);
+
+			setTimeout((function(marker) {
+				return function() {
+					marker.setVisible(false);
+				}
+			})(noticeMarker), 700);
+			return false;
+		});
 </script>
 
 </body>

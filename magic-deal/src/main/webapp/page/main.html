@@ -626,6 +626,7 @@ section>div {
 		$.getJSON(contextPath + "/product/allCateImg.do", function(resultObj) {
 			var result = resultObj.ajaxResult;
 			var i;
+			console.dir(result);
 			for(i=0; i<result.data.length; i++) {
 				var imgPath = contextPath;
 					imgPath += "/upload/product/"+ result.data[i].p_ph_path; 

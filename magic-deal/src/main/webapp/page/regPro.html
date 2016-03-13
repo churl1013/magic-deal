@@ -769,21 +769,12 @@ $("#dealFlag").on("change", function() {
 		$("#price").prop("disabled", false);
 		$("input[name=quality]").prop("disabled", false);
 		$("input[type=file]").prop("disabled", false);
-		
-		cloneBox.clone().appendTo(".photoRegBox");
-		cloneBox.clone().appendTo(".photoRegBox");
-		cloneBox.clone().appendTo(".photoRegBox");
-		cloneBox.clone().appendTo(".photoRegBox");
-		appendLabel();
 	}else {
 		// 구매
 		$("#price").val("");
 		$("#price").prop("disabled", true);
 		$("input[name=quality]").prop("checked", false);
 		$("input[name=quality]").prop("disabled", true);
-		$("input[type=file]").prop("disabled", true);
-		$("input[type=file]").prop("disabled", true);
-		$(".photoRegBox").empty();
 	}
 });
 
@@ -860,6 +851,10 @@ $("#price").on("click", function() {
 
 
 var checkValidate = function() {
+	var existFiles = $(".photoRegBox").find("div[data-chk='true']");
+	if(existFiles.length==0) {
+		return "최소 한개의 사진을 등록해야 합니다!";
+	}
 	return "ok";
 };
 
@@ -889,6 +884,8 @@ $("#productSubmitBtn").on("click", function() {
 		opt = opt?"y":"n";
 				
 		var keyNum = cateNumSearch(keyword);
+		
+		console.log(keyNum);
 		
 		data.append("dealType", dealType);
 		data.append("price", price);
@@ -928,7 +925,6 @@ $("#productSubmitBtn").on("click", function() {
 
 var cateNumSearch = function(keyword) {
 	var i;
-	console.log(keywords.length);
 	for(i=0; i<keywords.length; i++) {
 		if(keywords[i].pKeyword == keyword)
 			return keywords[i].pCategorieNo;

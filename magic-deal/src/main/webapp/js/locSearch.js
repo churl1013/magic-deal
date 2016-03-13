@@ -6,9 +6,14 @@
 var map;
 var clusterer;
 var markers = [];
+var filterMarkers = [];
 var places;
 var productData;	
 var locUtil;
+
+var markerImg;
+var sellMarkerImg;
+var buyMarkerImg;
 
 // 화면 범위 측정 및 표시데이터 관련
 var mBound = {};
@@ -20,17 +25,25 @@ var subwayIcon = null;
 var subwayMarkers = [];
 var subwayCircle = null;
 
-// 거리측정 라인 관련 변수
-var drawLine;
-var drawDot;
-var drawDot;
-var drawFlag;
-var centerPosition;
-var resultOverlay;
-
 var locInit = function() {
 	clustererInit();
 	placesInit();
+	
+	mBound = map.getBounds();
+	currCenter = map.getCenter();
+	
+	var imageSrc = contextPath + "/img/loc/location-icon.png";
+	var imageSize = new daum.maps.Size(30,45);
+	var imageOption = {offset: new daum.maps.Point(15,45)};
+	markerImg = new daum.maps.MarkerImage(imageSrc, imageSize, imageOption);
+	
+	imageSize = new daum.maps.Size(50,50);
+	imageOption = {offset: new daum.maps.Point(25, 50)};
+	imageSrc = contextPath + "/img/loc/sell_marker.png";
+	sellMarkerImg = new daum.maps.MarkerImage(imageSrc, imageSize, imageOption);
+	
+	imageSrc = contextPath + "/img/loc/buy_marker.png";
+	buyMarkerImg = new daum.maps.MarkerImage(imageSrc, imageSize, imageOption);
 };
 
 var placesInit = function() {
@@ -42,7 +55,7 @@ var clustererInit = function() {
 		map: this.map,
 		averageCenter : true,
 		minLevel : 3,
-		minClusterSize : 1,
+		minClusterSize : 2,
 		gridSize : 80,
 		disableClickZoom : true,
 		styles: [{
@@ -83,12 +96,26 @@ var clustererInit = function() {
 // 마커 추가 함수
 var addMarkers = function() {
 	productData.forEach(function(d) {
+		var img;
+		if(d.dealType == 's') {
+			img = sellMarkerImg;
+		}else {
+			img = buyMarkerImg;
+		}
 		var marker = new daum.maps.Marker({
-            position : new daum.maps.LatLng(d.pLat, d.pLon)
+            position : new daum.maps.LatLng(d.pLat, d.pLon),
+            image : img
         });
 
 		// 마커에 커스텀 데이터 삽입
 		marker.prodata = d;
+		
+		daum.maps.event.addListener(marker, "click", function() {
+			$("#selectNumberViewer").text("1");
+			$("#productListBox").empty();
+			var data = this.prodata;
+			drawMarker(data);
+		});
 
 		markers.push(marker);
     });
@@ -147,49 +174,51 @@ var getBoundNodes = function(clusters) {
 	return nodes;
 };
 
-var drawMarkerInList = function(selectMarkers) {
-	selectMarkers.forEach(function(marker) {
-		console.dir(marker.prodata);
-		// 리스트에 추가
-	});
+var drawMarker = function(data) {
+	var proCard = '<div class="productCard">';
+	proCard += '<div class="proPhoto"';
+	proCard += 'style="background-image:url(\'';
+	proCard += contextPath + '/upload/product/' + data.photoPath;
+	proCard += '/thum_' + data.photoName;
+	proCard += '\');"';
+	proCard += '></div>';
+	
+	var priceInfo = data.dealType=='s'?data.price+'원' : '가격협의';
+	
+	proCard += '<div class="proInfo">';
+	proCard += '<span>'+data.cateKeyword+'</span>';
+	proCard += '<span>'+priceInfo+'</span>';
+	proCard += '<span>'+data.pContent+'</span>';
+	proCard += '<span>'+data.pAddr+'</span>';
+	proCard += '</div>';
+	proCard += '<label class="ui ';
+	var labelColor = data.dealType=='s'?'pink':'violet';
+	var labelIcon = data.dealType=='s'?'won' : 'shop';
+	proCard += labelColor + ' right corner label">';
+	proCard += '<i class="' + labelIcon + ' icon"></i></label>';
+	proCard += '<input type="hidden" name="productNo" value="'+data.pNo+'"/>';
+	proCard += '<input type="hidden" name="lat" value="'+data.pLat+'"/>';
+	proCard += '<input type="hidden" name="lon" value="'+data.pLon+'"/>';
+	proCard += '</div>';
+	
+	$(proCard).appendTo("#productListBox");
 };
 
-var getTimeHTML = function(distance) {
-	// 도보의 시속은 평균 4km/h 이고 도보의 분속은 67m/min입니다
-	var walkkTime = distance / 67 | 0;
-	var walkHour = '', walkMin = '';
-
-	// 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
-	if (walkkTime > 60) {
-		walkHour = Math.floor(walkkTime / 60) + '시간 '
+var drawMarkerInList = function(selectMarkers, start, last) {
+	var i;
+	var s = start||0;
+	var l = last||10;
+	
+	if(selectMarkers.length < 10) {
+		l = selectMarkers.length;
 	}
-	walkMin = walkkTime % 60 + '분'
-
-	// 자전거의 평균 시속은 16km/h 이고 이것을 기준으로 자전거의 분속은 267m/min입니다
-	var bycicleTime = distance / 227 | 0;
-	var bycicleHour = '', bycicleMin = '';
-
-	// 계산한 자전거 시간이 60분 보다 크면 시간으로 표출합니다
-	if (bycicleTime > 60) {
-		bycicleHour = Math.floor(bycicleTime / 60) + '시간 '
+	
+	for(i=s;i<l;i++) {
+		var data = selectMarkers[i].prodata;
+		drawMarker(data);
 	}
-	bycicleMin = bycicleTime % 60 + '분'
-
-	// 거리와 도보 시간, 자전거 시간을 가지고 HTML Content를 만들어 리턴합니다
-	var content = '<div id="distanceInfo" class="ui card" onclick="closeDistanceOverlay()">';
-		content += '<div class="header"><i class="road icon"></i> 총 ' + distance + 'm</div>';
-		content += '<div class="content">';
-		content += '<div class="ui mini teal statistic">'
-		content += '<div class="value"><i class="location yellow arrow icon"></i> Walk';
-		content += '</div>';
-		content += '<div class="label">' + walkHour + walkMin;
-		content += '</div>';
-		content += '</div>';
-		content += '</div>';
-		content += '</div>';
-
-	return content;
 };
+
 
 //근처 역 정보 불러오기 콜백함수
 var loadStation = function(status, result) {
@@ -229,38 +258,6 @@ var addImgMarker = function(place) {
 	});
 	subwayMarkers.push(aMarker);
 
-	// 이미지 마커에 추가할 이벤트
-	daum.maps.event.addListener(aMarker, 'click', function() {
-		// 거리 측정 직선 생성
-		if(!drawFlag) {
-			drawFlag = true;
-			centerPosition = this.getPosition();
-			if(!drawLine) {
-				drawLine = new daum.maps.Polyline({
-					strokeWeight : 3,
-					strokeColor : 'tomato',
-					strokeOpacity : 1,
-					strokeStyle : 'solid'
-				});
-			}
-
-			if(!drawDot) {
-				drawDot = new daum.maps.CustomOverlay({
-					content : "<span class='dot'></span>",
-					zIndex : 1
-				});
-			}
-
-			if(resultOverlay != null) {
-				resultOverlay.setMap(null);
-				resultOverlay = null;
-			}
-
-			drawDot.setPosition(centerPosition);
-			drawDot.setMap(map);
-		}
-	});
-
 	daum.maps.event.addListener(aMarker, 'mouseover', function() {
 			var position = this.getPosition();
 			subwayCircle = makeCircle(position);
@@ -276,7 +273,15 @@ var addImgMarker = function(place) {
 	});
 };
 
-var closeDistanceOverlay = function() {
-	resultOverlay.setMap(null);
-	resultOverlay = null;
+
+var drawPageNumber = function(length, pageSize, currPage) {
+	var maxSize = (length-1)/pageSize+1;
+	var minSize = 1;
+	var currMaxSize = ((currPage-1)/pageSize+1)*pageSize;
+	var currMinSize = ((currPage-1)/pageSize)*10+1;
+	
+	if(currMaxSize > maxSize) {
+		currMaxSize = maxSize;
+	}
 };
+
