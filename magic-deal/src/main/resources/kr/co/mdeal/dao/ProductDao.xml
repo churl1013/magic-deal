@@ -6,7 +6,7 @@
 <mapper namespace="kr.co.mdeal.dao.ProductDao">
 
 	<resultMap type="categorie" id="categorieMap">
-		<result column="p_cate_no" property="pCategorieNo"/>
+		<result column="p_c_no" property="pCategorieNo"/>
 		<result column="p_keyword" property="pKeyword"/>
 		<result column="p_high_cate" property="pHighCate"/>
 		<result column="p_low_cate" property="pLowCate"/>
@@ -65,14 +65,17 @@
   		  from product pro, pro_photo pho, pro_categorie cate
  		 where pro.p_no = pho.p_no 
  		 	   and pro.p_c_no = cate.p_c_no 
-	   		   and pho.p_ph_thum='y' 
+	   		   and pho.p_ph_thum='y'
+	   		   <if test="pHighCate != 0">
 	   		   and cate.p_high_cate = #{pHighCate}
+	   		   </if>
 	   		   <if test="pLowCate != 0">
 	   		   and cate.p_low_cate = #{pLowCate}
 	   		   </if>
 	   		   <if test="pKeyword != null">
 	   		   and cate.p_keyword like '%'||#{pKeyword}||'%'
 	   		   </if>
+	   	 order by pro.p_no desc
 	</select>
 	
 	<select id="selectCategories" parameterType="categorie" resultMap="categorieMap">

@@ -52,6 +52,7 @@ public class ProductController {
 			ArrayList<ProductPhoto> pphotoList = new ArrayList<>();
 			
 			String dealType = mReq.getParameter("dealType");
+			String dealOpt = mReq.getParameter("opt");
 			String content = mReq.getParameter("content");
 			String addr = mReq.getParameter("addr");
 			Double lat = Double.parseDouble(mReq.getParameter("lat"));
@@ -65,6 +66,7 @@ public class ProductController {
 			product.setpLat(lat);
 			product.setpLon(lon);
 			product.setpCategorieNo(cateKey);
+			product.setDealOpt(dealOpt.charAt(0));
 			
 			cate.setpCategorieNo(cateKey);
 			
@@ -78,61 +80,57 @@ public class ProductController {
 				cate.setpLowCate(lCate);
 				cate.setpKeyword(keyword);
 			}
-			if(dealType.equals("b")) {
-				// 삽니다의 경우
-			}else {
+			if(dealType.equals("s")) {
 				// 팝니다의 경우
 				int price = Integer.parseInt(mReq.getParameter("price").replaceAll(",", ""));
 				String quality = mReq.getParameter("quality");
 				
 				product.setPrice(price);
 				product.setQuality(quality.charAt(0));
-				
-				// 경로 설정
-				String realPath = servletContext.getRealPath("/upload/product/");
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-				String datePath = sdf.format(new Date());
-				
-				realPath += datePath;
-				File pathFile = new File(realPath);
-				
-				pathFile.mkdirs();
-				
-				// 사진
-				Iterator<String> fileNames = mReq.getFileNames();
-				
-				boolean thumbnail = true;
-				
-				while(fileNames.hasNext()) {
-					String fileName = fileNames.next();
-					MultipartFile file = mReq.getFile(fileName);
-					if(file!=null && !fileName.equals("")) {
-						ProductPhoto pp = new ProductPhoto();
-						String oriFileName = file.getOriginalFilename();
-						String filePath = datePath;
-						String ext = FileUtils.getExt(oriFileName);
-						String realFileName = UUID.randomUUID().toString()+"."+ext;
-						File saveFile = new File(realPath+"/"+realFileName);
-						file.transferTo(saveFile);
-						
-						pp.setpPhotoName(realFileName);
-						pp.setpPhotoPath(filePath);
-						
-						if(thumbnail) {
-							FileUtils.imageResize(realPath+"/"+realFileName, 
-									realPath+"/thum_"+realFileName, ext, 250, 250);
-							pp.setpPhotoThum('y');
-							thumbnail = false;
-						}
-						
+			}
+			// 경로 설정
+			String realPath = servletContext.getRealPath("/upload/product/");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			String datePath = sdf.format(new Date());
+			
+			realPath += datePath;
+			File pathFile = new File(realPath);
+			
+			pathFile.mkdirs();
+			
+			// 사진
+			Iterator<String> fileNames = mReq.getFileNames();
+			
+			boolean thumbnail = true;
+			
+			while(fileNames.hasNext()) {
+				String fileName = fileNames.next();
+				MultipartFile file = mReq.getFile(fileName);
+				if(file!=null && !fileName.equals("")) {
+					ProductPhoto pp = new ProductPhoto();
+					String oriFileName = file.getOriginalFilename();
+					String filePath = datePath;
+					String ext = FileUtils.getExt(oriFileName);
+					String realFileName = UUID.randomUUID().toString()+"."+ext;
+					File saveFile = new File(realPath+"/"+realFileName);
+					file.transferTo(saveFile);
+					
+					pp.setpPhotoName(realFileName);
+					pp.setpPhotoPath(filePath);
+					
+					if(thumbnail) {
 						FileUtils.imageResize(realPath+"/"+realFileName, 
-								realPath+"/"+realFileName, ext, 500, 500);
-						
-						pphotoList.add(pp);
+								realPath+"/thum_"+realFileName, ext, 250, 250);
+						pp.setpPhotoThum('y');
+						thumbnail = false;
 					}
+					
+					FileUtils.imageResize(realPath+"/"+realFileName, 
+							realPath+"/"+realFileName, ext, 500, 500);
+					
+					pphotoList.add(pp);
 				}
 			}
-			
 			
 			service.registProduct(product, cate, pphotoList);
 		}else {

@@ -37,16 +37,13 @@ public class ProductServiceImpl implements ProductService{
 			dao.insertCategorie(cate);
 		}
 		
-		
 		product.setpCategorieNo(cate.getpCategorieNo());
 		dao.insertProduct(product);
-		
 		
 		for(ProductPhoto pp : photoList) {
 			pp.setpNo(product.getpNo());
 			dao.insertProductPhoto(pp);
 		}
-		
 	}
 	
 	@Override
