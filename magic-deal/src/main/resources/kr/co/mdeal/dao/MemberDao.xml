@@ -56,4 +56,10 @@
 		   set m_photo = #{mPhoto}
 		 where id = #{id}
 	</update>
+	
+	<update id="updateMemberInfo" parameterType="member">
+		update member
+		   set m_info = #{mInfo}
+		 where id = #{id}
+	</update>
 </mapper>

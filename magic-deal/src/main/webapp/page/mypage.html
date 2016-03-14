@@ -123,6 +123,29 @@ footer {
 	text-align : center;
 }
 
+.ui.modal.profileModal {
+	width : 500px;
+	margin-left : -250px;
+	text-align : left;
+	background-color : rgba(50,50,50,0.8);
+	z-index : 2;
+}
+
+.ui.modal.profileModal>.header {
+	background-color : rgba(50,50,50,0.8);
+	color : white;
+}
+
+.ui.modal.profileModal>.footer {
+	background-color : rgba(50,50,50,0.8);
+	color : white;
+}
+
+.ui.modal.profileModal>.content>label {
+	display : block;
+	margin : 10px 0px 5px 0px;
+	font-weight : bold;
+}
 
 </style>
 </head>
@@ -216,6 +239,8 @@ footer {
 									<b>자기소개</b>
 								</div>
 							</div>
+								<div id="infoUpdateBtnBox">
+								</div>
 							<div class="ui bottom attached active tab segment" id="mypageProfileInfo">
 							</div>
 						</div>
@@ -223,15 +248,15 @@ footer {
 
 					<div id="activity-tab-box" style="display: none">
 						<div class="activity-search-bar">
-							<select class="selectBox">
-								<option value="">전체물품</option>
-								<option value="1">거래대기</option>
-								<option value="2">거래완료</option>
-							</select>
+							<label>구매</label>&nbsp;&nbsp;&nbsp;
+							<div class="ui toggle checkbox">
+							  <input type="checkbox" name="public">
+							 <label>판매</label>
+							</div>
 
 							<div class="ui action small input">
 								<input type="text" placeholder="키워드를 입력하세요!"
-									style="width: 350px;" />
+									style="width: 350px; margin-left: 20px;" />
 								<button class="ui small brown right labeled icon button">
 									<i class="search icon"></i> 검색
 								</button>
@@ -254,10 +279,6 @@ footer {
 										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
 											들어가게 됩니다.</div>
 										<div class="info-button-box">
-											<button class="ui circular mini icon inverted olive button"
-												title="수정" style="font-size: 13px;">
-												<i class="write icon"></i>
-											</button>
 
 											<button class="ui circular mini icon inverted red button"
 												title="삭제" style="font-size: 13px;">
@@ -284,10 +305,6 @@ footer {
 										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
 											들어가게 됩니다.</div>
 										<div class="info-button-box">
-											<button class="ui circular mini icon inverted olive button"
-												title="수정" style="font-size: 13px;">
-												<i class="write icon"></i>
-											</button>
 
 											<button class="ui circular mini icon inverted red button"
 												title="삭제" style="font-size: 13px;">
@@ -437,50 +454,47 @@ footer {
 
 <!-- 프로필 업데이트 모달 -->
 			<div id="profileUpdateModal" class="ui modal profileModal">
-			    <i class="close icon"></i>
+			    <i class="close icon" onclick="updateClose()"></i>
 			    <div class="header">
 			      	프로필 수정
 			    </div>
 			    <div class="content">
-			     <label>닉네임
-     </label>
-     <div class="ui small input">
- 			<input type="text" id="signNickName" style="width:150px;"/> &nbsp;
- 			<button class="ui button" id="signNickNameBtn">중복검사</button>
-	</div>
+		<label>닉네임</label>
+	       <div class="ui small input">
+	 			<input type="text" id="signNickName2" style="width:150px;"/> &nbsp;
+			<span id="signNickChkResult2">닉네임을 입력하세요!</span>
+			</div>
       <label>비밀번호
          <span style="font-size:12px; color:#444">
            (숫자, 특수문자 포함 8자 이상)
          </span>
        </label>
        <div class="ui small input">
- 			<input type="password" id="signPass" style="width:200px;"/>
+ 			<input type="password" id="signPass2" style="width:200px;"/>
 	</div>
 
        <label>비밀번호 확인</label>
        <div class="ui small input">
- 			<input type="password" id="signPassChk" style="width:200px;"/>
+ 			<input type="password" id="signPassChk2" style="width:200px;"/>
 	</div>
 
 	<label>주소</label>
        <div class="ui small input">
- 			<input type="text" id="signAddr" style="width:350px;" readonly/>&nbsp;
- 			<button class="ui orange button" onclick="execDaumPostcode()">주소검색</button>
- 			<input type="hidden" id="signLat" value=""/>
- 			<input type="hidden" id="signLon" value=""/>
+ 			<input type="text" id="signAddr2" style="width:350px;" readonly/>&nbsp;
+ 			<button class="ui orange button" onclick="profile_execDaumPostcode()">주소검색</button>
+ 			<input type="hidden" id="signLat2" value=""/>
+ 			<input type="hidden" id="signLon2" value=""/>
 	</div>
-	<div id="popupLayer" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
-	<img src="http://i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	<div id="popupLayer2" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+	<img src="http://i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode(2)" alt="접기 버튼">
 	</div>
 			    </div>
-			    <div class="actions">
-			      <div class="ui positive right labeled icon button">
-			        <a class="text-white">수정 완료</a>
-			        <i class="checkmark icon"></i>
+			    <div class="actions footer">
+			      <div class="ui red deny inverted icon button" onclick="updateClose()">
+			        <i class="remove icon"></i> 취소
 			      </div>
-			      <div class="ui negative right labeled icon button">
-			        <a class="text-white">취소</a>
-			        <i class="remove icon"></i>
+			      <div class="ui green ok inverted right labeled icon button">
+			        <i class="checkmark icon"></i> 수정 완료
 			      </div>
 			    </div>
 			  </div>
@@ -536,6 +550,7 @@ footer {
 
 		var btnObj;
 		var btnObj2;
+		var btnObj3;
 		if(flag==0) {
 			// 자기 자신의 마이페이지일 경우
 			btnObj = '<div class="trickFileWrap">';
@@ -594,8 +609,10 @@ footer {
 			$("#profileUpdate").on("click", function() {
 				$('#profileUpdateModal').modal('show');
 			});
-			
-			
+			btnObj3 = '<div class="ui mini icon green button info-update-btn" onclick="infoUpdate()" style="float:right;margin-top:-34px;">';
+			btnObj3 += '수정</div>';
+			mypageProfileUpdate
+			$("#infoUpdateBtnBox").html(btnObj3);
 			
 		}else if(flag==1){
 			// 타인의 마이페이지일 경우
@@ -658,6 +675,104 @@ footer {
 		$("#profile-tab-box").css("display", "none");
 		$("#alarm-tab-box").css("display", "block");
 	});
+	
+	$("#signNickName2").on("keyup", function() {
+		var chkNick2 = $(this).val();
+		if(chkNick2.trim().length<2) {
+			$("#signNickChkResult2").text("닉네임은 2글자 이상입니다.");
+			$("#signNickChkResult2").css("color", "#db2828");
+			joinChkObj.nick = false;
+		}else {
+			$.getJSON(
+				"http://"+ip+":"+port+"/magic-deal/checkNick?chkNick="+chkNick2+"&callback=?", 
+				function(resultData) {
+				var result = resultData.result;
+				if(result == 'ok') {
+					$("#signNickChkResult2").text("사용 가능한 닉네임 입니다.");
+					$("#signNickChkResult2").css("color", "#21ba45");
+					joinChkObj.nick = true;
+				}else {
+					$("#signNickChkResult2").text("이미 사용중인 닉네임 입니다.");				
+					$("#signNickChkResult2").css("color", "#db2828");
+					joinChkObj.nick = false;
+				}
+			});
+		}
+	});
+	
+	var infoUpdate = function() {
+		
+		var info = $("#mypageProfileInfo").html();
+		$.post(contextPath + "/member/auth/infoupdate.do", {
+			mInfo : info
+		},function(result){
+			var res = result.ajaxResult;	
+			$("#mypageProfileInfo").html(res.d);
+		},"json");
+		
+		return false;
+		
+	};
+	
+    var element_wrap = document.getElementById('popupLayer2');
+
+    function foldDaumPostcode() {
+        // iframe을 넣은 element를 안보이게 한다.
+        element_wrap.style.display = 'none';
+    }
+
+    function profile_execDaumPostcode() {
+        // 현재 scroll 위치를 저장해놓는다.
+        var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullAddr = data.address; // 최종 주소 변수
+                var extraAddr = ''; // 조합형 주소 변수
+
+                // 기본 주소가 도로명 타입일때 조합한다.
+                if(data.addressType === 'R'){
+                    //법정동명이 있을 경우 추가한다.
+                    if(data.bname !== ''){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있을 경우 추가한다.
+                    if(data.buildingName !== ''){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('signLat2').value = data.zonecode; //5자리 새우편번호 사용
+                document.getElementById('signAddr2').value = fullAddr;
+
+                // iframe을 넣은 element를 안보이게 한다.
+                // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+                element_wrap.style.display = 'none';
+                var topPos = parseInt($(".ui.modal.profileModal").css("top"));
+                $(".ui.modal.profileModal").css("top", topPos+150+"px");
+
+                // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+                document.body.scrollTop = currentScroll;
+            },
+            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+            onresize : function(size) {
+                element_wrap.style.height = size.height+'px';
+            },
+            width : '100%',
+            height : '100%'
+        }).embed(element_wrap);
+
+        // iframe을 넣은 element를 보이게 한다.
+        element_wrap.style.display = 'block';
+        var topPos = parseInt($(".ui.modal.profileModal").css("top"));
+        $(".ui.modal.profileModal").css("top", topPos-150+"px");
+    }
 </script>
 </body>
 </html>

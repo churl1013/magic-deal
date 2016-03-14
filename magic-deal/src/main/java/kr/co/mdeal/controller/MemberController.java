@@ -74,6 +74,7 @@ public class MemberController {
 		return new AjaxResult("success", null);
 	}
 	
+	// 마이페이지 주인 정보 가져옴
 	@RequestMapping("ownerinfo.do")
 	public AjaxResult ownerInfo(Member member) {
 		member = service.getMemberInfo(member);
@@ -83,34 +84,46 @@ public class MemberController {
 			return new AjaxResult("fail", null);
 	}
 	
+	
+	// 자기소개 수정
+	@RequestMapping(value="auth/infoupdate.do", method=RequestMethod.POST)
+	public AjaxResult infoUpdate(Member member, HttpServletRequest req) {
+		Member login = (Member)req.getAttribute("auth");
+		member.setId(login.getId());
+		service.updateMemberInfo(member);
+		login.setmInfo(member.getmInfo());
+		return new AjaxResult("success", member.getmInfo());
+	}
+	
 	// 프로필 사진을 업로드하고 Member의 mPhoto에 경로 삽입
-		@RequestMapping(value="auth/profilephoto.do", method=RequestMethod.POST)
-		public AjaxResult profilePhotoChange( Member member, HttpServletRequest req,
-			      @RequestParam("file") MultipartFile file) throws Exception {
-			String realPath = servletContext.getRealPath("/upload/");
-			String oriFileName = file.getOriginalFilename();
-			String ext = FileUtils.getExt(oriFileName);
-			
-			String fileName = member.getId()+"."+ext;
-			String filePath = realPath + "profile/";
-			
-			member.setmPhoto(fileName);
-			File oriFile = new File(filePath + fileName);
-			file.transferTo(oriFile);
-			
-			FileUtils.imageResize(filePath+fileName, filePath+"mp_"+fileName, ext, 250, 200);
-			FileUtils.imageResize(filePath+fileName, filePath+"log_"+fileName, ext, 30, 30);
-			
-			oriFile.delete();
-			
-			// update 진행
-			service.updateProfilePhoto(member);
-			
-			// session 새로고침
-			Member login = (Member)req.getAttribute("auth");
-			login.setmPhoto(fileName);
-			logger.debug("Profile Photo Change : USER ID = " + member.getId());
-			
-			return new AjaxResult("success", null);
-		}
+	@RequestMapping(value="auth/profilephoto.do", method=RequestMethod.POST)
+	public AjaxResult profilePhotoChange( Member member, HttpServletRequest req,
+		      @RequestParam("file") MultipartFile file) throws Exception {
+		String realPath = servletContext.getRealPath("/upload/");
+		String oriFileName = file.getOriginalFilename();
+		String ext = FileUtils.getExt(oriFileName);
+		
+		String fileName = member.getId()+"."+ext;
+		String filePath = realPath + "profile/";
+		
+		member.setmPhoto(fileName);
+		File oriFile = new File(filePath + fileName);
+		file.transferTo(oriFile);
+		
+		FileUtils.imageResize(filePath+fileName, filePath+"mp_"+fileName, ext, 250, 200);
+		FileUtils.imageResize(filePath+fileName, filePath+"log_"+fileName, ext, 30, 30);
+		
+		oriFile.delete();
+		
+		// update 진행
+		service.updateProfilePhoto(member);
+		
+		// session 새로고침
+		Member login = (Member)req.getAttribute("auth");
+		System.out.println(login.getId());
+		login.setmPhoto(fileName);
+		logger.debug("Profile Photo Change : USER ID = " + member.getId());
+		
+		return new AjaxResult("success", null);
+	}
 }

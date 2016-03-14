@@ -9,4 +9,5 @@ public interface MemberService {
 	Member selectLogin(Member member);
 	Member getMemberInfo(Member member);
 	void updateProfilePhoto(Member member);
+	void updateMemberInfo(Member member);
 }

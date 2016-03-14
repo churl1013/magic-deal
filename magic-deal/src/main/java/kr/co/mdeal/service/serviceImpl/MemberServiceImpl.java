@@ -49,4 +49,10 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		dao.updateMemberPhoto(member);
 	}
+	
+	@Override
+	public void updateMemberInfo(Member member) {
+		// TODO Auto-generated method stub
+		dao.updateMemberInfo(member);
+	}
 }
