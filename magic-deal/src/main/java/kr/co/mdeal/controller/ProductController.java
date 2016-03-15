@@ -84,9 +84,12 @@ public class ProductController {
 				// 팝니다의 경우
 				int price = Integer.parseInt(mReq.getParameter("price").replaceAll(",", ""));
 				String quality = mReq.getParameter("quality");
-				
+				System.out.println(quality);
 				product.setPrice(price);
 				product.setQuality(quality.charAt(0));
+			}else {				
+				product.setPrice(0);
+				product.setQuality('z');
 			}
 			// 경로 설정
 			String realPath = servletContext.getRealPath("/upload/product/");

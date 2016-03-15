@@ -97,16 +97,17 @@ public class MemberController {
 	
 	// 프로필 사진을 업로드하고 Member의 mPhoto에 경로 삽입
 	@RequestMapping(value="auth/profilephoto.do", method=RequestMethod.POST)
-	public AjaxResult profilePhotoChange( Member member, HttpServletRequest req,
+	public AjaxResult profilePhotoChange(HttpServletRequest req,
 		      @RequestParam("file") MultipartFile file) throws Exception {
+		Member login = (Member)req.getAttribute("auth");
 		String realPath = servletContext.getRealPath("/upload/");
 		String oriFileName = file.getOriginalFilename();
 		String ext = FileUtils.getExt(oriFileName);
 		
-		String fileName = member.getId()+"."+ext;
+		String fileName = login.getId()+"."+ext;
 		String filePath = realPath + "profile/";
 		
-		member.setmPhoto(fileName);
+		login.setmPhoto(fileName);
 		File oriFile = new File(filePath + fileName);
 		file.transferTo(oriFile);
 		
@@ -116,13 +117,9 @@ public class MemberController {
 		oriFile.delete();
 		
 		// update 진행
-		service.updateProfilePhoto(member);
+		service.updateProfilePhoto(login);
 		
-		// session 새로고침
-		Member login = (Member)req.getAttribute("auth");
-		System.out.println(login.getId());
-		login.setmPhoto(fileName);
-		logger.debug("Profile Photo Change : USER ID = " + member.getId());
+		logger.debug("Profile Photo Change : USER ID = " + login.getId());
 		
 		return new AjaxResult("success", null);
 	}

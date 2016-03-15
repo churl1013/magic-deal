@@ -82,7 +82,7 @@
 		select * 
 		  from pro_categorie
 		 where p_high_cate = #{pHighCate}
-		 <if test="pLowCate != null">
+		 <if test="pLowCate != 0">
 		   and p_low_cate = #{pLowCate}
 		 </if>
 		 order by p_keyword asc

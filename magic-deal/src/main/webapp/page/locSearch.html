@@ -149,7 +149,7 @@ section {
 	width : 100%;
 	height : 100%;
 	position : absolute;
-	background-color : rgba(188,156,26,0.7);
+	background-color : rgba(26,26,26,0.7);
 	top : 0px;
 	left : 0px;
 	z-index : 2;
@@ -250,21 +250,199 @@ section {
 	background-color : white;
 	border-bottom : 1px solid #c8c8c8;
 	padding-left : 60px;
+	position : relative;
 }
 
 #dealTypeFilter {
-	width : 180px;
-	height : 50px;
+	width : 130px;
 	line-height : 50px;
 	padding : 0px;
 	margin : 0px;
 	border : none!important;
+	border-bottom:1px solid #c8c8c8!important;
+	border-right:1px solid #e8e8e8!important;
 	border-radius : 0px!important;
+	box-shadow : none;
+	padding-left : 10px!important;
 }
 
-#dealTypeFilter>.menu {
-	margin-top : 0px!important;
+#highCateFilter {
+	width : 200px;
+	line-height : 50px;
+	padding : 0px;
+	margin : 0px;
+	border : none!important;
+	border-bottom:1px solid #c8c8c8!important;
+	border-right:1px solid #e8e8e8!important;
+	border-radius : 0px!important;
+	box-shadow : none;
 }
+
+#lowCateFilter {
+	width : 150px;
+	line-height : 50px;
+	padding : 0px;
+	margin : 0px;
+	border : none!important;
+	border-bottom:1px solid #c8c8c8!important;
+	border-right:1px solid #e8e8e8!important;
+	border-radius : 0px!important;
+	box-shadow : none;
+	padding-left : 10px!important;
+}
+
+.dropdownDiscard {
+	height : 50px;
+	float : left;
+}
+
+.dropdownDiscard>.menu {
+	margin-top : 0px!important;
+	z-index : 2!important;
+}
+
+
+#keywordFilter {
+	width : 120px;
+}
+
+.customFilter {
+	display : inline-block;
+	float : left;
+	width : 120px;
+	height : 50px;
+	padding-left : 10px;
+	border-right : 1px solid #e8e8e8;
+	line-height : 50px;
+	border-bottom:1px solid #c8c8c8;
+}
+
+.customFilter>.text {
+	text-align : center;
+	cursor : pointer;
+	color : rgba(0,0,0,0.6);
+}
+
+.customFilter>.text:hover {
+	color : rgba(0,0,0,0.9);
+}
+
+#customFilterBox {
+	position : absolute;
+	width : 780px;
+	height : 300px;
+	left : 0px;
+	top : 50px;
+	z-index : 3;
+	display : none;
+}
+
+#viewChange {
+	width : 200px;
+	height : 50px;
+	line-height : 50px;
+	float : right;
+	padding-left : 15px;
+	padding-right : 15px;
+	font-weight : 600;
+	font-size : 13px;
+	color : rgba(0,0,0,0.6);
+}
+
+#viewChange>span:first-child {
+	margin-right : 10px;
+	cursor : pointer;
+}
+
+#viewChange>span:nth-child(2) {
+	margin-left : 10px;
+	cursor : pointer;
+}
+
+#viewChange>span:hover {
+	color : rgba(0,0,0,0.9);
+}
+
+.customFilterBoxInnerWrap {
+	width : 100%;
+	position : relative;
+	left : 0px;
+	top : 0px;
+}
+
+.customFilterBoxInnerWrap>div {
+	width : 100%;
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	padding : 20px;
+	padding-top : 30px;
+	border-right : 1px solid #c8c8c8;
+	border-bottom : 1px solid #c8c8c8;
+	background-color : #eee;
+	border-bottom-radius : 5px;
+}
+
+.customFilterBoxInnerWrap>.closeBtn {
+	position : absolute;
+	right : 5px;
+	top : 5px;
+	z-index : 3;
+	width : 20px;
+	height : 20px;
+	display : block;
+	cursor : pointer;
+}
+
+#keywordFilterBox,#productFilterBox>.content {
+	position : relative;
+	text-align : right;
+}
+
+.content>.qualityFilter {
+	width : 100%;
+	height : 70px;
+	text-align : right;
+	margin-bottom : 5px;
+	border-bottom : 1px solid #d8d8d8;
+}
+
+.content>.priceFilter {
+	width : 100%;
+	height : 70px;
+	text-align : right;
+	border-bottom : 1px solid #d8d8d8;
+}
+
+.content>.qualityFilter>.header {
+	font-weight : 600;
+	cursor : default;
+	height : 20px;
+}
+
+.content>.priceFilter>.header {
+	font-weight : 600;
+	cursor : default;
+	height : 20px;
+}
+
+.content>.qualityFilter>.filterContent {
+	height : 50px;
+	width : 100%;
+	line-height : 50px;
+}
+
+.content>.qualityFilter>.filterContent>.ui.checkbox {
+	margin-right : 10px;
+	font-size : 12px;
+}
+
+.content>.priceFilter>.filterContent {
+	height : 50px;
+	width : 100%;
+	line-height : 50px;
+}
+
 </style>
 </head>
 <body>
@@ -309,39 +487,238 @@ section {
 <!-- 내용부 -->
 <section>
 	<div class="locFilterWrap">
-		<div id="dealTypeFilter" class="ui floating labeled icon compact basic dropdown button">
-		  <i class="filter black icon"></i>
-		  <span class="text"> <i class="cubes orange icon"></i>모든 거래</span>
-		  <div class="menu" style="margin-top:0px;">
+	<!-- 필터 시작 -->
+		<div id="highCateFilter"
+			class="ui floating dropdown icon labeled basic button dropdownDiscard">
+		  <i class="filter black icon" style="background-color:white!important;"></i>
+		  <span id="selectedHighCate" class="text">
+		  	<!-- 선택된 상위 카테고리가 들어감 -->
+		  </span>
+		  <div class="menu" style="margin-top:0px!important;">
+		    <div class="header" style="margin:0px;">
+		      <i class="tags icon"></i>
+		      	상위 카테고리 선택
+		    </div>
+		    <div class="scrolling menu">
+		      <div class="item">
+		      	<div data-hidx="1">
+			        <div class="ui red empty circular label"></div>
+			        <span>신발 가방 잡화</span>
+		        </div>
+		      </div>
+		      <div class="item">
+	      		<div data-hidx="2">
+			        <div class="ui blue empty circular label"></div>
+					<span>휴대폰 태블릿</span>
+				</div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="3">
+			        <div class="ui purple empty circular label"></div>
+			        <span>여성의류</span>
+		        </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="4">
+			        <div class="ui black empty circular label"></div>
+			        <span>남성의류</span>
+		        </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="5">
+			        <div class="ui orange empty circular label"></div>
+			        <span>뷰티</span>
+		        </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="6">
+			        <div class="ui empty circular label"></div>
+			        <span>컴퓨터 주변기기</span>
+		        </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="7">
+			        <div class="ui yellow empty circular label"></div>
+			        <span>디지털 가전</span>
+		        </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="8">
+			        <div class="ui pink empty circular label"></div>
+				    <span>유아동 출산</span>
+			    </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="9">
+			        <div class="ui green empty circular label"></div>
+			        <span>가구 홈데코</span>
+		        </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="10">
+			        <div class="ui empty circular label" style="background-color:IndianRed"></div>
+			        <span>CD DVD</span>
+		        </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="11">
+			        <div class="ui empty circular label" style="background-color:indigo"></div>
+			        <span>스포츠 레저</span>
+			    </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="12">
+			        <div class="ui empty circular label" style="background-color:lemonchiffon"></div>
+			        <span>도서 문구</span>
+		        </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="13">
+			        <div class="ui empty circular label" style="background-color:goldenrod"></div>
+			        <span>음향기기 악기</span>
+		        </div>
+		      </div>
+		      <div class="item">
+		      	<div data-hidx="14">
+			        <div class="ui empty circular label" style="background-color:Turquoise"></div>
+			        <span>애완</span>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	
+	
+		<div id="dealTypeFilter"
+			class="ui floating labeled compact basic dropdown button dropdownDiscard">
+		  	<span class="text" id="selectedDealType"> 
+		  		<span data-didx="0">
+			  		<i class="cubes orange icon"></i>모든 거래
+				</span>
+			  </span>
+		  <div class="menu" style="margin-top:0px!important;">
 		    <div class="item">
+		    	<span data-didx="0">
 		      	<i class="cubes orange icon"></i>모든 거래
+		    	</span>
 		    </div>
 		    <div class="item">
+		  		<span data-didx="1">
 		      	<i class="shop violet icon"></i>삽니다
+		    	</span>
 		    </div>
 		    <div class="item">
+		    	<span data-didx="2">
 		      	<i class="won pink icon"></i>팝니다
+		      	</span>
 		    </div>
 		  </div>
 		</div>
 		
-		<div id="searchFilter" class="ui floating labeled icon compact basic dropdown button">
-		  <i class="filter black icon"></i>
-		  <span class="text"> <i class="cubes orange icon"></i>모든 거래</span>
-		  <div class="menu" style="margin-top:0px;">
-		    <div class="item">
-		      	<i class="cubes orange icon"></i>모든 거래
-		    </div>
-		    <div class="item">
-		      	<i class="shop violet icon"></i>삽니다
-		    </div>
-		    <div class="item">
-		      	<i class="won pink icon"></i>팝니다
-		    </div>
+		<div id="lowCateFilter"
+			class="ui floating labeled compact basic dropdown button dropdownDiscard">
+		  	<span class="text" id="selectedLowCate"> 
+		  		
+			</span>
+		  <div class="menu" style="margin-top:0px!important;">
+		    
 		  </div>
 		</div>
 		
+		<div id="keywordFilter" class="customFilter">
+			<div class="text">
+				키워드 필터
+				<i class="dropdown icon"></i>
+			</div>
+		</div>
+		
+		<div id="productFilter" class="customFilter">
+			<div class="text">
+				물품 필터
+				<i class="dropdown icon"></i>
+			</div>
+		</div>
+		
+		<div id="viewChange">
+			<span><i class="map large icon"></i>지도</span>|
+			<span><i class="list large icon"></i>리스트</span> 
+		</div>
+		
+		<div id="customFilterBox">
+			<div class="customFilterBoxInnerWrap">
+				<span class="closeBtn">
+					<i class="close grey icon"></i>
+				</span>
+				<div id="keywordFilterBox">
+					<div class="content">
+						<button id="keywordFilterSubmit"
+								class="ui violet tiny button" style="margin-bottom:5px;">적용</button>
+						<select id="keywordSel" class="ui fluid search dropdown" multiple="">
+						</select>
+					</div>
+				</div>
+				<div id="productFilterBox">
+					<div class="content">
+						<div class="qualityFilter">
+							<div class="header">
+								<i class="filter icon"></i>품질
+							</div>
+							<div class="filterContent">
+								<div class="ui checkbox">
+								    <input type="checkbox" tabindex="0" value="A" class="hidden" checked>
+								    <label>미사용</label>
+							    </div>
+							    <div class="ui checkbox">
+								    <input type="checkbox" tabindex="0" value="B" class="hidden" checked>
+								    <label>거의새것</label>
+							    </div>
+							    <div class="ui checkbox">
+								    <input type="checkbox" tabindex="0" value="C" class="hidden" checked>
+								    <label>사용감있음</label>
+							    </div>
+							    <div class="ui checkbox">
+								    <input type="checkbox" tabindex="0" value="D" class="hidden" checked>
+								    <label>하자있음</label>
+							    </div>
+							</div>
+						</div>
+						<div class="priceFilter">
+							<div class="header">
+								<i class="filter icon"></i>가격
+							</div>
+							<div class="filterContent">
+								<div id="priceInputBox" class="ui left action right labeled small input">
+								  <button class="ui icon teal button" id="minPriceBtn">
+								  	<i class="angle double down icon"></i>
+								  </button>
+								  <input type="text" id="filterMinPrice" style="text-align:right;width:100px;"/>
+								  <div class="ui basic label">
+								  	원
+								  </div>
+								</div>
+								&nbsp;&nbsp;
+								<span style="font-weight:600;">~</span>
+								&nbsp;&nbsp;
+								<div id="priceInputBox" class="ui left action right labeled small input">
+								  <button class="ui icon teal button" id="maxPriceBtn">
+								  	<i class="angle double up icon"></i>
+								  </button>
+								  <input type="text" id="filterMaxPrice" style="text-align:right;width:100px;"/>
+								  <div class="ui basic label">
+								  	원
+								  </div>
+								</div>
+							</div>
+						</div>
+						<button id="productFilterSubmit" class="ui violet tiny button" style="margin-top:5px;">적용</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- 필터 끝 -->
 	</div>
+	
+	
 	<div class="locContentWrap">
 		<div class="locMapWrap">
 			<div id="mapContainer">
@@ -492,8 +869,7 @@ section {
 	$("#productListBox").css("height", sHeight-70-80-50);
 	$(".sk-folding-cube").css("margin-top", (sHeight-70-50)/2);
 	
-	$(".ui.dropdown").dropdown();
-	
+	$(".ui.checkbox").checkbox();
 	$(window).resize(function() {
 		sWidth = parseInt($("section").css("width"));
 		sHeight = parseInt($("section").css("height"));
@@ -503,6 +879,7 @@ section {
 		$(".locContentWrap").css("height", sHeight-70-50);
 		$("#productListBox").css("height", sHeight-70-80-50);
 		$(".sk-folding-cube").css("margin-top", (sHeight-70-50)/2);
+		headerPosition();
 	});
 </script>
 
@@ -511,12 +888,52 @@ section {
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services,clusterer&autoload=false"></script>
 <script src="/magic-deal/js/common.js"></script>
 <script src="/magic-deal/js/locSearch.js"></script>
+<script src="/magic-deal/js/cate1.js"></script>
 <script>
 	var pageParam;
+		
+	var FilterObj = function() {
+		this.highCate = 0;
+		this.dealType = 0;
+		this.lowCate = 0;
+		this.keywords = [];
+		this.productFilter = {
+			quality : {
+				A : true,
+				B : true,
+				C : true,
+				D : true
+			},
+			price : {
+				min : 0,
+				max : 0
+			}
+		};
+	};
+	
+	var filterObj = new FilterObj();
+	
+	var currKeywords;
 	
 	pageParam = getParameter(document.location.href);
 	
-	
+	// 파라미터 체크 및 상위카테고리 필터 초기화
+	var pageCheck = function() {
+		if(!pageParam.hc) {
+			alert("허용되지 않은 접근입니다!!");
+			document.location.href= contextPath + "/page/main.html";
+		}else {
+			var hc = pageParam.hc;
+			var sel = $("#highCateFilter").find(".menu")
+										  .find(".scrolling")
+										  .find(".item").eq(hc-1);
+			$("#selectedHighCate").html(sel.html());
+			filterObj.highCate = hc;
+			var lowCate = cateData[hc];
+			printLowCate(lowCate);
+		}
+	};
+
 	// 로그인 체크 
 	var loginCheck = function(map) {
 		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
@@ -525,13 +942,383 @@ section {
 			locUtil = new LocUtil(map);
 			if(result.data!=null) {
 				locUtil.moveCenter(result.data.mLat, result.data.mLon);
-				locUtil.setLevel(6);
+				locUtil.setLevel(8);
 			}
-			getProduct();
+			getProduct(pageParam, function(resultData) {
+					var result = resultData.ajaxResult;
+					productData = result.data;
+					addMarkers();
+					filterOptionMarkers = markers;
+					clusterer.addMarkers(markers);
+					filterObj.productFilter.price.min = getMinPrice(markers);
+					filterObj.productFilter.price.max = getMaxPrice(markers);
+					$("#filterMinPrice").val(filterObj.productFilter.price.min);
+					$("#filterMaxPrice").val(filterObj.productFilter.price.max);
+				});
 		});
 	};
 	
-	// 지도 정의
+	
+	// 필터 관련 스크립트 시작
+	
+	$("#highCateFilter,#dealTypeFilter,#viewChange,#lowCateFilter").on("click", function() {
+		$(".customFilter").css("background-color", "white");
+		$("#customFilterBox").css("display", "none");
+	});
+	
+	$(".customFilterBoxInnerWrap>.closeBtn").on("click", function() {
+		$(".customFilter").css("background-color", "white");
+		$("#customFilterBox").css("display", "none");
+	});
+	
+	// 어떤 커스텀 필터가 클릭됬는지 확인하고 해당 필터를 customFilterBox에 설정
+	$(".customFilter").on("click", function() {
+		$(".customFilter").css("background-color", "white");
+		$(this).css("background-color", "#eee");
+		$("#customFilterBox").css("display", "block");
+		$(".customFilterBoxInnerWrap>div").css("display", "none");
+		
+		var id = this.id;
+		if(id == 'keywordFilter') {
+			$("#keywordFilterBox").css("display", "block");
+		}else if(id == 'productFilter') {
+			$("#productFilterBox").css("display", "block");
+		}
+	});
+	
+	$("#highCateFilter").dropdown({
+		onChange: function(selected) {
+			var hidx = $(selected).attr("data-hidx");
+			filterObj.highCate = hidx;
+			
+			var obj = {
+				hc : hidx
+			}
+			var lowCate = cateData[hidx];
+			filterInit();
+			printLowCate(lowCate);
+			getProduct(obj, function(resultObj) {
+				var result = resultObj.ajaxResult;
+				productData = result.data;
+				clusterer.clear();
+				markers = [];
+				addMarkers();
+				filterOptionMarkers = markers;
+				clusterer.addMarkers(markers);
+				filterObj.productFilter.price.min = getMinPrice(markers);
+				filterObj.productFilter.price.max = getMaxPrice(markers);
+				$("#filterMinPrice").val(filterObj.productFilter.price.min);
+				$("#filterMaxPrice").val(filterObj.productFilter.price.max);
+				reDrawMapInit();
+			});
+		}
+	});
+	
+	$("#dealTypeFilter").dropdown({
+		onChange : function(selected) {
+			var didx = $(selected).attr("data-didx");
+			filterObj.dealType = didx;
+			filterProxy();
+			if(didx == 1) {
+				// 삽니다의 경우 물품필터 비활성화
+				productFilterDisabled(true);
+			}else {
+				// 그 외 활성화
+				productFilterDisabled(false);
+			}
+		}
+	});
+	
+	var productFilterDisabled = function(flag) {
+		$(".qualityFilter>.filterContent>.ui.checkbox>input[type='checkbox']").prop("disabled", flag);
+		$("#filterMinPrice").prop("disabled", flag);
+		$("#filterMaxPrice").prop("disabled", flag);
+		$("#productFilterSubmit").prop("disabled", flag);
+	};
+	
+	$("#lowCateFilter").dropdown({
+		onChange : function(selected) {
+			var lcidx = $(selected).attr("data-lcidx");
+			filterObj.lowCate = lcidx;
+			keywordFilterInit();
+			if(lcidx == 0) {
+				//전체 카테고리 선택
+				//키워드 필터 disabled
+				$("#keywordSel").empty();
+				$("#keywordSel").parent().find(".default.text").text("하위 카테고리를 먼저 선택하세요");
+				$("#keywordSel").parent().addClass("disabled");
+			}else {
+				$.getJSON(contextPath + "/product/categorie.do", {
+					pHighCate : filterObj.highCate,
+					pLowCate : filterObj.lowCate
+				},function(resultData) {
+					var result = resultData.ajaxResult;
+					currKeywords = result.data;
+					printKeywordFilter(result.data);
+					$("#keywordSel").parent().find(".default.text").text("키워드를 선택하세요");
+					$("#keywordSel").parent().removeClass("disabled");
+				});
+			}
+			filterProxy();
+		}
+	});
+
+	
+	$("#keywordSel").dropdown({
+		onChange : function(val) {
+			filterObj.keywords = val;
+			console.log(filterObj.keywords);
+		}
+	});
+	
+	$("#keywordFilterSubmit").on("click", function() {
+		filterProxy();
+	});
+	
+	var filterProxy = function() {
+		$("#listLoadingWrap").css("display", "block");
+		clusterer.clear();
+		filterOptionMarkers = dataFilter(markers);
+		clusterer.addMarkers(filterOptionMarkers);
+		reDrawMapInit();
+
+		$("#filterMinPrice").val(filterObj.productFilter.price.min);
+		$("#filterMaxPrice").val(filterObj.productFilter.price.max);
+		$("#listLoadingWrap").css("display", "none");
+	}
+	
+	var dataFilter = function (datas) {
+		var filters = datas;
+		
+		// 하위 카테고리 적용
+		filters = lowCateFilter(filters, filterObj.lowCate);
+		// 거래타입 필터 적용
+		filters = dealTypeFilter(filters, filterObj.dealType);
+		
+		// 키워드 필터 적용
+		filters = keywordFilter(filters, filterObj.keywords);
+		filters = productQualityFilter(filters, filterObj.productFilter.quality);
+		filters = productPriceFilter(filters, filterObj.productFilter.price);
+		
+		return filters;
+	};
+	
+	var dealTypeFilter = function (datas, type) {
+		var filters;
+		if(type == 0) {
+			return datas;
+		}else if(type == 1) {
+			// 팝니다.
+			filters = datas.filter(function(d) {
+				return d.prodata.dealType == 'b';
+			});
+		}else if(type == 2) {
+			// 삽니다.
+			filters = datas.filter(function(d) {
+				return d.prodata.dealType == 's';
+			});
+		}
+		
+		return filters;
+	};
+	
+	var lowCateFilter = function (datas, type) {
+		var filters;
+		if(type == 0) {
+			// 전체 카테고리
+			return datas;
+		}else {
+			// 카테고리 선택
+			filters = datas.filter(function(d) {
+				return d.prodata.cateLow == parseInt(type);
+			});
+		}
+		
+		return filters;
+	};
+	
+	var keywordFilter = function (datas, type) {
+		var filters;
+		if(type.length == 0) {
+			// 키워드가 없을때
+			return datas;
+		}else {
+			filters = datas.filter(function(d) {
+				var i;
+				for(i=0;i<type.length;i++) {
+					if(d.prodata.pCategorieNo == type[i]) {
+						return true;		
+					}
+				}
+				return false;
+			});
+		}
+		return filters;
+	};
+	
+	var productQualityFilter = function(datas, type) {
+		var filters;
+		if(type.a&&type.b&&type.c&&type.d) {
+			// 모든 품질 선택 시
+			return datas;
+		}else {
+			filters = datas.filter(function(d) {
+				if(d.prodata.quality == "z")
+					return true;
+				return type[d.prodata.quality];
+			});
+		}
+		return filters;
+	};
+	
+	var productPriceFilter = function(datas, type) {
+		var filters;
+		filters = datas.filter(function(d) {
+			return d.prodata.price>=type.min && d.prodata.price<=type.max;
+		});
+		return filters;
+	};
+	
+	var printLowCate = function(lowCate) {
+		var box = $("#lowCateFilter").find(".menu");
+		var i;
+		box.empty();
+		$("#keywordSel").parent().addClass("disabled");
+		$("#keywordSel").parent().append("<div class='default text'>하위 카테고리를 먼저 선택하세요!</div>");
+		for(i=0; i<lowCate.length; i++) {
+			var cateName = lowCate[i].display;
+			var cateNo = lowCate[i].value;
+			var cate = '<div class="item">';
+			cate += '<span data-lcidx="'+cateNo+'">';
+			cate += cateName;
+			cate += '</span></div>';
+			box.append(cate);
+			if(i==0) {
+				$(cate).addClass("active selected")
+					   .find("span")
+					   .clone()
+					   .appendTo("#selectedLowCate");
+			}
+		}
+	};
+	
+	var printKeywordFilter = function(data) {
+		var box = $("#keywordSel");
+		var i;
+		box.empty();
+		for(i=0; i<data.length; i++) {
+			var keyword = data[i].pKeyword;
+			var keywordNo = data[i].pCategorieNo;
+			var keywordBox = "<option value='"+keywordNo+"'>"+keyword+"</option>"
+			box.append(keywordBox);
+		};
+	};	
+	
+	var filterInit = function() {
+		$("#dealTypeFilter").find(".text").empty();
+		$("#dealTypeFilter").find(".menu").find("div").removeClass("active selected")
+			.eq(0).addClass("active selected").find("span")
+			.clone().appendTo("#dealTypeFilter>.text");
+		$("#lowCateFilter").find(".text").empty();
+		keywordFilterInit();
+		productFilterInit();
+	};
+	
+	var keywordFilterInit = function() {
+		$("#keywordSel").parent().find(".menu").empty();
+		$("#keywordSel").parent().find("a").remove();
+		$("#keywordSel").parent().find(".default.text").remove();
+		$("#keywordSel").empty();
+		filterObj.keywords = [];
+	};
+	
+	var productFilterInit = function() {
+		$(".qualityFilter>.filterContent>.ui.checkbox>input[type='checkbox']").prop("checked", true);
+		filterObj.productFilter = {
+				quality : {
+					A : true,
+					B : true,
+					C : true,
+					D : true
+				},
+				price : {
+					min : 0,
+					max : 0
+				}
+			};
+		
+		filterObj.productFilter.price.min = getMinPrice(filterOptionMarkers);
+		filterObj.productFilter.price.max = getMaxPrice(filterOptionMarkers);
+		$("#filterMinPrice").val(filterObj.productFilter.price.min);
+		$("#filterMaxPrice").val(filterObj.productFilter.price.max);
+	};
+	
+	var getMaxPrice = function(datas) {
+		if(datas.length > 0) {
+			var max = datas[0].prodata.price;
+			var i;
+			for(i=1;i<datas.length;i++) {
+				if(datas[i].prodata.price>max) {
+					max = datas[i].prodata.price;
+				}
+			}
+			return max;
+		}
+		return 0;	
+	};
+	
+	var getMinPrice = function(datas) {
+		if(datas.length > 0) {
+			var min = datas[0].prodata.price;
+			var i;
+			for(i=1;i<datas.length;i++) {
+				if(datas[i].prodata.price<min) {
+					min = datas[i].prodata.price;
+				}
+			}
+			return min;
+		}
+		
+		return 0;
+	};
+	
+	$(".qualityFilter>.filterContent>.ui.checkbox>input[type='checkbox']")
+		.on("change", function() {
+			var prop = $(this).val();
+			var checked = $(this).prop("checked");
+			
+			filterObj.productFilter.quality[prop] = checked;
+		});
+	
+	$("#maxPriceBtn").on("click", function() {
+		$("#filterMaxPrice").val(getMaxPrice(filterOptionMarkers));
+	});
+	
+	$("#minPriceBtn").on("click", function() {
+		$("#filterMinPrice").val(getMinPrice(filterOptionMarkers));
+	});
+	
+	$("#productFilterSubmit").on("click", function() {
+		var min = parseInt($("#filterMinPrice").val());
+		var max = parseInt($("#filterMaxPrice").val());
+		
+		if(min<0) {
+			min = 0;
+			$("#filterMinPrice").val(min);
+		}
+		if(max<0) {
+			max = 0;
+			$("#filterMaxPrice").val(max);
+		}
+		filterObj.productFilter.price.min = min;
+		filterObj.productFilter.price.max = max;
+		
+		filterProxy();
+	});
+	// 필터 관련 스크립트 끝
+	
+	
+	// 지도 정의 및 지도스크립트 시작
 	daum.maps.load(function() {
 	    // v3가 모두 로드된 후, 이 콜백 함수가 실행됩니다.
 	    var mapContainer = $("#mapContainer").get()[0];
@@ -590,7 +1377,6 @@ section {
 	    
 	    
 		daum.maps.event.addListener(clusterer, 'clustered', function(clusters) {
-			$("#listLoadingWrap").css("display", "block");
 			currBndMarkers = getBoundNodes(clusters);
 			var totalSize = 0;
 			filterMarkers = [];
@@ -625,18 +1411,14 @@ section {
 	});
 	
 	// 물품 데이터 읽어오기
-	var getProduct = function(obj) {
-		var target = obj || pageParam;
+	var getProduct = function(obj, callback) {
+		$("#listLoadingWrap").css("display", "block");
+		var target = obj;
 		var hc = target.hc;
 		
 		$.getJSON(contextPath + "/product/list.do", {
-				pHighCate : pageParam.hc
-			}, function(resultData) {
-				var result = resultData.ajaxResult;
-				productData = result.data;
-				addMarkers();
-				clusterer.addMarkers(markers);
-			});
+				pHighCate : hc
+			}, callback);
 	};
 	
 	// Map Event 등록
@@ -652,7 +1434,7 @@ section {
 		}
 	});
 	
-	// product Card Event 등록
+	// product Card Event 등록 (지도모드일때만 적용)
 	$("#productListBox").on('mouseenter',">.productCard", function() {
 			var lat = $(this).find("input[name=lat]").val();
 			var lon = $(this).find("input[name=lon]").val();
@@ -671,7 +1453,14 @@ section {
 			})(noticeMarker), 700);
 			return false;
 		});
+	
+	
+	// 지도 스크립트 끝
+	
+	// 마지막 실행되는 함수들 ( 페이지 로딩 관련 )
+	pageCheck();
 </script>
+
 
 </body>
 </html>
