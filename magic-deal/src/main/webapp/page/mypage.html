@@ -823,7 +823,7 @@ footer {
 			var lon = $("#signLon2").val();
 			if(lat.length==0&&lon.length==0){
 				lat = mlat;
-				lon = mlat;
+				lon = mlon;
 			}
 			$.post(contextPath+"/member/auth/profileUpdate.do", {
 				nickName : nick,

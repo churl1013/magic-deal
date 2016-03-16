@@ -6,6 +6,7 @@ import java.util.List;
 
 import kr.co.mdeal.domain.Categorie;
 import kr.co.mdeal.domain.Product;
+import kr.co.mdeal.domain.ProductComment;
 import kr.co.mdeal.domain.ProductPhoto;
 
 public interface ProductService {
@@ -16,4 +17,5 @@ public interface ProductService {
 	ProductPhoto getCategoriePhoto(Categorie cate);
 	List<HashMap<String, Object>> getProductList(Categorie cate);
 	HashMap<String, Object> getProductDetail(Product pro);
+	void registProductComment(ProductComment comment);
 }

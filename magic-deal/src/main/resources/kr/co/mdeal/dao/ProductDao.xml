@@ -20,6 +20,17 @@
 		<result column="p_ph_thum" property="pPhotoThum" />
 	</resultMap>
 	
+	<resultMap type="productComment" id="productCommentMap">
+		<result column="p_c_no" property="pcNo" />
+		<result column="p_no" property="pNo" />
+		<result column="m_no" property="mNo" />
+		<result column="p_c_content" property="pcContent" />
+		<result column="p_c_reg_date" property="pcRegDate" />
+		<result column="id" property="id" />
+		<result column="nname" property="nickName" />
+		<result column="m_photo" property="mPhoto" />
+	</resultMap>
+	
 	<resultMap type="product" id="productMap">
 		<result column="p_no" property="pNo" />
 		<result column="m_no" property="mNo" />
@@ -81,13 +92,31 @@
 		<result column="m_photo" property="mPhoto" />
 		<result column="like_cnt" property="likeCnt" />
 		<result column="product_cnt" property="productCnt" />
+		<result column="comment_cnt" property="commentCnt" />
 	</resultMap>
 	
 	<select id="selectProductPhoto" parameterType="product" resultMap="productPhotoMap">
-		select * 
+		select *
 		  from pro_photo
 		 where p_no = #{pNo}
 	</select>
+	
+	<select id="selectProductCommentInit" parameterType="product" resultMap="productCommentMap">
+		select p_c_no, p_no, cmt.m_no, p_c_content, 
+			   date_format(p_c_reg_date, "%Y년 %c월 %e일 %H:%i") p_c_reg_date,
+			   mem.m_photo, mem.id, mem.nname
+		  from pro_comment cmt, member mem
+		 where p_no = #{pNo}
+		 	   and cmt.m_no = mem.m_no
+		 order by p_c_no desc
+		 limit 2
+	</select>
+	
+	<insert id="insertProductComment" parameterType="productComment">
+		insert into pro_comment
+			   (p_no, m_no, p_c_content, p_c_reg_date)
+		values (#{pNo}, #{mNo}, #{pcContent}, now())
+	</insert>
 	
 	<select id="selectProductDetail" parameterType="product" resultMap="productDetailMap">
 		select pro.p_no, pro.p_c_no, pro.price, pro.p_content,
@@ -96,7 +125,8 @@
 		       cate.p_keyword, cate.p_high_cate, cate.p_low_cate,
 		       mem.id, mem.nname, mem.m_photo, mem.like_cnt,
 		       date_format(mem.join_date, "%Y. %e %b") join_date,
-		       (select count(*) from product where m_no = mem.m_no) product_cnt
+		       (select count(*) from product where m_no = mem.m_no) product_cnt,
+		       (select count(*) from pro_comment where p_no = pro.p_no) comment_cnt
 		  from product pro, pro_categorie cate, member mem
 		 where pro.p_c_no = cate.p_c_no 
 			   and pro.m_no = mem.m_no

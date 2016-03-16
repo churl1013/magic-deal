@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.mdeal.domain.AjaxResult;
 import kr.co.mdeal.domain.Member;
 import kr.co.mdeal.service.MemberService;
+import kr.co.mdeal.util.ContentProcess;
 import kr.co.mdeal.util.FileUtils;
 import kr.co.mdeal.util.OneWayCipherSHA256;
 
@@ -60,6 +61,7 @@ public class MemberController {
 	public AjaxResult loginCheck(HttpSession session) {
 		Member login = (Member)session.getAttribute("userLoginInfo");
 		if(login != null) {
+			login.setmInfo(ContentProcess.enterChange(login.getmInfo()));
 			// 로그인 성공 (세션에 로그인 정보 등록 및 로그인 객체 반환)
 			return new AjaxResult("success", login);
 		} else {
@@ -90,6 +92,7 @@ public class MemberController {
 	public AjaxResult infoUpdate(Member member, HttpServletRequest req) {
 		Member login = (Member)req.getAttribute("auth");
 		member.setId(login.getId());
+		
 		service.updateMemberInfo(member);
 		login.setmInfo(member.getmInfo());
 		return new AjaxResult("success", member.getmInfo());

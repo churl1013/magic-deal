@@ -195,6 +195,7 @@ var modalOpen = function(proIdx) {
 		pNo : detailId
 	}, function(resultObj) {
 		var result = resultObj.ajaxResult;
+		console.dir(result);
 		drawViewModal(result.data);
 	});
 };
@@ -314,7 +315,7 @@ var drawViewModal = function(data) {
 		productInfo += '</ul>';
 	
 	header.find(".viewItemContent>.itemInfo").append(productInfo);
-	header.find(".viewItemContent>.itemContent>.view-itemContent").text(data.pContent);
+	header.find(".viewItemContent>.itemContent>.view-itemContent").html(data.pContent);
 	
 	var writerInfo = header.find(".viewItemContent>.itemWriter>.view-memberCard");
 	writerInfo.find(".view-memberCardImg").css("background-image", "url('"
@@ -337,6 +338,50 @@ var drawViewModal = function(data) {
 		// 로그인한 사용자와 판매자가 같을경우 채팅버튼 제거
 		writerInfo.find("#view-chatBtn").remove();
 	}
+	
+	
+	var replyBox = currentCloneBox.find(".viewItemReply");
+	
+	if(data.lId.length == 0) {
+		// 비 로그인 상태 : 댓글 등록폼을 안보이게 변경
+		console.log("비로그인");
+		replyBox.find(".view-regReplyBox").remove();
+	}else {
+		replyBox.find("#view-commentRegBtn").attr("data-pnidx", data.pNo).on("click", view_registComment);
+	}
+	
+	if(data.commentCnt > 0) {
+		replyBox
+			.find(".view-appendCommentBox>#view-appendCmtBtn")
+			.attr("data-pnidx", data.pNo).attr("data-pidx", "1")
+			.on("click", view_getMoreComment);
+		
+		
+		var commentBox = replyBox.find(".view-regReplyContextBox");
+		var comment;
+		for(i=0; i<data.commentList.length; i++) {
+			var cmtObj = data.commentList[i];
+			comment =  '<div class="comment">';
+			comment += '<a class="avatar">';
+			comment += '<img src="'+contextPath+"/upload/profile/log_"+cmtObj.mPhoto+'"/>';
+			comment += '</a>';
+			comment += '<div class="content">';
+			comment += '<a class="author">'+cmtObj.nickName+'</a>';
+			comment += '<div class="metadata">';
+			comment += '<div class="date">'+cmtObj.pcRegDate+'</div>';
+			comment += '<div class="deleteBtn">삭제</div>';
+			comment += '</div>';
+			comment += '<div class="text">';
+			comment += cmtObj.pcContent;
+			comment += '</div>';
+			comment += '</div>';
+			comment += '</div>';
+			commentBox.append(comment);
+		}
+	}else {
+		replyBox.find(".view-appendCommentBox>#view-appendCmtBtn").prop("disabled", true);
+		replyBox.find(".view-appendCommentBox>#view-appendCmtBtn").html("no comment&nbsp;&nbsp;");
+	}
 	$(".viewItemWrap").prepend(currentCloneBox);
 	$("#viewLoadingWrap").css("display", "none");
 };
@@ -349,4 +394,27 @@ $(".viewItemWrap").on("click",">.viewItemPaddingBox>.viewCloseBtn", function() {
 		currentCloneBox.remove();
 	});
 });
+
+var view_getMoreComment = function() {
+	// 댓글 더보기
+};
+
+var view_registComment = function() {
+	// 댓글 등록
+	var textArea = $(this).parent().parent().find("td").eq(0).find("textarea");
+	var inputVal = textArea.val();
+	var pNo = $(this).attr("data-pnidx");
+	if(inputVal.trim().length == 0) {
+		alertMsg("입력된 내용이 없습니다!", "확인");
+		textArea.focus();
+	}else {
+		$.getJSON(contextPath + "/product/auth/registComment.do", {
+			pcContent : inputVal,
+			pNo : pNo
+		}, function(resultObj) {
+			var result = resultObj.ajaxResult;
+			console.dir(result);
+		});
+	}
+};
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import kr.co.mdeal.dao.ProductDao;
 import kr.co.mdeal.domain.Categorie;
 import kr.co.mdeal.domain.Product;
+import kr.co.mdeal.domain.ProductComment;
 import kr.co.mdeal.domain.ProductPhoto;
 import kr.co.mdeal.service.ProductService;
 
@@ -75,7 +76,15 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> result = dao.selectProductDetail(pro);
 		List<ProductPhoto> photoList = dao.selectProductPhoto(pro);
+		List<ProductComment> commentList = dao.selectProductCommentInit(pro);
 		result.put("photoList", photoList);
+		result.put("commentList", commentList);
 		return result;
+	}
+	
+	@Override
+	public void registProductComment(ProductComment comment) {
+		// TODO Auto-generated method stub
+		dao.insertProductComment(comment);
 	}
 }

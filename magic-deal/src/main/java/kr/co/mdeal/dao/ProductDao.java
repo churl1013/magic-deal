@@ -5,6 +5,7 @@ import java.util.List;
 
 import kr.co.mdeal.domain.Categorie;
 import kr.co.mdeal.domain.Product;
+import kr.co.mdeal.domain.ProductComment;
 import kr.co.mdeal.domain.ProductPhoto;
 
 public interface ProductDao {
@@ -19,4 +20,7 @@ public interface ProductDao {
 	List<HashMap<String, Object>> selectProductList(Categorie cate);
 	HashMap<String, Object> selectProductDetail(Product pro);
 	List<ProductPhoto> selectProductPhoto(Product pro);
+	List<ProductComment> selectProductCommentInit(Product pro);
+	List<ProductComment> selectProductComment(HashMap<String, Object> option);
+	void insertProductComment(ProductComment comment);
 }

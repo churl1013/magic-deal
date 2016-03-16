@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.aspectj.util.FileUtil;
@@ -26,8 +27,10 @@ import kr.co.mdeal.domain.AjaxResult;
 import kr.co.mdeal.domain.Categorie;
 import kr.co.mdeal.domain.Member;
 import kr.co.mdeal.domain.Product;
+import kr.co.mdeal.domain.ProductComment;
 import kr.co.mdeal.domain.ProductPhoto;
 import kr.co.mdeal.service.ProductService;
+import kr.co.mdeal.util.ContentProcess;
 import kr.co.mdeal.util.FileUtils;
 
 @Controller
@@ -182,8 +185,19 @@ public class ProductController {
 			lId = login.getId();
 		}
 		HashMap<String, Object> productDetail = service.getProductDetail(pro);
+		productDetail.put("pContent", ContentProcess.enterChange(productDetail.get("pContent").toString()));
 		productDetail.put("lId", lId);
 		return new AjaxResult("success", productDetail);
+	}
+
+	@RequestMapping("auth/registComment.do")
+	public AjaxResult registComment(ProductComment comment, HttpServletRequest req) {
+		Member login = (Member)req.getAttribute("auth");
+		int mNo = login.getmNo();
+		comment.setmNo(mNo);
+		service.registProductComment(comment);
+		
+		return new AjaxResult("success", null);
 	}
 	
 	
