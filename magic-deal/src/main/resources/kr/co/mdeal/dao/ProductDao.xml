@@ -58,6 +58,50 @@
 		<result property="cateLow" column="p_low_cate"/>
 	</resultMap>
 	
+	<resultMap type="hashMap" id="productDetailMap">
+		<result column="p_no" property="pNo" />
+		<result column="m_no" property="mNo" />
+		<result column="p_c_no" property="pCategorieNo" />
+		<result column="price" property="price" />
+		<result column="p_content" property="pContent" />
+		<result column="p_reg_date" property="pRegDate" />
+		<result column="deal_type" property="dealType" />
+		<result column="deal_step" property="dealStep" />
+		<result column="quality" property="quality" />
+		<result column="deal_opt" property="dealOpt" />
+		<result column="p_addr" property="pAddr" />
+		<result column="p_lat" property="pLat" />
+		<result column="p_lon" property="pLon" />
+		<result property="cateKeyword" column="p_keyword"/>
+		<result property="cateHigh" column="p_high_cate"/>
+		<result property="cateLow" column="p_low_cate"/>
+		<result column="id" property="id" />
+		<result column="nname" property="nickName" />
+		<result column="join_date" property="joinDate" />
+		<result column="m_photo" property="mPhoto" />
+		<result column="like_cnt" property="likeCnt" />
+		<result column="product_cnt" property="productCnt" />
+	</resultMap>
+	
+	<select id="selectProductPhoto" parameterType="product" resultMap="productPhotoMap">
+		select * 
+		  from pro_photo
+		 where p_no = #{pNo}
+	</select>
+	
+	<select id="selectProductDetail" parameterType="product" resultMap="productDetailMap">
+		select pro.p_no, pro.p_c_no, pro.price, pro.p_content,
+			   pro.deal_opt, pro.quality, pro.p_addr, pro.deal_type,
+		       date_format(pro.p_reg_date, "%Y년 %c월 %e일 %H:%i") p_reg_date,
+		       cate.p_keyword, cate.p_high_cate, cate.p_low_cate,
+		       mem.id, mem.nname, mem.m_photo, mem.like_cnt,
+		       date_format(mem.join_date, "%Y. %e %b") join_date,
+		       (select count(*) from product where m_no = mem.m_no) product_cnt
+		  from product pro, pro_categorie cate, member mem
+		 where pro.p_c_no = cate.p_c_no 
+			   and pro.m_no = mem.m_no
+			   and pro.p_no = #{pNo}
+	</select>
 	
 	<select id="selectProductList" parameterType="categorie" resultMap="productAllMap">
 		select pro.*, pho.p_ph_no, pho.p_ph_path, pho.p_ph_name,

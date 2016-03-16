@@ -173,4 +173,18 @@ public class ProductController {
 		List<HashMap<String, Object>> productList = service.getProductList(cate);
 		return new AjaxResult("success", productList);
 	}
+
+	@RequestMapping("detail.do")
+	public AjaxResult getProductDetail(Product pro, HttpSession session) {
+		Member login = (Member)session.getAttribute("userLoginInfo");
+		String lId = "";
+		if(login!=null) {
+			lId = login.getId();
+		}
+		HashMap<String, Object> productDetail = service.getProductDetail(pro);
+		productDetail.put("lId", lId);
+		return new AjaxResult("success", productDetail);
+	}
+	
+	
 }

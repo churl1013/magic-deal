@@ -15,4 +15,5 @@ public interface ProductService {
 	List<HashMap<String, String>> getCategoriesPhoto();
 	ProductPhoto getCategoriePhoto(Categorie cate);
 	List<HashMap<String, Object>> getProductList(Categorie cate);
+	HashMap<String, Object> getProductDetail(Product pro);
 }

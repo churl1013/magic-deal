@@ -69,4 +69,13 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		return dao.selectProductList(cate);
 	}
+	
+	@Override
+	public HashMap<String, Object> getProductDetail(Product pro) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> result = dao.selectProductDetail(pro);
+		List<ProductPhoto> photoList = dao.selectProductPhoto(pro);
+		result.put("photoList", photoList);
+		return result;
+	}
 }

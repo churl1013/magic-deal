@@ -1,0 +1,376 @@
+@CHARSET "UTF-8";
+.viewItemWrap {
+	width : 100%;
+	height : 100%;
+	background-color : rgba(0,0,0,0.7);
+	display : none;
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	opacity : 0;
+	z-index : 777;
+}
+
+#viewItemCloneBox {
+	display : none;
+}
+
+.viewItemPaddingBox {
+	width : 1024px;
+	padding : 70px 0px 70px 0px;
+	margin : 0px auto;
+	position : relative;
+}
+
+.viewItemBox {
+	width : 100%;
+	background-color : rgba(255,255,255,0.9);
+	border-radius : 3px;
+	padding : 20px;
+}
+
+.viewItemHeader {
+	width : 100%;
+	height : 500px;
+	border : 1px solid #c8c8c8;
+	background-color : #fff;
+}
+
+.viewItemReply {
+	margin-top : 10px;
+	min-height : 50px;
+	border : 1px solid #c8c8c8;
+	background-color : #fff;
+}
+
+.viewCloseBtn {
+	position : absolute;
+	right : -35px;
+	top : 35px;
+	width : 28px;
+	height : 28px;
+	cursor : pointer;
+}
+
+.view-scrollUpBtn {
+	width : 50px;
+	height : 50px;
+	position : fixed;
+	right : 10px;
+	bottom : 10px;
+	background-color : red;
+}
+
+.viewItemPhotoBox {
+	width : 400px;
+	height : 100%;
+	float : left;
+}
+
+.viewItemContent {
+	width : 582px;
+	height: 100%;
+	float : left;
+}
+
+#currentViewPhoto {
+	width : 100%;
+	height : 410px;
+	border-bottom : 1px solid #d8d8d8;
+}
+
+.thumbImgBox {
+	width : 100%;
+	height : 88px;
+	position : relative;
+}
+
+.thumb {
+	width : 25%;
+	height : 100%;
+	float : left;
+	cursor : pointer;
+}
+
+.thumbFocus {
+	width : 25%;
+	height : 100%;
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	text-align : center;
+	line-height : 80px;
+	border : 4px solid rgba(0,0,0,0.6);
+}
+
+.itemInfo {
+	width : 100%;
+	height : 238px;
+	padding : 10px;
+}
+
+.itemWriter {
+	width : 100%;
+	height : 120px;
+	border-bottom : 1px solid #d8d8d8;
+	padding : 10px 10px 0px 10px;
+}
+
+.itemContent {
+	width : 100%;
+	height : 140px;
+	padding : 10px;
+}
+
+#view-proFlag {
+	width : 100%;
+	height : 30px;
+	line-height : 30px;
+}
+
+.view-infoHeader {
+	font-size : 16px;
+	font-weight : 600;
+	font-family : 'Doppio One';
+}
+
+.view-annotation {
+	font-size : 12px;
+	color : #aaa;
+	font-weight : normal;
+}
+
+.view-inforHeader-share {
+	height : 30px;
+	line-height : 30px;
+	width : 100%;
+}
+
+.itemInfo>ul {
+	position : relative;
+	font-size : 13px;
+	list-style : none;
+}
+
+.itemInfo>ul>li {
+	margin : 5px 0px 2px 0px;
+	border-bottom : 1px solid #f0f0f0;
+}
+
+.view-infoTitle {
+	display : inline-block;
+	width : 100px;
+}
+
+.view-infoTitle::before {
+	content : " ";
+	width : 8px;
+	height : 4px;
+	display : inline-block;
+	margin-right : 5px;
+	background-color : #b8b8b8;
+	border : 1px solid #c8c8c8;
+	position : relative;
+	top : -2px;
+}
+
+.view-infoContent {
+	display : inline-block;
+	width : 400px;
+	font-weight : 600;
+}
+
+.view-sharedBtnBox {
+	width : 200px;
+	height : 30px;
+	font-size : 0px;
+	float : right;
+	line-height : 0px;
+}
+
+.view-shareBtn {
+	line-height : 9px;
+	width : 30px;
+	height : 30px;
+	overflow : hidden;
+	margin-left : 5px;
+	border-radius : 2px;
+	border : none;
+	background-image : url("/magic-deal/img/social_icon/btn_social.png");
+	background-repeat : no-repeat;
+	outline : none;
+	border : 1px solid #e8e8e8;
+	float : left;
+}
+
+.facebook_btn {
+	background-position : -7px -75px;
+}
+
+.twitter_btn {
+	background-position : -49px -75px;
+}
+
+.kakao_btn {
+	background-position : -89px -75px;
+}
+
+.kakaostory_btn {
+	background-position : -130px -75px;
+}
+
+.url_btn {
+	background-image : none;
+	font-weight : 900;
+	font-size : 9px;
+	background-color : white;
+}
+
+.view-memberCard {
+	width : 100%;
+	height : 90px;
+	border-radius : 3px;
+	padding : 3px 10px 3px 10px;
+}
+
+.view-memberCardImg {
+	width : 82px;
+	height : 82px;
+	border : 1px solid #d8d8d8;
+	border-radius : 3px;
+	background-size : 100% 100%;
+	backgroun-repeat : no-repeat;
+	float : left;
+}
+
+.view-memberCardInfo {
+	float : left;
+	margin-left : 10px;
+	width : 450px;
+	height : 100%;
+	padding : 5px;
+	position : relative;
+}
+
+.view-card-nick {
+	font-weight : 800;
+	font-size : 16px;
+	color : #4183c4;
+	height : 21px;
+}
+
+.view-memberCardInfo-chatBtn {
+	position : absolute;
+	right : 5px;
+	bottom : 5px;
+}
+
+.view-clickable {
+	cursor : pointer;
+	transition : all 0.2s;
+}
+
+.view-clickable:hover {
+	color : #00b5ad;
+}
+
+.view-likeCntBox {
+	padding-left : 15px;
+	color : #777;
+	font-size : 12px;
+}
+
+.view-likeCnt::after {
+	content : "likes"
+}
+
+.view-card-active {
+	width : 100%;
+	height : 57px;
+	line-height : 57px;
+}
+
+.view-itemContent {
+	height : 100px;
+	border : 1px solid #c8c8c8;
+	overflow-x : hidden;
+	overflow-y : auto;
+	font-size : 13px;
+	padding : 5px;
+}
+
+.view-regReplyBox {
+	width : 100%;
+	min-height : 50px;
+	background-color : #f8f8f8;	
+}
+
+.view-regReplyForm {
+	width : 100%;
+	min-height : 50px;
+	padding : 5px 5px 5px 5px;
+	text-align : right;
+}
+
+.view-regReplyForm>table {
+	min-height : 100%;
+}
+
+#view-commentContent {
+	width : 880px;
+	margin-right : 5px;
+	min-height : 100%;
+	resize: vertical;
+	border-radius : 2px;
+	border : 1px solid #c8c8c8;
+	outline : none;
+	padding : 3px;
+	font-size : 12px;
+	background-color : #fbfbfb;
+}
+
+#view-commentRegBtn {
+	border : none;
+	height : 40px;
+	outline : none;
+	margin : 0px!important;
+}
+
+.view-regReplyContextBox {
+	padding : 10px;
+}
+
+.deleteBtn {
+	color : #db2828;
+	cursor : pointer;
+}
+
+.view-appendCommentBox {
+	width : 100%;
+	height : 30px;
+	text-align : right;
+	padding : 3px;
+}
+
+#view-appendCmtBtn {
+	font-size : 12px;
+	border : none;
+	padding : 3px 3px 3px 8px;
+	background-color : #222;
+	color : white;
+	font-weight : 600;
+	border-radius : 2px;
+}
+
+#viewLoadingWrap {
+	width : 100%;
+	height : 100%;
+	position : absolute;
+	background-color : rgba(26,26,26,0.7);
+	top : 0px;
+	left : 0px;
+	z-index : 2;
+	display : none;
+}
+
+

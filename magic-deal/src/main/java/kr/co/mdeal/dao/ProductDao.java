@@ -17,4 +17,6 @@ public interface ProductDao {
 	List<HashMap<String, String>> selectCategoriesPhoto();
 	ProductPhoto selectCategoriePhoto(Categorie cate);
 	List<HashMap<String, Object>> selectProductList(Categorie cate);
+	HashMap<String, Object> selectProductDetail(Product pro);
+	List<ProductPhoto> selectProductPhoto(Product pro);
 }
