@@ -10,4 +10,5 @@ public interface MemberDao {
 	Member selectMemberById(Member member);
 	void updateMemberPhoto(Member member);
 	void updateMemberInfo(Member member);
+	void updateMemberProfile(Member member);
 }

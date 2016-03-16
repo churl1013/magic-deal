@@ -62,4 +62,13 @@
 		   set m_info = #{mInfo}
 		 where id = #{id}
 	</update>
+	
+	<update id="updateMemberProfile" parameterType="member">
+		update member
+		   set nname = #{nickName},password = #{password},m_addr = #{mAddr},m_lat = #{mLat},m_lon = #{mLon}
+		 where id = #{id}
+	</update>
+	
+	
+	
 </mapper>

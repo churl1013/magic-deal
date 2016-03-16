@@ -147,6 +147,43 @@ footer {
 	font-weight : bold;
 }
 
+
+.ui.modal.infoModal {
+	width : 800px;
+	margin-left : -400px;
+	text-align : left;
+	background-color : rgba(50,50,50,0.8);
+	z-index : 2;
+}
+
+.ui.modal.infoModal>.header {
+	background-color : rgba(50,50,50,0.8);
+	color : white;
+}
+
+.ui.modal.infoModal>.footer {
+	background-color : rgba(50,50,50,0.8);
+	color : white;
+}
+
+.ui.modal.infoModal>.content>label {
+	display : block;
+	margin : 10px 0px 5px 0px;
+	font-weight : bold;
+}
+
+.infoTextArea {
+	width : 750px;
+	height : 100px;
+	border-radius : 5px;
+	border : 1px solid #d8d8d8;
+	background-color : fafafa;
+	outline : none;
+	resize : none;
+	padding : 5px;
+	font-size : 12px;
+}
+
 </style>
 </head>
 <body>
@@ -454,7 +491,7 @@ footer {
 
 <!-- 프로필 업데이트 모달 -->
 			<div id="profileUpdateModal" class="ui modal profileModal">
-			    <i class="close icon" onclick="updateClose()"></i>
+			    <i class="close icon" id="updateCloseBtn" onclick="updateClose()"></i>
 			    <div class="header">
 			      	프로필 수정
 			    </div>
@@ -462,7 +499,7 @@ footer {
 		<label>닉네임</label>
 	       <div class="ui small input">
 	 			<input type="text" id="signNickName2" style="width:150px;"/> &nbsp;
-			<span id="signNickChkResult2">닉네임을 입력하세요!</span>
+			<span id="signNickChkResult2" style="margin-top:10px">변경할 닉네임을 입력하세요!</span>
 			</div>
       <label>비밀번호
          <span style="font-size:12px; color:#444">
@@ -470,7 +507,8 @@ footer {
          </span>
        </label>
        <div class="ui small input">
- 			<input type="password" id="signPass2" style="width:200px;"/>
+ 			<input type="password" id="signPass2" style="width:200px;"/>&nbsp;
+ 				<span style="margin-top:10px">현재 혹은 변경할 비밀번호를 입력하세요!</span>
 	</div>
 
        <label>비밀번호 확인</label>
@@ -500,6 +538,40 @@ footer {
 			  </div>
  <!-- 프로필 업데이트 모달 끝 -->
 
+<!-- 소개 업데이트 모달 -->
+			<div id="infoUpdateModal" class="ui modal infoModal">
+			    <i class="close icon" id="infoCloseBtn"></i>
+			    <div class="header">
+			      	자기소개 수정
+			    </div>
+			    <div class="content">
+		<label>자기소개</label>
+	       <div class="ui small input">
+	       <textarea id="infoContent" class="infoTextArea"></textarea>
+<!-- 	 			<input type="text" id="signNickName2" style="width:150px;"/> &nbsp; -->
+			</div>
+<!--       <label>비밀번호 -->
+<!--          <span style="font-size:12px; color:#444"> -->
+<!--            (숫자, 특수문자 포함 8자 이상) -->
+<!--          </span> -->
+<!--        </label> -->
+<!--        <div class="ui small input"> -->
+<!--  			<input type="password" id="signPass2" style="width:200px;"/>&nbsp; -->
+<!--  				<span style="margin-top:10px">현재 혹은 변경할 비밀번호를 입력하세요!</span> -->
+<!-- 	</div> -->
+
+			    </div>
+			    <div class="actions footer">
+			      <div class="ui red deny inverted icon button">
+			        <i class="remove icon"></i> 취소
+			      </div>
+			      <div class="ui green ok inverted right labeled icon button">
+			        <i class="checkmark icon"></i> 수정 완료
+			      </div>
+			    </div>
+			  </div>
+ <!-- 소개 업데이트 모달 끝 -->
+
 <!-- 헤더 관련 팝업 모달 끝-->
 
 <!-- 기본 임폴트 js -->
@@ -518,10 +590,18 @@ footer {
 
 <script>
 	var pageParam;
-	
+	var nickName;
+	var mlat;
+	var mlon;
 	var loginCheck = function() {
 		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
+			if(resultObj.ajaxResult.data!=null){
+			nickName = resultObj.ajaxResult.data.nickName;
+			mlat = resultObj.ajaxResult.data.mLat;
+			mlon = resultObj.ajaxResult.data.mLon;
+			}
 			var result = resultObj.ajaxResult;
+			
 			loginBoxDraw(result.data);
 			if(result.data&&result.data.id==pageParam.ow) {
 				// 로그인한 사용자가 마이페이지 주인
@@ -540,14 +620,14 @@ footer {
 			}
 		});
 	};
-	
 	var mypageDraw = function(u_info, flag) {
 		$("#mypageProfieImg").attr("src", contextPath+"/upload/profile/mp_"+u_info.mPhoto);
 		$("#mypageProfileNickName").text(u_info.nickName);
 		$("#mypageProfileJoinDate").text(u_info.joinDate);
 		$("#mypageProfileLikeCount").text(u_info.likeCnt);
 		$("#mypageProfileInfo").html(u_info.mInfo);
-
+		
+		
 		var btnObj;
 		var btnObj2;
 		var btnObj3;
@@ -599,20 +679,45 @@ footer {
 			// 마이페이지 수정 파트
 			btnObj2 = '<div class="ui mini icon black button info-update-btn" id="profileUpdate">';
 			btnObj2 += '정보 업데이트</div>';
-			mypageProfileUpdate
 			$("#profileUpdateBtnBox").html(btnObj2);
 			
-			$("#mypageProfileInfo").on("click", function() {
-				this.contentEditable='true';
-			});
 			
 			$("#profileUpdate").on("click", function() {
-				$('#profileUpdateModal').modal('show');
+				  $("#signNickName2").val(u_info.nickName);
+				  $("#signAddr2").val(u_info.mAddr);
+				$('#profileUpdateModal').modal({
+					closable : false,
+					onDeny : function(){
+						return true;
+					},
+					onApprove : function(){
+						var updateFlag = updateSubmitChk();
+						console.log("updateFlag 상태 : "+updateFlag);
+						updateCommit(updateFlag);
+						return false;
+					}
+				}).modal('show');
+				
 			});
-			btnObj3 = '<div class="ui mini icon green button info-update-btn" onclick="infoUpdate()" style="float:right;margin-top:-34px;">';
+			btnObj3 = '<div class="ui mini icon green button info-update-btn" id="infoModal" style="float:right;margin-top:-34px;">';
 			btnObj3 += '수정</div>';
-			mypageProfileUpdate
 			$("#infoUpdateBtnBox").html(btnObj3);
+			
+			// 자기소개 수정 modal창 클릭 이벤트
+			$("#infoModal").on("click", function() {
+				  $("#infoContent").val(u_info.mInfo);
+				$('#infoUpdateModal').modal({
+					closable : false,
+					onDeny : function(){
+						return true;
+					},
+					onApprove : function(){
+						infoUpdate();
+						return false;
+					}
+				}).modal('show');
+				
+			});
 			
 		}else if(flag==1){
 			// 타인의 마이페이지일 경우
@@ -676,42 +781,124 @@ footer {
 		$("#alarm-tab-box").css("display", "block");
 	});
 	
+	// 프로필 수정 닉네임 중복 확인
 	$("#signNickName2").on("keyup", function() {
 		var chkNick2 = $(this).val();
 		if(chkNick2.trim().length<2) {
 			$("#signNickChkResult2").text("닉네임은 2글자 이상입니다.");
 			$("#signNickChkResult2").css("color", "#db2828");
-			joinChkObj.nick = false;
+			updateChkObj.nick = false;
 		}else {
 			$.getJSON(
 				"http://"+ip+":"+port+"/magic-deal/checkNick?chkNick="+chkNick2+"&callback=?", 
 				function(resultData) {
 				var result = resultData.result;
+				console.log(chkNick2);
 				if(result == 'ok') {
 					$("#signNickChkResult2").text("사용 가능한 닉네임 입니다.");
 					$("#signNickChkResult2").css("color", "#21ba45");
-					joinChkObj.nick = true;
-				}else {
+					updateChkObj.nick = true;
+				}
+ 				else if(chkNick2==nickName){
+ 					$("#signNickChkResult2").text("현재 사용자의 닉네임입니다.");
+ 					$("#signNickChkResult2").css("color", "#379DBF");
+ 					updateChkObj.nick = true;
+ 				}
+				else {
 					$("#signNickChkResult2").text("이미 사용중인 닉네임 입니다.");				
 					$("#signNickChkResult2").css("color", "#db2828");
-					joinChkObj.nick = false;
+					updateChkObj.nick = false;
 				}
 			});
 		}
 	});
 	
+	// 프로필 정보 수정 Commit
+	var updateCommit = function(flag) {
+		if(flag) {
+			var nick = $("#signNickName2").val();
+			var pass = $("#signPass2").val();
+			var addr = $("#signAddr2").val();
+			var lat = $("#signLat2").val();
+			var lon = $("#signLon2").val();
+			if(lat.length==0&&lon.length==0){
+				lat = mlat;
+				lon = mlat;
+			}
+			$.post(contextPath+"/member/auth/profileUpdate.do", {
+				nickName : nick,
+				password : pass,
+				mAddr : addr,
+				mLat : lat,
+				mLon : lon
+			}, function(result) {
+				console.log(result.ajaxResult);
+				var result = result.ajaxResult;
+				console.log(result.msg);
+				if(result.msg == 'success') {
+					infoSuccessMsg("프로필 정보가<br/>성공적으로 변경되었습니다!", "확인");
+				}
+			}, "json");
+		}
+	};
+	
+	// 자기 소개 변경 완료시 Alert 창
+	var infoSuccessMsg = function(msg, btn) {
+		$("#alertMsg").html(msg);
+		$("#alertBtn").html(btn);
+		$(".ui.modal.alertModal").modal( {
+			allowMultiple : true,
+			closable : false,
+			onApprove : function() {
+				$("#infoCloseBtn").trigger("click");
+				location.reload(true);
+				return true;
+			}
+		}).modal('show');
+	};
+	
+	// 프로필 변경 완료시 Alert 창
+	var updateSuccessMsg = function(msg, btn) {
+		$("#alertMsg").html(msg);
+		$("#alertBtn").html(btn);
+		$(".ui.modal.alertModal").modal( {
+			allowMultiple : true,
+			closable : false,
+			onApprove : function() {
+				$("#updateCloseBtn").trigger("click");
+				location.reload(true);
+				return true;
+			}
+		}).modal('show');
+	};
+	
+	// 자기 소개 변경 함수
 	var infoUpdate = function() {
-		
-		var info = $("#mypageProfileInfo").html();
+		var info = $("#infoContent").val();
+		console.log(info);
 		$.post(contextPath + "/member/auth/infoupdate.do", {
 			mInfo : info
 		},function(result){
-			var res = result.ajaxResult;	
-			$("#mypageProfileInfo").html(res.d);
+			console.log(result.ajaxResult);
+			var result = result.ajaxResult;
+			console.log(result.msg);
+			if(result.msg == 'success') {
+				updateSuccessMsg("자기소개가<br/>성공적으로 변경되었습니다!", "확인");
+			}
 		},"json");
 		
 		return false;
 		
+	};
+	
+	// 프로필 업데이트 창 닫기
+	var updateClose = function() {
+		$("#signNickName2").val("");
+		$("#signPass2").val("");
+		$("#signPassChk2").val("");
+		$("#signAddr2").val("");
+		$("#signLat2").val("");
+		$("#signLon2").val("");
 	};
 	
     var element_wrap = document.getElementById('popupLayer2');
@@ -747,9 +934,19 @@ footer {
                     fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
                 }
 
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('signLat2').value = data.zonecode; //5자리 새우편번호 사용
-                document.getElementById('signAddr2').value = fullAddr;
+                $("#signAddr2").val(fullAddr);
+                var geocoder = new daum.maps.services.Geocoder();
+                geocoder.addr2coord(data.address, function(status, result) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+                        // 해당 주소에 대한 좌표를 받아서
+                        var lat = result.addr[0].lat;
+                        var lng = result.addr[0].lng;
+                        
+                        $("#signLat2").val(lat);
+                        $("#signLon2").val(lng);
+                    }
+                });
 
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
@@ -772,7 +969,56 @@ footer {
         element_wrap.style.display = 'block';
         var topPos = parseInt($(".ui.modal.profileModal").css("top"));
         $(".ui.modal.profileModal").css("top", topPos-150+"px");
-    }
+    };
+    
+    // 프로필 비밀번호 변경 유효성 검사
+    var passwordChk2 = function() {
+    	var pass1 = $("#signPass2").val();
+    	var pass2 = $("#signPassChk2").val();
+    	if((pass1.length>=6)&&(pass2.length>=6)){
+    		if(pass1==pass2){
+    			return true;
+    		}
+    	}
+    	return false;
+    };
+    
+    // 프로필 변경 true 확인
+    var updateChkObj = {
+    		nick : true,
+    		password : false,
+    		result : function() {
+    			return this.nick && this.password;
+    		}
+    	};
+    
+    var alertMsg2 = function(msg, btn) {
+    	$("#alertMsg").html(msg);
+    	$("#alertBtn").html(btn);
+    	$(".ui.modal.alertModal").modal( {
+    		allowMultiple : true,
+    		closable : false,
+    		onApprove : function() {
+    			return true;
+    		}
+    	}).modal('show');
+    };
+
+    // 프로필 변경 Submit 처리
+    var updateSubmitChk = function() {
+    	updateChkObj.password = passwordChk2();
+    	console.log("nick:"+updateChkObj.nick);
+    	console.log("pass:"+updateChkObj.password);
+    	if(updateChkObj.result()) {
+    		// 폼 검사 적격 회원가입 진행
+    		return true;
+    	}else {
+    		// 폼 검사 부적격
+    		alertMsg2("입력이 누락되거나 잘못되었습니다!!", "확인");
+    		return false;
+    	}
+    	
+    };
 </script>
 </body>
 </html>

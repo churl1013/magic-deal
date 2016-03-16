@@ -95,6 +95,21 @@ public class MemberController {
 		return new AjaxResult("success", member.getmInfo());
 	}
 	
+	// 개인정보 수정
+	@RequestMapping(value="auth/profileUpdate.do", method=RequestMethod.POST)
+	public AjaxResult profileUpdate(Member member, HttpServletRequest req) {
+		Member login = (Member)req.getAttribute("auth");
+		member.setId(login.getId());
+		member.setPassword(
+				OneWayCipherSHA256.getSHA256(member.getPassword()));
+		login.setNickName(member.getNickName());
+		login.setmAddr(member.getmAddr());
+		login.setmLat(member.getmLat());
+		login.setmLon(member.getmLon());
+		service.updateMemberProfile(member);
+		return new AjaxResult("success", null);
+	}
+	
 	// 프로필 사진을 업로드하고 Member의 mPhoto에 경로 삽입
 	@RequestMapping(value="auth/profilephoto.do", method=RequestMethod.POST)
 	public AjaxResult profilePhotoChange( Member member, HttpServletRequest req,
