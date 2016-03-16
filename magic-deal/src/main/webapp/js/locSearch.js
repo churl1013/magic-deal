@@ -6,7 +6,8 @@
 var map;
 var clusterer;
 var markers = [];
-var filterMarkers = [];
+var filterOptionMarkers = [];	// 상단 필터링에 의한 필터된 마커들
+var filterMarkers = [];			// 화면 범위에 따른 리스트에 표시할 마커들
 var places;
 var productData;	
 var locUtil;
@@ -32,9 +33,8 @@ var pageSize = 10;
 var locInit = function() {
 	clustererInit();
 	placesInit();
+	reDrawMapInit();
 	
-	mBound = map.getBounds();
-	currCenter = map.getCenter();
 	
 	var imageSrc = contextPath + "/img/loc/location-icon.png";
 	var imageSize = new daum.maps.Size(30,45);
@@ -48,6 +48,11 @@ var locInit = function() {
 	
 	imageSrc = contextPath + "/img/loc/buy_marker.png";
 	buyMarkerImg = new daum.maps.MarkerImage(imageSrc, imageSize, imageOption);
+};
+
+var reDrawMapInit = function() {
+	mBound = map.getBounds();
+	currCenter = map.getCenter();
 };
 
 var placesInit = function() {
@@ -197,9 +202,9 @@ var drawMarker = function(data) {
 	proCard += '</div>';
 	proCard += '<label class="ui ';
 	var labelColor = data.dealType=='s'?'pink':'violet';
-	var labelIcon = data.dealType=='s'?'won' : 'shop';
-	proCard += labelColor + ' right corner label">';
-	proCard += '<i class="' + labelIcon + ' icon"></i></label>';
+	var labelIcon = data.dealType=='s'?'팜' : '삼';
+	proCard += labelColor + ' right corner label" style="padding:5px;text-align:right;">';
+	proCard += labelIcon + '</label>';
 	proCard += '<input type="hidden" name="productNo" value="'+data.pNo+'"/>';
 	proCard += '<input type="hidden" name="lat" value="'+data.pLat+'"/>';
 	proCard += '<input type="hidden" name="lon" value="'+data.pLon+'"/>';
@@ -320,3 +325,4 @@ var drawPageNumber = function(length, currPage) {
 	
 	return false;
 };
+

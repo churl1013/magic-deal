@@ -869,7 +869,7 @@ $("#productSubmitBtn").on("click", function() {
 		
 		var dealType = $("#dealFlag").prop("checked");	//true = 판매
 		var price = $("#price").val();
-		var quality = $("input[name=quality]").val();
+		var quality = $("input[name=quality]:checked").val();
 		var content = $("#regContent").val();
 		var addr = $("#regAddr").val();
 		var lat = $("#regLat").val();
@@ -884,8 +884,6 @@ $("#productSubmitBtn").on("click", function() {
 		opt = opt?"y":"n";
 				
 		var keyNum = cateNumSearch(keyword);
-		
-		console.log(keyNum);
 		
 		data.append("dealType", dealType);
 		data.append("price", price);

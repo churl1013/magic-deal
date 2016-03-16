@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css"
+	href="../semantic/semantic.min.css">
+<title>Insert title here</title>
+<style>
+* {
+	padding : 0px;
+	margin : 0px;
+	box-sizing : border-box;
+}
+
+.viewItemWrap {
+	width : 100%;
+	height : 100%;
+	background-color : rgba(0,0,0,0.7);
+	display : none;
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	opacity : 0;
+	z-index : 777;
+}
+
+.viewItemPaddingBox {
+	width : 1024px;
+	padding : 70px 0px 70px 0px;
+	margin : 0px auto;
+	position : relative;
+}
+
+.viewItemBox {
+	width : 100%;
+	background-color : rgba(255,255,255,0.9);
+	border-radius : 3px;
+	padding : 20px;
+}
+
+.viewItemHeader {
+	width : 100%;
+	height : 500px;
+	border : 1px solid #c8c8c8;
+	background-color : #fff;
+}
+
+.viewItemReply {
+	margin-top : 10px;
+	min-height : 100px;
+	border : 1px solid #c8c8c8;
+	background-color : #fff;
+}
+
+.viewCloseBtn {
+	position : absolute;
+	right : -35px;
+	top : 35px;
+	width : 28px;
+	height : 28px;
+	cursor : pointer;
+}
+
+.viewItemPhotoBox {
+	width : 400px;
+	height : 100%;
+	border-right : 1px solid #d8d8d8;
+	float : left;
+}
+
+.viewItemContent {
+	width : 582px;
+	height: 100%;
+	float : left;
+}
+
+#currentViewPhoto {
+	width : 100%;
+	height : 410px;
+	border-bottom : 1px solid #d8d8d8;
+}
+
+.thumbImgBox {
+	width : 100%;
+	height : 88px;
+}
+
+.thumb {
+	width : 25%;
+	height : 100%;
+	float : left;
+}
+
+.itemInfo {
+	width : 100%;
+	height : 130px;
+	border-bottom : 1px solid #d8d8d8;
+	padding : 10px;
+}
+
+.itemShare {
+	width : 100%;
+	height : 50px;
+	border-bottom : 1px solid #d8d8d8;
+	padding : 10px;
+}
+
+.itemWriter {
+	width : 100%;
+	height : 130px;
+	border-bottom : 1px solid #d8d8d8;
+	padding : 10px;
+}
+
+.itemContent {
+	width : 100%;
+	height : 188px;
+	padding : 10px;
+}
+</style>
+
+</head>
+<body>
+<button id="show">show!</button>
+<div class="viewItemWrap">
+	<div class="viewItemPaddingBox">
+		<div class="viewItemBox">
+			<div class="viewItemHeader">
+				<div class="viewItemPhotoBox">
+					<div id="currentViewPhoto">
+					
+					</div>
+					<div class="thumbImgBox">
+						<div class="thumb"></div>
+						<div class="thumb"></div>
+						<div class="thumb"></div>
+						<div class="thumb"></div>
+					</div>
+				</div>
+				<div class="viewItemContent">
+					<div class="itemInfo">
+						<div id="view-proFlag">
+							<label class="ui label">삽니다</label>
+							<i class="shipping bordered inverted olive icon"></i>
+						</div>
+						<div id="view-proFlag">
+							<label class="ui label">삽니다</label>
+							<i class="shipping bordered inverted olive icon"></i>
+						</div>
+					</div>
+					<div class="itemShare">
+					
+					</div>
+					<div class="itemWriter">
+					
+					</div>
+					<div class="itemContent">
+					
+					</div>
+				</div>
+			</div>
+			<div class="viewItemReply">
+			
+			</div>
+		</div>
+		<div class="viewCloseBtn">
+			<i class="inverted large close icon"></i>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="../semantic/semantic.min.js"></script>
+<script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
+<script>
+	$("#show").on("click", function() {
+		$(".viewItemWrap").css("display","block").animate({
+			opacity : 1
+		}, "fast");
+	});
+	
+	$(".viewItemWrap").niceScroll();
+	
+	$(".viewCloseBtn").on("click", function() {
+		$(".viewItemWrap").animate({
+			opacity : 0
+		}, "fast", function() {
+			$(this).css("display", "none");
+		});
+	});
+</script>
+</body>
+</html>

@@ -27,6 +27,6 @@ public class FileUtils {
 			ext = fileName.substring(extPos+1, fileName.length());
 		}
 		
-		return ext;
+		return ext.toUpperCase();
 	}
 }

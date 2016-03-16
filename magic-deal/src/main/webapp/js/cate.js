@@ -32,7 +32,7 @@ var opt4 = [
             {display: "바지", value: "7" },
             {display: "스커트", value: "8" },
             {display: "치마", value: "9" },
-            {display: "남방", value: "10" },
+            {display: "셔츠", value: "10" },
             {display: "블라우스", value: "11" },
             {display: "트레이닝복", value: "12" },
             {display: "속옷", value: "13" },
@@ -46,7 +46,7 @@ var opt5 = [
             {display: "바지", value: "4" },
             {display: "트레이닝복", value: "5" },
             {display: "니트", value: "6" },
-            {display: "남방", value: "7" },
+            {display: "셔츠", value: "7" },
             {display: "정장", value: "8" },
             {display: "속옷", value: "9" },
             {display: "기타", value: "10" }];
