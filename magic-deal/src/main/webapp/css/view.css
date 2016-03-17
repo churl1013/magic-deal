@@ -83,6 +83,7 @@
 	width : 100%;
 	height : 88px;
 	position : relative;
+	background-color : #f8f8f8;
 }
 
 .thumb {
@@ -341,27 +342,18 @@
 	padding : 10px;
 }
 
-.deleteBtn {
+.viewCommentDeleteBtn {
 	color : #db2828;
 	cursor : pointer;
 }
 
-.view-appendCommentBox {
+.view-commentPagingBox {
 	width : 100%;
 	height : 30px;
 	text-align : right;
 	padding : 3px;
 	background-color : #f8f8f8;
-}
-
-#view-appendCmtBtn {
-	font-size : 12px;
-	border : none;
-	padding : 3px 3px 3px 8px;
-	background-color : #222;
-	color : white;
-	font-weight : 600;
-	border-radius : 2px;
+	text-align : center;
 }
 
 #viewLoadingWrap {
@@ -373,6 +365,37 @@
 	left : 0px;
 	z-index : 2;
 	display : none;
+}
+
+.viewPageIdxBox {
+	cursor : pointer;
+	display : inline-block;
+	width : 25px;
+	min-height : 25px;
+	margin : 0px 2px 0px 2px;
+	background-color : #222;
+	border-radius : 2px;
+	color : white;
+	font-weight : 600;
+	font-size : 12px;
+	line-height : 25px;
+}
+
+.viewCurrPage {
+	cursor : default;
+	background-color : #ff851b;
+}
+
+.viewPageArrowBox {
+	cursor : pointer;
+	display : inline-block;
+	width : 25px;
+	height : 25px;
+	margin : 0px 2px 0px 2px;
+	font-weight : 600;
+	font-size : 12px;
+	line-height : 25px;
+	
 }
 
 

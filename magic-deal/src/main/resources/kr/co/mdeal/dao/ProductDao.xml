@@ -95,21 +95,34 @@
 		<result column="comment_cnt" property="commentCnt" />
 	</resultMap>
 	
+	<delete id="deleteProductComment" parameterType="productComment">
+		delete 
+		  from pro_comment
+		 where m_no = #{mNo}
+		   and p_c_no = #{pcNo}
+	</delete>
+	
 	<select id="selectProductPhoto" parameterType="product" resultMap="productPhotoMap">
 		select *
 		  from pro_photo
 		 where p_no = #{pNo}
 	</select>
 	
-	<select id="selectProductCommentInit" parameterType="product" resultMap="productCommentMap">
+	<select id="selectProductCommentCount" parameterType="int" resultType="int">
+		select count(*)
+		  from pro_comment
+		 where p_no = #{pNo}
+	</select>
+	
+	<select id="selectProductComment" parameterType="hashMap" resultMap="productCommentMap">
 		select p_c_no, p_no, cmt.m_no, p_c_content, 
-			   date_format(p_c_reg_date, "%Y년 %c월 %e일 %H:%i") p_c_reg_date,
+			   date_format(p_c_reg_date, "%Y. %c. %e %H:%i") p_c_reg_date,
 			   mem.m_photo, mem.id, mem.nname
 		  from pro_comment cmt, member mem
 		 where p_no = #{pNo}
 		 	   and cmt.m_no = mem.m_no
 		 order by p_c_no desc
-		 limit 2
+		 limit #{start}, 8
 	</select>
 	
 	<insert id="insertProductComment" parameterType="productComment">

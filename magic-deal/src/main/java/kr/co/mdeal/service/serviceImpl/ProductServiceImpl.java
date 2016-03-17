@@ -76,9 +76,8 @@ public class ProductServiceImpl implements ProductService{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> result = dao.selectProductDetail(pro);
 		List<ProductPhoto> photoList = dao.selectProductPhoto(pro);
-		List<ProductComment> commentList = dao.selectProductCommentInit(pro);
+		
 		result.put("photoList", photoList);
-		result.put("commentList", commentList);
 		return result;
 	}
 	
@@ -86,5 +85,23 @@ public class ProductServiceImpl implements ProductService{
 	public void registProductComment(ProductComment comment) {
 		// TODO Auto-generated method stub
 		dao.insertProductComment(comment);
+	}
+	
+	@Override
+	public HashMap<String, Object> getProductComment(HashMap<String, Object> option) {
+		// TODO Auto-generated method stub
+		List<ProductComment> commentList = dao.selectProductComment(option);
+		int maxCnt = dao.selectProductCommentCount((int)option.get("pNo"));
+		
+		HashMap<String, Object> result = new HashMap<>();
+		result.put("commentList", commentList);
+		result.put("maxCnt", maxCnt);
+		return result;
+	}
+	
+	@Override
+	public void deleteProductComment(ProductComment comment) {
+		// TODO Auto-generated method stub
+		dao.deleteProductComment(comment);
 	}
 }

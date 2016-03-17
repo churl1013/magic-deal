@@ -7,7 +7,9 @@ package kr.co.mdeal.util;
 
 public class ContentProcess {
 	public static String enterChange(String content) {
-		content = content.replaceAll("\n", "<br/>");
+		if(content!=null) {
+			content = content.replaceAll("\n", "<br/>");
+		}
 		return content;
 	}
 }

@@ -241,6 +241,9 @@ var comma = function(val) {
 var drawViewModal = function(data) {
 	currentCloneBox = cloneBox.clone();
 	currentCloneBox.css("display", "block");
+	
+	// 현재 모달에 물품번호를 속성으로 지정
+	currentCloneBox.attr("data-pnidx", data.pNo);
 	var header = currentCloneBox.find(".viewItemHeader");
 	var i;
 	var productImg = "";
@@ -339,7 +342,6 @@ var drawViewModal = function(data) {
 		writerInfo.find("#view-chatBtn").remove();
 	}
 	
-	
 	var replyBox = currentCloneBox.find(".viewItemReply");
 	
 	if(data.lId.length == 0) {
@@ -347,40 +349,12 @@ var drawViewModal = function(data) {
 		console.log("비로그인");
 		replyBox.find(".view-regReplyBox").remove();
 	}else {
-		replyBox.find("#view-commentRegBtn").attr("data-pnidx", data.pNo).on("click", view_registComment);
+		replyBox.find("#view-commentRegBtn").on("click", RegistViewComment);
 	}
 	
 	if(data.commentCnt > 0) {
-		replyBox
-			.find(".view-appendCommentBox>#view-appendCmtBtn")
-			.attr("data-pnidx", data.pNo).attr("data-pidx", "1")
-			.on("click", view_getMoreComment);
-		
-		
-		var commentBox = replyBox.find(".view-regReplyContextBox");
-		var comment;
-		for(i=0; i<data.commentList.length; i++) {
-			var cmtObj = data.commentList[i];
-			comment =  '<div class="comment">';
-			comment += '<a class="avatar">';
-			comment += '<img src="'+contextPath+"/upload/profile/log_"+cmtObj.mPhoto+'"/>';
-			comment += '</a>';
-			comment += '<div class="content">';
-			comment += '<a class="author">'+cmtObj.nickName+'</a>';
-			comment += '<div class="metadata">';
-			comment += '<div class="date">'+cmtObj.pcRegDate+'</div>';
-			comment += '<div class="deleteBtn">삭제</div>';
-			comment += '</div>';
-			comment += '<div class="text">';
-			comment += cmtObj.pcContent;
-			comment += '</div>';
-			comment += '</div>';
-			comment += '</div>';
-			commentBox.append(comment);
-		}
-	}else {
-		replyBox.find(".view-appendCommentBox>#view-appendCmtBtn").prop("disabled", true);
-		replyBox.find(".view-appendCommentBox>#view-appendCmtBtn").html("no comment&nbsp;&nbsp;");
+		// 댓글 1페이지 및 페이징 정보를 불러와 출력
+		getViewCommentList(1);
 	}
 	$(".viewItemWrap").prepend(currentCloneBox);
 	$("#viewLoadingWrap").css("display", "none");
@@ -395,26 +369,133 @@ $(".viewItemWrap").on("click",">.viewItemPaddingBox>.viewCloseBtn", function() {
 	});
 });
 
-var view_getMoreComment = function() {
-	// 댓글 더보기
-};
 
-var view_registComment = function() {
+var RegistViewComment = function() {
 	// 댓글 등록
 	var textArea = $(this).parent().parent().find("td").eq(0).find("textarea");
 	var inputVal = textArea.val();
-	var pNo = $(this).attr("data-pnidx");
+	var pNo = currentCloneBox.attr("data-pnidx");
 	if(inputVal.trim().length == 0) {
 		alertMsg("입력된 내용이 없습니다!", "확인");
 		textArea.focus();
 	}else {
-		$.getJSON(contextPath + "/product/auth/registComment.do", {
+		$.getJSON(contextPath + "/product/auth/commentRegist.do", {
 			pcContent : inputVal,
 			pNo : pNo
 		}, function(resultObj) {
 			var result = resultObj.ajaxResult;
-			console.dir(result);
+			if(result.msg == 'success') {
+				textArea.val("");
+				getViewCommentList(1);
+			}
 		});
 	}
+};
+
+var getViewCommentList = function(pageNum) {
+	var pNo = currentCloneBox.attr("data-pnidx");
+	$.getJSON(contextPath + "/product/commentList.do", {
+		pNo : pNo,
+		page : pageNum
+	}, function(resultObj) {
+		var result = resultObj.ajaxResult;
+		viewCommentDraw(result.data, pageNum);
+		pageNumDraw(result.data.maxCnt, pageNum);
+	});
+};
+
+var viewCommentDraw = function(data) {
+	var replyBox = currentCloneBox.find(".viewItemReply");
+	var commentList = data.commentList;
+	var lId = data.lId;
+	if(commentList.length > 0) {
+		var commentBox = replyBox.find(".view-regReplyContextBox").empty();
+		var comment;
+		for(i=0; i<commentList.length; i++) {
+			var cmtObj = commentList[i];
+			comment =  '<div class="comment">';
+			comment += '<a class="avatar">';
+			comment += '<img src="'+contextPath+"/upload/profile/log_"+cmtObj.mPhoto+'"/>';
+			comment += '</a>';
+			comment += '<div class="content">';
+			comment += '<a class="author">'+cmtObj.nickName+'</a>';
+			comment += '<div class="metadata">';
+			comment += '<div class="date">'+cmtObj.pcRegDate+'</div>';
+			if(lId==cmtObj.id) {
+				comment += '<div class="viewCommentDeleteBtn" data-cidx="'+cmtObj.pcNo+'">삭제</div>';
+			}
+			comment += '</div>';
+			comment += '<div class="text">';
+			comment += cmtObj.pcContent;
+			comment += '</div>';
+			comment += '</div>';
+			comment += '</div>';
+			commentBox.append(comment);
+		}
+	}
+	$(".viewCommentDeleteBtn").on("click", function() {
+		var pcNo = $(this).attr("data-cidx");
+		var currPage = $(".viewCurrPage").text();
+		
+		$.getJSON(contextPath + "/product/auth/commentDelete.do", {
+			pcNo : pcNo
+		}, function(resultObj) {
+			getViewCommentList(currPage);
+		});
+	});
+};
+
+var pageNumDraw = function(maxCnt, currPage) {
+	var pagingBox = currentCloneBox.find(".viewItemReply>.view-commentPagingBox");
+	var maxPage = parseInt((maxCnt-1)/8)+1;
+	var currMinPage;
+	var currMaxPage;
+	var i;
+	currPage = parseInt(currPage);
+	if(currPage<=5) {
+		currMinPage = 1;
+		currMaxPage = 10;
+		
+		if(maxPage < currMaxPage) 
+			currMaxPage = maxPage;
+	}else if(currPage<=maxPage-5) {
+		currMinPage = currPage-4;
+		currMaxPage = currPage+5;
+	}else {
+		currMinPage = maxPage-9;
+		currMaxPage = maxPage;
+		if(currMinPage < 1) {
+			currMinPage = 1;
+		}
+	}
+	
+	pagingBox.empty();
+	
+	var pageIdxBox;
+	if(currMinPage>1) {
+		pageIdxBox = "<span class='viewPageArrowBox' onclick='getViewCommentList(1)'>";
+		pageIdxBox += "<i class='angle double left icon'></i>";
+		pageIdxBox += "</span>";
+		pagingBox.append(pageIdxBox);
+	}
+	
+	for(i=currMinPage; i<=currMaxPage; i++) {
+		pageIdxBox = "<span class='viewPageIdxBox'>";
+		pageIdxBox += i;
+		pageIdxBox += "</span>";
+		pagingBox.append(pageIdxBox);
+	}
+	
+	if(currMaxPage<maxPage) {
+		pageIdxBox = "<span class='viewPageArrowBox' onclick='getViewCommentList("+maxPage+")'>";
+		pageIdxBox += "<i class='angle double right icon'></i>";
+		pageIdxBox += "</span>";
+		pagingBox.append(pageIdxBox);
+	}
+	
+	pagingBox.find(".viewPageIdxBox").on("click", function() {
+		var pageNum = $(this).text();
+		getViewCommentList(pageNum);
+	}).eq(currPage-currMinPage).addClass("viewCurrPage").on("click", null);
 };
 

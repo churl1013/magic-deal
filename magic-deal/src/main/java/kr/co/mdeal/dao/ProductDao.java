@@ -20,7 +20,8 @@ public interface ProductDao {
 	List<HashMap<String, Object>> selectProductList(Categorie cate);
 	HashMap<String, Object> selectProductDetail(Product pro);
 	List<ProductPhoto> selectProductPhoto(Product pro);
-	List<ProductComment> selectProductCommentInit(Product pro);
 	List<ProductComment> selectProductComment(HashMap<String, Object> option);
 	void insertProductComment(ProductComment comment);
+	int selectProductCommentCount(int pNo);
+	void deleteProductComment(ProductComment comment);
 }

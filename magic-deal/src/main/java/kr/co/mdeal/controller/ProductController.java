@@ -190,14 +190,44 @@ public class ProductController {
 		return new AjaxResult("success", productDetail);
 	}
 
-	@RequestMapping("auth/registComment.do")
-	public AjaxResult registComment(ProductComment comment, HttpServletRequest req) {
+	@RequestMapping("auth/commentRegist.do")
+	public AjaxResult commentRegist(ProductComment comment, HttpServletRequest req) {
 		Member login = (Member)req.getAttribute("auth");
 		int mNo = login.getmNo();
 		comment.setmNo(mNo);
 		service.registProductComment(comment);
 		
 		return new AjaxResult("success", null);
+	}
+	
+	@RequestMapping("auth/commentDelete.do")
+	public AjaxResult commentDelete(ProductComment comment, HttpServletRequest req) {
+		Member login = (Member)req.getAttribute("auth");
+		int mNo = login.getmNo();
+		comment.setmNo(mNo);
+
+		service.deleteProductComment(comment);
+		return new AjaxResult("success", null);
+	}
+	
+	
+	
+	@RequestMapping("commentList.do")
+	public AjaxResult commentList(Product product, @RequestParam(defaultValue="1")int page, HttpSession session) {
+		HashMap<String, Object> option = new HashMap<>();
+		option.put("pNo", product.getpNo());
+		option.put("start", (page-1)*8);
+		
+		Member login = (Member)session.getAttribute("userLoginInfo");
+		String lId = "";
+		if(login!=null) {
+			lId = login.getId();
+		}
+		
+		HashMap<String, Object> result = service.getProductComment(option);
+		result.put("lId", lId);
+		
+		return new AjaxResult("success", result);
 	}
 	
 	

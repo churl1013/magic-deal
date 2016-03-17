@@ -18,4 +18,6 @@ public interface ProductService {
 	List<HashMap<String, Object>> getProductList(Categorie cate);
 	HashMap<String, Object> getProductDetail(Product pro);
 	void registProductComment(ProductComment comment);
+	HashMap<String, Object> getProductComment(HashMap<String, Object> option); 
+	void deleteProductComment(ProductComment comment);
 }
