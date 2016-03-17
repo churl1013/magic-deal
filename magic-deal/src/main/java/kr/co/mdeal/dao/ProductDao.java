@@ -24,4 +24,5 @@ public interface ProductDao {
 	void insertProductComment(ProductComment comment);
 	int selectProductCommentCount(int pNo);
 	void deleteProductComment(ProductComment comment);
+	List<HashMap<String, Object>> selectAreaProduct(HashMap<String, Object> option);
 }

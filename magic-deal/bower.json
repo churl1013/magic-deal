@@ -17,12 +17,16 @@
   ],
   "dependencies": {
     "jquery": "1.11.3",
+    "jquery-ui" : "1.11.4",
+    "jquery.nicescroll" : "3.6.0",
     "blueimp-file-upload": "jquery-file-upload#^9.11.2"
   },
   "install": {
     "path": "src/main/webapp/lib",
     "sources": {
       "jquery": "bower_components/jquery/dist/**",
+      "jquery-ui" : "bower_components/jquery-ui/jquery-ui.js",
+      "jquery.nicescroll" : "bower_components/jquery.nicescroll/jquery.nicescroll.js",
       "blueimp-file-upload": "bower_components/blueimp-file-upload/**"
     }
   }

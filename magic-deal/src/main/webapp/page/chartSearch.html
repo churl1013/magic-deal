@@ -6,6 +6,11 @@
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/view.css">
+<link rel="shortcut icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
+<title>Magic Deal</title>
+<!-- 기본 임폴트 css 파일 끝-->
 <style>
 	body {
 		background-color : #fff;
@@ -97,6 +102,10 @@
 		height : 40px;
 		padding : 5px;
 		width : 100%;
+	}
+	
+	#info-product-name {
+		font-weight : bold;
 	}
 	
 	#popup-header>.right.floated.meta {
@@ -344,39 +353,35 @@
 </head>
 
 <body>
+<!-- 헤더부 -->
+<!-- 헤더부 -->
 <header>
-	<div class="ui search">
-  		<div class="ui icon input">
-    		<input class="prompt" type="text" placeholder="원하는 지역을 검색하세요" style="font-size:12px; width:200px;"/>
-   			 <i class="search icon"></i>
-  		</div>
-  	<div class="results"></div>
+	<div id="loginStatusWrap">
+		<!-- 로그인 관련 내용 헤더 -->
 	</div>
-	<div>
-		<div id="loginNsignupBtn" class="ui icon label">
-			<i class="user violet icon"></i>
-			<a class="detail">로그인 및 회원가입</a>
-		</div>
+	<div id="headerLogo">
+		<img src="../img/fontlogo.png"/>
 	</div>
-	<img src="../img/logo1.png"/>
 </header>
+<!-- 헤더끝 -->
+<!-- 헤더끝 -->
+
+<!-- 네비게이션 -->
 <div id="navBtn" class="ui icon button small black">
 	<i class="sidebar icon"></i>
 </div>
 <nav class="ui vertical menu">
-	<a class="item">
+	<a id="navMainDirectBtn" class="item">
       <i class="home large orange icon"></i>메인
     </a>
-    <a class="item">
-      <i class="gift large orange icon"></i>물품등록
+    <a id="navProductRegistBtn" class="item">
+      <i class="cubes large orange icon"></i>물품등록
     </a>
-    <a class="item">
-      <i class="child large orange icon"></i>마이페이지
-    </a>
-    <a class="item">
-      <i class="info circle large orange icon"></i>고객센터
+    <a id="navBoardDirectBtn" class="item">
+      <i class="info circle large orange icon"></i>커뮤니티
     </a>
 </nav>
+<!-- 네비게이션 끝 -->
 
 <aside>
 	<div class="filterMarginBox">
@@ -459,7 +464,7 @@
 		<div class="right floated meta">
 			<a id="popup-close-btn"><i class="close icon"></i></a>
 		</div>
-		<img class="ui avatar image" src="../img/sample-test/profile-exam.JPG"/>
+		<img class="ui avatar image product-owner-photo"/>
 		<span class="product-owner">김흥국</span>
 		<span class="like-rating">
 			<i class="heart red outline mini icon"></i>
@@ -482,7 +487,7 @@
 			<p id="info-distance"></p>
 			<p id="info-quality"></p>
 			<div class="info-btn-box">
-				<button class="ui tiny black button" style="width:100%;">
+				<button class="ui tiny black button" id="detailViewBtn" style="width:100%;">
 					<i class="zoom icon"></i> 상세보기
 				</button>
 			</div>
@@ -490,76 +495,328 @@
 	</div>
 </div>
 
-
+<!-- 헤더 관련 팝업 모달 -->
+<!-- 로그인 모달 -->
 <div class="ui modal loginModal">
-  <i class="close icon"></i>
+  <i class="close icon" id="loginCloseBtn" onclick="loginClose();"></i>
   <div class="header">
-    <div class="ui orange ribbon label">
-    	Log in / Sign up
-    </div>
+    	로그인 및 회원가입
   </div>
   <div class="content" style="text-align:center;">
         <div class="ui small left icon input" style="margin-bottom:15px;">
-			<input type="text" placeholder="아이디를 입력하세요"/>
+			<input type="text" id="loginId" placeholder="아이디를 입력하세요"/>
 			<i class="user icon"></i>
 		</div>
 		<div class="ui small left icon input">
-			<input type="password" placeholder="비밀번호를 입력하세요"/>
+			<input type="password" id="loginPass" placeholder="비밀번호를 입력하세요"/>
 			<i class="privacy icon"></i>
 		</div>
   </div>
   <div class="actions">
-    <div class="ui black deny button">
-      Log in
-    </div>
-    <div class="ui positive right labeled icon button">
+    <div class="ui ok orange button">
       Sign up
+    </div>
+    <div class="ui teal deny icon button">
+      Log in
       <i class="sign in icon"></i>
     </div>
   </div>
 </div>
+<!-- 로그인 모달 끝 -->
 
-<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
-<script src="/magic-deal/custom_lib/jquery-ui.min.js"></script>
+<!-- 회원가입 모달 -->
+<div class="ui modal signUpModal">
+  <div id="signUpHeader" class="header">
+	  <i class="large icons">
+		  <i class="user icon"></i>
+		  <i class="add corner orange icon"></i>
+	  </i>
+  	Welcome Magic Deal !!!
+  </div>
+  <div class="content">
+	<label>아이디
+       <span style="font-size:12px; color:#444">
+         (영문, 숫자 혼합 8자리 이상)
+       </span>
+     </label>
+     <div class="ui small input">
+		<input type="text" id="signId" style="width:150px;"/>&nbsp;
+		<span id="signIdChkResult">아이디를 입력하세요!</span>
+	</div>
+      <label>비밀번호
+         <span style="font-size:12px; color:#444">
+           (숫자, 특수문자 포함 8자 이상)
+         </span>
+       </label>
+       <div class="ui small input">
+ 			<input type="password" id="signPass" style="width:200px;"/>
+	</div>
+
+       <label>비밀번호 확인</label>
+       <div class="ui small input">
+ 			<input type="password" id="signPassChk" style="width:200px;"/>
+	</div>
+
+       <label>닉네임</label>
+       <div class="ui small input">
+ 			<input type="text" id="signNickName" style="width:150px;"/> &nbsp;
+		<span id="signNickChkResult">닉네임을 입력하세요!</span>
+	</div>
+	
+	<label>주소</label>
+       <div class="ui small input">
+ 			<input type="text" id="signAddr" style="width:350px;" readonly/>&nbsp;
+ 			<button class="ui orange button" onclick="execDaumPostcode()">주소검색</button>
+ 			<input type="hidden" id="signLat" value=""/>
+ 			<input type="hidden" id="signLon" value=""/>
+	</div>
+	<div id="popupLayer" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+	<img src="http://i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	</div>
+  </div>
+  <div id="signUpFooter" class="actions">
+  	<button class="ui red deny inverted icon button" id="signUpCloseBtn">
+  		<i class="close icon"></i> 닫기
+  	</button>
+    <button class="ui violet ok inverted right labeled icon button" onclick="signUpSubmitChk();">
+      	회원가입
+      <i class="sign in icon"></i>
+    </button>
+  </div>
+</div>
+<!-- 회원가입 모달 끝 -->
+
+<!-- 알림창 모달 -->
+<div class="ui modal alertModal">
+  <i class="close icon"></i>
+  <div class="header">
+    	알림
+  </div>
+  <div id="alertMsg" class="content" style="text-align:center;">
+        
+  </div>
+  <div class="actions">
+     <div id="alertBtn" class="ui ok right grey labeled icon button">
+    </div>
+  </div>
+</div>
+<!-- 알림창 모달 끝 -->
+<!-- 헤더 관련 팝업 모달 끝-->
+
+
+<!-- 상세보기 모달 시작 -->
+<div class="viewItemWrap">
+	
+	<div class="view-scrollUpBtn ui icon inverted button">
+		<i class="angle double up large icon"></i>
+	</div>
+	<div id="viewLoadingWrap">
+		<div class="sk-folding-cube">
+			<div class="sk-cube1 sk-cube"></div>
+			<div class="sk-cube2 sk-cube"></div>
+			<div class="sk-cube4 sk-cube"></div>
+			<div class="sk-cube3 sk-cube"></div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="viewItemPaddingBox" id="viewItemCloneBox">
+	<div class="viewItemBox">
+		<div class="viewItemHeader">
+			<div class="viewItemPhotoBox">
+				<div id="currentViewPhoto">
+				</div>
+				<div class="thumbImgBox">
+					<div class="thumbFocus">
+					</div>
+				</div>
+			</div>
+			<div class="viewItemContent">
+				<div class="itemInfo">
+					<div class="view-infoHeader view-inforHeader-share">
+						PRODUCT INFO <span class="view-annotation">상품정보</span>
+						<div class="view-sharedBtnBox">
+							<button class='view-shareBtn facebook_btn'></button>
+							<button class='view-shareBtn twitter_btn'></button>
+							<button class='view-shareBtn kakao_btn'></button>
+							<button class='view-shareBtn kakaostory_btn'></button>
+							<button class='view-shareBtn url_btn'>URL</button>
+						</div>
+					</div>
+				</div>
+				<div class="itemWriter">
+					<div class="view-infoHeader">
+						MEMBER INFO <span class="view-annotation">등록회원 정보</span>
+					</div>
+					<div class="view-memberCard">
+						<div class="view-memberCardImg"></div>
+						<div class="view-memberCardInfo">
+							<div class="view-card-nick">
+							</div>
+							<div class="view-card-active">
+								<div class="ui horizontal statistic">
+								  <div class="value">
+								  </div>
+								  <div class="label">
+								    Items
+								  </div>
+								</div>
+							</div>
+							<div id="view-chatBtn" class="ui purple small button view-memberCardInfo-chatBtn">
+								채팅하기
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="itemContent">
+					<div class="view-infoHeader">
+						DETAIL INFO <span class="view-annotation">상세 정보</span>
+					</div>
+					<div class="view-itemContent">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="viewItemReply">
+			<div class="view-regReplyBox">
+				<div class="view-infoHeader">
+					COMMENT WRITE <span class="view-annotation">댓글 작성</span>
+				</div>
+				<div class="view-regReplyForm">
+					<table>
+						<tr>
+							<td><textarea id="view-commentContent"></textarea></td>
+							<td style="vertical-align:top;">
+								<button id="view-commentRegBtn" class="ui black small button">등 록</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="view-regReplyContextBox ui comments">
+			<!-- 댓글 내용부 -->
+				
+			<!-- 댓글 내용부 끝 -->
+			</div>
+			<div class="view-commentPagingBox">
+				
+			</div>
+		</div>
+	</div>
+	<div class="viewCloseBtn">
+		<i class="inverted large close icon"></i>
+	</div>
+</div>
+<!-- 상세보기 모달 끝 -->
+
+<script src="/magic-deal//lib/jquery/jquery.js"></script>
+<script src="/magic-deal/lib/jquery-ui/jquery-ui.js"></script>
 <script src="/magic-deal/semantic/semantic.min.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
 <script src="/magic-deal/js/common.js"></script>
+
+<!-- view modal 관련 -->
+<script src="/magic-deal/lib/jquery.nicescroll/jquery.nicescroll.js"></script>
+<script src="/magic-deal/js/view.js"></script>
+<!-- view modal 관련 끝 -->
+
+<!-- chart 관련 -->
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="/magic-deal/js/chartSearch.js"></script>
+
+<!-- 화면 조정 -->
 <script>
-	$(function() {
-		var c_width = parseInt($("#chartViewWrap").css("width"));
-		var c_height = parseInt($("#chartViewWrap").css("height"));
-		
-		$('.ui.checkbox').checkbox();
-		
-		$("#extendBtn").css({
-			"left" : ((c_width)/2-45)+250+"px",
-			"top" :  ((c_height)/2-45)+70+"px"
-		});
-		
-		$("#chartViewWrap").on("contextmenu", function(event) {
-			event.preventDefault();
-			return false;
-		});
-		
-		$(".favorite-content-wrap").on("mousewheel", function(event) {
-			var delta = event.originalEvent.wheelDelta;
-			var currPos = $(this).scrollLeft();
-			if(delta > 0) {
-				$(this).scrollLeft(currPos-60);
-			}else if(delta < 0) {
-				$(this).scrollLeft(currPos+60);
-			}
-		});
-		
-		$("#informationBox").draggable();
-		
-		$("footer").hover(function(){
-			$("footer").css("bottom","0px");
-		}, function(){
-			$("footer").css("bottom","-155px");
-		});
+	cWidth = parseInt($("#chartViewWrap").css("width"));
+	cHeight = parseInt($("#chartViewWrap").css("height"));
+	
+	$('.ui.checkbox').checkbox();
+	
+	$("#extendBtn").css({
+		"left" : ((cWidth)/2-45)+250+"px",
+		"top" :  ((cHeight)/2-45)+70+"px"
+	});
+	
+	$("#chartViewWrap").on("contextmenu", function(event) {
+		event.preventDefault();
+		return false;
+	});
+	
+	$(".favorite-content-wrap").on("mousewheel", function(event) {
+		var delta = event.originalEvent.wheelDelta;
+		var currPos = $(this).scrollLeft();
+		if(delta > 0) {
+			$(this).scrollLeft(currPos-60);
+		}else if(delta < 0) {
+			$(this).scrollLeft(currPos+60);
+		}
+	});
+	
+	$("#informationBox").draggable();
+	
+	$("footer").hover(function(){
+		$("footer").css("bottom","0px");
+	}, function(){
+		$("footer").css("bottom","-155px");
 	});
 </script>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="../custom_lib/chartTest.js"></script>
+<!-- 화면조정끝 -->
+
+<!-- 페이지 로직 -->
+<script>
+	var pageParam;
+	
+	pageParam = getParameter(document.location.href);
+	
+	var pageCheck = function() {
+		if(!pageParam.hc) {
+			alert("허용되지 않은 접근입니다!!");
+			document.location.href= contextPath + "/page/main.html";
+		}else {
+			
+		}
+	};
+	
+	// 로그인 체크 
+	var loginCheck = function() {
+		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
+			var result = resultObj.ajaxResult;
+			loginBoxDraw(result.data);
+			getChartData(result.data);
+		});
+	};
+	
+	
+	//chartData 가져옴
+	var getChartData = function(login) {
+		var lat;
+		var lon;
+		var hc = pageParam.hc;
+	
+		if(login) {
+			lat = login.mLat;
+			lon = login.mLon;
+		}else {
+			// 서울 위도 37.6, 경도 127
+			lat = 37.6;
+			lon = 127;
+		}
+		
+		$.getJSON(contextPath + "/product/areaSearch.do", {
+			mLat : lat,
+			mLon : lon,
+			pHighCate : hc
+		}, function(resultObj) {
+			var result = resultObj.ajaxResult;
+			initChart(result.data);
+		});
+	};
+	
+	<!-- 실행부 -->
+	pageCheck();
+	loginCheck();
+</script>
 </body>
 </html>

@@ -69,6 +69,8 @@
 		<result property="cateLow" column="p_low_cate"/>
 	</resultMap>
 	
+	
+	
 	<resultMap type="hashMap" id="productDetailMap">
 		<result column="p_no" property="pNo" />
 		<result column="m_no" property="mNo" />
@@ -94,6 +96,47 @@
 		<result column="product_cnt" property="productCnt" />
 		<result column="comment_cnt" property="commentCnt" />
 	</resultMap>
+	
+	<resultMap type="hashMap" id="productAreaMap">
+		<result column="p_no" property="pNo" />
+		<result column="m_no" property="mNo" />
+		<result column="p_c_no" property="pCategorieNo" />
+		<result column="price" property="price" />
+		<result column="quality" property="quality" />
+		<result column="p_lat" property="pLat" />
+		<result column="p_lon" property="pLon" />
+		<result property="cateKeyword" column="p_keyword"/>
+		<result property="cateHigh" column="p_high_cate"/>
+		<result property="cateLow" column="p_low_cate"/>
+		<result column="id" property="id" />
+		<result column="nname" property="nickName" />
+		<result column="m_photo" property="mPhoto" />
+		<result column="like_cnt" property="likeCnt" />
+		<result column="distance" property="distance" />
+	</resultMap>
+	
+	<select id="selectAreaProduct" parameterType="hashMap" resultMap="productAreaMap">
+		select pro.p_no, pro.m_no, pro.p_c_no, pro.price, pro.quality, pro.p_lat, pro.p_lon, 
+			   cate.p_high_cate, cate.p_low_cate, 
+			   cate.p_keyword, pho.p_ph_path, pho.p_ph_name,
+		       mem.id, mem.nname, mem.m_photo, mem.like_cnt,
+			   (6371 * acos(cos(radians(#{lat})) * cos(radians(pro.p_lat)) 
+		             * cos(radians(#{lon}) - radians(pro.p_lon))
+				     + sin(radians(#{lat})) 
+		             * sin(radians(pro.p_lat)))) as distance
+		  from product pro, pro_categorie cate, pro_photo pho, member mem
+		 where cate.p_c_no = pro.p_c_no
+		   and pro.p_no = pho.p_no
+		   and mem.m_no = pro.m_no
+		   and cate.p_high_cate = #{pHighCate}
+		   <if test="pLowCate != 0">
+		   and cate.p_low_cate = #{pLowCate}
+		   </if>
+		   and pho.p_ph_thum = 'y'
+		   and pro.deal_type = 's'
+		   and pro.deal_step = 'y'
+		 order by distance asc;
+	</select>
 	
 	<delete id="deleteProductComment" parameterType="productComment">
 		delete 

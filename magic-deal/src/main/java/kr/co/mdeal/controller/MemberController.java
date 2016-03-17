@@ -129,8 +129,8 @@ public class MemberController {
 		File oriFile = new File(filePath + fileName);
 		file.transferTo(oriFile);
 		
-		FileUtils.imageResize(filePath+fileName, filePath+"mp_"+fileName, ext, 250, 200);
-		FileUtils.imageResize(filePath+fileName, filePath+"log_"+fileName, ext, 30, 30);
+		FileUtils.imageResize(filePath+fileName, filePath+"mp_"+fileName, ext, 250, 250);
+		FileUtils.imageResize(filePath+fileName, filePath+"log_"+fileName, ext, 50, 50);
 		
 		oriFile.delete();
 		

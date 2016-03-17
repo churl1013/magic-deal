@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import kr.co.mdeal.domain.Categorie;
+import kr.co.mdeal.domain.Member;
 import kr.co.mdeal.domain.Product;
 import kr.co.mdeal.domain.ProductComment;
 import kr.co.mdeal.domain.ProductPhoto;
@@ -20,4 +21,5 @@ public interface ProductService {
 	void registProductComment(ProductComment comment);
 	HashMap<String, Object> getProductComment(HashMap<String, Object> option); 
 	void deleteProductComment(ProductComment comment);
+	List<HashMap<String, Object>> getAreaProduct(Member mem, Categorie cate);
 }

@@ -2,15 +2,6 @@ var contextPath = "/magic-deal";
 var ip = "192.168.0.11";
 var port = "8000";
 
-var headerPosition = function() {
-	var wWidth = $(window).width();
-	var left = (wWidth/2-parseInt($("#headerLogo").css("width"))/2);
-	$("#headerLogo").css("left", left+"px");
-};
-
-// 헤더 위치 잡음
-headerPosition();
-
 // header, nav 이벤트 관련 js 파일입니다.
 var nav_flag = false;
 var popup_layer;

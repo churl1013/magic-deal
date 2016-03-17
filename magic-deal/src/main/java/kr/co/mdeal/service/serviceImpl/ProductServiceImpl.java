@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.mdeal.dao.ProductDao;
 import kr.co.mdeal.domain.Categorie;
+import kr.co.mdeal.domain.Member;
 import kr.co.mdeal.domain.Product;
 import kr.co.mdeal.domain.ProductComment;
 import kr.co.mdeal.domain.ProductPhoto;
@@ -103,5 +104,17 @@ public class ProductServiceImpl implements ProductService{
 	public void deleteProductComment(ProductComment comment) {
 		// TODO Auto-generated method stub
 		dao.deleteProductComment(comment);
+	}
+	
+	@Override
+	public List<HashMap<String, Object>> getAreaProduct(Member mem, Categorie cate) {
+		// TODO Auto-generated method stub
+		
+		HashMap<String, Object> option = new HashMap<>();
+		option.put("lat", mem.getmLat());
+		option.put("lon", mem.getmLon());
+		option.put("pHighCate", cate.getpHighCate());
+		option.put("pLowCate", cate.getpLowCate());
+		return dao.selectAreaProduct(option);
 	}
 }

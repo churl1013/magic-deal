@@ -231,4 +231,9 @@ public class ProductController {
 	}
 	
 	
+	@RequestMapping("areaSearch.do")
+	public AjaxResult areaSearch(Member mem, Categorie cate) {
+		List<HashMap<String, Object>> result = service.getAreaProduct(mem, cate);
+		return new AjaxResult("success", result);
+	}
 }
