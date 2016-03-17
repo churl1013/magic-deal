@@ -408,8 +408,8 @@ var viewCommentDraw = function(data) {
 	var replyBox = currentCloneBox.find(".viewItemReply");
 	var commentList = data.commentList;
 	var lId = data.lId;
+	var commentBox = replyBox.find(".view-regReplyContextBox").empty();
 	if(commentList.length > 0) {
-		var commentBox = replyBox.find(".view-regReplyContextBox").empty();
 		var comment;
 		for(i=0; i<commentList.length; i++) {
 			var cmtObj = commentList[i];
@@ -418,7 +418,8 @@ var viewCommentDraw = function(data) {
 			comment += '<img src="'+contextPath+"/upload/profile/log_"+cmtObj.mPhoto+'"/>';
 			comment += '</a>';
 			comment += '<div class="content">';
-			comment += '<a class="author">'+cmtObj.nickName+'</a>';
+			comment += '<a class="author" onclick="document.location.href=\'mypage.html?ow='+cmtObj.id;
+			comment += '\'">'+cmtObj.nickName+'</a>';
 			comment += '<div class="metadata">';
 			comment += '<div class="date">'+cmtObj.pcRegDate+'</div>';
 			if(lId==cmtObj.id) {
