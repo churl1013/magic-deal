@@ -9,6 +9,7 @@
 	left : -200px;
 	padding-top : 130px;
 	-webkit-transition : all 0.5s;
+	border-radius : 0px!important;
 }
 
 .ui.vertical.menu>.item{

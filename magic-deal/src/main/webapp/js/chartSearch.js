@@ -65,7 +65,7 @@ var getQualityIdx = function(quality) {
 };
 
 var initChart = function(data) {
-	console.dir(data);
+	$("#chartViewWrap").find(".node").remove();
 	searchResultData = data;
 	maxPrice = d3.max(data, function(d) {
 		return d.price;
@@ -125,7 +125,7 @@ var initChart = function(data) {
 						nodeRightClickEvt(d, this);
 					});
 	firstDrawFlag = true;
-	allAxisDraw(0);	// 초기엔 모든 축이 적용된 화면 뿌림
+	$(".axisBox.allAxis").trigger("click");
 };
 
 // 왼쪽 마우스 이벤트
@@ -354,6 +354,7 @@ var addfilterList = function(list) {
 		
 		filterList["f"+d.pNo] = {};
 		filterList["f"+d.pNo].obj = this;
+		filterList["f"+d.pNo].box = nBox;
 		filterList["f"+d.pNo].interval = null;
 		
 		filterList.length++;
@@ -555,26 +556,11 @@ var allAxisDraw = function(delay) {
 	   });
 	
 	svg.append("text")
-	   .attr("x", 60)
-	   .attr("y", cHeight-15)
-	   .text("거리 가까움")
-	   .style({
-		   "font-size" : "12",
-		   "fill-opacity" : "0",
-		   "fill" : "#222",
-		   "font-weight" : "bold"
-	   })
-	   .transition().ease("linear").duration(1000).delay(300)
-	   .style({
-		  "fill-opacity" : "1" 
-	   });
-	
-	svg.append("text")
 	   .attr("x", cWidth-100)
 	   .attr("y", cHeight-15)
 	   .text("거리 멈")
 	   .style({
-		   "font-size" : "12",
+		   "font-size" : "14",
 		   "fill-opacity" : "0",
 		   "fill" : "#222",
 		   "font-weight" : "bold"
@@ -589,23 +575,7 @@ var allAxisDraw = function(delay) {
 	   .attr("y", 30)
 	   .text("가격 비쌈")
 	   .style({
-		   "font-size" : "12",
-		   "fill-opacity" : "0",
-		   "fill" : "#222",
-		   "font-weight" : "bold",
-		   "writing-mode" : "tb"
-	   })
-	   .transition().ease("linear").duration(1000).delay(300)
-	   .style({
-		  "fill-opacity" : "1" 
-	   });
-	
-	svg.append("text")
-	   .attr("x", 15)
-	   .attr("y", cHeight-100)
-	   .text("가격 쌈")
-	   .style({
-		   "font-size" : "12",
+		   "font-size" : "14",
 		   "fill-opacity" : "0",
 		   "fill" : "#222",
 		   "font-weight" : "bold",
@@ -626,7 +596,7 @@ var allAxisTick = function() {
 	   .attr("y", 25)
 	   .text("love it!")
 	   .style({
-		   "font-size" : "12",
+		   "font-size" : "16",
 		   "fill-opacity" : "0",
 		   "fill" : "#db2828",
 		   "font-weight" : "bold",
@@ -642,7 +612,7 @@ var allAxisTick = function() {
 	   .attr("y", 25)
 	   .text("bad")
 	   .style({
-		   "font-size" : "12",
+		   "font-size" : "16",
 		   "fill-opacity" : "0",
 		   "fill" : "#767676",
 		   "font-weight" : "bold",
@@ -656,8 +626,8 @@ var allAxisTick = function() {
 	svg.append("rect")
 	   .attr("x", 200)
 	   .attr("y", 10)
-	   .attr("rx", 5)
-	   .attr("ry", 5)
+	   .attr("rx", 2)
+	   .attr("ry", 2)
 	   .attr("width", "200px")
 	   .attr("height", "20px")
 	   .style("fill", "url(#grdbar)")
@@ -691,13 +661,18 @@ var allAxisTick = function() {
 var distanceAxisDraw = function(before, limit, delay) {
 	// 화면 height에 따라 원의 반지름 비율변경
 	// 최대 50km 까지 출력하므로 반지름 비율은 최대원일때 화면의 높이의 절반보다 작아야함
+	console.log('test');
 	var radianRate = (cHeight/2-40)/50;
 	// 노드 그리기
 	var filterNode;
 	filterNode = nodes.filter(function(d) {
 		var flag = Math.floor(d.distance)<=limit && Math.floor(d.distance)>before;
+		console.log(d.distance, limit, before);
+		console.log(flag);
 		return flag;
 	});
+	
+	console.dir(filterNode);
 	
 	var angleGap = drawCircleAngle(filterNode[0].length);
 	var angle = 0;

@@ -36,6 +36,7 @@
 		height : 100%;
 		position : relative;
 		background-color : #fff;
+		border-top : 1px solid #c8c8c8;
 	}
 	
 	#defineField {
@@ -287,13 +288,11 @@
 		background-color : #1b1c1d;
 		position : relative;
 	}	
-	
-	.filterAxis {
-	}
-	
+
 	#filterList {
-		width : 230px;
-		height : 300px;
+		margin-top : 5px;
+		width : 220px;
+		height : 200px;
 		border-radius : 3px;
 		background-color : #fcfcfc;
 		border : 1px solid #d8d8d8;
@@ -349,6 +348,208 @@
 		text-align : center;
 		transition : all 0.3s;
 	}
+	
+	.filterWrap {
+		width : 100%;
+		padding : 10px;
+	}
+	
+	.filterSearch {
+		width : 100%;
+		border : 1px solid #c7c7c7;
+		padding : 5px;
+		font-size : 0px;
+	}
+	
+	.filterAxis {
+		margin-top : 10px;
+		width : 100%;
+		height : 50px;
+		border : 1px solid #c8c8c8;
+		font-size : 0px;
+		line-height : 0px;
+	}
+	
+	.axisBox {
+		width : 25%;
+		height : 100%;
+		float : left;
+		background-repeat : no-repeat;
+		background-position : center;
+		background-size : 80% 80%;
+		cursor : pointer;
+		transition : all 0.3s;
+	}
+	
+	.axisBox:hover {
+		background-color : #fff;
+	}
+	
+	.axisBox.allAxis {
+		background-image : url("/magic-deal/img/chart/allAxis.png");
+		background-color : #ffc808;
+	}
+	
+	.axisBox.distanceAxis {
+		background-image : url("/magic-deal/img/chart/distanceAxis.png");
+		border-left : 1px solid #c8c8c8;
+	}
+	
+	.axisBox.priceAxis {
+		background-image : url("/magic-deal/img/chart/priceAxis.png");
+		border-left : 1px solid #c8c8c8;
+	}
+	
+	.axisBox.qualityAxis {
+		background-image : url("/magic-deal/img/chart/qualityAxis.png");
+		border-left : 1px solid #c8c8c8;
+		background-color : #a291fb;
+	}
+	
+	.axisBox>.hiddenInput {
+		display : none;
+	}
+	
+	.filterListWrap {
+		margin-top : 10px;
+		width : 230px;
+		height : 250px;
+		border : 1px solid #c8c8c8;
+		padding : 5px;
+	}
+	
+	#keywordFilterInput {
+		width : 100%;
+		border : 1px solid #b8b8b8;
+		padding : 5px;
+		outline : none;
+		font-size : 13px;
+	}
+	
+	.cateFilterWrap {
+		display : block;
+		font-size : 0px;
+		width : 100%;
+	}
+	
+	.cateFilter {
+		width : 100%;
+		font-size : 12px;
+		outline : none;
+		border : 1px solid #c7c7c7;
+		border-radius : 2px;
+		font-weight : 600;
+		height : 25px;
+		margin-bottom : 5px;
+	}
+	
+	#addrFilterWrap {
+		width : 100%;
+		border : 1px solid #b8b8b8;
+		background-color : #444;
+		cursor : pointer;
+		border-radius : 5px;
+		height : 30px;
+		font-size : 12px;
+		padding : 5px;
+		transition : all 0.3s;
+	}
+	
+	#addrFilterWrap:hover {
+		background-color : #777;
+	}
+	
+	.addrIcon {
+		width : 20px;
+		height : 20px;
+		float : left;
+	}
+	
+	#addrInfo {
+		color : white;
+		font-weight : 600;
+		float : left;
+		width : 170px;
+		height : 20px;
+		overflow : hidden;
+		white-space : nowrap;
+		text-overflow : ellipsis;
+	}
+	
+	.filterSubmitWrap {
+		margin-top : 5px;
+		width : 100%;
+		height : 30px;
+		font-size : 12px;
+		text-align : right;
+	}
+	
+	.filterSubmitWrap>button {
+		width : 70px;
+		height : 30px;
+		border : none;
+		font-weight : 800;
+		border-radius : 4px;
+		background-color : #00b5ad;
+		color : white;
+		outline : none;
+		transition : all 0.3s;
+	}
+	
+	.filterSubmitWrap>button:hover {
+		background-color : #00c6bd;
+	}
+	
+	.ui.modal.locSelectModal {
+		width : 500px;
+		margin-left : -250px;
+	}
+	
+	.locSelectModal>.header {
+		padding : 5px!important;
+	}
+	
+	.locSelectModal>.content {
+		padding : 5px!important;
+		text-align : left!important;
+	}
+	
+	#selectAddr {
+		width : 80%;
+		border : 1px solid #c8c8c8;
+		border-radius : 4px;
+		padding : 3px;
+		height : 30px;
+		font-size : 13px;
+		margin-bottom : 5px;
+	}
+	
+	.locSelectModal>.actions {
+		padding : 5px!important;
+	}
+	
+	#selectMap {
+		width : 490px;
+		height : 400px;
+		position : relative;
+	}
+	
+	#selectAddrwrap {
+		display:none;
+		border:1px solid;
+		width:480px;
+		height:400px;
+		margin:5px 0;
+		position:relative;
+	}
+	
+	#btnFoldWrap {
+		cursor:pointer;
+		position:absolute;
+		right:0px;
+		top:-1px;
+		z-index:1;
+	}
 </style>
 </head>
 
@@ -384,36 +585,65 @@
 <!-- 네비게이션 끝 -->
 
 <aside>
-	<div class="filterMarginBox">
-		<label class="ui teal right corner label">
-        	<i class="area chart icon"></i>
-      	</label>
-	</div>
-	<div class="filterCategorieInfo">
-		<label>상위</label>
-		<label>하위</label>
-		<label>키워드</label>
-	</div>
-	<div class="filterSearch">
-		<select>
-			<option>상위</option>
-		</select>
-		<select>
-			<option>하위</option>
-		</select>
-		<input type="text" placeholder="키워드"/>
-		<input type="submit" value="검색" />
-	</div>
-	<div class="filterAxis">
-		<input type="radio" value="all" name="axis" checked/> 축 모두 적용 <br/>
-		<input type="radio" value="distance" name="axis"/> 거리만 적용 <br/>
-		<input type="radio" value="price" name="axis"/> 가격만 적용 <br/>
-		<input type="checkbox" id="qualityFlag" checked/> 품질 on / off <br/>
-	</div>
-	
-	<div class="filterListWrap">
-		<input type="text" placeholder="keyword filter"/>
-		<div id="filterList">
+	<div class="filterMarginBox"></div>
+	<div class="filterWrap">
+		<div class="filterSearch">
+			<div class="cateFilterWrap">
+				<select id="highCateFilter" class="cateFilter">
+					<option value='1'>신발, 가방, 잡화</option>
+					<option value='2'>휴대폰, 태블릿</option>
+					<option value='3'>여성의류</option>
+					<option value='4'>남성의류</option>
+					<option value='5'>뷰티</option>
+					<option value='6'>컴퓨터, 주변기기</option>
+					<option value='7'>디지털, 가전</option>
+					<option value='8'>유아동, 출산</option>
+					<option value='9'>가구, 홈데코</option>
+					<option value='10'>CD, DVD</option>
+					<option value='11'>스포츠, 레저</option>
+					<option value='12'>도서, 문구</option>
+					<option value='13'>음향기기, 악기</option>
+					<option value='14'>애완</option>
+				</select>
+				<select id="lowCateFilter" class="cateFilter">
+				</select>
+			</div>
+			<div id="addrFilterWrap">
+				<span class="addrIcon">
+					<i class="location arrow inverted red icon"></i>
+				</span>
+				<span id="addrInfo">
+					
+				</span>
+				<input type="hidden" id="searchLat" value=""/>
+				<input type="hidden" id="searchLon" value=""/>
+			</div>
+			<div class="filterSubmitWrap">
+				<button id="chartSearchBtn">
+					<i class="search black icon"></i>
+					검색
+				</button>
+			</div>
+		</div>
+		<div class="filterAxis">
+			<div class="axisBox allAxis" data-content="거리 & 가격 차트 보기" data-variation="inverted">
+				<input type="radio" class="hiddenInput" value="all" name="axis" checked/>
+			</div>
+			<div class="axisBox distanceAxis" data-content="거리 차트 보기" data-variation="inverted">	
+				<input type="radio" class="hiddenInput" value="distance" name="axis"/>
+			</div>
+			<div class="axisBox priceAxis" data-content="가격 차트 보기" data-variation="inverted">
+				<input type="radio" class="hiddenInput" value="price" name="axis"/>
+			</div>
+			<div class="axisBox qualityAxis" data-html="품질 등급 적용 ON / OFF <br/>(all chart only)" data-variation="inverted">
+				<input type="checkbox" class="hiddenInput" id="qualityFlag" checked/> 
+			</div>
+		</div>
+		
+		<div class="filterListWrap">
+			<input type="text" id="keywordFilterInput" placeholder="keyword filter"/>
+			<div id="filterList">
+			</div>
 		</div>
 	</div>
 </aside>
@@ -428,17 +658,17 @@
 			                    x1="0%" y1="100%"
 			                    x2="100%" y2="100%"
 			                    spreadMethod="pad">
-			      <stop offset="0%"   stop-color="rgb(219, 40, 40)" stop-opacity="0.6"/>
-			      <stop offset="100%" stop-color="rgb(219, 40, 40)" stop-opacity="0.1"/>
+			      <stop offset="0%"   stop-color="rgb(219, 190, 40)" stop-opacity="0.6"/>
+			      <stop offset="100%" stop-color="rgb(219, 190, 40)" stop-opacity="0.1"/>
 			    </linearGradient>
 			    <linearGradient id="grdback"
 			                    x1="0%" y1="0%"
 			                    x2="0%" y2="100%"
 			                    gradientTransform="rotate(45)"
 			                    spreadMethod="pad">
-			      <stop offset="0%" stop-color="rgb(219, 40, 40)" stop-opacity="0"/>
-			      <stop offset="20%" stop-color="rgb(219, 40, 40)" stop-opacity="0.1"/>
-			      <stop offset="100%"   stop-color="rgb(219, 40, 40)" stop-opacity="0.9"/>
+			      <stop offset="0%" stop-color="rgb(219, 190, 40)" stop-opacity="0"/>
+			      <stop offset="20%" stop-color="rgb(219, 190, 40)" stop-opacity="0.2"/>
+			      <stop offset="100%"   stop-color="rgb(219, 190, 40)" stop-opacity="0.7"/>
 			    </linearGradient>
 			</defs>
 		</svg>
@@ -464,23 +694,22 @@
 		<div class="right floated meta">
 			<a id="popup-close-btn"><i class="close icon"></i></a>
 		</div>
-		<img class="ui avatar image product-owner-photo"/>
-		<span class="product-owner">김흥국</span>
+		<img src="/magic-deal/upload/product/image.png" class="ui avatar image product-owner-photo"/>
+		<span class="product-owner"></span>
 		<span class="like-rating">
 			<i class="heart red outline mini icon"></i>
-			<span class="like-count">124</span> likes
+			<span class="like-count"></span> likes
 		</span>
 	</div>
 	<div id="popup-content" class="content">
 		<div class="content-image">
-			<img src="../img/cimg/cimg14.JPG" width="150px" height="150px" style="border-radius:5px;"/>
+			<img src="/magic-deal/upload/product/image.png" width="150px" height="150px" style="border-radius:5px;"/>
 		</div>
 		
 		<div class="content-info">
 			<p class="info-title">
 				<i class="cube red icon"></i>
 				<span id="info-product-name">
-					<b>칼하트 후드집업</b>
 				</span>
 			</p>
 			<p id="info-price"></p>
@@ -711,6 +940,36 @@
 </div>
 <!-- 상세보기 모달 끝 -->
 
+<!-- 주소 선택 모달 -->
+<div class="ui modal locSelectModal">
+  <i class="close icon"></i>
+  <div class="header">
+    	<div id="currLocBtn" class="ui yellow tiny button">현재위치</div>
+        <div id="dirSelectLocBtn" class="ui teal tiny button">직접검색</div>
+  </div>
+  <div class="content" style="text-align:center;">
+        <input type="text" id="selectAddr" readonly/>
+        <input type="hidden" id="selectLat" />
+        <input type="hidden" id="selectLon" />
+        <div id="selectAddrwrap">
+        	<i class="close icon" id="btnFoldWrap" onclick="closeSelectAddrWrap()" alt="접기 버튼">
+			</i>
+        </div>
+        <div id="selectMap">
+        	
+        </div>
+  </div>
+  <div class="actions">
+  	<div class="ui cancel tiny red button">
+     	취소
+    </div>
+     <div class="ui ok tiny black button">
+     	적용
+    </div>
+  </div>
+</div>
+<!-- 주소 선택 모달 끝 -->
+
 <script src="/magic-deal//lib/jquery/jquery.js"></script>
 <script src="/magic-deal/lib/jquery-ui/jquery-ui.js"></script>
 <script src="/magic-deal/semantic/semantic.min.js"></script>
@@ -731,6 +990,9 @@
 <script>
 	cWidth = parseInt($("#chartViewWrap").css("width"));
 	cHeight = parseInt($("#chartViewWrap").css("height"));
+	
+	$(".filterListWrap").css("height", cHeight-290);
+	$("#filterList").css("height", cHeight-290-50);
 	
 	$('.ui.checkbox').checkbox();
 	
@@ -775,7 +1037,15 @@
 			alert("허용되지 않은 접근입니다!!");
 			document.location.href= contextPath + "/page/main.html";
 		}else {
-			
+			$("#highCateFilter").find("option").eq(pageParam.hc-1).prop("selected", true);
+			var lowCateData = v_cateData[pageParam.hc-1].lowCate;
+			$("#lowCateFilter").append("<option value='0' selected>전체 하위카테고리</option>");
+			var i;
+			for(i=0;i<lowCateData.length;i++) {
+				$("#lowCateFilter").append("<option value='"+
+											lowCateData[i].value+"'>"+
+											lowCateData[i].display+"</option>");
+			}
 		}
 	};
 	
@@ -784,35 +1054,291 @@
 		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
 			var result = resultObj.ajaxResult;
 			loginBoxDraw(result.data);
-			getChartData(result.data);
+			var data = {};
+			if(result.data != null) {
+				data.hc = pageParam.hc;
+				data.lat = result.data.mLat;
+				data.lon = result.data.mLon;
+				data.addr = result.data.mAddr;
+			}
+			getChartData(data);
 		});
 	};
 	
 	
 	//chartData 가져옴
-	var getChartData = function(login) {
+	var getChartData = function(data) {
 		var lat;
 		var lon;
-		var hc = pageParam.hc;
+		var hc = data.hc||pageParam.hc;
+		var lc = data.lc||0;
+		var addr = data.addr||"서울특별시";
+		console.dir(data);
 	
-		if(login) {
-			lat = login.mLat;
-			lon = login.mLon;
+		if(data.lat) {
+			lat = data.lat;
+			lon = data.lon;
 		}else {
 			// 서울 위도 37.6, 경도 127
 			lat = 37.6;
 			lon = 127;
 		}
+			$("#searchLat").val(lat);
+			$("#searchLon").val(lon);
+			$("#addrInfo").text(addr);
+			
+			$("#selectLat").val(lat);
+			$("#selectLon").val(lon);
+			$("#selectAddr").val(addr);
 		
 		$.getJSON(contextPath + "/product/areaSearch.do", {
 			mLat : lat,
 			mLon : lon,
-			pHighCate : hc
+			pHighCate : hc,
+			pLowCate : lc
 		}, function(resultObj) {
 			var result = resultObj.ajaxResult;
+			console.dir(result);
 			initChart(result.data);
 		});
 	};
+	
+	$(".axisBox").on("click", function() {
+		var cls = $(this).attr("class").split(" ")[1];
+		if(cls.indexOf("quality")==-1) {
+			$(".allAxis, .distanceAxis, .priceAxis").css("background-color", "#f8f8f8");
+			$(this).find("input[type=radio]").prop("checked", true);
+			$("input[name=axis]").trigger("change");
+			$(this).css("background-color", "#ffc808");
+		}else {
+			var flag = $(this).find("input[type=checkbox]").prop("disabled");
+			if(!flag) {
+				var curr = $(this).find("input[type=checkbox]").prop("checked");
+				$(this).find("input[type=checkbox]").prop("checked", !curr).trigger("change");
+				if(!curr) {
+					$(this).css("background-color", "#a291fb");
+				}else {
+					$(this).css("background-color", "#f8f8f8");
+				}
+			}
+		}
+	});
+	
+	$(".axisBox").popup({
+        transition: 'scale',
+        inline: true
+    });
+	
+	$("#highCateFilter").on("change", function() {
+		var val = $(this).val();
+		var lowCateData = v_cateData[val-1].lowCate;
+		$("#lowCateFilter").empty()
+						   .append("<option value='0' selected>전체 하위카테고리</option>");
+		var i;
+		for(i=0;i<lowCateData.length;i++) {
+			$("#lowCateFilter").append("<option value='"+
+										lowCateData[i].value+"'>"+
+										lowCateData[i].display+"</option>");
+		}
+	});
+	
+	$("#addrFilterWrap").on("click", function() {
+		var lat = $("#selectLat").val();
+		var lon = $("#selectLon").val();
+		map.setCenter(new daum.maps.LatLng(lat, lon));
+		$(".ui.modal.locSelectModal").modal({
+			closable : false,
+			onApprove : function() {
+				submitLocSelectModal()
+				return true;
+			},
+			onDeny : function() {
+				closeLocSelectModal()
+				return true;
+			}
+		}).modal('show');
+		map.relayout();
+		marker.setPosition(map.getCenter());
+	});
+	
+	$("#keywordFilterInput").on("keyup", function() {
+		var val = $("#keywordFilterInput").val();
+		var i;
+		var currFilterList = {
+				length : 0
+		};
+		for(var prop in filterList) {
+			if(prop!='length') {
+				var obj = filterList[prop];
+				var box = obj.box;
+				box				
+				if(obj.obj.__data__.cateKeyword.toUpperCase().indexOf(val.toUpperCase())!=-1) {
+					box.prependTo("#filterList");
+				}
+			}
+		}	
+	});
+	
+	
+	$("#chartSearchBtn").on("click", function() {
+		var lat = parseFloat($("#searchLat").val());
+		var lon = parseFloat($("#searchLon").val());
+		var hc = $("#highCateFilter").val();
+		var lc = $("#lowCateFilter").val();
+		var addr = $("#addrInfo").text();
+		var data = {};
+		data.lat = lat;
+		data.lon = lon;
+		data.hc = hc;
+		data.lc = lc;
+		data.addr = addr;
+		
+		getChartData(data);
+	});
+	
+	
+	<!-- 위치 선택 관련 코드 -->
+	var mapContainer;
+	var map;
+	var marker;
+	var geocoder;
+	var addrSearchWrap;
+	
+	mapContainer = document.getElementById("selectMap");
+	geocoder = new daum.maps.services.Geocoder();
+	addrSearchWrap = document.getElementById("selectAddrwrap");
+	
+	var mapOption = {
+		center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+	    level: 4 // 지도의 확대 레벨
+	};
+	
+	map = new daum.maps.Map(mapContainer, mapOption);
+	
+	marker = new daum.maps.Marker({
+	  	position: map.getCenter()
+	});
+	
+	marker.setMap(map);
+	
+	daum.maps.event.addListener(map, 'click', function(mouseEvent) {
+		var latlng = mouseEvent.latLng;
+		$("#selectLat").val(latlng.getLat());
+	    $("#selectLon").val(latlng.getLng());
+		marker.setPosition(latlng);
+		geocoder.coord2addr(latlng, function(status, result) {
+			if (status === daum.maps.services.Status.OK) {
+				$("#selectAddr").val(result[0].fullName);
+			}
+		});
+	});
+	
+	$("#currLocBtn").on("click", function() {
+		
+		$(addrSearchWrap).css("display", "none");
+		if("geolocation" in navigator) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				 getAddr(position.coords.latitude, position.coords.longitude);
+			});
+		}else {
+			alertMsg("위치를 불러올 수 없습니다! <br/> 위치를 직접 선택해주세요!", "확인");	
+		}
+	});
+	
+	var getAddr = function(lat, lon) {
+		var coord = new daum.maps.LatLng(lat, lon);
+		$("#selectLat").val(lat);
+		$("#selectLon").val(lon);
+		
+		geocoder.coord2addr(coord, function(status, result) {
+			if (status === daum.maps.services.Status.OK) {
+				$("#selectAddr").val(result[0].fullName);
+				$(mapContainer).css("display", "block");
+				map.relayout();
+				map.setCenter(coord);
+				marker.setPosition(coord);
+			}
+		});
+	};
+	
+	$("#dirSelectLocBtn").on("click", function() {
+		$(mapContainer).css("display", "none");
+		
+		new daum.Postcode({
+	           oncomplete: function(data) {
+	           	var fullAddr = data.address; // 최종 주소 변수
+	               var extraAddr = ''; // 조합형 주소 변수
+
+	               // 기본 주소가 도로명 타입일때 조합한다.
+	               if(data.addressType === 'R'){
+	                   //법정동명이 있을 경우 추가한다.
+	                   if(data.bname !== ''){
+	                       extraAddr += data.bname;
+	                   }
+	                   // 건물명이 있을 경우 추가한다.
+	                   if(data.buildingName !== ''){
+	                       extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                   }
+	                   // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+	                   fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	               }
+	               
+				$(addrSearchWrap).css("display", "none");
+				getLatLon(data);
+				$("#selectAddr").val(fullAddr);
+	          	},
+	          	width : "100%",
+	          	height : "100%"
+		}).embed(addrSearchWrap);
+
+		$(addrSearchWrap).css("display", "block");
+	});
+	
+	var getLatLon = function(data) {
+		geocoder.addr2coord(data.address, function(status, result) {
+	        // 정상적으로 검색이 완료됐으면
+	        if (status === daum.maps.services.Status.OK) {
+	            // 해당 주소에 대한 좌표를 받아서
+	            var lat = result.addr[0].lat;
+	            var lon = result.addr[0].lng;
+	            var coord = new daum.maps.LatLng(lat, lon);
+	            $("#selectLat").val(lat);
+	            $("#selectLon").val(lon);
+	            
+	            $(mapContainer).css("display", "block");
+	            map.relayout();
+				map.setCenter(coord);
+				marker.setPosition(coord);
+	        }
+	    });
+	};
+	
+	var closeSelectAddrWrap = function() {
+		$(addrSearchWrap).css("display", "none");
+		$(mapContainer).css("display", "block");
+	};
+	
+	var closeLocSelectModal = function() {
+		var lat = $("#searchLat").val();
+		var lon = $("#searchLon").val();
+		var addr = $("#addrInfo").text();
+		
+		$("#selectLat").val(lat);
+		$("#selectLon").val(lon);
+		$("#selectAddr").val(addr);
+	};
+	
+	var submitLocSelectModal = function() {
+		var lat = $("#selectLat").val();
+		var lon = $("#selectLon").val();
+		var addr = $("#selectAddr").val();
+		
+		$("#addrInfo").text(addr);
+		$("#searchLat").val(lat);
+		$("#searchLon").val(lon);
+	};
+	
+	<!-- 위치 선택 관련 코드 끝 -->
 	
 	<!-- 실행부 -->
 	pageCheck();

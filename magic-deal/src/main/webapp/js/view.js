@@ -184,9 +184,26 @@ var v_cateData = [
 
 var currentCloneBox;
 var cloneBox = $("#viewItemCloneBox");
+var closeCallback;
+var normalClose = function() {
+	$(".viewItemWrap").animate({
+		opacity : 0
+	}, "fast", function() {
+		$(this).css("display", "none");
+		currentCloneBox.remove();
+	});
+};
 
-var modalOpen = function(proIdx) {
+var modalOpen = function(proIdx, callback) {
 	var detailId = proIdx;
+	if(callback) {
+		closeCallback = callback;
+	}else {
+		closeCallback = normalClose;
+	}
+	
+	$(".viewItemWrap").on("click",">.viewItemPaddingBox>.viewCloseBtn", closeCallback);
+	
 	$(".viewItemWrap").css("display","block").animate({
 		opacity : 1
 	}, "fast");
@@ -359,15 +376,6 @@ var drawViewModal = function(data) {
 	$(".viewItemWrap").prepend(currentCloneBox);
 	$("#viewLoadingWrap").css("display", "none");
 };
-
-$(".viewItemWrap").on("click",">.viewItemPaddingBox>.viewCloseBtn", function() {
-	$(".viewItemWrap").animate({
-		opacity : 0
-	}, "fast", function() {
-		$(this).css("display", "none");
-		currentCloneBox.remove();
-	});
-});
 
 
 var RegistViewComment = function() {

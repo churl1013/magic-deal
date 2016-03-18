@@ -9,11 +9,7 @@ header {
 	padding-right : 15px;
 	text-align : center;
 	background: #ffffff;
-	background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
-	background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
-	background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 );
-	border-bottom : 1px solid #c8c8c8;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 header>div:nth-child(1) {
