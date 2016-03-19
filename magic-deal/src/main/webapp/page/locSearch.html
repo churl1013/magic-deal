@@ -869,7 +869,7 @@ section {
 
 
 <!-- 스크립트 시작 -->
-<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="/magic-deal/lib/jquery/jquery.js"></script>
 <script src="/magic-deal/semantic/semantic.min.js"></script>
 <script>
 	var sHeight = parseInt($("section").css("height"));
@@ -1098,7 +1098,7 @@ section {
 		filterOptionMarkers = dataFilter(markers);
 		clusterer.addMarkers(filterOptionMarkers);
 		reDrawMapInit();
-
+		
 		$("#filterMinPrice").val(filterObj.productFilter.price.min);
 		$("#filterMaxPrice").val(filterObj.productFilter.price.max);
 		$("#listLoadingWrap").css("display", "none");
@@ -1111,7 +1111,6 @@ section {
 		filters = lowCateFilter(filters, filterObj.lowCate);
 		// 거래타입 필터 적용
 		filters = dealTypeFilter(filters, filterObj.dealType);
-		
 		// 키워드 필터 적용
 		filters = keywordFilter(filters, filterObj.keywords);
 		filters = productQualityFilter(filters, filterObj.productFilter.quality);
