@@ -67,6 +67,7 @@
 		<result property="cateKeyword" column="p_keyword"/>
 		<result property="cateHigh" column="p_high_cate"/>
 		<result property="cateLow" column="p_low_cate"/>
+		<result column="comment_cnt" property="commentCnt" />
 	</resultMap>
 	
 	
@@ -190,12 +191,17 @@
 	</select>
 	
 	<select id="selectProductList" parameterType="categorie" resultMap="productAllMap">
-		select pro.*, pho.p_ph_no, pho.p_ph_path, pho.p_ph_name,
-	   		   cate.p_keyword, cate.p_high_cate, cate.p_low_cate
+		select pro.p_no, pro.m_no, pro.p_c_no, pro.price, pro.p_content,
+			   date_format(pro.p_reg_date, "%Y년 %c월 %e일 %H:%i") p_reg_date,
+			   pro.deal_type, pro.quality, pro.deal_opt, pro.p_addr, pro.p_lat, pro.p_lon, 
+			   pho.p_ph_no, pho.p_ph_path, pho.p_ph_name,
+	   		   cate.p_keyword, cate.p_high_cate, cate.p_low_cate,
+	   		   (select count(*) from pro_comment com where com.p_no=pro.p_no) comment_cnt
   		  from product pro, pro_photo pho, pro_categorie cate
  		 where pro.p_no = pho.p_no 
  		 	   and pro.p_c_no = cate.p_c_no 
 	   		   and pho.p_ph_thum='y'
+	   		   and pro.deal_step = 'y'
 	   		   <if test="pHighCate != 0">
 	   		   and cate.p_high_cate = #{pHighCate}
 	   		   </if>

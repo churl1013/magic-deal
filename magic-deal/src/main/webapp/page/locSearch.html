@@ -26,6 +26,7 @@ section {
 }
 
 .locContentWrap {
+	position : relative;
 	width : 100%;
 	min-width : 1024px;
 	background-color : #f8f8f8;
@@ -39,11 +40,19 @@ section {
 }
 
 .locListWrap {
-	float : left;
 	width : 400px;
 	height : 100%;
-	position : relative;
 	border-left : 1px solid #c7c7c7;
+	background-color : #fbfbfb;
+	position : absolute;
+	top : 0px;
+	right : 0px;
+	z-index : 99;
+}
+
+.loclistOpen {
+	width : 100%;
+	overflow-y : auto;
 }
 
 #mapContainer {
@@ -80,19 +89,20 @@ section {
 #productListPagingBox {
 	width : 100%;
 	height : 30px;
-	background-color : mintcream;
+	background-color : #fbfbfb;
 	line-height : 30px;
 	text-align : center;
 }
 
 .productCard {
-	width : 370px;
+	width : 99%;
 	height : 150px;
 	border : 1px solid #c8c8c8;
 	padding : 5px;
 	margin-top : 5px;
 	position : relative;
 	cursor : pointer;
+	background-color : #fff;
 }
 
 .productCard>.proPhoto {
@@ -211,7 +221,7 @@ section {
 
 .dropdownDiscard>.menu {
 	margin-top : 0px!important;
-	z-index : 2!important;
+	z-index : 100!important;
 }
 
 
@@ -246,7 +256,7 @@ section {
 	height : 300px;
 	left : 0px;
 	top : 50px;
-	z-index : 3;
+	z-index : 100;
 	display : none;
 }
 
@@ -354,6 +364,27 @@ section {
 	height : 50px;
 	width : 100%;
 	line-height : 50px;
+}
+
+.proHiddenInfo {
+	width : 250px;
+	height : 80px;
+	display : none;
+	position : absolute;
+	bottom : 2px;
+	right : 2px;
+	text-align : right;
+	padding-right : 5px;
+	font-size : 13px;
+	color : #333;
+}
+
+.proHiddenInfo>span {
+	display : block;
+}
+
+.proInfoKeyword {
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 </style>
@@ -543,8 +574,8 @@ section {
 		</div>
 		
 		<div id="viewChange">
-			<span><i class="map large icon"></i>지도</span>|
-			<span><i class="list large icon"></i>리스트</span> 
+			<span id="mapViewBtn"><i class="map large icon"></i>지도</span>|
+			<span id="listViewBtn"><i class="list large icon"></i>리스트</span> 
 		</div>
 		
 		<div id="customFilterBox">
@@ -898,13 +929,13 @@ section {
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services,clusterer&autoload=false"></script>
 <script src="/magic-deal/js/common.js"></script>
-<script src="/magic-deal/js/locSearch.js"></script>
-<script src="/magic-deal/js/cate1.js"></script>
-
 <!-- view modal 관련 -->
 <script src="/magic-deal/lib/jquery.nicescroll/jquery.nicescroll.js"></script>
 <script src="/magic-deal/js/view.js"></script>
 <!-- view modal 관련 끝 -->
+<script src="/magic-deal/js/locSearch.js"></script>
+<script src="/magic-deal/js/cate1.js"></script>
+
 
 <script>
 	var pageParam;
@@ -1473,6 +1504,42 @@ section {
 	
 	// 지도 스크립트 끝
 	
+	var viewFlag = false;
+	// --> false : 지도 / true : 리스트
+	
+	// view 전환 관련 이벤트
+	$("#mapViewBtn").on("click", function() {
+		if(viewFlag) {
+			$(".locListWrap").removeClass("loclistOpen");
+			$("#productListBox").css("width", "");
+			$("#productListBox").css("margin", "");
+			$("#productListBox").css("height", sHeight-70-80-50);
+			$("#productListBox").css("overflow-y", "scroll");
+			$("#productListBox").css("padding", "");
+			
+			
+			viewFlag = false;
+			map.setLevel(locUtil.getLevel());
+		}
+	});
+	
+	$("#listViewBtn").on("click", function() {
+		if(!viewFlag) {
+			$(".locListWrap").addClass("loclistOpen");
+			$("#productListBox").css({
+				width : "1024px",
+				"height" : "",
+				"padding" : "10px 0px 10px 0px",
+				"min-height" : $("#productListBox").height(),
+				"overflow-y" : "auto",
+				margin : "0px auto"
+			});
+
+			
+			viewFlag = true;
+			map.setLevel(14);
+		}
+	});
 	
 	// 모달 관련 이벤트
 	$("#productListBox").on("click", ">.productCard", function() {

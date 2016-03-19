@@ -4,7 +4,7 @@
 	background-color : rgba(0,0,0,0.8);
 	border-right : 1px solid #e8e8e8;
 	position : fixed;
-	z-index : 4;
+	z-index : 198;
 	top : 0px;
 	left : -200px;
 	padding-top : 130px;
@@ -20,7 +20,7 @@
 }
 
 #navBtn {
-	z-index : 5;
+	z-index : 200;
 	position : fixed;
 	left : 10px;
 	top : 80px;

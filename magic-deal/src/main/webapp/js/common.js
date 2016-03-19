@@ -214,15 +214,15 @@ var loginBoxDraw = function(u_info) {
 		// 로그인 상태
 		loginBox = '<div id="chatBtn">';
 		loginBox += '<i class="large icons">';
-		loginBox += '<i class="comments teal icon"></i>';
-		loginBox += '<i class="corner red add icon"></i>';
+		loginBox += '<i class="comments icon"></i>';
+		loginBox += '<i class="corner add icon"></i>';
 		loginBox += '</i>';
 		loginBox += '<span class="smallTextLabel">채팅</span>';
 		loginBox += '</div>';
 		loginBox += '<div id="alarmBtn">';
 		loginBox += '<i class="large icons">';
-		loginBox += '<i class="alarm orange icon"></i>';
-		loginBox += '<i class="corner red add icon"></i>';
+		loginBox += '<i class="alarm icon"></i>';
+		loginBox += '<i class="corner add icon"></i>';
 		loginBox += '</i>';
 		loginBox += '<span class="smallTextLabel">알람</span>';
 		loginBox += '</div>';

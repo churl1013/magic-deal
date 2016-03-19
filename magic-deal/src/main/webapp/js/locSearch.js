@@ -158,7 +158,7 @@ var LocUtil = function(map) {
 		}
 	},
 	this.getLevel = function() {
-		return map.getLevel();
+		return levelVal;
 	},
 	this.downLevel = function() {
 		// 확대
@@ -192,10 +192,9 @@ var drawMarker = function(data) {
 	proCard += '\');"';
 	proCard += '></div>';
 	
-	var priceInfo = data.dealType=='s'?data.price+'원' : '가격협의';
-	
+	var priceInfo = data.dealType=='s'?comma(data.price)+'원' : '가격협의';
 	proCard += '<div class="proInfo">';
-	proCard += '<span>'+data.cateKeyword+'</span>';
+	proCard += '<span class="proInfoKeyword">'+data.cateKeyword+'</span>';
 	proCard += '<span>'+priceInfo+'</span>';
 	proCard += '<span>'+data.pContent+'</span>';
 	proCard += '<span>'+data.pAddr+'</span>';
@@ -208,7 +207,18 @@ var drawMarker = function(data) {
 	proCard += '<input type="hidden" name="productNo" value="'+data.pNo+'"/>';
 	proCard += '<input type="hidden" name="lat" value="'+data.pLat+'"/>';
 	proCard += '<input type="hidden" name="lon" value="'+data.pLon+'"/>';
+	proCard += '<div class="proHiddenInfo">';
+	proCard += '<span>품질 : ' + getQualityText(data.quality);
+	proCard += '</span>';
+	proCard += '<span>거래방식 : ' + (data.dealOpt=='y'?'직거래 & 택배가능':'직거래');
+	proCard += '</span>';
+	proCard += '<span>등록일시 : ' + data.pRegDate;
+	proCard += '</span>';
+	proCard += '<span>댓글 ('+data.commentCnt+')';
+	proCard += '</span>';
 	proCard += '</div>';
+	proCard += '</div>';
+	
 	
 	$(proCard).appendTo("#productListBox");
 };
@@ -271,6 +281,7 @@ var drawMarkerInList = function(page) {
 	var s = (page-1)*pageSize;
 	var l = page*pageSize;
 	
+	
 	if(filterMarkers.length < l) {
 		l = filterMarkers.length;
 	}
@@ -279,6 +290,18 @@ var drawMarkerInList = function(page) {
 	for(i=s;i<l;i++) {
 		var data = filterMarkers[i].prodata;
 		drawMarker(data);
+	}
+	
+	// 자신을 감싼 박스에 scrollTop을 0으로 만듬
+	if(!viewFlag) {
+		//지도
+		console.log("지도")
+		$("#productListBox").scrollTop(0);
+	}else {
+		console.log("리스트")
+		$(".proInfo").css("width", "600px");
+		$(".proHiddenInfo").css("display", "block");
+		$(".locListWrap").scrollTop(0);
 	}
 	
 	drawPageNumber(filterMarkers.length, page);
