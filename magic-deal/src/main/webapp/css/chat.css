@@ -1,0 +1,250 @@
+	.chat-chatBoxWrap {
+		bottom : 10px;
+		right : 340px;
+		position : fixed;
+		display : none;
+		z-index : 999;
+		width : 250px;
+		height : 330px;
+		border : 1px solid #c8c8c8;
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+	
+	.chat-chatInfoBox {
+		width : 100%;
+		height : 30px;
+		background-color : #222;
+		font-size : 13px;
+		line-height : 30px;
+		font-weight : bold;
+		padding-left : 10px;
+		position : relative;
+		color : white;
+	}
+	
+	.chat-chatBoxCloseBtn {
+		position : absolute;
+		right : 0px;
+		top : 0px;
+		cursor : pointer;
+	}
+	
+	.chat-chatBox {
+		width : 100%;
+		height : 260px;
+		background-color : #fbfbfb;
+		position : relative;
+		overflow-y : scroll;
+	}
+	
+	.chat-inputBox {
+		width : 100%;
+		height : 40px;
+		background-color : #dfdfdf;
+		font-size : 0px;
+		line-height : 0px;
+	}
+	
+	#chat-inputText {
+		width : 208px;
+		height : 39px;
+		padding-left : 5px;
+		font-size : 12px;
+		outline : none;
+		border : none;
+		border-top : 1px solid #c8c8c8;
+	}
+	
+	.chat-sendBtn {
+		width : 40px;
+		height : 39px;
+		font-size : 10px;
+		outline : none;
+		font-weight : bold;
+		border : none;
+		border-top : 1px solid #c8c8c8;
+		background-color : #222;
+		color : white;
+	}
+	
+	.chat-msgWrap {
+		width : 100%;
+		top : 0px;
+	}
+	
+	.chat-msg {
+		margin-bottom : 3px;
+		padding : 5px 10px 5px 5px;
+		border-radius : 3px;
+		font-size : 12px;
+		border-bottom : 1px solid #e8e8e8;
+	}
+	
+	.chat-msg-userPhoto {
+		width : 24px;
+		height : 24px;
+		border-radius : 50%;
+		background-color : #888;
+		display : inline-block;
+		background-size : 100% 100%;
+	}
+	
+	.ownermsg {
+		background-color : 	#fff;
+		text-align : right;
+		padding-left : 40px;
+		color : #777;
+	}
+	
+	.othermsg {
+		background-color : 	#fcfcfc;
+		text-align : left;
+		padding-right : 40px;
+		color : #000;
+	}
+	
+	.othermsg .chat-msg-userName {
+		font-weight : 600;
+		padding-right : 10px;
+	}
+	
+	.circularBox {
+		display : inline-block;
+		width : 10px;
+		height : 10px;
+		border-radius : 5px;
+		background-color : #fbbd08;
+		margin-right : 10px;
+	}
+	
+		.chat-chatListBox {
+		width : 320px;
+		height : 400px;
+		border : 1px solid #c8c8c8;
+		overflow-x : hidden;
+		background-color : #e8e8e8;
+		overflow-y : scroll;
+	}
+	
+	.chat-CardBox {
+		background-color : #f8f8f8;
+		width : 298px;
+		height : 60px;
+		border : 1px solid #b8b8b8;
+		margin : 2px 0px 2px 0px;
+		cursor : pointer;
+	}
+	
+	.chat-memPhoto {
+		float : left;
+		width : 60px;
+		height : 58px;
+		background-size : 100% 100%;
+	}
+	
+	.chat-chatInfo {
+		float : left;
+		width : 236px;
+		height : 58px;
+		padding : 5px 5px 5px 5px;
+		font-size : 12px;
+		font-weight : bold;
+		position : relative;
+	}
+	
+	.chat-chatInfo>span {
+		display : block;	
+	}
+	
+	.chat-regDate {
+		font-size : 10px;
+		color : #999;
+		position : absolute;
+		bottom : 1px;
+		right : 3px;
+	}
+	
+	.chat-newCnt {
+		font-size : 11px;
+		color : white;
+		width : 30px;
+		height : 30px;
+		border-radius : 50%;
+		line-height : 30px;
+		position : absolute;
+		bottom : 20px;
+		right : 3px;
+		background-color : #ff695e;
+		text-align : center;
+	}
+	
+	.chat-cardCloseBtn {
+		position : absolute;
+		right : 0px;
+		top : 0px;
+		cursor : pointer;
+	}
+	
+	.chat-chatListBoxWrap {
+		display : none;
+		position : fixed;
+		right : 10px;
+		bottom : 10px; 
+		width : 320px;
+		height : 430px;
+		font-family: 'Noto Sans KR', sans-serif;
+		z-index : 776;
+	}
+	
+	.chat-chatListHeader {
+		width : 100%;
+		height : 30px;
+		background-color : #222;
+		color : white;
+		text-align : center;
+		line-height : 30px;
+		font-size : 12px;
+		position : relative;
+	}
+	
+	.chat-chatListCloseBtn {
+		position : absolute;
+		top : 0px;
+		right : 0px;
+		cursor : pointer;
+	}
+	
+	.chat-chatNoticeBox {
+	display : none;
+	position : fixed;
+	z-index : 999;
+	cursor : default;
+	width : 300px;
+	border-radius : 3px;
+	height : 60px;
+	background-color : #fcfcfc;
+	border : 1px solid #c8c8c8;
+	font-family: 'Noto Sans KR', sans-serif;
+	box-shadow : 2px 2px 8px #999;
+	bottom : 10px;
+	left : 10px;
+	opacity : 0;
+	}
+	
+	.chat-chatNoticePhoto {
+		width : 60px;
+		height : 58px;
+		float : left;
+		cursor : default;
+	}
+	
+	
+	.chat-chatNoticeInfo {
+		width : 238px;
+		height : 58px;
+		font-size : 12px;
+		float : left;
+		padding : 0px 10px 0px 10px;
+		line-height : 58px;	
+		cursor : default;
+	}

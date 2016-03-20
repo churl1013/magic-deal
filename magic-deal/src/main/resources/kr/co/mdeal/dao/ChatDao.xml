@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.mdeal.dao.ChatDao">
+	<update id="updateReadFlag" parameterType="chatRoom">
+		update chat_msg
+		   set read_flag = 'y'
+		 where room_no = #{roomNo}
+		   and writer_no != #{ownerNo}
+		   and read_flag = 'n'
+	</update>
+
+	<select id="selectChatRoom" resultType="hashMap" parameterType="chatRoom">
+		select chat.*, mem.nname, mem.m_photo
+		  from chat_room chat, member mem
+		 where room_no = #{roomNo}
+		   and (mem.m_no = 
+		   			(select sub_no 
+		   			   from chat_room 
+		   			  where owner_no = #{ownerNo}
+		   			    and room_no = #{roomNo}) 
+		   	or mem.m_no = 
+		   			(select owner_no 
+		   			   from chat_room 
+		   			  where sub_no = #{ownerNo}
+		   			    and room_no = #{roomNo}))
+	</select>
+	
+	<select id="selectChatMsgList" resultType="hashMap" parameterType="chatRoom">
+		select msg_no, room_no, writer_no, msg, read_flag,
+			   date_format(send_date, "%Y. %c. %e %H:%i") send_date
+		  from chat_msg
+		 where room_no = #{roomNo}
+		 order by msg_no asc
+	</select>
+
+
+	<select id="selectChatRoomList" parameterType="member" resultType="hashMap">
+		select 
+				cate.p_high_cate, cate.p_low_cate, cate.p_keyword, 
+		        mem.id, mem.nname, mem.m_photo, mem.m_no, chat.room_key,
+		        chat.room_no, chat.p_no, chat.owner_no, chat.sub_no,
+		        date_format(chat.open_date, "%Y. %c. %e %H:%i") open_date,
+		        (select count(*) from chat_msg where room_no = chat.room_no and read_flag='n' and writer_no != #{mNo}) new_cnt
+		  from product pro, pro_categorie cate, member mem, chat_room chat
+		 where pro.p_no = chat.p_no
+		   and pro.p_c_no = cate.p_c_no
+		   and (
+		   		(mem.m_no in (select sub_no from chat_room where owner_no = #{mNo}) 
+		   			and chat.owner_no = #{mNo} and chat.sub_no = mem.m_no) 
+		   			or (mem.m_no in (select owner_no from chat_room where sub_no = #{mNo}) 
+		   			and chat.sub_no=#{mNo} and chat.owner_no = mem.m_no))
+		 order by chat.open_date desc
+
+	</select>
+	
+	<select id="selectCountRoom" parameterType="chatRoom" resultType="int">
+		select count(*) cnt from chat_room
+		 where room_key = #{roomKey} 
+	</select>
+	
+	<insert id="insertChatRoom" parameterType="chatRoom">
+		insert 
+		  into chat_room
+		       (p_no, owner_no, sub_no, room_key)
+		values (#{pNo}, #{ownerNo}, #{subNo}, #{roomKey})
+	</insert>
+	
+</mapper>

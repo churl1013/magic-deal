@@ -932,6 +932,9 @@ $("input[name=axis]").on("change", function() {
 		"cursor" : "default",
 		"z-index" : "-1"
 	});
+	
+	if(infoOpenFlag) $("#popup-close-btn").trigger("click");
+	
 	if(axis === 'all') {
 		moveToCenterAll(false);
 		$("#qualityFlag").prop("disabled", false);

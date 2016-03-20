@@ -180,7 +180,7 @@
 			   pro.deal_opt, pro.quality, pro.p_addr, pro.deal_type,
 		       date_format(pro.p_reg_date, "%Y년 %c월 %e일 %H:%i") p_reg_date,
 		       cate.p_keyword, cate.p_high_cate, cate.p_low_cate,
-		       mem.id, mem.nname, mem.m_photo, mem.like_cnt,
+		       mem.id, mem.nname, mem.m_photo, mem.like_cnt, mem.m_no,
 		       date_format(mem.join_date, "%Y. %e %b") join_date,
 		       (select count(*) from product where m_no = mem.m_no) product_cnt,
 		       (select count(*) from pro_comment where p_no = pro.p_no) comment_cnt
