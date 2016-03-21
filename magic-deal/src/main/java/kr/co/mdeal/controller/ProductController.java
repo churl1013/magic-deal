@@ -236,4 +236,13 @@ public class ProductController {
 		List<HashMap<String, Object>> result = service.getAreaProduct(mem, cate);
 		return new AjaxResult("success", result);
 	}
+	
+	
+	// 나의 활동목록
+	@RequestMapping("myList.do")
+	public AjaxResult getProductMyList(Member mem) {
+		List<HashMap<String, Object>> productList = service.getProductMyList(mem);
+		return new AjaxResult("success", productList);
+	}
+
 }

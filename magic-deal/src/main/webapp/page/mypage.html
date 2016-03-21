@@ -146,8 +146,8 @@ footer {
 
 
 .ui.modal.infoModal {
-	width : 800px;
-	margin-left : -400px;
+	width: 500px;
+    margin-left: -250px;
 	text-align : left;
 	background-color : rgba(50,50,50,0.8);
 	z-index : 2;
@@ -170,8 +170,8 @@ footer {
 }
 
 .infoTextArea {
-	width : 750px;
-	height : 100px;
+	width : 450px;
+	height : 320px;
 	border-radius : 5px;
 	border : 1px solid #d8d8d8;
 	background-color : fafafa;
@@ -735,9 +735,11 @@ footer {
 			nickName = resultObj.ajaxResult.data.nickName;
 			mlat = resultObj.ajaxResult.data.mLat;
 			mlon = resultObj.ajaxResult.data.mLon;
+			mNo = resultObj.ajaxResult.data.mNo;
 			}
 			var result = resultObj.ajaxResult;
-			
+
+			// 물품 가져오기 끝
 			// 채팅서버 연결
 			if(result.data!=null)
 				chatConnect(result.data);
@@ -745,12 +747,27 @@ footer {
 			loginBoxDraw(result.data);
 			if(result.data&&result.data.id==pageParam.ow) {
 				// 로그인한 사용자가 마이페이지 주인
+				console.dir(result.data);
 				mypageDraw(result.data, 0);
+				// 물품 가져오기
+				getMyList(result.data, function(resultData) {
+						var result = resultData.ajaxResult;
+						var productData = result.data;
+						console.dir(productData);
+					});
 			} else if(pageParam.ow){
 				$.post(contextPath + "/member/ownerinfo.do", {
 					id : pageParam.ow
 				}, function(resultObj) {
 					var getData = resultObj.ajaxResult;
+					
+					// 물품 가져오기
+					getMyList(getData.data, function(resultData) {
+							var result = resultData.ajaxResult;
+							var productData = result.data;
+						console.dir(productData);
+						});
+					
 					if(result.data) mypageDraw(getData.data, 1);
 					else mypageDraw(getData.data, 2);
 				},"json");
@@ -760,6 +777,7 @@ footer {
 			}
 		});
 	};
+	
 	var mypageDraw = function(u_info, flag) {
 		$("#mypageProfieImg").attr("src", contextPath+"/upload/profile/mp_"+u_info.mPhoto);
 		$("#mypageProfileNickName").text(u_info.nickName);
@@ -845,7 +863,8 @@ footer {
 			
 			// 자기소개 수정 modal창 클릭 이벤트
 			$("#infoModal").on("click", function() {
-				  $("#infoContent").val(u_info.mInfo);
+				 var replacement = replaceAll(u_info.mInfo, '<br/>', '\n');
+				 $("#infoContent").val(replacement);
 				$('#infoUpdateModal').modal({
 					closable : false,
 					onDeny : function(){
@@ -1157,8 +1176,22 @@ footer {
     		alertMsg2("입력이 누락되거나 잘못되었습니다!!", "확인");
     		return false;
     	}
-    	
     };
+    
+ // 자기소개 모달창 줄바꿈
+    function replaceAll(str, target, replacement) {
+		return str.split(target).join(replacement);
+    };
+    
+    // 리스트 가져오기
+    var getMyList = function(obj, callback) {
+    	var target = obj;
+		var mNo = target.mNo;
+		console.log(
+		$.getJSON(contextPath + "/product/myList.do", {
+				mNo : mNo
+			}, callback));
+	};
 </script>
 </body>
 </html>

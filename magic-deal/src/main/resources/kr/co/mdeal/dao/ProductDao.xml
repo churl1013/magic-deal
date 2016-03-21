@@ -116,6 +116,15 @@
 		<result column="distance" property="distance" />
 	</resultMap>
 	
+	<select id="selectProductMyList" parameterType="hashMap" resultMap="productDetailMap">
+      select pro.*,  cate.p_keyword, pho.p_ph_path, pho.p_ph_name
+           from product pro, pro_categorie cate, pro_photo pho
+                where m_no = #{mNo}
+                  and pro.p_c_no = cate.p_c_no
+                  and pho.p_no = pro.p_no
+            order by pro.p_no desc
+   	</select>
+	
 	<select id="selectAreaProduct" parameterType="hashMap" resultMap="productAreaMap">
 		select pro.p_no, pro.m_no, pro.p_c_no, pro.price, pro.quality, pro.p_lat, pro.p_lon, 
 			   cate.p_high_cate, cate.p_low_cate, 

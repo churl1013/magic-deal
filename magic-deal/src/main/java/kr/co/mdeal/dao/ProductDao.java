@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import kr.co.mdeal.domain.Categorie;
+import kr.co.mdeal.domain.Member;
 import kr.co.mdeal.domain.Product;
 import kr.co.mdeal.domain.ProductComment;
 import kr.co.mdeal.domain.ProductPhoto;
@@ -25,4 +26,5 @@ public interface ProductDao {
 	int selectProductCommentCount(int pNo);
 	void deleteProductComment(ProductComment comment);
 	List<HashMap<String, Object>> selectAreaProduct(HashMap<String, Object> option);
+	List<HashMap<String, Object>> selectProductMyList(Member mem);
 }

@@ -22,4 +22,5 @@ public interface ProductService {
 	HashMap<String, Object> getProductComment(HashMap<String, Object> option); 
 	void deleteProductComment(ProductComment comment);
 	List<HashMap<String, Object>> getAreaProduct(Member mem, Categorie cate);
+	List<HashMap<String, Object>> getProductMyList(Member mem);
 }

@@ -117,4 +117,10 @@ public class ProductServiceImpl implements ProductService{
 		option.put("pLowCate", cate.getpLowCate());
 		return dao.selectAreaProduct(option);
 	}
+	
+	@Override
+	public List<HashMap<String, Object>> getProductMyList(Member mem) {
+		// TODO Auto-generated method stub
+		return dao.selectProductMyList(mem);
+	}
 }
