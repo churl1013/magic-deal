@@ -55,7 +55,7 @@ var drawChatList = function(data) {
 			card += '\')"></div>';
 			card += '<div class="chat-chatInfo">';
 			card += '<span class="chat-proInfo">';
-			card += getCategorieText(data[i].p_high_cate, data[i].p_low_cate) 
+			card += getCategorieText(data[i].p_high_cate-1, data[i].p_low_cate-1) 
 			card += ' > ' + data[i].p_keyword;
 			card += '</span>';
 			card += '<span class="chat-memInfo">';

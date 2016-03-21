@@ -591,69 +591,7 @@ var allAxisDraw = function(delay) {
 };
 
 var allAxisTick = function() {
-	svg.append("text")
-	   .attr("x", 195)
-	   .attr("y", 25)
-	   .text("love it!")
-	   .style({
-		   "font-size" : "16",
-		   "fill-opacity" : "0",
-		   "fill" : "#db2828",
-		   "font-weight" : "bold",
-		   "text-anchor" : "end"
-	   })
-	   .transition().ease("linear").duration(1000).delay(300)
-	   .style({
-		   "fill-opacity" : "1" 
-	   });
 	
-	svg.append("text")
-	   .attr("x", 405)
-	   .attr("y", 25)
-	   .text("bad")
-	   .style({
-		   "font-size" : "16",
-		   "fill-opacity" : "0",
-		   "fill" : "#767676",
-		   "font-weight" : "bold",
-		   "text-anchor" : "start"
-	   })
-	   .transition().ease("linear").duration(1000).delay(300)
-	   .style({
-			"fill-opacity" : "1" 
-	   });
-	
-	svg.append("rect")
-	   .attr("x", 200)
-	   .attr("y", 10)
-	   .attr("rx", 2)
-	   .attr("ry", 2)
-	   .attr("width", "200px")
-	   .attr("height", "20px")
-	   .style("fill", "url(#grdbar)")
-	   .style("fill-opacity", "0")
-	   .style("stroke", "#000")
-	   .style("stroke-opacity", "0")
-	   .transition().ease("linear").duration(1000).delay(300)
-	   .style({
-			"stroke-opacity" : "1" 
-	   })
-	   .transition().ease("linear").duration(1000)
-	   .style({
-			"fill-opacity" : "1" 
-	   });
-	
-	svg.append("rect")
-	   .attr("x", 30)
-	   .attr("y", 50)
-	   .attr("width", cWidth-60+"px")
-	   .attr("height", cHeight-80+"px")
-	   .style("fill", "url(#grdback)")
-	   .style("fill-opacity", "0")
-	   .transition().ease("linear").duration(1000).delay(1000)
-	   .style({
-		  "fill-opacity" : "1" 
-	   });
 }
 
 
@@ -661,18 +599,13 @@ var allAxisTick = function() {
 var distanceAxisDraw = function(before, limit, delay) {
 	// 화면 height에 따라 원의 반지름 비율변경
 	// 최대 50km 까지 출력하므로 반지름 비율은 최대원일때 화면의 높이의 절반보다 작아야함
-	console.log('test');
 	var radianRate = (cHeight/2-40)/50;
 	// 노드 그리기
 	var filterNode;
 	filterNode = nodes.filter(function(d) {
 		var flag = Math.floor(d.distance)<=limit && Math.floor(d.distance)>before;
-		console.log(d.distance, limit, before);
-		console.log(flag);
 		return flag;
 	});
-	
-	console.dir(filterNode);
 	
 	var angleGap = drawCircleAngle(filterNode[0].length);
 	var angle = 0;
@@ -794,7 +727,7 @@ var priceAxisDraw = function() {
 		   .attr("y", priceScale(avr))
 		   .attr("width", size+"px")
 		   .attr("height", "0px")
-		   .style("fill", color(i%20))
+		   .style("fill", "url(#barPattern)")
 		   .style("fill-opacity", "0")
 		   .transition().ease("cubic-in-out").duration(800).delay(800)
 		   .attr("y", priceScale(d.price)+10+size)
@@ -827,7 +760,7 @@ var priceAxisDraw = function() {
 		   .attr("y", priceScale(avr)+size)
 		   .attr("width", size+"px")
 		   .attr("height", "0px")
-		   .style("fill", color(i%17))
+		   .style("fill",  "url(#barPattern2)")
 		   .style("fill-opacity", "0")
 		   .transition().ease("cubic-in-out").duration(800).delay(800)
 		   .attr("height", function() {
