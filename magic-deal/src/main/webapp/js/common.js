@@ -1,5 +1,5 @@
 var contextPath = "/magic-deal";
-var ip = "192.168.0.7"; 
+var ip = "192.168.0.11"; 
 var port = "8000"; 
 
 // header, nav 이벤트 관련 js 파일입니다.

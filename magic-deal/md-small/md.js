@@ -53,22 +53,29 @@ app.get("/magic-deal/checkNick", function(req, res) {
 var socket_ids = {};
 
 var registUser = function(socket, data) {
-	socket.auth =  data;
-	socket_ids[data.mNo] = socket;
+	if(!socket.auth) {
+		socket.auth =  data;
+		socket_ids[data.mNo] = socket;
+		console.log("USER SOCKET INFO - REGIST");
+	}else {
+		console.log("[WARN] USER SOCKET INFO - ALREADY EXIST");
+	}
 };
 
 var deleteUser = function(socket) {
 	if(socket_ids[socket.auth.mNo]) {
 		delete socket_ids[socket.auth.mNo];
+		console.log("USER SOCKET INFO - DELETE");
+	}else {
+		console.log("USER ")
 	}
 };
 
 io.on("connection", function(socket) {
-	console.log('user connected');
 	
 	socket.on("disconnect", function() {
 		deleteUser(socket);
-		console.log("user disconnected");
+		console.log("USER DISCONECTION");
 	});
 	
 	socket.on("login_member", function(data) {

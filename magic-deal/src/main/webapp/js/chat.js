@@ -169,13 +169,13 @@ var chatConnect = function(data) {
 		var box = '<div class="chat-msg othermsg">';
 			box += '<div class="chat-msg-userPhoto"></div>';
 			box += '<span class="chat-msg-userName">';
-			box += data.room.nname + '</span>';
+			box += data.writer.nickName + '</span>';
 			box += data.msg;
 			box += '</div>';
 		msgBox.append(box);
 		
 		$(".chat-msg-userPhoto").css("background-image", "url('"+
-				contextPath + "/upload/profile/mp_" + data.room.m_photo+"')");
+				contextPath + "/upload/profile/mp_" + data.writer.mPhoto+"')");
 		
 		$(".chat-chatBox").scrollTop($(".chat-chatBox")[0].scrollHeight);
 	});

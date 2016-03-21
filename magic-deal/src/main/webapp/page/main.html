@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/chat.css">
 <link rel="shortcut icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
 <title>Magic Deal</title>
@@ -15,77 +16,129 @@
 
 
 <style>
+header {
+	background-color : rgba(255,255,255,0.9)!important;
+	color : #222!important;
+	height : 50px!important;
+	line-height : 50px!important;
+}
+
 section {
 	position : relative;
 	left : 0px;
 	width : 100%;
-	height : 100%;
-	overflow : auto;
+	min-height : 100%;
+	padding : 0px;
 }
 
-section>div {
-	height : 100%;
-	padding-top : 70px;
+#mainBox {
+	width : 100%;
+	height : 700px;
+	background-size : 100% 100%;
+	position : relative;
 }
 
+#mainBox>.slideDownBtnWrap>#slideDownBtn {
+	cursor : pointer;
+}
+
+#mainBox>.ui.inverted.dimmer {
+	z-index : 5!important;
+}
+
+#mainBox>.mainfontlogo {
+	position : absolute;
+	top : 250px;
+	left : 80px;
+	width : 600px;
+	height : 170px;
+	margin : 0px auto;
+	background-size : 100% 100%;
+	background-image : url("/magic-deal/img/mainfontlogo.png");
+}
+
+.sideSelectOpenBtn {
+	z-index : 7!important;
+	position : absolute;
+	right : 15px;
+	width : 200px;
+	text-align : right;
+	height : 50px;
+	font-family : 'Doppio One';
+	font-size : 16px;
+	cursor : pointer;
+	transition : all 0.5s;
+}
+
+.cateSelectBox {
+	z-index : 8!important;
+	width : 200px;
+	background-color : rgba(255,255,255,0.7);
+	position : absolute;
+	top : 0px;
+	right : -200px;
+	transition : all 0.5s;
+	font-family: 'Noto Sans KR', sans-serif;
+	overflow-x : hidden;
+	overflow-y : auto;
+}
+
+.cateSelectBox>div {
+	width : 100%;
+	height : 40px;
+	line-height : 40px;
+	text-align : left;
+	font-weight : 600;
+	padding-left : 5px;
+	margin : 0px 0px 0px 10px; 
+	border-bottom : 1px solid #dfdfdf;
+	cursor : pointer;
+	trasition : all 0.4s;
+}
+
+.cateSelectBox>div:first-child {
+	border-top : 1px solid #dfdfdf;
+}
+
+#mainBox>.slideDownBtnWrap {
+	position : absolute;
+	bottom : 20px;
+	color : #222;
+	font-size : 18px;
+	font-weight : 600;
+	font-family : 'Doppio One';
+	width : 100%;
+	text-align : center;
+}
 
 #categorieWrap {
-	background-color : #222;
+	margin-top : 50px;
+	width : 100%;
+	text-align : center;
+	font-size : 0px;
+	line-height : 0px;
 }
 
-@media (max-width:767px) {
-	.imgChangeBox {
-		width : 100%;
-		height : 50%;
-	}
-	
-	#cateBox {
-		display : none;
-	}
-}
-
-@media (min-width:768px) and (max-width:1024px) {
-	.imgChangeBox {
-		width : 50%;
-		height : 33.4%;
-	}
-	
-	#cateBox {
-		width : 100%;
-		height : 100%;
-		background-size : 100% 100%;
-		background-image : url('/magic-deal/img/1234.gif');
-		background-size : 100% 100%;
-	}
-}
-
-@media (min-width : 1025px) {
-	.imgChangeBox {
-		width : 16.66%;
-		height : 33.4%;
-	}
-	#cateBox {
-		width : 33.32%;
-		height : 66.7%;
-		background-size : 100% 100%;
-		float : left;
-		background-image : url('/magic-deal/img/1234.gif');
-		background-size : 100% 100%;
-	}
+.emptyBox {
+	background-color : #111;
+	color : white;
+	font-size : 24px;
+	font-family : 'Doppio One';
+	text-shadow : 1px 1px 5px #c8c8c8;
 }
 
 .imgChangeBox {
-	transition : background-color 0.5s;
+	text-align : left;
+	transition : all 0.5s;
 	background-size : 100% 100%;
 	background-image : url('../img/default/loading.gif');
 }
 
 .boxCommon {
-	float : left;
+	width : 20%;
+	display : inline-block;
 	position : relative;
 	overflow : hidden;
-	border-right : 1px solid #666;
-	border-bottom : 1px solid #666;
 	z-index : 0;
 }
 
@@ -94,39 +147,135 @@ section>div {
 	top : 15px; 
 	right : 15px;
 	z-index:1;
-}
-
-.hoverLabel {
-	position : absolute;
-	text-align : center;
-	width : 100%;
-	height : 100%;
-	padding-top : 10px;
-	top : -100%;
-	font-family:Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
-	background-color : rgba(0,0,0,0.5);
-	color : #f0f0f0;
-	z-index : 1;
-	transition : all 0.3s ease-in-out;
-}
-.hoverLabel>div {
-	width : 100%;
-	height : 100%;
-	position : relative;
-}
-
-.hoverLabel>div>div {
-	position : absolute;
-	bottom : 20px;
-	width : 100%;
-}
-
-.hoverLabelOpen {
-	top : 0%;
+	border : 2px solid #fff;
+	background-color : rgba(0,0,0,0.3);
+	font-size : 14px;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight : bold;
+	height : 30px;
+	line-height : 25px;
+	padding : 0px 10px 0px 10px;
+	color : white;
+	border-radius : 3px;
+	text-shadow : 1px 1px 2px #222;
 }
 
 .statistic {
 	cursor : default;
+	display : block!important;
+	margin-bottom : 10px!important;
+}
+
+#navBtn {
+	top : 8px!important;
+	z-index : 200!important;
+}
+
+.ui.vertical.menu {
+	z-index : 9!important;
+	top : 0!important;
+	padding-top : 60px!important;
+	margin-top : 0px!important;
+}
+
+
+.focusAnimation {
+	animation : focusAni 1s ease-in-out 0.5s infinite alternate; 
+}
+
+
+@keyframes focusAni {
+	from {
+		color : #222;
+	}
+	
+	to {
+		color : #ffe21f;
+		text-shadow : 1px 1px 3px black;
+	}
+}
+
+.moveTopBtn {
+	width : 40px;
+	height : 40px;
+	border : 1px solid #c8c8c8;
+	border-radius : 3px;
+	cursor : pointer;
+	position : fixed;
+	right : 15px;
+	bottom : 35px;
+	line-height : 35px;
+	text-align : center;
+	color : #c8c8c8!important;
+	font-size : 24px;
+	display : none;
+}
+
+.moveTopBtn:hover {
+	color : #888!important;
+}
+
+footer {
+	width : 100%;
+	height : 150px;
+	background-color : rgba(250,250,250,0.9);
+	padding : 20px 0px 10px 10px;
+	font-size : 13px;
+	color : #333;
+	text-align : left;
+	font-family : 'Doppio One';
+	position : relative;
+}
+
+.copyRightBox {
+	color : black;
+}
+
+.followBox {
+	margin-top : 30px;
+	height : 55px;
+}
+
+.followBoxHeader {
+	font-size : 15px;
+	color : black;
+}
+
+.view-shareBtn {
+	width : 30px;
+	height : 30px;
+	overflow : hidden;
+	margin-left : 5px;
+	border-radius : 2px;
+	border : none;
+	background-image : url("/magic-deal/img/social_icon/btn_social.png");
+	background-repeat : no-repeat;
+	outline : none;
+	border : 1px solid #e8e8e8;
+	float : left;
+}
+
+.facebook_btn {
+	background-position : -7px -75px;
+}
+
+.twitter_btn {
+	background-position : -49px -75px;
+}
+
+.kakao_btn {
+	background-position : -89px -75px;
+}
+
+.kakaostory_btn {
+	background-position : -130px -75px;
+}
+
+.logoBox {
+	position : absolute;
+	right : 120px;
+	top : 50px;
+	height : 50px;
 }
 
 </style>
@@ -137,9 +286,6 @@ section>div {
 <header>
 	<div id="loginStatusWrap">
 		<!-- 로그인 관련 내용 헤더 -->
-	</div>
-	<div id="headerLogo">
-		<img src="../img/fontlogo.png"/>
 	</div>
 </header>
 <!-- 헤더끝 -->
@@ -163,29 +309,204 @@ section>div {
 
 <!-- 페이지 내용 -->
 <section>
+	<div id="mainBox" class="ui blurring segment">
+		<div class="ui inverted dimmer"></div>
+		<div class="mainfontlogo"></div>
+		<div class="slideDownBtnWrap">
+			<span id="slideDownBtn">
+				<span style="font-size:14px;">slide</span><br/>
+				<i class="angle double down big icon focusAnimation"></i>
+			</span>
+		</div>
+	</div>
+	
+	<div class="sideSelectOpenBtn">
+			categories
+			<i class="angle double left big icon"></i>
+		</div>
+		<div class="cateSelectBox">
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=1'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=1'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				신발 가방 잡화
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=2'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=2'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				휴대폰 태블릿
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=3'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=3'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				여성의류
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=4'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=4'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				남성의류
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=5'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=5'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				뷰티
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=6'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=6'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				컴퓨터 주변기기
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=7'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=7'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				디지털 가전
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=8'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=8'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				유아동 출산
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=9'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=9'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				가구 홈데코
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=10'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=10'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				CD DVD
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=11'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=11'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				스포츠 레저
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=12'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=12'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				도서 문구
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=13'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=13'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				음향기기 악기
+			</div>
+			<div>
+				<div class="ui dimmer">
+				    <div class="content">
+					    <div class="center">
+					    	<div class="ui inverted tiny button" onclick="document.location.href='chartSearch.html?hc=14'">chart</div>
+					    	<div class="ui inverted tiny button" onclick="document.location.href='locSearch.html?hc=14'">map</div>
+					    </div>
+				    </div>
+			    </div>
+				애완
+			</div>
+		</div>
+	
+	
 	<!-- 전체상품 안내 박스 -->
 	<div id="categorieWrap">
-		<div id="cateBox"></div>
-
+		<div class="emptyBox boxCommon">
+			All Products..
+		</div>
 		<div class="imgChangeBox blurring dimmable boxCommon">
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume1"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" 
-							 style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button"
-							 onclick="document.location.href='mapSearch.html?hc=1'">지도검색</div>
+						<div class="ui tiny inverted button" 
+							 style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=1'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=1'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel">
         		신발&nbsp;&nbsp;
 				가방&nbsp;&nbsp;
 				잡화
@@ -196,19 +517,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume2"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=2'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=2'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel">
         		휴대폰&nbsp;&nbsp;태블릿
       		</div>
 		</div>
@@ -216,19 +539,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume3"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=3'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=3'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
         		여성의류
       		</div>
 		</div>
@@ -236,20 +561,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume4"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button" 
-							onclick="document.location.href='locSearch.html?hc=4'">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=4'">차트검색</div>
+						<div class="ui tiny inverted button" 
+							 onclick="document.location.href='locSearch.html?hc=4'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
         		남성의류
       		</div>
 		</div>
@@ -257,19 +583,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume5"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=5'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=5'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
         		뷰티
       		</div>
 		</div>
@@ -277,19 +605,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume6"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=6'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=6'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
         		컴퓨터&nbsp;&nbsp;주변기기
       		</div>
 		</div>
@@ -298,19 +628,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume7"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=7'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=7'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
         		디지털&nbsp;&nbsp;가전
       		</div>
 		</div>
@@ -318,19 +650,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume8"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=8'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=8'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
         		유아동&nbsp;&nbsp;
 				출산
       		</div>
@@ -339,19 +673,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume9"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=9'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=9'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
 				가구&nbsp;&nbsp;
 				홈 데코
       		</div>
@@ -361,19 +697,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume10"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=10'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=10'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
 				CD&nbsp;&nbsp;
 				DVD
       		</div>
@@ -382,19 +720,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume11"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=11'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=11'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
 				스포츠&nbsp;&nbsp;
 				레저
       		</div>
@@ -403,19 +743,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume12"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=12'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=12'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
 				도서&nbsp;&nbsp;
 				문구
       		</div>
@@ -425,19 +767,21 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume13"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=13'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=13'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
 				음향기기&nbsp;&nbsp;
 				악기
       		</div>
@@ -446,24 +790,53 @@ section>div {
 			<div class="ui dimmer">
 				<div class="content">
 					<div class="center">
-						<div class="ui yellow small inverted statistic" style="display:block;">
+						<div class="ui yellow small inverted statistic">
 							<div class="value">
 								<i class="cubes icon"></i>
 								<span id="pVolume14"></span>
 							</div>
 							<div class="label">Products</div>
 						</div>
-						<div class="ui inverted button" style="margin-bottom:5px;">차트검색</div>
-						<div class="ui inverted button">지도검색</div>
+						<div class="ui tiny inverted button" style="margin-bottom:5px;"
+							 onclick="document.location.href='chartSearch.html?hc=14'">차트검색</div>
+						<div class="ui tiny inverted button"
+							 onclick="document.location.href='locSearch.html?hc=14'">지도검색</div>
 					</div>
 				</div>
 			</div>
-			<div id="boxLabel" class="ui black tag label">
+			<div id="boxLabel" >
         		애완
       		</div>
 		</div>
 	</div>
+
 </section> 
+
+<footer>
+	<div class="copyRightBox">
+		Copyright <i class="copyright icon"></i> 2016 respond 404
+	</div>
+	<div class="followBox">
+		<span class="followBoxHeader">Follow us</span>
+		<div class="followListBox">
+			<div class="view-shareBtnBox">
+				<button class='view-shareBtn facebook_btn'></button>
+				<button class='view-shareBtn twitter_btn'></button>
+				<button class='view-shareBtn kakao_btn'></button>
+				<button class='view-shareBtn kakaostory_btn'></button>
+			</div>	
+		</div>
+	</div>
+	
+	<div class="logoBox">
+		<img src="/magic-deal/img/fontlogo.png" width="120px" height="50px" style="margin-right : 40px;"/>
+		<img src="/magic-deal/img/teamlogo.png" width="120px" height="50px"/>
+	</div>
+</footer>
+
+<div class="moveTopBtn">
+	<i class="angle double up icon"></i>
+</div>
 <!-- 페이지 내용 끝 -->
 
 
@@ -573,29 +946,110 @@ section>div {
   </div>
 </div>
 <!-- 알림창 모달 끝 -->
+
+<!-- 채팅 관련 엘리먼트 -->
+
+<div class="chat-chatBoxWrap">
+	<div class="chat-chatInfoBox">
+		<div class="circularBox"></div>
+		<span id="chat-chatBoxNick"></span>
+		<div class="chat-chatBoxCloseBtn">
+			<i class="close icon"></i>
+		</div>	
+	</div>
+	<div class="chat-chatBox">
+		<div class="chat-msgWrap">
+		</div>
+	</div>
+	<div class="chat-inputBox">
+		<input type="text" id="chat-inputText" placeholder="보낼 내용을 입력하세요"/>
+		<button class="chat-sendBtn">SEND</button>
+	</div>
+</div>
+
+<div class="chat-chatListBoxWrap">
+	<div class="chat-chatListHeader">
+		총 
+		<span id="chatList-count"></span>
+		개 대화
+		
+		<div class="chat-chatListCloseBtn">
+			<i class="close icon"></i>
+		</div>		
+	</div>
+	<div class="chat-chatListBox">
+	</div>
+</div>
+
+<div class="chat-chatNoticeBox">
+	<div class="chat-chatNoticePhoto">
+		<img style="width:100%; height:100%;"/>
+	</div>
+	<div class="chat-chatNoticeInfo">
+	
+	</div>
+</div>
+
+<!-- 채팅 관련 엘리먼트 끝 -->
+
+
 <!-- 헤더 관련 팝업 모달 끝-->
+
 
 <!-- 기본 임폴트 js -->
 <script type="text/javascript" src="../lib/jquery/jquery.js"></script>
 <script src="/magic-deal/semantic/semantic.min.js"></script>
 <script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
 <script src="/magic-deal/js/common.js"></script>
-<!-- 기본 임폴트 js -->
-
-<script src="/magic-deal/custom_lib/imagechange.js"></script>
+<script src="/magic-deal/js/socket.io.js"></script>
+<script src="/magic-deal/js/chat.js"></script>
 
 <script>
-	var imageChange;
-	var lastChangeBox = -1;
-	var imgs = [];
+	// 화면 설정
+	var wWidth = $(window).width();
+	var wHeight = $(window).height();
+	
+	$("#mainBox").css("height", wHeight);
+	$("#categorieWrap").css("height", wHeight-50);
+	$(".boxCommon").css("height", (wHeight-50)/3);
+	$(".emptyBox").css("line-height", (wHeight-50)/3+"px");
+	$(".cateSelectBox").css({
+		"height" : wHeight,
+		"padding-top" : (wHeight+50-560)/2
+	});
+	$(".sideSelectOpenBtn").css("top", (wHeight/2-25));
+	$("#mainBox>.mainfontlogo").css("top", (wHeight/2-85));
+	$(".cateSelectBox>div").dimmer({
+		on:'hover'
+	});
+	
+	var nScroll = $("body").niceScroll({
+		horizrailenabled:false
+	});
+	
+	$("#mainBox").css("background-image", 'url("/magic-deal/img/mainphoto.jpg")');
 	var loginCheck = function() {
 		$.get(contextPath + "/member/loginCheck.do", function(resultObj) {
 			var result = resultObj.ajaxResult;
 			loginBoxDraw(result.data);
+			if(result.data!=null)
+				chatConnect(result.data);
 		}, "json");
 	};
+	loginCheck();
+</script>
+<script src="/magic-deal/custom_lib/imagechange.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
+<!-- 기본 임폴트 js -->
+
+
+<script>
+	var cateBoxOpenFlag = false;
+	var imageChange;
+	var lastChangeBox = -1;
+	var imgs = [];
+	
 	
 	var categorieLoad = function() {
 		$.get(contextPath + "/product/categorieVolume.do", function(resultObj) {
@@ -655,10 +1109,8 @@ section>div {
 		
 	}
 	
-	loginCheck();
 	categorieLoad();
 	initImgLoad();
-	$("section").niceScroll();
 	
 	$(window).resize(function() {
 		// 화면 사이즈 변경에 따라 이미지 사이즈도 따라서 변경
@@ -688,6 +1140,67 @@ section>div {
 		on : "hover"
 	});
 	
+	$("#slideDownBtn").on("click", function() {
+		var topPos = $(window).height();
+		nScroll.doScrollTop(topPos);
+	});
+	
+	$(".sideSelectOpenBtn").on("click", function() {
+		if(!cateBoxOpenFlag) {
+			$(".sideSelectOpenBtn").css("right", "215px")
+								   .find("i")
+								   .removeClass("angle double left big icon")
+								   .addClass("angle double right big icon");
+			$(".cateSelectBox").css("right", "0px");
+			
+			$('#mainBox').dimmer({
+				closable : false
+			}).dimmer('show');
+			
+			nScroll.locked = true;
+			
+			cateBoxOpenFlag = true;
+		}else {
+			$(".sideSelectOpenBtn").css("right", "15px")
+			   .find("i")
+			   .removeClass("angle double right big icon")
+			   .addClass("angle double left big icon");
+			$(".cateSelectBox").css("right", "-200px");
+			
+			$('#mainBox').dimmer('hide');
+			
+			nScroll.locked = false;
+			cateBoxOpenFlag = false;
+		}
+	});
+	
+	$(".moveTopBtn").on("click", function() {
+		nScroll.doScrollTop(0);
+	});
+	
+	$(window).scroll(function() {
+		var scrollTop = $(window).scrollTop();
+
+		if(scrollTop > 50) {
+			$(".moveTopBtn").css("display", "block");
+		}else {
+			$(".moveTopBtn").css("display", "none");
+		}
+		
+		if(scrollTop >= wHeight-1) {
+			$("header").css({
+				position : "fixed",
+				top : "0px"
+			});
+		}else {
+			$("header").css({
+				position : "absolute",
+				top : "0px"
+			});
+		}
+		
+		return false;
+	});
 	
 	// 이미지 체인저 시간값 설정
 	setTimeout(randomImgChange, 2000);

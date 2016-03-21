@@ -900,6 +900,51 @@ section {
 <!-- 상세보기 모달 끝 -->
 
 
+<!-- 채팅 관련 엘리먼트 -->
+
+<div class="chat-chatBoxWrap">
+	<div class="chat-chatInfoBox">
+		<div class="circularBox"></div>
+		<span id="chat-chatBoxNick"></span>
+		<div class="chat-chatBoxCloseBtn">
+			<i class="close icon"></i>
+		</div>	
+	</div>
+	<div class="chat-chatBox">
+		<div class="chat-msgWrap">
+		</div>
+	</div>
+	<div class="chat-inputBox">
+		<input type="text" id="chat-inputText" placeholder="보낼 내용을 입력하세요"/>
+		<button class="chat-sendBtn">SEND</button>
+	</div>
+</div>
+
+<div class="chat-chatListBoxWrap">
+	<div class="chat-chatListHeader">
+		총 
+		<span id="chatList-count"></span>
+		개 대화
+		
+		<div class="chat-chatListCloseBtn">
+			<i class="close icon"></i>
+		</div>		
+	</div>
+	<div class="chat-chatListBox">
+	</div>
+</div>
+
+<div class="chat-chatNoticeBox">
+	<div class="chat-chatNoticePhoto">
+		<img style="width:100%; height:100%;"/>
+	</div>
+	<div class="chat-chatNoticeInfo">
+	
+	</div>
+</div>
+
+<!-- 채팅 관련 엘리먼트 끝 -->
+
 <!-- 스크립트 시작 -->
 <script type="text/javascript" src="/magic-deal/lib/jquery/jquery.js"></script>
 <script src="/magic-deal/semantic/semantic.min.js"></script>
@@ -931,6 +976,7 @@ section {
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services,clusterer&autoload=false"></script>
 <script src="/magic-deal/js/common.js"></script>
 <script src="/magic-deal/lib/jquery.nicescroll/jquery.nicescroll.js"></script>
+<script src="/magic-deal/js/socket.io.js"></script>
 <script src="/magic-deal/js/chat.js"></script> 
 <!-- view modal 관련 -->
 <script src="/magic-deal/js/view.js"></script>
@@ -993,6 +1039,9 @@ section {
 			if(result.data!=null) {
 				locUtil.moveCenter(result.data.mLat, result.data.mLon);
 				locUtil.setLevel(8);
+				
+				// 채팅 연결
+				chatConnect(result.data);
 			}
 			getProduct(pageParam, function(resultData) {
 					var result = resultData.ajaxResult;

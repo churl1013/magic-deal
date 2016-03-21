@@ -171,7 +171,19 @@ var drawViewModal = function(data) {
 		// 댓글 1페이지 및 페이징 정보를 불러와 출력
 		getViewCommentList(1);
 	}
+	
+	
+	
 	$(".viewItemWrap").prepend(currentCloneBox);
+
+	// 공유버튼 이벤트 걸기
+	$(".facebook_btn").on("click", function() {
+		var popOption = "width=700, height=500, resizable=no, scrollbars=no, status=no;";
+		
+		window.open( 
+			"http://www.facebook.com/sharer/sharer.php?u="
+		   +"http://192.168.0.11:8008/magic-deal/page/detail.html?n="+data.pNo, "", popOption);
+	});
 	$("#viewLoadingWrap").css("display", "none");
 };
 

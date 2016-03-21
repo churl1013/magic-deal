@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/chat.css">
 <link rel="shortcut icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
 <title>Magic Deal</title>
@@ -501,16 +502,65 @@ footer {
   </div>
 </div>
 <!-- 알림창 모달 끝 -->
+
+
+<!-- 채팅 관련 엘리먼트 -->
+
+<div class="chat-chatBoxWrap">
+	<div class="chat-chatInfoBox">
+		<div class="circularBox"></div>
+		<span id="chat-chatBoxNick"></span>
+		<div class="chat-chatBoxCloseBtn">
+			<i class="close icon"></i>
+		</div>	
+	</div>
+	<div class="chat-chatBox">
+		<div class="chat-msgWrap">
+		</div>
+	</div>
+	<div class="chat-inputBox">
+		<input type="text" id="chat-inputText" placeholder="보낼 내용을 입력하세요"/>
+		<button class="chat-sendBtn">SEND</button>
+	</div>
+</div>
+
+<div class="chat-chatListBoxWrap">
+	<div class="chat-chatListHeader">
+		총 
+		<span id="chatList-count"></span>
+		개 대화
+		
+		<div class="chat-chatListCloseBtn">
+			<i class="close icon"></i>
+		</div>		
+	</div>
+	<div class="chat-chatListBox">
+	</div>
+</div>
+
+<div class="chat-chatNoticeBox">
+	<div class="chat-chatNoticePhoto">
+		<img style="width:100%; height:100%;"/>
+	</div>
+	<div class="chat-chatNoticeInfo">
+	
+	</div>
+</div>
+
+<!-- 채팅 관련 엘리먼트 끝 -->
+
 <!-- 헤더 관련 팝업 모달 끝-->
 
 
 <!-- 기본 임폴트 js -->
-<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="/magic-deal/lib/jquery/jquery.js"></script>
 <script src="/magic-deal/semantic/semantic.min.js"></script>
 <script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
 <script src="/magic-deal/js/common.js"></script>
+<script src="/magic-deal/js/socket.io.js"></script>
+<script src="/magic-deal/js/chat.js"></script> 
 <script src="/magic-deal/js/cate.js"></script>
 <!-- 기본 임폴트 js -->
 
@@ -562,7 +612,9 @@ var loginCheck = function() {
 	$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
 		var result = resultObj.ajaxResult;
 		loginBoxDraw(result.data);
-		if(!result.data) {
+		if(result.data!=null) {
+			chatConnect(result.data);
+		}else {
 			alert("로그인 후 이용해주세요!");
 			document.location.href = contextPath + "/page/main.html";
 		}
