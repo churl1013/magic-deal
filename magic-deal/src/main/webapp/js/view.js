@@ -8,6 +8,7 @@ var currentCloneBox;
 var cloneBox = $("#viewItemCloneBox");
 var closeCallback;
 var normalClose = function() {
+	$(".thumbFocus").css("left", "0%");
 	$(".viewItemWrap").css("display", "none");
 	$(this).css("display", "none");
 	currentCloneBox.remove();
@@ -62,6 +63,7 @@ var drawViewModal = function(data) {
 	
 	var thumbBox = header.find(".viewItemPhotoBox>.thumbImgBox")
 	thumbBox.prepend(productImg);
+	
 	var cloneThumb = thumbBox.find(".thumb").on("click", function() {
 		var currIdx = $(".thumb").index(this);
 		var currBox = this;

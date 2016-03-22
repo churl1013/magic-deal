@@ -61,14 +61,14 @@
 
 @media all and (min-width:768px) and (max-width:1023px) {
 	.locMapWrap {
-		height : 70%;
+		height : 60%;
 		width : 100%!important;
 		position : relative;
 	}
 	
 	.locListWrap {
 		width : 100%!important;
-		height : 30%;
+		height : 40%;
 		border-left : 1px solid #c7c7c7;
 		background-color : #fbfbfb;
 		z-index : 99;
@@ -76,6 +76,41 @@
 	
 	.view-memberCardInfo {
 		width : 280px;
+	}
+	
+	.productCard {
+		height : 100px!important;
+	}
+	
+	.productCard>.proPhoto {
+		width : 90px!important;
+		height : 90px!important;
+	}
+	
+	.productCard>.proInfo {
+		height : 100px!important;
+	}
+	
+	.productCard>.proInfo>span {
+		height : 22px!important;
+		line-height : 22px!important;
+		fontsize : 14px!important;
+	}
+	
+	.productCard>.proInfo>span:first-child {
+		font-weight : bold;
+	}
+	
+	.productCard>.proInfo>span:nth-child(3) {
+		color : #888;
+	}
+	
+	.mobileFilter {
+		display : block!important;
+	}
+	
+	.view-memberCardInfo {
+		width : 190px;
 	}
 }
 
