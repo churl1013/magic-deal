@@ -333,8 +333,8 @@ footer {
 
 							<div class="ui action small input">
 								<input type="text" placeholder="키워드를 입력하세요!"
-									style="width: 350px; margin-left: 20px;" />
-								<button class="ui small brown right labeled icon button">
+									style="width: 350px; margin-left: 20px;" id="searchKeyword"/>
+								<button class="ui small brown right labeled icon button" id="searchButton">
 									<i class="search icon"></i> 검색
 								</button>
 							</div>
@@ -753,6 +753,8 @@ footer {
 	var productData;
 	var ownerNo;
 	var mNo;
+	 var toggle = "s";
+	 var keyword = "";
 	
 	var loginCheck = function() {
 		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
@@ -1008,8 +1010,10 @@ footer {
 		$("#alarm-tab-box").css("display", "none");
 		$("#profile-tab-box").css("display", "none");
 		$("#activity-tab-box").css("display", "block");
-		
-		
+		$("#searchKeyword").val("");
+		$("#dealStepHigh").prop("checked", true);
+		toggle = "s";
+		keyword = "";
 		getMyList(1);
 	});
 	
@@ -1263,7 +1267,6 @@ footer {
 		return str.split(target).join(replacement);
     };
     
-	var toggle = "s";
    	$("#dealStepHigh").on("change", function() {
    		if(this.checked) {
    			// 팝니다 물품만
@@ -1285,7 +1288,8 @@ footer {
 		$.getJSON(contextPath + "/product/myList.do", {
 				mNo : mNo,
 				page : pageNum,
-				dealType : toggle
+				dealType : toggle,
+				key : keyword
 			}, function(resultObj) {
 				var result = resultObj.ajaxResult;
 				console.dir(result);
@@ -1408,6 +1412,17 @@ footer {
 				
 		
 	};
+	
+	$("#searchButton").on("click", function() {
+		event.preventDefault();
+		keyword = $("#searchKeyword").val();
+		if(keyword==""){
+			keywordMsg("검색어를 입력하세요!", "확인");
+		}
+		else{
+    		getMyList(1);
+		}
+	});
 	
 	var mypageNumDraw = function(maxCnt, currPage) {
 		console.log(maxCnt, currPage);

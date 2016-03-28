@@ -118,8 +118,11 @@
 	
 	<select id="selectProductbyMemeberCount" parameterType="hashMap" resultType="int">
 		select count(*) 
-		  from product 
-		 where m_no = #{mNo} and deal_type = #{dealType}
+		  from product pro, pro_categorie cate
+		 where m_no = #{mNo} and pro.deal_type = #{dealType} and pro.p_c_no = cate.p_c_no
+		 <if test="keyword neq null">
+                  	and cate.p_keyword like CONCAT('%', #{keyword}, '%')
+                  </if>
 	</select>
 	
 	<select id="selectProductMyList" parameterType="hashMap" resultMap="productDetailMap">
@@ -133,6 +136,9 @@
                   and pho.p_no = pro.p_no
                   and pro.deal_type = #{dealType}
                   and pho.p_ph_thum = 'y'
+                  <if test="keyword neq null">
+                  	and cate.p_keyword like CONCAT('%', #{keyword}, '%')
+                  </if>
             order by pro.p_no desc
             limit #{start}, 6
    	</select>

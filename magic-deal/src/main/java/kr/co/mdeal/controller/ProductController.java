@@ -245,11 +245,14 @@ public class ProductController {
 	
 	
 	@RequestMapping("myList.do")
-	public AjaxResult getProductMyListtList(Member mem, @RequestParam(defaultValue="1")int page, HttpSession session, Product pro) {
+	public AjaxResult getProductMyListtList(Member mem, @RequestParam(defaultValue="1")int page, HttpSession session, Product pro,@RequestParam(defaultValue="") String key) {
 		HashMap<String, Object> option = new HashMap<>();
+		System.out.println("keyword 값 : "+key);
 		option.put("mNo", mem.getmNo());
 		option.put("start", (page-1)*6);
 		option.put("dealType", pro.getDealType());
+		if(key.length()>0) 
+			option.put("keyword", key);
 		Member login = (Member)session.getAttribute("userLoginInfo");
 		String lId = "";
 		if(login!=null) {
