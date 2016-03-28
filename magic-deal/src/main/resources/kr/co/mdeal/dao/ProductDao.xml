@@ -132,6 +132,7 @@
                   and pro.p_c_no = cate.p_c_no
                   and pho.p_no = pro.p_no
                   and pro.deal_type = #{dealType}
+                  and pho.p_ph_thum = 'y'
             order by pro.p_no desc
             limit #{start}, 6
    	</select>
@@ -299,15 +300,15 @@
 	
 	
 	<select id="selectCategoriesPhoto" resultType="hashMap">
-		select max(p_no) p_no, p_high_cate, p_ph_path, p_ph_name
+		select productall.p_no, p_high_cate, p_ph_path, p_ph_name
 	 	  from (
-				select pro.p_no, cate.p_high_cate, ph.p_ph_path, ph.p_ph_name
-			  	  from pro_photo ph, product pro, pro_categorie cate
-			 	 where cate.p_c_no = pro.p_c_no and pro.p_no = ph.p_no
-				  	   and ph.p_ph_thum='y' and pro.deal_type = 's' and pro.deal_step='y'
-				) productall
-	  	 group by p_high_cate
-	  	 order by p_high_cate asc
+				select max(pro.p_no) p_no, cate.p_high_cate
+			  	  from product pro, pro_categorie cate
+			 	 where cate.p_c_no = pro.p_c_no and pro.deal_type = 's' and pro.deal_step='y'
+                 group by p_high_cate
+				) productall, pro_photo ph
+			where ph.p_no = productall.p_no and ph.p_ph_thum = 'y'
+			order by p_high_cate asc
 	</select>
 	
 	<select id="selectCategoriePhoto" resultMap="productPhotoMap" parameterType="categorie">

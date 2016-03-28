@@ -54,9 +54,7 @@
 		display : block!important;
 	}
 	
-	.view-memberCardInfo {
-		width : 190px;
-	}
+	
 }
 
 @media all and (min-width:768px) and (max-width:1023px) {
@@ -72,10 +70,6 @@
 		border-left : 1px solid #c7c7c7;
 		background-color : #fbfbfb;
 		z-index : 99;
-	}
-	
-	.view-memberCardInfo {
-		width : 280px;
 	}
 	
 	.productCard {
@@ -108,10 +102,7 @@
 	.mobileFilter {
 		display : block!important;
 	}
-	
-	.view-memberCardInfo {
-		width : 190px;
-	}
+
 }
 
 
@@ -133,14 +124,10 @@
 		z-index : 99;
 	}
 	
-	.view-memberCardInfo {
-		width : 400px;
-	}
+	
 }
 
-.view-memberCardInfo-chatBtn {
-	float : right;	
-}
+
 
 #selectNumberViewerWrap {
 	width : 100%;

@@ -74,7 +74,7 @@
 @media all and (min-width:1024px) {
     /* 1025px 이상 해상도 */
     .emptyBox {
-		background-color : #111;
+		background-color : black;
 		color : white;
 		font-size : 24px;
 		font-family : 'Doppio One';
@@ -97,6 +97,9 @@
 		position : relative;
 		overflow : hidden;
 		z-index : 0;
+		border-right : 1px solid #c8c8c8;
+		border-top : 1px solid #c8c8c8;
+		background-color : #000;
 	}
 	
 	.logoBox {

@@ -125,13 +125,13 @@ public class ProductController {
 					
 					if(thumbnail) {
 						FileUtils.imageResize(realPath+"/"+realFileName, 
-								realPath+"/thum_"+realFileName, ext, 250, 250);
+								realPath+"/thum_"+realFileName, ext, 350, 350);
 						pp.setpPhotoThum('y');
 						thumbnail = false;
 					}
 					
 					FileUtils.imageResize(realPath+"/"+realFileName, 
-							realPath+"/"+realFileName, ext, 500, 500);
+							realPath+"/"+realFileName, ext, 800, 800);
 					
 					pphotoList.add(pp);
 				}

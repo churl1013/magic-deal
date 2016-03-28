@@ -73,16 +73,9 @@ var ImageChange = function(ele){
 	var width = parseInt($(".imgChangeBox").css("width"));
 	var height = parseInt($(".imgChangeBox").css("height"));
     var view_port = $(boxs[idx]).find("#view_port");
-    var new_view_port = $("<div id='view_port'></div>").css({
-        "width" : width*2,
-        "height" : "100%",
-        "position" : "absolute",
-        "opacity" : "0"
-      }).appendTo(boxs[idx]);
     var newImg = new Image;
-	newImg.onload = (function(data, beforeBox) {
+	newImg.onload = (function(data) {
     	var box = data;
-    	var before = beforeBox;
 		return function() {
 			var imgBox = $("<img />").attr("src", this.src);
     		var iWidth = this.width;
@@ -112,16 +105,14 @@ var ImageChange = function(ele){
     		
     		$(box).append(imgBox);
 
-    		before.animate({
-    			opacity : "0"
-    		},"1000",function() {
-    			$(this).remove();
-    			$(new_view_port).animate({
-    				opacity : "1"
-    			}, "1000");
+    		view_port.animate({
+    			left : "-100%"
+    		},"1500",function() {
+    			$(this).find(">img:eq(0)").remove();
+    			$(this).css("left","0%");
     		});
     	}
-	})(new_view_port, view_port);
+	})(view_port);
 	
 	newImg.src = img;
   }

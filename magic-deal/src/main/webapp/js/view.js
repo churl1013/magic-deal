@@ -22,9 +22,6 @@ var modalOpen = function(proIdx, callback) {
 		closeCallback = normalClose;
 	}
 	
-	console.log('test');
-	$(".viewItemWrap").find(".viewItemPaddingBox").remove();
-	
 	$(".viewItemWrap").on("click",">.viewItemPaddingBox>.viewCloseBtn", closeCallback);
 	
 	$(".viewItemWrap").css("display","block");
@@ -73,19 +70,52 @@ var drawViewModal = function(data) {
 		if(currIdx<0) currIdx = 0;
 		$(".thumbFocus").animate({
 			"left" : (currIdx*25)+"%"
-		}, 300, function() {
+		}, 1, function() {
 			var img = $(currBox).find("img").clone();
-			$("#currentViewPhoto").animate({
-				"opacity" : "0.2"
-			}, 50, function() {
-				$("#currentViewPhoto").empty();
-				$("#currentViewPhoto").append(img).animate({
-					"opacity" : "1"
-				}, 100);
-			});
+			var newImg = new Image;
+			newImg.onload = (function(target) {
+				var box = target;
+				return function() {
+					var height = parseInt($("#currentViewPhoto").css("height"));
+					var width = parseInt($("#currentViewPhoto").css("width"));
+					var iWidth = this.width;
+		    		var iHeight = this.height;
+		    		
+		    		if(iWidth > iHeight) {
+		    			var translateVal = width / iWidth;
+		    			var translateHeight = iHeight * translateVal;
+		    			var margin = Math.floor((height-translateHeight)/2);
+		    			
+		    			target.css({
+		    				width : "100%",
+		    				height : "auto",
+		    				"margin-top" : margin
+		    			});
+		    		}else {
+		    			var translateVal = height / iHeight;
+		    			var translateWidth = iWidth * translateVal;
+		    			var margin = Math.floor((width-translateWidth)/2);
+		    			target.css({
+		    				width : "auto",
+		    				height : "100%",
+		    				"margin-left" : margin
+		    			});
+		    		}
+		    		
+					$("#currentViewPhoto").animate({
+						"opacity" : "0.2"
+					}, 10, function() {
+						$("#currentViewPhoto").empty();
+						$("#currentViewPhoto").append(img).animate({
+							"opacity" : "1"
+						}, 20);
+					});
+				};
+			})(img);
+			
+			newImg.src = img.attr("src");
 		});
-	}).eq(0).find("img").clone();
-	header.find(".viewItemPhotoBox>#currentViewPhoto").append(cloneThumb);
+	}).eq(0).trigger("click");
 	
 	var productInfo = '<ul>';
 		productInfo += '<li>';
@@ -175,7 +205,7 @@ var drawViewModal = function(data) {
 	}
 	
 	
-	
+	$(".viewItemWrap").find(".viewItemPaddingBox").remove();
 	$(".viewItemWrap").prepend(currentCloneBox);
 
 	// 공유버튼 이벤트 걸기
@@ -319,4 +349,5 @@ var pageNumDraw = function(maxCnt, currPage) {
 		getViewCommentList(pageNum);
 	}).eq(currPage-currMinPage).addClass("viewCurrPage").on("click", null);
 };
+
 

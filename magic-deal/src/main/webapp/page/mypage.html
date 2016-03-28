@@ -52,7 +52,7 @@ section {
 }
 
 .tab-title {
-	width: 33.3%;
+	width: 50%;
 	height: 50px;
 	display: inline-block;
 	text-align: center;
@@ -63,7 +63,6 @@ section {
 
 .tab-title:nth-child(2) {
 	border-left: 1px solid #d8d8d8;
-	border-right: 1px solid #d8d8d8;
 }
 
 .tab-title:hover {
@@ -250,13 +249,19 @@ footer {
 </div>
 <nav class="ui vertical menu">
 	<a id="navMainDirectBtn" class="item">
-      <i class="home large orange icon"></i>메인
+      <i class="home yellow large icon"></i>메인
     </a>
     <a id="navProductRegistBtn" class="item">
-      <i class="cubes large orange icon"></i>물품등록
+      <i class="cubes yellow large icon"></i>물품등록
+    </a>
+    <a id="navMapSearchBtn" class="item">
+      <i class="marker yellow large icon"></i>지도검색
+    </a>
+    <a id="navChartSearchBtn" class="item">
+      <i class="area chart yellow large icon"></i>차트검색
     </a>
     <a id="navBoardDirectBtn" class="item">
-      <i class="info circle large orange icon"></i>커뮤니티
+      <i class="info circle large yellow icon"></i>커뮤니티
     </a>
 </nav>
 <!-- 네비게이션 끝 -->
@@ -268,12 +273,12 @@ footer {
 			<!-- 마이페이지 내용부 -->
 				<div class="horizontal-tab">
 					<span id="profileTabBtn" class="tab-title"
-						style="background-color: #fff;"> <i class="user brown icon"></i>프로필
-					</span> <span id="activityTabBtn" class="tab-title"> <i
-						class="quote left teal icon"></i>활동 관리
-					</span> <span id="alarmTabBtn" class="tab-title"> <i
-						class="alarm red icon"></i>알람 관리
-					</span>
+						style="background-color: #fff;"> 
+						<i class="user brown icon"></i>프로필
+					</span> 
+					<span id="activityTabBtn" class="tab-title"> 
+						<i class="quote left teal icon"></i>활동 관리
+					</span> 
 				</div>
 
 				<div class="tab-content-box">
@@ -342,9 +347,6 @@ footer {
 						</div>
 					</div>
 
-					<div id="alarm-tab-box" style="display: none">
-						<div></div>
-					</div>
 				</div>
 
 				<!-- 마이페이지 내용부 끝-->
@@ -792,7 +794,38 @@ footer {
 	};
 	
 	var mypageDraw = function(u_info, flag) {
-		$("#mypageProfieImg").attr("src", contextPath+"/upload/profile/mp_"+u_info.mPhoto);
+		var proImg = new Image;
+		proImg.onload = function() {
+			var width = parseInt($("#mypageProfieImg").parent().css("width"));
+			var height = parseInt($("#mypageProfieImg").parent().css("height"));
+			var imgBox = $("#mypageProfieImg");
+			var iWidth = this.width;
+    		var iHeight = this.height;
+    		if(iWidth > iHeight) {
+    			var translateVal = width / iWidth;
+    			var translateHeight = iHeight * translateVal;
+    			var margin = Math.floor((height-translateHeight)/2);
+    			
+    			console.log(width, height, iWidth, iHeight, translateHeight);
+    			imgBox.css({
+    				width : width,
+    				height : "auto",
+    				"margin-top" : margin
+    			});
+    		}else {
+    			var translateVal = height / iHeight;
+    			var translateWidth = iWidth * translateVal;
+    			var margin = Math.floor((width-translateWidth)/2);
+    			imgBox.css({
+    				width : "auto",
+    				height : height,
+    				"margin-left" : margin
+    			});
+    		}
+			
+			$("#mypageProfieImg").attr("src", contextPath+"/upload/profile/mp_"+u_info.mPhoto);
+		};
+		proImg.src = contextPath+"/upload/profile/mp_"+u_info.mPhoto;
 		$("#mypageProfileNickName").text(u_info.nickName);
 		$("#mypageProfileJoinDate").text(u_info.joinDate);
 		$("#mypageProfileLikeCount").text(u_info.likeCnt);
@@ -906,6 +939,41 @@ footer {
 		var fileReader = new FileReader();
 		fileReader.onload = function() {
 			var dataURL = fileReader.result;
+			
+			var proImg = new Image;
+			proImg.onload = function() {
+				var width = parseInt($("#mypageProfieImg").parent().css("width"));
+				var height = parseInt($("#mypageProfieImg").parent().css("height"));
+				var imgBox = $("#mypageProfieImg");
+				imgBox.css("");
+				var iWidth = this.width;
+	    		var iHeight = this.height;
+	    		
+	    		if(iWidth > iHeight) {
+	    			var translateVal = width / iWidth;
+	    			var translateHeight = iHeight * translateVal;
+	    			var margin = Math.floor((height-translateHeight)/2);
+	    			
+	    			imgBox.css({
+	    				width : width,
+	    				height : "auto",
+	    				"margin-top" : margin
+	    			});
+	    		}else {
+	    			var translateVal = height / iHeight;
+	    			var translateWidth = iWidth * translateVal;
+	    			var margin = Math.floor((width-translateWidth)/2);
+	    			imgBox.css({
+	    				width : "auto",
+	    				height : height,
+	    				"margin-left" : margin
+	    			});
+	    		}
+				
+				$("#mypageProfieImg").attr("src", dataURL);
+			};
+			proImg.src = dataURL;
+			
 			$("#mypageProfieImg").attr("src", dataURL);
 			$("#logUserPhoto").attr("src", dataURL);
 		};
@@ -1190,25 +1258,25 @@ footer {
     	}
     };
     
- // 자기소개 모달창 줄바꿈
- var toggle = "s";
+ 	// 자기소개 모달창 줄바꿈
     function replaceAll(str, target, replacement) {
 		return str.split(target).join(replacement);
     };
     
-    	$("#dealStepHigh").on("change", function() {
-    		if(this.checked) {
-    			// 팝니다 물품만
-    			console.log("판매1111");
-    			toggle = "s";
-    		}else {
-    			// 삽니다 물품만
-    			console.log("구매2222");
-    			toggle = "b";
-    		}
-    		$(".activity-paging").empty();
-    		getMyList(1);
-    	});
+	var toggle = "s";
+   	$("#dealStepHigh").on("change", function() {
+   		if(this.checked) {
+   			// 팝니다 물품만
+   			console.log("판매1111");
+   			toggle = "s";
+   		}else {
+   			// 삽니다 물품만
+   			console.log("구매2222");
+   			toggle = "b";
+   		}
+   		$(".activity-paging").empty();
+   		getMyList(1);
+   	});
     	
     // 리스트 가져오기
     var getMyList = function(pageNum) {

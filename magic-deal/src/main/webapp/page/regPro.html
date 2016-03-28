@@ -373,8 +373,7 @@ var loginCheck = function() {
 		if(result.data!=null) {
 			chatConnect(result.data);
 		}else {
-			alert("로그인 후 이용해주세요!");
-			document.location.href = contextPath + "/page/main.html";
+			alertLoginCheck("로그인 후 이용해주세요!", "확인");
 		}
 	});
 };
@@ -708,10 +707,7 @@ $("#productSubmitBtn").on("click", function() {
 			dataType : "json",
 			data : data,
 			processData: false,
-            contentType: false,
-			success : function(resultObj) {
-				console.dir(resultObj);
-			}
+            contentType: false
 		}).done(function(resultObj) {
 			var result = resultObj.ajaxResult;
 			document.location.href = contextPath + "/page/mypage.html#?ow="+result.data;
@@ -730,6 +726,18 @@ var cateNumSearch = function(keyword) {
 			return keywords[i].pCategorieNo;
 	}
 	return -1;
+};
+
+var alertLoginCheck = function(msg, btn) {
+	$("#alertMsg").html(msg);
+	$("#alertBtn").html(btn);
+	$(".ui.modal.alertModal").modal( {
+		allowMultiple : true,
+		closable : false,
+		onApprove : function() {
+			document.location.href="main.html";
+		}
+	}).modal('show');
 };
 
 </script>
