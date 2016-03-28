@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.aspectj.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -266,5 +267,17 @@ public class ProductController {
 		result.put("resultList", productResult);
 		
 		return new AjaxResult("success", result);
+	}
+	
+	@RequestMapping("share.do")
+	public String redirectSharePage(@RequestParam int n, Model model) {
+		Product pro = new Product();
+		pro.setpNo(n);
+		HashMap<String, Object> productDetail = service.getProductDetail(pro);
+		productDetail.put("pContent", ContentProcess.enterChange(productDetail.get("pContent").toString()));
+		
+		model.addAttribute("productDetail",productDetail);
+		
+		return "detail";
 	}
 }
