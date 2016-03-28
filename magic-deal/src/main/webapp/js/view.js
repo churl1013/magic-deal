@@ -24,6 +24,9 @@ var modalOpen = function(proIdx, callback) {
 		closeCallback = normalClose;
 	}
 	
+	console.log('test');
+	$(".viewItemWrap").find(".viewItemPaddingBox").remove();
+	
 	$(".viewItemWrap").on("click",">.viewItemPaddingBox>.viewCloseBtn", closeCallback);
 	
 	$(".viewItemWrap").css("display","block").animate({

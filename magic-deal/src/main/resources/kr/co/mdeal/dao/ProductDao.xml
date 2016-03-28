@@ -116,13 +116,24 @@
 		<result column="distance" property="distance" />
 	</resultMap>
 	
+	<select id="selectProductbyMemeberCount" parameterType="hashMap" resultType="int">
+		select count(*) 
+		  from product 
+		 where m_no = #{mNo} and deal_type = #{dealType}
+	</select>
+	
 	<select id="selectProductMyList" parameterType="hashMap" resultMap="productDetailMap">
-      select pro.*,  cate.p_keyword, pho.p_ph_path, pho.p_ph_name
+      select pro.p_no, pro.m_no, pro.p_c_no, pro.price, pro.p_content,
+			   date_format(pro.p_reg_date, "%Y.%c.%e %H:%i") p_reg_date,pro.deal_step,
+			   pro.deal_type, pro.quality, pro.deal_opt, pro.p_addr, pro.p_lat, pro.p_lon, 
+				cate.p_keyword, pho.p_ph_path, pho.p_ph_name
            from product pro, pro_categorie cate, pro_photo pho
                 where m_no = #{mNo}
                   and pro.p_c_no = cate.p_c_no
                   and pho.p_no = pro.p_no
+                  and pro.deal_type = #{dealType}
             order by pro.p_no desc
+            limit #{start}, 6
    	</select>
 	
 	<select id="selectAreaProduct" parameterType="hashMap" resultMap="productAreaMap">
@@ -154,6 +165,26 @@
 		 where m_no = #{mNo}
 		   and p_c_no = #{pcNo}
 	</delete>
+	
+	<delete id="deleteProductPhoto" parameterType="product">
+		delete 
+		 from pro_photo 
+		 where p_no = #{pNo}
+	</delete>
+	
+	<delete id="deleteProduct" parameterType="product">
+		delete 
+		 from product
+		 where p_no = #{pNo}
+	</delete>
+	
+	<delete id="deleteMyListComment" parameterType="product">
+		delete 
+		 from pro_comment
+		 where p_no = #{pNo}
+	</delete>
+	
+	
 	
 	<select id="selectProductPhoto" parameterType="product" resultMap="productPhotoMap">
 		select *

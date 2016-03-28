@@ -119,8 +119,21 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public List<HashMap<String, Object>> getProductMyList(Member mem) {
+	public HashMap<String, Object> getProductMyList(HashMap<String, Object> option) {
 		// TODO Auto-generated method stub
-		return dao.selectProductMyList(mem);
+		List<HashMap<String, Object>> productList = dao.selectProductMyList(option);
+		int maxCnt = dao.selectProductbyMemeberCount(option);
+		
+		HashMap<String, Object> result = new HashMap<>();
+		result.put("productList", productList);
+		result.put("maxCnt", maxCnt);
+		return result;
+	}
+
+	@Override
+	public void deleteProductDelete(Product pro) {
+		dao.deleteProductPhoto(pro);
+		dao.deleteMyListComment(pro);
+		dao.deleteProduct(pro);
 	}
 }

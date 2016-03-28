@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/chat.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/view.css">
 <link rel="shortcut icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
 <title>Magic Deal</title>
@@ -169,6 +170,21 @@ footer {
 	font-weight : bold;
 }
 
+.activity-paging {
+	width : 100%;
+	height : 30px;
+	background-color : #fbfbfb;
+	line-height : 30px;
+	text-align : center;
+}
+
+.activity-paging>.pageBtn.currPage {
+	font-weight : 800;
+	cursor : default;
+	background-color : #a333c8;
+	color : white;
+}
+
 .infoTextArea {
 	width : 450px;
 	height : 320px;
@@ -181,6 +197,36 @@ footer {
 	font-size : 12px;
 }
 
+.myPageIdxBox {
+	cursor : pointer;
+	display : inline-block;
+	width : 25px;
+	min-height : 25px;
+	margin : 0px 2px 0px 2px;
+	background-color : #222;
+	border-radius : 2px;
+	color : white;
+	font-weight : 600;
+	font-size : 12px;
+	line-height : 25px;
+}
+
+.myPageCurrPage {
+	cursor : default;
+	background-color : #ff851b;
+}
+
+.myPageArrowBox {
+	cursor : pointer;
+	display : inline-block;
+	width : 25px;
+	height : 25px;
+	margin : 0px 2px 0px 2px;
+	font-weight : 600;
+	font-size : 12px;
+	line-height : 25px;
+	
+}
 </style>
 </head>
 <body>
@@ -276,7 +322,7 @@ footer {
 						<div class="activity-search-bar">
 							<label>구매</label>&nbsp;&nbsp;&nbsp;
 							<div class="ui toggle checkbox">
-							  <input type="checkbox" name="public">
+							  <input type="checkbox" name="public" checked id="dealStepHigh">
 							 <label>판매</label>
 							</div>
 
@@ -289,169 +335,10 @@ footer {
 							</div>
 						</div>
 
-						<div class="activity-content">
-						
-							<div class="product-card">
-								<a class="ui left corner red label"> <i class="cube icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/test.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #db2828;">거래완료</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="product-card">
-								<a class="ui left corner green label"> <i
-									class="in cart icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/sample2.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #21ba45;">거래대기</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="product-card">
-								<a class="ui left corner red label"> <i class="cube icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/test.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #db2828;">거래완료</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="product-card">
-								<a class="ui left corner red label"> <i class="cube icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/test.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #db2828;">거래완료</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="product-card">
-								<a class="ui left corner red label"> <i class="cube icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/test.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #db2828;">거래완료</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="product-card">
-								<a class="ui left corner red label"> <i class="cube icon"></i>
-								</a>
-								<div class="product-card-img"
-									style="background-image: url('../img/sample-test/test.JPG');">
-
-								</div>
-								<div class="product-card-info">
-									<div class="product-card-info-wrap">
-										<div class="info-title">
-											<span>2016. 02. 29</span> <span style="color: #db2828;">거래완료</span>
-										</div>
-										<div class="info-content">이곳에는 각종 판매에 관련되어 사용자가 등록한 내용이
-											들어가게 됩니다.</div>
-										<div class="info-button-box">
-
-											<button class="ui circular mini icon inverted red button"
-												title="삭제" style="font-size: 13px;">
-												<i class="trash icon"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						
+						<div class="activity-content" id="productListBox">
 						</div>
 
-						<div class="activity-paging">
-							<a class="ui mini icon button"> <i
-								class="angle double left icon"></i>
-							</a> <a class="ui mini icon button"> <i class="angle left icon"></i>
-							</a> &nbsp;&nbsp;1 &nbsp;&nbsp;2 &nbsp;&nbsp;3 &nbsp;&nbsp;4
-							&nbsp;&nbsp;5 &nbsp;&nbsp;6 &nbsp;&nbsp;7 &nbsp;&nbsp;8
-							&nbsp;&nbsp;9 &nbsp;&nbsp;10&nbsp;&nbsp; <a
-								class="ui mini icon button"> <i
-								class="angle double right icon"></i>
-							</a> <a class="ui mini icon button"> <i class="angle right icon"></i>
-							</a>
+						<div class="activity-paging" id="productListPagingBox">
 						</div>
 					</div>
 
@@ -577,6 +464,7 @@ footer {
 </div>
 <!-- 알림창 모달 끝 -->
 
+
 <!-- 프로필 업데이트 모달 -->
 			<div id="profileUpdateModal" class="ui modal profileModal">
 			    <i class="close icon" id="updateCloseBtn" onclick="updateClose()"></i>
@@ -636,17 +524,7 @@ footer {
 		<label>자기소개</label>
 	       <div class="ui small input">
 	       <textarea id="infoContent" class="infoTextArea"></textarea>
-<!-- 	 			<input type="text" id="signNickName2" style="width:150px;"/> &nbsp; -->
 			</div>
-<!--       <label>비밀번호 -->
-<!--          <span style="font-size:12px; color:#444"> -->
-<!--            (숫자, 특수문자 포함 8자 이상) -->
-<!--          </span> -->
-<!--        </label> -->
-<!--        <div class="ui small input"> -->
-<!--  			<input type="password" id="signPass2" style="width:200px;"/>&nbsp; -->
-<!--  				<span style="margin-top:10px">현재 혹은 변경할 비밀번호를 입력하세요!</span> -->
-<!-- 	</div> -->
 
 			    </div>
 			    <div class="actions footer">
@@ -706,6 +584,145 @@ footer {
 
 <!-- 채팅 관련 엘리먼트 끝 -->
 
+
+<!-- 물품 삭제 모달 -->
+<div class="ui basic modal" id="deleteModal">
+  <i class="close icon" id="deleteCloseBtn"></i>
+  <div class="header">
+    	물품 삭제
+  </div>
+  <div class="image content">
+    <div class="image">
+      <i class="archive icon"></i>
+    </div>
+    <div class="description">
+      <p>해당 품목의 사진,댓글,정보를 모두 삭제합니다</p>
+      <p>해당 품목을 정말 삭제하시겠습니까?</p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="two fluid ui inverted buttons">
+      <div class="ui red basic inverted deny button">
+        <i class="remove icon"></i>
+        No
+      </div>
+      <div class="ui green ok basic inverted button">
+        <i class="checkmark icon"></i>
+        Yes
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 물품 삭제 모달 끝 -->
+
+<!-- 상세보기 모달 시작 -->
+<div class="viewItemWrap">
+	
+	<div class="view-scrollUpBtn ui icon inverted button">
+		<i class="angle double up large icon"></i>
+	</div>
+	<div id="viewLoadingWrap">
+		<div class="sk-folding-cube">
+			<div class="sk-cube1 sk-cube"></div>
+			<div class="sk-cube2 sk-cube"></div>
+			<div class="sk-cube4 sk-cube"></div>
+			<div class="sk-cube3 sk-cube"></div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="viewItemPaddingBox" id="viewItemCloneBox">
+	<div class="viewItemBox">
+		<div class="viewItemHeader">
+			<div class="viewItemPhotoBox">
+				<div id="currentViewPhoto">
+				</div>
+				<div class="thumbImgBox">
+					<div class="thumbFocus">
+					</div>
+				</div>
+			</div>
+			<div class="viewItemContent">
+				<div class="itemInfo">
+					<div class="view-infoHeader view-inforHeader-share">
+						PRODUCT INFO <span class="view-annotation">상품정보</span>
+						<div class="view-sharedBtnBox">
+							<button class='view-shareBtn facebook_btn'></button>
+							<button class='view-shareBtn twitter_btn'></button>
+							<button class='view-shareBtn kakao_btn'></button>
+							<button class='view-shareBtn kakaostory_btn'></button>
+							<button class='view-shareBtn url_btn'>URL</button>
+						</div>
+					</div>
+				</div>
+				<div class="itemWriter">
+					<div class="view-infoHeader">
+						MEMBER INFO <span class="view-annotation">등록회원 정보</span>
+					</div>
+					<div class="view-memberCard">
+						<div class="view-memberCardImg"></div>
+						<div class="view-memberCardInfo">
+							<div class="view-card-nick">
+							</div>
+							<div class="view-card-active">
+								<div class="ui horizontal statistic">
+								  <div class="value">
+								  </div>
+								  <div class="label">
+								    Items
+								  </div>
+								</div>
+							</div>
+							<div id="view-chatBtn" class="ui purple small button view-memberCardInfo-chatBtn">
+								채팅하기
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="itemContent">
+					<div class="view-infoHeader">
+						DETAIL INFO <span class="view-annotation">상세 정보</span>
+					</div>
+					<div class="view-itemContent">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="viewItemReply">
+			<div class="view-regReplyBox">
+				<div class="view-infoHeader">
+					COMMENT WRITE <span class="view-annotation">댓글 작성</span>
+				</div>
+				<div class="view-regReplyForm">
+					<table>
+						<tr>
+							<td><textarea id="view-commentContent"></textarea></td>
+							<td style="vertical-align:top;">
+								<button id="view-commentRegBtn" class="ui black small button">등 록</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="view-regReplyContextBox ui comments">
+			<!-- 댓글 내용부 -->
+				
+			<!-- 댓글 내용부 끝 -->
+			</div>
+			<div class="view-commentPagingBox">
+				
+			</div>
+		</div>
+	</div>
+	<div class="viewCloseBtn">
+		<i class="inverted large close icon"></i>
+	</div>
+</div>
+<!-- 상세보기 모달 끝 -->
+
+
 <!-- 헤더 관련 팝업 모달 끝-->
 
 <!-- 기본 임폴트 js -->
@@ -720,6 +737,7 @@ footer {
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
 <script src="/magic-deal/js/common.js"></script>
+<script src="/magic-deal/js/view.js"></script>
 <script src="/magic-deal/js/socket.io.js"></script>
 <script src="/magic-deal/js/chat.js"></script> 
 <!-- 기본 임폴트 js -->
@@ -729,6 +747,11 @@ footer {
 	var nickName;
 	var mlat;
 	var mlon;
+	var pageSize = 6;
+	var productData;
+	var ownerNo;
+	var mNo;
+	
 	var loginCheck = function() {
 		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
 			if(resultObj.ajaxResult.data!=null){
@@ -747,27 +770,17 @@ footer {
 			loginBoxDraw(result.data);
 			if(result.data&&result.data.id==pageParam.ow) {
 				// 로그인한 사용자가 마이페이지 주인
-				console.dir(result.data);
+				console.dir("result.data : "+result.data);
 				mypageDraw(result.data, 0);
-				// 물품 가져오기
-				getMyList(result.data, function(resultData) {
-						var result = resultData.ajaxResult;
-						var productData = result.data;
-						console.dir(productData);
-					});
+				ownerNo = result.data.mNo;
 			} else if(pageParam.ow){
 				$.post(contextPath + "/member/ownerinfo.do", {
 					id : pageParam.ow
 				}, function(resultObj) {
 					var getData = resultObj.ajaxResult;
-					
-					// 물품 가져오기
-					getMyList(getData.data, function(resultData) {
-							var result = resultData.ajaxResult;
-							var productData = result.data;
-						console.dir(productData);
-						});
-					
+					console.dir("getData.data : "+getData.data);
+					console.dir(getData.data);
+					ownerNo = getData.data.mNo;
 					if(result.data) mypageDraw(getData.data, 1);
 					else mypageDraw(getData.data, 2);
 				},"json");
@@ -901,16 +914,13 @@ footer {
 		
 	// mypage 실행부
 	pageParam = getParameter(document.location.href);
+	
 	loginCheck();
+	
 	$(".scrollWrap").niceScroll();
 	
 	$('.special.card .image').dimmer({
 		on: 'hover'
-	});
-	
-	$(".product-card").hover(function() {
-		$(this).find(".product-card-info")
-			   .toggleClass("product-card-info-open");
 	});
 	
 	//profile-tab-box
@@ -930,6 +940,9 @@ footer {
 		$("#alarm-tab-box").css("display", "none");
 		$("#profile-tab-box").css("display", "none");
 		$("#activity-tab-box").css("display", "block");
+		
+		
+		getMyList(1);
 	});
 	
 	$("#alarmTabBtn").click(function() {
@@ -1047,7 +1060,6 @@ footer {
 		},"json");
 		
 		return false;
-		
 	};
 	
 	// 프로필 업데이트 창 닫기
@@ -1179,19 +1191,226 @@ footer {
     };
     
  // 자기소개 모달창 줄바꿈
+ var toggle = "s";
     function replaceAll(str, target, replacement) {
 		return str.split(target).join(replacement);
     };
     
+    	$("#dealStepHigh").on("change", function() {
+    		if(this.checked) {
+    			// 팝니다 물품만
+    			console.log("판매1111");
+    			toggle = "s";
+    		}else {
+    			// 삽니다 물품만
+    			console.log("구매2222");
+    			toggle = "b";
+    		}
+    		$(".activity-paging").empty();
+    		getMyList(1);
+    	});
+    	
     // 리스트 가져오기
-    var getMyList = function(obj, callback) {
-    	var target = obj;
-		var mNo = target.mNo;
-		console.log(
+    var getMyList = function(pageNum) {
+    	$(".activity-paging").empty();
+		var mNo = ownerNo;
 		$.getJSON(contextPath + "/product/myList.do", {
-				mNo : mNo
-			}, callback));
+				mNo : mNo,
+				page : pageNum,
+				dealType : toggle
+			}, function(resultObj) {
+				var result = resultObj.ajaxResult;
+				console.dir(result);
+				drawList(result.data);
+				console.log("maxCnt 값 : "+result.data.resultList.maxCnt);
+				mypageNumDraw(result.data.resultList.maxCnt, pageNum);
+			});
 	};
+	
+	// 카드 뿌리기
+	var drawList = function(resultData) {
+		$("#productListBox").empty();
+		$("#productListPagingBox").empty();
+		var lId = resultData.lId;
+		var listData = resultData.resultList.productList;
+		console.dir(listData);
+		console.log(listData.length);
+		if(listData.length > 0) {
+			for(i=0; i<listData.length; i++) {
+				console.dir(listData[i]);
+				var data = listData[i];
+				var proCard = '<div class="product-card">';
+				var labelColor = data.dealStep=='y'?'green':'red';
+				var labelStep = data.dealStep=='y'?'대기':'완료';
+				proCard += '<a class="ui left corner ';
+				proCard += labelColor+' label">';
+		 		proCard += '<span style="float:left; font-size:12px; margin-left: 3px; margin-top: 8px;">';
+		 		proCard += labelStep+'</span>'
+				proCard += '</a>';
+				proCard += '<div class="product-card-img" ';
+				proCard += 'style="background-image:url(\'';
+				proCard += contextPath + '/upload/product/' + data.p_ph_path;
+				proCard += '/thum_' + data.p_ph_name;
+				proCard += '\');"';
+				proCard += '></div>';
+				proCard += '<input type="hidden" name="productNo" value="'+data.pNo+'"/>';
+				proCard += '<div class="product-card-info">';
+				proCard += '<div class="product-card-info-wrap">';
+				proCard += '<div class="info-title">';
+				proCard += '<span>'+data.pRegDate+'</span>';
+				var dealType = data.dealType=='s'?'팝니다':'삽니다';
+				proCard += '<span>'+dealType+'</span>';
+				proCard += '</div>';
+				proCard += '<div class="info-content">';
+				proCard += data.cateKeyword;
+				proCard += '</div>';
+				proCard += '<div class="info-button-box">';
+				if(mNo!=null&&mNo==data.mNo) {
+					
+				proCard +=	'<div class="ui toggle checkbox" style="float:left; margin-left: 5px; margin-top: 10px;">';
+				proCard +=	'<input type="checkbox" name="public" id="dealStepLow">';
+				proCard +=	'<label>완료</label>';
+				proCard +=	'</div>';
+				
+				proCard += '<button class="ui circular mini icon blue button"';
+				proCard += 'title="수정" style="font-size:13px;">';
+				proCard += '<i class="edit icon"></i>';
+				proCard += '</button>';
+				proCard += '<button class="ui circular mini icon red button deleteProduct"';
+				proCard += 'title="삭제" style="font-size:13px;" data-pidx="'+data.pNo+'">';
+				proCard += '<i class="trash icon"></i>';
+				proCard += '</button>';
+				}
+				proCard += '</div>';
+				proCard += '</div>';
+				$(proCard).appendTo("#productListBox");
+			
+				
+			}
+			
+			// 물품 삭제 함수
+			$(".deleteProduct").on("click", function() {
+				event.stopPropagation();
+				var pNo = $(this).attr("data-pidx");
+				$(this).parent().parent().parent().parent()
+					   .trigger("mouseover");
+				$('#deleteModal').modal({
+					closable : false,
+					onDeny : function(){
+						return true;
+					},
+					onApprove : function(){
+						$.getJSON(contextPath + "/product/productDelete.do", {
+							pNo : pNo
+						}, function(resultObj) {
+							moveActivityTap();
+						});
+						return true;
+					}
+				}).modal('show');
+			});
+			
+			// 물품 상세정보 함수
+			$("#productListBox").on("click", ">.product-card", function() {
+				modalOpen($(this).find("input[name=productNo]").val());
+			});
+			
+			$(".product-card").on("mouseover", function() {
+	 			$(this).find(".product-card-info")
+	 				   .addClass("product-card-info-open");
+	 		});
+			
+			$(".product-card").on("mouseleave", function() {
+	 			$(this).find(".product-card-info")
+	 				   .removeClass("product-card-info-open");
+	 		});
+			
+			
+			$("#dealStepLow").on("change", function() {
+				if(this.checked) {
+					// 완료
+					console.log("완료");
+				}else {
+					// 대기
+					console.log("대기");
+				}
+			});
+			
+		}
+				
+		
+	};
+	
+	var mypageNumDraw = function(maxCnt, currPage) {
+		console.log(maxCnt, currPage);
+		var pagingBox = $(".activity-paging");
+		var maxPage = parseInt((maxCnt-1)/6)+1;
+		var currMinPage;
+		var currMaxPage;
+		var i;
+		currPage = parseInt(currPage);
+		if(currPage<=5) {
+			currMinPage = 1;
+			currMaxPage = 10;
+			
+			if(maxPage < currMaxPage) 
+				currMaxPage = maxPage;
+		}else if(currPage<=maxPage-5) {
+			currMinPage = currPage-4;
+			currMaxPage = currPage+5;
+		}else {
+			currMinPage = maxPage-9;
+			currMaxPage = maxPage;
+			if(currMinPage < 1) {
+				currMinPage = 1;
+			}
+		}
+		
+		pagingBox.empty();
+		
+		var pageIdxBox;
+		if(currMinPage>1) {
+			pageIdxBox = "<span class='myPageArrowBox' onclick='getMyList(1)'>";
+			pageIdxBox += "<i class='angle double left icon'></i>";
+			pageIdxBox += "</span>";
+			pagingBox.append(pageIdxBox);
+		}
+		
+		for(i=currMinPage; i<=currMaxPage; i++) {
+			pageIdxBox = "<span class='myPageIdxBox'>";
+			pageIdxBox += i;
+			pageIdxBox += "</span>";
+			pagingBox.append(pageIdxBox);
+		}
+		
+		if(currMaxPage<maxPage) {
+			pageIdxBox = "<span class='myPageArrowBox' onclick='getMyList("+maxPage+")'>";
+			pageIdxBox += "<i class='angle double right icon'></i>";
+			pageIdxBox += "</span>";
+			pagingBox.append(pageIdxBox);
+		}
+		
+		pagingBox.find(".myPageIdxBox").on("click", function() {
+			var pageNum = $(this).text();
+			getMyList(pageNum);
+		}).eq(currPage-currMinPage).addClass("myPageCurrPage").on("click", null);
+	};
+	
+	
+	var moveActivityTap = function() {
+		setTimeout(function() {
+			$("#activityTabBtn").trigger("click");		
+		}, 50);
+	};
+	
+	var currentViewTab = function() {
+		var url = document.location.href;
+		if(url.indexOf("#") != -1) {
+			moveActivityTap();
+		}
+	};
+	
+	currentViewTab();
 </script>
 </body>
 </html>

@@ -26,5 +26,9 @@ public interface ProductDao {
 	int selectProductCommentCount(int pNo);
 	void deleteProductComment(ProductComment comment);
 	List<HashMap<String, Object>> selectAreaProduct(HashMap<String, Object> option);
-	List<HashMap<String, Object>> selectProductMyList(Member mem);
+	List<HashMap<String, Object>> selectProductMyList(HashMap<String, Object> option);
+	int selectProductbyMemeberCount(HashMap<String, Object> option);
+	void deleteProduct(Product pro);
+	void deleteMyListComment(Product pro);
+	void deleteProductPhoto(Product pro);
 }

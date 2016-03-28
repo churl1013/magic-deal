@@ -956,7 +956,7 @@ $("#productSubmitBtn").on("click", function() {
 			}
 		}).done(function(resultObj) {
 			var result = resultObj.ajaxResult;
-			document.location.href = contextPath + "/page/mypage.html?ow="+result.data;
+			document.location.href = contextPath + "/page/mypage.html#?ow="+result.data;
 		});
 		
 	}else {

@@ -210,7 +210,14 @@ public class ProductController {
 		return new AjaxResult("success", null);
 	}
 	
-	
+	@RequestMapping("productDelete.do")
+	public AjaxResult productDelete(Product pro) {
+		int pNo = pro.getpNo();
+		pro.setpNo(pNo);
+		
+		service.deleteProductDelete(pro);
+		return new AjaxResult("success", null);
+	}
 	
 	@RequestMapping("commentList.do")
 	public AjaxResult commentList(Product product, @RequestParam(defaultValue="1")int page, HttpSession session) {
@@ -238,11 +245,24 @@ public class ProductController {
 	}
 	
 	
-	// 나의 활동목록
 	@RequestMapping("myList.do")
-	public AjaxResult getProductMyList(Member mem) {
-		List<HashMap<String, Object>> productList = service.getProductMyList(mem);
-		return new AjaxResult("success", productList);
+	public AjaxResult getProductMyListtList(Member mem, @RequestParam(defaultValue="1")int page, HttpSession session, Product pro) {
+		HashMap<String, Object> option = new HashMap<>();
+		option.put("mNo", mem.getmNo());
+		option.put("start", (page-1)*6);
+		option.put("dealType", pro.getDealType());
+		Member login = (Member)session.getAttribute("userLoginInfo");
+		String lId = "";
+		if(login!=null) {
+			lId = login.getId();
+		}
+		
+		HashMap<String, Object> productResult = service.getProductMyList(option);
+		
+		HashMap<String,Object> result = new HashMap<>();
+		result.put("lId", lId);
+		result.put("resultList", productResult);
+		
+		return new AjaxResult("success", result);
 	}
-
 }

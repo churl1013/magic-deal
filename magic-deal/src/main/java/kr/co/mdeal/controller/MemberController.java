@@ -80,9 +80,10 @@ public class MemberController {
 	@RequestMapping("ownerinfo.do")
 	public AjaxResult ownerInfo(Member member) {
 		member = service.getMemberInfo(member);
-		if(member != null)
+		if(member != null){
+			member.setmInfo(ContentProcess.enterChange(member.getmInfo()));
 			return new AjaxResult("success", member);
-		else
+		}else
 			return new AjaxResult("fail", null);
 	}
 	
