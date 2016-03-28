@@ -8,12 +8,10 @@ var currentCloneBox;
 var cloneBox = $("#viewItemCloneBox");
 var closeCallback;
 var normalClose = function() {
-	$(".viewItemWrap").animate({
-		opacity : 0
-	}, "fast", function() {
-		$(this).css("display", "none");
-		currentCloneBox.remove();
-	});
+	$(".thumbFocus").css("left", "0%");
+	$(".viewItemWrap").css("display", "none");
+	$(this).css("display", "none");
+	currentCloneBox.remove();
 };
 
 var modalOpen = function(proIdx, callback) {
@@ -29,15 +27,15 @@ var modalOpen = function(proIdx, callback) {
 	
 	$(".viewItemWrap").on("click",">.viewItemPaddingBox>.viewCloseBtn", closeCallback);
 	
-	$(".viewItemWrap").css("display","block").animate({
-		opacity : 1
-	}, "fast");
+	$(".viewItemWrap").css("display","block");
 	$("#viewLoadingWrap").css("display", "block");
 	$.getJSON(contextPath + "/product/detail.do", {
 		pNo : detailId
 	}, function(resultObj) {
 		var result = resultObj.ajaxResult;
-		console.dir(result);
+		
+		console.log("데이터는 읽어옴");
+		
 		drawViewModal(result.data);
 	});
 };
@@ -68,6 +66,7 @@ var drawViewModal = function(data) {
 	
 	var thumbBox = header.find(".viewItemPhotoBox>.thumbImgBox")
 	thumbBox.prepend(productImg);
+	
 	var cloneThumb = thumbBox.find(".thumb").on("click", function() {
 		var currIdx = $(".thumb").index(this);
 		var currBox = this;

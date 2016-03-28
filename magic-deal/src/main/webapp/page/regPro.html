@@ -15,258 +15,9 @@
 <title>Magic Deal</title>
 <!-- 기본 임폴트 css 파일 끝-->
 
-<style>
-.scrollWrap {
-	width: 100%;
-	min-height: 100%;
-	height: 100%;
-	padding-top: 70px;
-	overflow: auto;
-	background-color: #fbfbfb;
-}
+<!-- 해당 페이지 CSS 파일 -->
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/regPro.css">
 
-section {
-	width: 100%;
-	min-height: 95%; 
-	padding-top : 50px;
-	padding-bottom: 20px;
-	padding-top: 50px;
-}	
-
-.contentBox {
-	margin: 0px auto;
-	width: 800px;
-	position: relative;
-	box-shadow : 2px 2px 8px #999;
-	border-radius: 4px;
-	background-color: #f9f9f9;
-	padding : 10px;
-}
-
-footer {
-	width: 100%;
-	height: 50px;
-	background: #242628;
-	background: -moz-linear-gradient(top, #242628 0%, #000000 100%);
-	background: -webkit-linear-gradient(top, #242628 0%, #000000 100%);
-	background: linear-gradient(to bottom, #242628 0%, #000000 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#242628',
-		endColorstr='#000000', GradientType=0);
-	line-height: 50px;
-	text-align: center;
-	color: white;
-	font-weight: 300;
-}
-
-.regContentHeader {
-	width : 100%;
-	border-bottom : 1px solid #e8e8e8;
-	text-align : center;
-	padding : 10px 0px 10px 0px;
-	margin-bottom : 10px;
-}
-
-.regSimpleTextHeader {
-	font-size : 16px;
-	font-weight : bold;
-	display : block;
-}
-
-.photoRegBox {
-	width : 100%;
-	text-align : center;
-	border-bottom : 1px solid #e8e8e8;
-}
-
-.photoRegBox>div {
-	width : 180px;
-	height : 180px;
-	display : inline-block;
-	border : 1px solid #d8d8d8;
-	border-radius : 2px;
-	margin : 5px;
-	position : relative;
-	overflow : hidden;
-}
-
-#thumbImgLabel {
-	z-index : 1;
-	position : absolute;
-	left : 5px;
-	top : 5px;
-}
-
-/* 파일 input 변환 트릭 */
-.fileInputHide {
-	position : absolute;
-	width : 100%;
-	height : 100%;
-	top : 0px;
-	left : 0px;
-	opacity : 0;
-}
-
-.fileInputOverlapBox {
-	position : absolute;
-	width : 100%;
-	height : 100%;
-	top : 0px;
-	left : 0px;
-	background-image : url('../img/default/image.png');
-	background-size : 100% 100%;
-}
-/* 파일 input 변환 트릭 끝 */
-
-.row {
-	width : 100%;
-	margin : 3px 0px 3px 0px;
-	border-bottom : 1px solid #e8e8e8;
-	text-align : center;
-	padding : 5px 0px 5px 0px;
-}
-
-.column {
-	display : inline-block;
-	font-size : 13px;
-	vertical-align : middle;
-}
-
-.column.columnTitle {
-	width : 18%;
-	font-weight : bold;
-	text-align : center;
-}
-
-.column.columnContent {
-	width : 80%;
-	text-align : left;
-	padding-left : 10px;
-	font-size : 12px;
-}
-
-.regSelectBox {
-	border-radius : 3px;
-	border : 1px solid #c8c8c8;
-	height : 25px;
-	padding-right : 5px;
-	outline : none;
-}
-
-.regTextArea {
-	width : 100%;
-	height : 100px;
-	border-radius : 5px;
-	border : 1px solid #d8d8d8;
-	background-color : fafafa;
-	outline : none;
-	resize : none;
-	padding : 5px;
-	font-size : 12px;
-}
-
-.dropdownTextInput {
-	display : inline-block;
-	font-size : 0px;
-	line-height : 0px;
-	vertical-align : middle;
-	position : relative;
-}
-
-.filterResult {
-	position : absolute;
-	top : 25px;
-	width : 200px;
-	height : 100px;
-	overflow-y : auto;
-	background-color : #fdfdfd;
-	border : 1px solid #c8c8c8;
-	border-top : none;
-	color : black;
-	font-size : 12px;
-	border-bottom-left-radius : 4px;
-	border-bottom-right-radius : 4px;
-	color : #333;
-	z-index : 1;
-	text-align : center;
-	line-height : 150px;
-	display : none;
-}
-
-.filterResult>div {
-	width : 100%;
-	margin : 1px 0px 1px 0px;
-	padding : 0px 5px 0px 5px;
-	height : 20px;
-	line-height : 20px;
-	border-bottom : 1px solid #d8d8d8;
-	cursor : pointer;
-	text-align : left;
-}
-
-.filterResult>div:hover {
-	background-color : #a8a8a8;
-}
-
-.regTextInput {
-	border-radius : 3px;
-	border : 1px solid #c8c8c8;
-	padding-left : 4px;
-	height : 25px;
-	outline : none;
-	font-size : 12px;
-}
-
-#price {
-	border-radius : 3px;
-	border : 1px solid #c8c8c8;
-	padding-right : 2px;
-	outline : none;
-	text-align : right;
-	font-size : 12px;
-}
-
-.ui.checkbox {
-	font-size : 12px;
-	margin-right : 10px;
-}
-
-.customIconBtn {
-	padding : 2px;
-	outline : none;
-	font-size : 12px;
-	border-radius : 3px;
-	font-weight: bold;
-	margin-right : 5px;
-	color : white;
-	border : none;
-}
-
-#selectLoc {
-	width : 300px;
-	height : 300px;
-	margin-top : 10px;
-	display : none;
-}
-
-#btnFoldWrap {
-	cursor:pointer;
-	position:absolute;
-	right:0px;
-	top:-1px;
-	z-index:1;
-}
-
-#selectAddrwrap {
-	display:none;
-	border:1px solid;
-	width:400px;
-	height:300px;
-	margin:5px 0;
-	position:relative;
-}
-
-</style>
-</script>
 </head>
 <body>
 
@@ -289,16 +40,23 @@ footer {
 </div>
 <nav class="ui vertical menu">
 	<a id="navMainDirectBtn" class="item">
-      <i class="home large orange icon"></i>메인
+      <i class="home yellow large icon"></i>메인
     </a>
     <a id="navProductRegistBtn" class="item">
-      <i class="cubes large orange icon"></i>물품등록
+      <i class="cubes yellow large icon"></i>물품등록
+    </a>
+    <a id="navMapSearchBtn" class="item">
+      <i class="marker yellow large icon"></i>지도검색
+    </a>
+    <a id="navChartSearchBtn" class="item">
+      <i class="area chart yellow large icon"></i>차트검색
     </a>
     <a id="navBoardDirectBtn" class="item">
-      <i class="info circle large orange icon"></i>커뮤니티
+      <i class="info circle large yellow icon"></i>커뮤니티
     </a>
 </nav>
 <!-- 네비게이션 끝 -->
+
 
 
 <!-- 내용부 -->

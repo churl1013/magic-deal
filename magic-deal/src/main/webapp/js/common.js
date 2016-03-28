@@ -212,26 +212,34 @@ var loginBoxDraw = function(u_info) {
 	var loginBox;
 	if(u_info) {
 		// 로그인 상태
-		loginBox = '<div id="chatBtn">';
+		loginBox = '<div id="logUserBtn">';
+		loginBox += '<img id="logUserPhoto" class="ui image avatar" src="'+contextPath+"/upload/profile/log_"+u_info.mPhoto+'">';
+		loginBox += '<span class="smallTextLabel">'+u_info.nickName+'</span></div>';
+
+		loginBox += '<div id="chatBtn" data-content="message" data-variation="inverted">';
 		loginBox += '<i class="large icons">';
 		loginBox += '<i class="comments icon"></i>';
 		loginBox += '<i class="corner add icon"></i>';
 		loginBox += '</i>';
-		loginBox += '<span class="smallTextLabel">채팅</span>';
+		
+		//loginBox += '<span class="smallTextLabel">채팅</span>';
+		
 		loginBox += '</div>';
-		loginBox += '<div id="alarmBtn">';
-		loginBox += '<i class="large icons">';
-		loginBox += '<i class="alarm icon"></i>';
-		loginBox += '<i class="corner add icon"></i>';
-		loginBox += '</i>';
-		loginBox += '<span class="smallTextLabel">알람</span>';
-		loginBox += '</div>';
-		loginBox += '<div id="logUserBtn">';
-		loginBox += '<img id="logUserPhoto" class="ui image avatar" src="'+contextPath+"/upload/profile/log_"+u_info.mPhoto+'">';
-		loginBox += '<span class="smallTextLabel">'+u_info.nickName+'</span></div>';
-		loginBox +=  '<div id="logoutBtn" data-content="로그아웃">';
+		
+		// 알람버튼 제거
+//		loginBox += '<div id="alarmBtn">';
+//		loginBox += '<i class="large icons">';
+//		loginBox += '<i class="alarm icon"></i>';
+//		loginBox += '<i class="corner add icon"></i>';
+//		loginBox += '</i>';
+//		loginBox += '<span class="smallTextLabel">알람</span>';
+//		loginBox += '</div>';
+		
+		
+		loginBox +=  '<div id="logoutBtn" data-content="logout" data-variation="inverted">';
 		loginBox += '<i class="sign out large black icon"></i>';
-		loginBox += '<span class="smallTextLabel">로그아웃</span></div>';
+		//loginBox += '<span class="smallTextLabel">로그아웃</span>';
+		loginBox += '</div>';
 		
 		// 로그인시 바뀌는 버튼 이벤트들 등록해야함.
 	}else {
@@ -243,6 +251,8 @@ var loginBoxDraw = function(u_info) {
 		// 로그아웃시 바뀌는 버튼 이벤트들 등록해야함.
 	}
 	logBoxWrap.html(loginBox);
+	
+	$('#chatBtn, #logoutBtn').popup();
 	
 	if(u_info) {
 		logBoxWrap.find("#logoutBtn").on("click", function() {
@@ -352,6 +362,14 @@ var getParameter = function(url) {
 	
 	$("#navProductRegistBtn").on("click", function() {
 		document.location.href = contextPath+'/page/regPro.html';
+	});
+	
+	$("#navMapSearchBtn").on("click", function() {
+		document.location.href = contextPath+'/page/locSearch.html?hc=1';
+	});
+	
+	$("#navChartSearchBtn").on("click", function() {
+		document.location.href = contextPath+'/page/chartSearch.html?hc=1';
 	});
 	
 	$("#navBoardDirectBtn").on("click", function() {

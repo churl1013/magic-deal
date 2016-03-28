@@ -1,4 +1,177 @@
 @CHARSET "UTF-8";
+
+@media all and (max-width:767px) {
+	.viewItemPaddingBox {
+		width : 310px;
+		padding : 70px 0px 70px 0px;
+		margin : 0px auto;
+		position : relative;
+	}
+	
+	.viewItemHeader {
+		width : 100%;
+		border : 1px solid #c8c8c8;
+		background-color : #fff;
+	}
+	
+	.viewItemPhotoBox {
+		width : 100%;
+		height : 300px!important;
+		float : none!important;
+	}
+
+	.viewItemContent {
+		width : 100%;
+		float : none!important;
+	}
+	
+	.view-inforHeader-share {
+		height : 80px!important;
+	}
+	
+	.view-sharedBtnBox {
+		float : none!important;
+	}
+	
+	.view-infoTitle {
+		display : block!important;
+		width : 100%!important;
+	}
+	
+	.view-infoContent {
+		display : block!important;
+		width : 100%!important;
+	}
+	
+	.itemInfo {
+		width : 100%;
+		padding : 10px;
+	}
+	
+	.view-memberCard {
+		padding : 3px 3px 3px 3px!important;
+		height : 50px!important;
+	}
+	
+	.view-memberCardImg {
+		width : 40px!important;
+		height : 40px!important;
+	}
+	
+	.view-memberCardInfo {
+		margin-left : 3px!important;
+	}
+	
+	.viewPageIdxBox {
+		width : 15px!important;
+		min-height : 15px!important;
+		margin : 0px 1px 0px 1px!important;
+		font-size : 10px!important;
+		line-height : 15px!important;
+	}
+	
+	.view-clickable>.view-annotation {
+		display : none!important;
+	}
+	
+	#view-commentRegBtn {
+		font-size : 11px!important;
+		padding : 3px 3px 3px 3px;
+		width : 40px!important;
+	}
+}
+
+@media all and (min-width:768px) and (max-width:1023px) {
+	.viewItemPaddingBox {
+		width : 768px;
+		padding : 70px 0px 70px 0px;
+		margin : 0px auto;
+		position : relative;
+	}
+
+	.viewItemHeader {
+		width : 100%;
+		height : 500px;
+		border : 1px solid #c8c8c8;
+		background-color : #fff;
+	}
+	
+	.viewItemPhotoBox {
+		width : 290px;
+		height : 100%;
+		float : left;
+	}
+	
+	.viewItemContent {
+		width : 430px;
+		height: 100%;
+		float : left;
+	}
+	
+	.itemInfo {
+		width : 100%;
+		height : 238px;
+		padding : 10px;
+	}
+}	
+
+@media all and (min-width:1024px) {
+	.viewItemPaddingBox {
+		width : 1024px;
+		padding : 70px 0px 70px 0px;
+		margin : 0px auto;
+		position : relative;
+	}
+	
+	.viewItemHeader {
+		width : 100%;
+		height : 500px;
+		border : 1px solid #c8c8c8;
+		background-color : #fff;
+	}
+	
+	.viewItemPhotoBox {
+		width : 400px;
+		height : 100%;
+		float : left;
+	}
+	
+	.viewItemContent {
+		width : 582px;
+		height: 100%;
+		float : left;
+	}
+	
+	.itemInfo {
+		width : 100%;
+		height : 238px;
+		padding : 10px;
+	}
+}
+
+
+#view-commentContent {
+	width : 95%;
+	margin-right : 5px;
+	min-height : 100%;
+	resize: vertical;
+	border-radius : 4px;
+	border : 1px solid #c8c8c8;
+	outline : none;
+	padding : 3px;
+	font-size : 12px;
+	background-color : #fff;
+}
+
+#view-commentRegBtn {
+	border : none;
+	height : 40px;
+	outline : none;
+	margin : 0px!important;
+}
+
+
+
 .viewItemWrap {
 	width : 100%;
 	height : 100%;
@@ -7,7 +180,6 @@
 	position : absolute;
 	left : 0px;
 	top : 0px;
-	opacity : 0;
 	z-index : 777;
 }
 
@@ -15,25 +187,12 @@
 	display : none;
 }
 
-.viewItemPaddingBox {
-	width : 1024px;
-	padding : 70px 0px 70px 0px;
-	margin : 0px auto;
-	position : relative;
-}
 
 .viewItemBox {
 	width : 100%;
 	background-color : rgba(255,255,255,0.9);
 	border-radius : 3px;
 	padding : 20px;
-}
-
-.viewItemHeader {
-	width : 100%;
-	height : 500px;
-	border : 1px solid #c8c8c8;
-	background-color : #fff;
 }
 
 .viewItemReply {
@@ -45,7 +204,7 @@
 
 .viewCloseBtn {
 	position : absolute;
-	right : -35px;
+	right : 0px;
 	top : 35px;
 	width : 28px;
 	height : 28px;
@@ -61,27 +220,17 @@
 	background-color : red;
 }
 
-.viewItemPhotoBox {
-	width : 400px;
-	height : 100%;
-	float : left;
-}
 
-.viewItemContent {
-	width : 582px;
-	height: 100%;
-	float : left;
-}
 
 #currentViewPhoto {
 	width : 100%;
-	height : 410px;
+	height : 80%;
 	border-bottom : 1px solid #d8d8d8;
 }
 
 .thumbImgBox {
 	width : 100%;
-	height : 88px;
+	height : 20%;
 	position : relative;
 	background-color : #f8f8f8;
 }
@@ -102,12 +251,6 @@
 	text-align : center;
 	line-height : 80px;
 	border : 4px solid rgba(0,0,0,0.6);
-}
-
-.itemInfo {
-	width : 100%;
-	height : 238px;
-	padding : 10px;
 }
 
 .itemWriter {
@@ -160,7 +303,7 @@
 
 .view-infoTitle {
 	display : inline-block;
-	width : 100px;
+	width : 20%;
 }
 
 .view-infoTitle::before {
@@ -177,7 +320,7 @@
 
 .view-infoContent {
 	display : inline-block;
-	width : 400px;
+	width : 80%;
 	font-weight : 600;
 }
 
@@ -247,7 +390,6 @@
 .view-memberCardInfo {
 	float : left;
 	margin-left : 10px;
-	width : 450px;
 	height : 100%;
 	padding : 5px;
 	position : relative;
@@ -316,27 +458,17 @@
 
 .view-regReplyForm>table {
 	min-height : 100%;
+	width : 100%;
 }
 
-#view-commentContent {
-	width : 880px;
-	margin-right : 5px;
-	min-height : 100%;
-	resize: vertical;
-	border-radius : 4px;
-	border : 1px solid #c8c8c8;
-	outline : none;
-	padding : 3px;
-	font-size : 12px;
-	background-color : #fff;
+.view-regReplyForm>table>tbody>tr>td:first-child {
+	width : 90%;
 }
 
-#view-commentRegBtn {
-	border : none;
-	height : 40px;
-	outline : none;
-	margin : 0px!important;
+.view-regReplyForm>table>tbody>tr>td:nth-child(2) {
+	width : 10%;
 }
+
 
 .view-regReplyContextBox {
 	padding : 10px;

@@ -37,18 +37,6 @@ header>div:nth-child(1) {
 	cursor : pointer;
 }
 
-@media (max-width:767px) {
-	.ui.search {
-		display : none;
-	}
-	
-	#loginStatusWrap>div {
-		margin-left : 0px;
-		display : inline-block;
-		cursor : pointer;
-	}
-}
-
 .ui.modal.loginModal{
 	width : 300px;
 	margin-left : -150px;

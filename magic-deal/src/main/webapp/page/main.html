@@ -14,271 +14,9 @@
 <title>Magic Deal</title>
 <!-- 기본 임폴트 css 파일 끝-->
 
+<!-- 해당 페이지 css -->
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/main.css">
 
-<style>
-header {
-	background-color : rgba(255,255,255,0.9)!important;
-	color : #222!important;
-	height : 50px!important;
-	line-height : 50px!important;
-}
-
-section {
-	position : relative;
-	left : 0px;
-	width : 100%;
-	min-height : 100%;
-	padding : 0px;
-}
-
-#mainBox {
-	width : 100%;
-	height : 700px;
-	background-size : 100% 100%;
-	position : relative;
-}
-
-#mainBox>.slideDownBtnWrap>#slideDownBtn {
-	cursor : pointer;
-}
-
-#mainBox>.ui.inverted.dimmer {
-	z-index : 5!important;
-}
-
-#mainBox>.mainfontlogo {
-	position : absolute;
-	top : 250px;
-	left : 80px;
-	width : 600px;
-	height : 170px;
-	margin : 0px auto;
-	background-size : 100% 100%;
-	background-image : url("/magic-deal/img/mainfontlogo.png");
-}
-
-.sideSelectOpenBtn {
-	z-index : 7!important;
-	position : absolute;
-	right : 15px;
-	width : 200px;
-	text-align : right;
-	height : 50px;
-	font-family : 'Doppio One';
-	font-size : 16px;
-	cursor : pointer;
-	transition : all 0.5s;
-}
-
-.cateSelectBox {
-	z-index : 8!important;
-	width : 200px;
-	background-color : rgba(255,255,255,0.7);
-	position : absolute;
-	top : 0px;
-	right : -200px;
-	transition : all 0.5s;
-	font-family: 'Noto Sans KR', sans-serif;
-	overflow-x : hidden;
-	overflow-y : auto;
-}
-
-.cateSelectBox>div {
-	width : 100%;
-	height : 40px;
-	line-height : 40px;
-	text-align : left;
-	font-weight : 600;
-	padding-left : 5px;
-	margin : 0px 0px 0px 10px; 
-	border-bottom : 1px solid #dfdfdf;
-	cursor : pointer;
-	trasition : all 0.4s;
-}
-
-.cateSelectBox>div:first-child {
-	border-top : 1px solid #dfdfdf;
-}
-
-#mainBox>.slideDownBtnWrap {
-	position : absolute;
-	bottom : 20px;
-	color : #222;
-	font-size : 18px;
-	font-weight : 600;
-	font-family : 'Doppio One';
-	width : 100%;
-	text-align : center;
-}
-
-#categorieWrap {
-	margin-top : 50px;
-	width : 100%;
-	text-align : center;
-	font-size : 0px;
-	line-height : 0px;
-}
-
-.emptyBox {
-	background-color : #111;
-	color : white;
-	font-size : 24px;
-	font-family : 'Doppio One';
-	text-shadow : 1px 1px 5px #c8c8c8;
-}
-
-.imgChangeBox {
-	text-align : left;
-	transition : all 0.5s;
-	background-size : 100% 100%;
-	background-image : url('../img/default/loading.gif');
-}
-
-.boxCommon {
-	width : 20%;
-	display : inline-block;
-	position : relative;
-	overflow : hidden;
-	z-index : 0;
-}
-
-#boxLabel {
-	position : absolute; 
-	top : 15px; 
-	right : 15px;
-	z-index:1;
-	border : 2px solid #fff;
-	background-color : rgba(0,0,0,0.3);
-	font-size : 14px;
-	font-family: 'Noto Sans KR', sans-serif;
-	font-weight : bold;
-	height : 30px;
-	line-height : 25px;
-	padding : 0px 10px 0px 10px;
-	color : white;
-	border-radius : 3px;
-	text-shadow : 1px 1px 2px #222;
-}
-
-.statistic {
-	cursor : default;
-	display : block!important;
-	margin-bottom : 10px!important;
-}
-
-#navBtn {
-	top : 8px!important;
-	z-index : 200!important;
-}
-
-.ui.vertical.menu {
-	z-index : 9!important;
-	top : 0!important;
-	padding-top : 60px!important;
-	margin-top : 0px!important;
-}
-
-
-.focusAnimation {
-	animation : focusAni 1s ease-in-out 0.5s infinite alternate; 
-}
-
-
-@keyframes focusAni {
-	from {
-		color : #222;
-	}
-	
-	to {
-		color : #ffe21f;
-		text-shadow : 1px 1px 3px black;
-	}
-}
-
-.moveTopBtn {
-	width : 40px;
-	height : 40px;
-	border : 1px solid #c8c8c8;
-	border-radius : 3px;
-	cursor : pointer;
-	position : fixed;
-	right : 15px;
-	bottom : 35px;
-	line-height : 35px;
-	text-align : center;
-	color : #c8c8c8!important;
-	font-size : 24px;
-	display : none;
-}
-
-.moveTopBtn:hover {
-	color : #888!important;
-}
-
-footer {
-	width : 100%;
-	height : 150px;
-	background-color : rgba(250,250,250,0.9);
-	padding : 20px 0px 10px 10px;
-	font-size : 13px;
-	color : #333;
-	text-align : left;
-	font-family : 'Doppio One';
-	position : relative;
-}
-
-.copyRightBox {
-	color : black;
-}
-
-.followBox {
-	margin-top : 30px;
-	height : 55px;
-}
-
-.followBoxHeader {
-	font-size : 15px;
-	color : black;
-}
-
-.view-shareBtn {
-	width : 30px;
-	height : 30px;
-	overflow : hidden;
-	margin-left : 5px;
-	border-radius : 2px;
-	border : none;
-	background-image : url("/magic-deal/img/social_icon/btn_social.png");
-	background-repeat : no-repeat;
-	outline : none;
-	border : 1px solid #e8e8e8;
-	float : left;
-}
-
-.facebook_btn {
-	background-position : -7px -75px;
-}
-
-.twitter_btn {
-	background-position : -49px -75px;
-}
-
-.kakao_btn {
-	background-position : -89px -75px;
-}
-
-.kakaostory_btn {
-	background-position : -130px -75px;
-}
-
-.logoBox {
-	position : absolute;
-	right : 120px;
-	top : 50px;
-	height : 50px;
-}
-
-</style>
 </head>
 <body>
 
@@ -296,13 +34,19 @@ footer {
 </div>
 <nav class="ui vertical menu">
 	<a id="navMainDirectBtn" class="item">
-      <i class="home large orange icon"></i>메인
+      <i class="home yellow large icon"></i>메인
     </a>
     <a id="navProductRegistBtn" class="item">
-      <i class="cubes large orange icon"></i>물품등록
+      <i class="cubes yellow large icon"></i>물품등록
+    </a>
+    <a id="navMapSearchBtn" class="item">
+      <i class="marker yellow large icon"></i>지도검색
+    </a>
+    <a id="navChartSearchBtn" class="item">
+      <i class="area chart yellow large icon"></i>차트검색
     </a>
     <a id="navBoardDirectBtn" class="item">
-      <i class="info circle large orange icon"></i>커뮤니티
+      <i class="info circle large yellow icon"></i>커뮤니티
     </a>
 </nav>
 <!-- 네비게이션 끝 -->
@@ -1010,7 +754,7 @@ footer {
 	var wHeight = $(window).height();
 	
 	$("#mainBox").css("height", wHeight);
-	$("#categorieWrap").css("height", wHeight-50);
+	//$("#categorieWrap").css("height", wHeight-50);
 	$(".boxCommon").css("height", (wHeight-50)/3);
 	$(".emptyBox").css("line-height", (wHeight-50)/3+"px");
 	$(".cateSelectBox").css({

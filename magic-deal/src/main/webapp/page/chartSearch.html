@@ -69,22 +69,15 @@
 	
 	.circleBtnBox {
 		z-index : -1;
-		width : 90px;
-		height : 90px;
 		border-radius : 50%;
 		position : absolute;
-		line-height : 90px;
 		font-size : 12px;
 		color : white;
+		font-weight : 600;
+		font-family: 'Noto Sans KR', sans-serif;
 		text-align : center;
 		cursor : default;
-		background: rgb(69,72,77);
-		background: -moz-radial-gradient(center, ellipse cover,  rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%);
-		background: -webkit-radial-gradient(center, ellipse cover,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);
-		background: radial-gradient(ellipse at center,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=1 );
-		box-shadow : 0px 3px 4px #999;
-		transition : all 0.5s;
+		background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCI+CjxmaWx0ZXIgaWQ9Im4iIHg9IjAiIHk9IjAiPgo8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC43IiBudW1PY3RhdmVzPSIxMCIgc3RpdGNoVGlsZXM9InN0aXRjaCI+PC9mZVR1cmJ1bGVuY2U+CjwvZmlsdGVyPgo8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iIzAwMCI+PC9yZWN0Pgo8cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjQiPjwvcmVjdD4KPC9zdmc+");		transition : all 0.5s;
 		opacity : 0;
 	}
 	
@@ -576,16 +569,23 @@
 </div>
 <nav class="ui vertical menu">
 	<a id="navMainDirectBtn" class="item">
-      <i class="home large orange icon"></i>메인
+      <i class="home yellow large icon"></i>메인
     </a>
     <a id="navProductRegistBtn" class="item">
-      <i class="cubes large orange icon"></i>물품등록
+      <i class="cubes yellow large icon"></i>물품등록
+    </a>
+    <a id="navMapSearchBtn" class="item">
+      <i class="marker yellow large icon"></i>지도검색
+    </a>
+    <a id="navChartSearchBtn" class="item">
+      <i class="area chart yellow large icon"></i>차트검색
     </a>
     <a id="navBoardDirectBtn" class="item">
-      <i class="info circle large orange icon"></i>커뮤니티
+      <i class="info circle large yellow icon"></i>커뮤니티
     </a>
 </nav>
 <!-- 네비게이션 끝 -->
+
 
 <aside>
 	<div class="filterMarginBox"></div>
@@ -657,22 +657,17 @@
 	<div id="chartViewWrap">
 		<svg id="defineField">
 			<defs>
-			    <linearGradient id="grdbar"
-			                    x1="0%" y1="100%"
-			                    x2="100%" y2="100%"
-			                    spreadMethod="pad">
-			      <stop offset="0%"   stop-color="rgb(219, 190, 40)" stop-opacity="0.6"/>
-			      <stop offset="100%" stop-color="rgb(219, 190, 40)" stop-opacity="0.1"/>
-			    </linearGradient>
-			    <linearGradient id="grdback"
-			                    x1="0%" y1="0%"
-			                    x2="0%" y2="100%"
-			                    gradientTransform="rotate(45)"
-			                    spreadMethod="pad">
-			      <stop offset="0%" stop-color="rgb(219, 190, 40)" stop-opacity="0"/>
-			      <stop offset="20%" stop-color="rgb(219, 190, 40)" stop-opacity="0.2"/>
-			      <stop offset="100%"   stop-color="rgb(219, 190, 40)" stop-opacity="0.7"/>
-			    </linearGradient>
+			   <pattern id="barPattern" patternUnits="userSpaceOnUse" width="10" height="10">
+			      <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSI+CjxyZWN0IHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgZmlsbD0iIzI4MjgyOCI+PC9yZWN0Pgo8Y2lyY2xlIGN4PSIzIiBjeT0iNC4zIiByPSIxLjgiIGZpbGw9IiMzOTM5MzkiPjwvY2lyY2xlPgo8Y2lyY2xlIGN4PSIzIiBjeT0iMyIgcj0iMS44IiBmaWxsPSJibGFjayI+PC9jaXJjbGU+CjxjaXJjbGUgY3g9IjEwLjUiIGN5PSIxMi41IiByPSIxLjgiIGZpbGw9IiMzOTM5MzkiPjwvY2lyY2xlPgo8Y2lyY2xlIGN4PSIxMC41IiBjeT0iMTEuMyIgcj0iMS44IiBmaWxsPSJibGFjayI+PC9jaXJjbGU+Cjwvc3ZnPg=="
+			        x="0" y="0" width="10" height="10">
+			      </image>
+			    </pattern>
+			    
+			    <pattern id="barPattern2" patternUnits="userSpaceOnUse" width="10" height="10">
+			      <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxwYXRoIGQ9Ik0tMiAxMEwxMCAtMlpNMTAgNkw2IDEwWk0tMiAyTDIgLTIiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSI0LjUiPjwvcGF0aD4KPC9zdmc+"
+			      			        x="0" y="0" width="10" height="10">
+			      </image>
+			    </pattern>
 			</defs>
 		</svg>
 		<svg id="drawField" xmlns="http://www.w3.org/2000/svg" 
@@ -681,7 +676,7 @@
 		</svg>
 	</div>
 	<div id="extendBtn" class="circleBtnBox">
-		거리 넓히기
+		거리 확장
 	</div>
 </section>
 <footer>
@@ -1046,8 +1041,11 @@
 	$('.ui.checkbox').checkbox();
 	
 	$("#extendBtn").css({
-		"left" : ((cWidth)/2-45)+250+"px",
-		"top" :  ((cHeight)/2-45)+70+"px"
+		"width" : (cHeight/2-40)/50*12+"px",
+		"height" : (cHeight/2-40)/50*12+"px",
+		"line-height" : (cHeight/2-40)/50*12+"px",
+		"left" : ((cWidth)/2-(cHeight/2-40)/50*12/2)+250+"px",
+		"top" :  ((cHeight)/2-(cHeight/2-40)/50*12/2)+70+"px"
 	});
 	
 	$("#chartViewWrap").on("contextmenu", function(event) {

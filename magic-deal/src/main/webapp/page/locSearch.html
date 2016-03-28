@@ -15,380 +15,8 @@
 <title>Magic Deal</title>
 <!-- 기본 임폴트 css 파일 끝-->
 
-<style>
-section {
-	position : relative;
-	left : 0px;
-	width : 100%;
-	height : 100%;
-	min-width : 1024px;
-	padding-top : 70px;
-	overflow-y : hidden;
-}
-
-.locContentWrap {
-	position : relative;
-	width : 100%;
-	min-width : 1024px;
-	background-color : #f8f8f8;
-}
-
-.locMapWrap {
-	float : left;
-	height : 100%;
-	position : relative;
-	min-width : 400px;
-}
-
-.locListWrap {
-	width : 400px;
-	height : 100%;
-	border-left : 1px solid #c7c7c7;
-	background-color : #fbfbfb;
-	position : absolute;
-	top : 0px;
-	right : 0px;
-	z-index : 99;
-}
-
-.loclistOpen {
-	width : 100%;
-	overflow-y : auto;
-}
-
-#mapContainer {
-	width : 100%;
-	height : 100%;
-}
-
-#selectNumberViewerWrap {
-	width : 100%;
-	height : 50px;
-	background-color : #a333c8;
-	text-align : center;
-	font-size : 14px;
-	line-height : 50px;
-	color : white;
-	font-weight : bold;
-}
-
-#selectNumberViewer::before {
-	content : "검색결과 ";
-}
-
-#selectNumberViewer::after {
-	content : "개";
-}
-
-#productListBox {
-	width : 100%;
-	padding : 0px 10px 0px 10px;
-	overflow-x : hidden;
-	overflow-y : scroll;
-}
-
-#productListPagingBox {
-	width : 100%;
-	height : 30px;
-	background-color : #fbfbfb;
-	line-height : 30px;
-	text-align : center;
-}
-
-.productCard {
-	width : 99%;
-	height : 150px;
-	border : 1px solid #c8c8c8;
-	padding : 5px;
-	margin-top : 5px;
-	position : relative;
-	cursor : pointer;
-	background-color : #fff;
-}
-
-.productCard>.proPhoto {
-	width : 130px;
-	height : 140px;
-	float : left;
-	margin-right : 5px;
-	background-image : url('/magic-deal/img/default/image.png');
-	background-size : 100% 100%;
-}
-
-.productCard>.proInfo {
-	width : 200px;
-	height : 140px;
-	float : left;
-	z-index : 1;
-}
-
-.productCard>.proInfo>span {
-	width : 100%;
-	height : 35px;
-	line-height : 35px;
-	display : block;
-	font-size : 14px;
-	text-overflow : ellipsis;
-	white-space : nowrap;
-	overflow : hidden;
-}
-
-.productCard>.proInfo>span:first-child {
-	font-weight : bold;
-}
-
-.productCard>.proInfo>span:nth-child(3) {
-	color : #888;
-}
-
-#productListPagingBox>.pageBtn {
-	cursor : pointer;
-	text-decoration : none;
-	color : black;
-	display : inline-block;
-	width : 28.5px;
-	font-weight : 600;
-}
-
-#productListPagingBox>.pageBtn.currPage {
-	font-weight : 800;
-	cursor : default;
-	background-color : #a333c8;
-	color : white;
-}
-
-#listLoadingWrap {
-	width : 100%;
-	height : 100%;
-	position : absolute;
-	background-color : rgba(26,26,26,0.7);
-	top : 0px;
-	left : 0px;
-	z-index : 2;
-}
-
-.locFilterWrap {
-	width : 100%;
-	min-width : 1024px;
-	height : 50px;
-	background-color : #f9f9f9;
-	border-bottom : 1px solid #c8c8c8;
-	padding-left : 60px;
-	position : relative;
-}
-
-#dealTypeFilter {
-	width : 130px;
-	line-height : 50px;
-	padding : 0px;
-	margin : 0px;
-	border : none!important;
-	border-bottom:1px solid #c8c8c8!important;
-	border-right:1px solid #e8e8e8!important;
-	border-radius : 0px!important;
-	box-shadow : none;
-	padding-left : 10px!important;
-}
-
-#highCateFilter {
-	width : 200px;
-	line-height : 50px;
-	padding : 0px;
-	margin : 0px;
-	border : none!important;
-	border-bottom:1px solid #c8c8c8!important;
-	border-right:1px solid #e8e8e8!important;
-	border-radius : 0px!important;
-	box-shadow : none;
-}
-
-#lowCateFilter {
-	width : 150px;
-	line-height : 50px;
-	padding : 0px;
-	margin : 0px;
-	border : none!important;
-	border-bottom:1px solid #c8c8c8!important;
-	border-right:1px solid #e8e8e8!important;
-	border-radius : 0px!important;
-	box-shadow : none;
-	padding-left : 10px!important;
-}
-
-.dropdownDiscard {
-	height : 50px;
-	float : left;
-}
-
-.dropdownDiscard>.menu {
-	margin-top : 0px!important;
-	z-index : 100!important;
-}
-
-
-#keywordFilter {
-	width : 120px;
-}
-
-.customFilter {
-	display : inline-block;
-	float : left;
-	width : 120px;
-	height : 50px;
-	padding-left : 10px;
-	border-right : 1px solid #e8e8e8;
-	line-height : 50px;
-	border-bottom:1px solid #c8c8c8;
-}
-
-.customFilter>.text {
-	text-align : center;
-	cursor : pointer;
-	color : rgba(0,0,0,0.6);
-}
-
-.customFilter>.text:hover {
-	color : rgba(0,0,0,0.9);
-}
-
-#customFilterBox {
-	position : absolute;
-	width : 780px;
-	height : 300px;
-	left : 0px;
-	top : 50px;
-	z-index : 100;
-	display : none;
-}
-
-#viewChange {
-	width : 200px;
-	height : 50px;
-	line-height : 50px;
-	float : right;
-	padding-left : 15px;
-	padding-right : 15px;
-	font-weight : 600;
-	font-size : 13px;
-	color : rgba(0,0,0,0.6);
-}
-
-#viewChange>span:first-child {
-	margin-right : 10px;
-	cursor : pointer;
-}
-
-#viewChange>span:nth-child(2) {
-	margin-left : 10px;
-	cursor : pointer;
-}
-
-#viewChange>span:hover {
-	color : rgba(0,0,0,0.9);
-}
-
-.customFilterBoxInnerWrap {
-	width : 100%;
-	position : relative;
-	left : 0px;
-	top : 0px;
-}
-
-.customFilterBoxInnerWrap>div {
-	width : 100%;
-	position : absolute;
-	left : 0px;
-	top : 0px;
-	padding : 20px;
-	padding-top : 30px;
-	border-right : 1px solid #c8c8c8;
-	border-bottom : 1px solid #c8c8c8;
-	background-color : #eee;
-	border-bottom-radius : 5px;
-}
-
-.customFilterBoxInnerWrap>.closeBtn {
-	position : absolute;
-	right : 5px;
-	top : 5px;
-	z-index : 3;
-	width : 20px;
-	height : 20px;
-	display : block;
-	cursor : pointer;
-}
-
-#keywordFilterBox,#productFilterBox>.content {
-	position : relative;
-	text-align : right;
-}
-
-.content>.qualityFilter {
-	width : 100%;
-	height : 70px;
-	text-align : right;
-	margin-bottom : 5px;
-	border-bottom : 1px solid #d8d8d8;
-}
-
-.content>.priceFilter {
-	width : 100%;
-	height : 70px;
-	text-align : right;
-	border-bottom : 1px solid #d8d8d8;
-}
-
-.content>.qualityFilter>.header {
-	font-weight : 600;
-	cursor : default;
-	height : 20px;
-}
-
-.content>.priceFilter>.header {
-	font-weight : 600;
-	cursor : default;
-	height : 20px;
-}
-
-.content>.qualityFilter>.filterContent {
-	height : 50px;
-	width : 100%;
-	line-height : 50px;
-}
-
-.content>.qualityFilter>.filterContent>.ui.checkbox {
-	margin-right : 10px;
-	font-size : 12px;
-}
-
-.content>.priceFilter>.filterContent {
-	height : 50px;
-	width : 100%;
-	line-height : 50px;
-}
-
-.proHiddenInfo {
-	width : 250px;
-	height : 80px;
-	display : none;
-	position : absolute;
-	bottom : 2px;
-	right : 2px;
-	text-align : right;
-	padding-right : 5px;
-	font-size : 13px;
-	color : #333;
-}
-
-.proHiddenInfo>span {
-	display : block;
-}
-
-.proInfoKeyword {
-	font-family: 'Noto Sans KR', sans-serif;
-}
-
-</style>
+<!-- 해당 페이지 css -->
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/locSearch.css">
 </head>
 <body>
 <!-- 헤더부 -->
@@ -408,16 +36,23 @@ section {
 </div>
 <nav class="ui vertical menu">
 	<a id="navMainDirectBtn" class="item">
-      <i class="home large orange icon"></i>메인
+      <i class="home yellow large icon"></i>메인
     </a>
     <a id="navProductRegistBtn" class="item">
-      <i class="cubes large orange icon"></i>물품등록
+      <i class="cubes yellow large icon"></i>물품등록
+    </a>
+    <a id="navMapSearchBtn" class="item">
+      <i class="marker yellow large icon"></i>지도검색
+    </a>
+    <a id="navChartSearchBtn" class="item">
+      <i class="area chart yellow large icon"></i>차트검색
     </a>
     <a id="navBoardDirectBtn" class="item">
-      <i class="info circle large orange icon"></i>커뮤니티
+      <i class="info circle large yellow icon"></i>커뮤니티
     </a>
 </nav>
 <!-- 네비게이션 끝 -->
+
 
 <!-- 내용부 -->
 <section>
@@ -955,7 +590,7 @@ section {
 	// 컨텐츠가가 들어갈 div의 크기 셋팅
 	$(".locContentWrap").css("height", sHeight-70-50);
 	$(".locMapWrap").css("width", sWidth-400);
-	$("#productListBox").css("height", sHeight-70-80-50);
+	$("#productListBox").css("height", parseInt($(".locListWrap").css("height"))-80);
 	$(".sk-folding-cube").css("margin-top", (sHeight-70-50)/2);
 	
 	$(".ui.checkbox").checkbox();
@@ -966,7 +601,7 @@ section {
 			$(".locMapWrap").css("width", sWidth-400);
 		}
 		$(".locContentWrap").css("height", sHeight-70-50);
-		$("#productListBox").css("height", sHeight-70-80-50);
+		$("#productListBox").css("height", parseInt($(".locListWrap").css("height"))-80);
 		$(".sk-folding-cube").css("margin-top", (sHeight-70-50)/2);
 	});
 </script>
@@ -984,10 +619,8 @@ section {
 <script src="/magic-deal/js/locSearch.js"></script>
 <script src="/magic-deal/js/cate1.js"></script>
 
-
 <script>
 	var pageParam;
-		
 	var FilterObj = function() {
 		this.highCate = 0;
 		this.dealType = 0;
