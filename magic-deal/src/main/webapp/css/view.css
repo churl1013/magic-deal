@@ -170,13 +170,13 @@
 	width : 99%;
 	margin-right : 5px;
 	min-height : 100%;
-	resize: vertical;
 	border-radius : 4px;
 	border : 1px solid #c8c8c8;
 	outline : none;
 	padding : 3px;
 	font-size : 12px;
 	background-color : #fff;
+	resize : none;
 }
 
 #view-commentRegBtn {

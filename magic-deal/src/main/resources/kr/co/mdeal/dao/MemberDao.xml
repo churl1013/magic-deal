@@ -19,6 +19,11 @@
 		<result column="m_lon" property="mLon" />
 	</resultMap>
 	
+	<resultMap type="likecheck" id="likeResultMap">
+		<result column="m_no" property="mNo" />
+		<result column="like_m_no" property="likeMno" />
+	</resultMap>
+	
 	<select id="selectIdCount" resultType="int" parameterType="string">
 		select count(*) 
 		  from member
@@ -69,6 +74,26 @@
 		 where id = #{id}
 	</update>
 	
+	<insert id="insertMemberCount" parameterType="likecheck">
+		insert into like_check
+		       (m_no, like_m_no)
+		values (#{mNo}, #{likeMno})
+	</insert>
 	
+	<update id="updateCount" parameterType="likecheck">
+		update member
+		   set like_cnt = like_cnt +1
+		 where m_no = #{likeMno}
+	</update>
+	
+	<insert id="deleteMemberCount" parameterType="likecheck">
+		delete from like_check where m_no = #{mNo} and like_m_no = #{likeMno}
+	</insert>
+	
+	<update id="deleteCount" parameterType="likecheck">
+		update member
+		   set like_cnt = like_cnt -1
+		 where m_no = #{likeMno}
+	</update>
 	
 </mapper>

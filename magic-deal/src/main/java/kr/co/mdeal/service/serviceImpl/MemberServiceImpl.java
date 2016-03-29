@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.mdeal.dao.MemberDao;
+import kr.co.mdeal.domain.LikeCheck;
 import kr.co.mdeal.domain.Member;
 import kr.co.mdeal.service.MemberService;
 
@@ -60,5 +61,17 @@ public class MemberServiceImpl implements MemberService{
 	public void updateMemberProfile(Member member) {
 		// TODO Auto-generated method stub
 		dao.updateMemberProfile(member);
+	}
+
+	@Override
+	public void insertMemberCount(LikeCheck lc) {
+		dao.insertMemberCount(lc);
+		dao.updateCount(lc);
+	}
+
+	@Override
+	public void deleteMemberCount(LikeCheck lc) {
+		dao.deleteMemberCount(lc);
+		dao.deleteCount(lc);
 	}
 }

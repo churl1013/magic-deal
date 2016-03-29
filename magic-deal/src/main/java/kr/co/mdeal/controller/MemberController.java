@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.mdeal.domain.AjaxResult;
+import kr.co.mdeal.domain.LikeCheck;
 import kr.co.mdeal.domain.Member;
 import kr.co.mdeal.service.MemberService;
 import kr.co.mdeal.util.ContentProcess;
@@ -87,6 +88,29 @@ public class MemberController {
 			return new AjaxResult("fail", null);
 	}
 	
+	// 좋아요 등록
+		@RequestMapping(value="auth/likeRegist.do")
+		public AjaxResult likeRegist(LikeCheck like, HttpServletRequest req) {
+			LikeCheck lc = new LikeCheck();
+			int mno = Integer.parseInt(req.getParameter("mNo"));
+			int likemno = Integer.parseInt(req.getParameter("likeMno"));
+			lc.setLikeMno(likemno);
+			lc.setmNo(mno);
+			service.insertMemberCount(lc);
+			return new AjaxResult("success", null);
+		}
+		
+	// 좋아요 취소
+	@RequestMapping(value="auth/unlikeRegist.do")
+	public AjaxResult unlikeRegist(LikeCheck like, HttpServletRequest req) {
+		LikeCheck lc = new LikeCheck();
+		int mno = Integer.parseInt(req.getParameter("mNo"));
+		int likemno = Integer.parseInt(req.getParameter("likeMno"));
+		lc.setLikeMno(likemno);
+		lc.setmNo(mno);
+		service.deleteMemberCount(lc);
+		return new AjaxResult("success", null);
+	}
 	
 	// 자기소개 수정
 	@RequestMapping(value="auth/infoupdate.do", method=RequestMethod.POST)

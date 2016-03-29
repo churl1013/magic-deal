@@ -15,6 +15,24 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+app.get("/magic-deal/checkLike", function(req, res) {
+
+	  var chkMno = req.param("chkMno");
+	  var chkLikeMno = req.param("chkLikeMno");
+	  var callback = req.param("callback");
+	  pool.getConnection(function(err, connection) {
+	    connection.query("select count(*) cnt from like_check where m_no='"+chkMno+"' and like_m_no='"+chkLikeMno+"'", function(err, rows, fields) {
+	      if(err) throw err;
+	      if(rows[0].cnt == 1) {
+	        res.send(callback+"({'result' : 'fail'})");
+	      }else {
+	        res.send(callback+"({'result' : 'ok'})");
+	      }
+	      connection.release();
+	    });
+	  });
+	});
+
 app.get("/magic-deal/checkId", function(req, res) {
 
   var chkId = req.param("chkId");

@@ -1,5 +1,6 @@
 package kr.co.mdeal.service;
 
+import kr.co.mdeal.domain.LikeCheck;
 import kr.co.mdeal.domain.Member;
 
 public interface MemberService {
@@ -11,4 +12,6 @@ public interface MemberService {
 	void updateProfilePhoto(Member member);
 	void updateMemberInfo(Member member);
 	void updateMemberProfile(Member member);
+	void insertMemberCount(LikeCheck lc);
+	void deleteMemberCount(LikeCheck lc);
 }
