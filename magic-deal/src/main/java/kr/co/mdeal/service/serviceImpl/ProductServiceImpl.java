@@ -136,4 +136,29 @@ public class ProductServiceImpl implements ProductService{
 		dao.deleteMyListComment(pro);
 		dao.deleteProduct(pro);
 	}
+	
+	@Override
+	public void updateProduct(Product product, Categorie cate, ArrayList<ProductPhoto> photoList, ArrayList<ProductPhoto> newPhotoList) {
+		// TODO Auto-generated method stub
+		// 카테고리 번호가 존재하는지 확인
+		// 카테고리 번호가 없는 카테고리면 카테고리 먼저 입력
+		// 카테고리 번호가 이미 존재한다면 바로 상품 입력
+		// 상품 입력 후 파일 입력
+
+		if(cate.getpCategorieNo() == -1) {
+			dao.insertCategorie(cate);
+		}
+		
+		product.setpCategorieNo(cate.getpCategorieNo());
+		dao.updateProduct(product);
+		
+		for(ProductPhoto pp : photoList) {
+			dao.updateProductPhoto(pp);
+		}
+		
+		for(ProductPhoto np : newPhotoList) {
+			np.setpNo(product.getpNo());
+			dao.appendProductPhoto(np);
+		}
+	}
 }

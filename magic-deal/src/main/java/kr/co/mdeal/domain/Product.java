@@ -1,7 +1,5 @@
 package kr.co.mdeal.domain;
 
-import java.util.ArrayList;
-
 public class Product {
 	private int pNo;
 	private int mNo;
@@ -16,23 +14,9 @@ public class Product {
 	private String pAddr;
 	private double pLat;
 	private double pLon;
-	private ArrayList<ProductPhoto> thumbnailPhoto;
-	private Categorie categorie;
 	
 
-	public Categorie getCategorie() {
-		return categorie;
-	}
-	public void setCategorie(Categorie categorie) {
-		this.categorie = categorie;
-	}
 	
-	public ArrayList<ProductPhoto> getThumbnailPhoto() {
-		return thumbnailPhoto;
-	}
-	public void setThumbnailPhoto(ArrayList<ProductPhoto> thumbnailPhoto) {
-		this.thumbnailPhoto = thumbnailPhoto;
-	}
 	public int getpNo() {
 		return pNo;
 	}

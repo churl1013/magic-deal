@@ -17,7 +17,7 @@ var ImageChange = function(ele){
 	var width = parseInt($(".imgChangeBox").css("width"));
 	var height = parseInt($(".imgChangeBox").css("height"));
     $("<div id='view_port'></div>").css({
-      "width" : width*2,
+      "width" : width,
       "height" : "100%",
       "position" : "absolute",
     }).appendTo(boxs);
@@ -38,23 +38,30 @@ var ImageChange = function(ele){
 	    		
 	    		
 	    		if(iWidth > iHeight) {
-	    			var translateVal = width / iWidth;
-	    			var translateHeight = iHeight * translateVal;
-	    			var margin = Math.floor((height-translateHeight)/2);
-	    			
-	    			imgBox.css({
-	    				width : width,
-	    				height : "auto",
-	    				"margin-top" : margin
-	    			});
-	    		}else {
 	    			var translateVal = height / iHeight;
 	    			var translateWidth = iWidth * translateVal;
 	    			var margin = Math.floor((width-translateWidth)/2);
+	    			if(margin>0) {
+	    				margin = 0;
+	    				translateWidth = width;
+	    			}
 	    			imgBox.css({
-	    				width : "auto",
+	    				width : translateWidth,
 	    				height : height,
 	    				"margin-left" : margin
+	    			});
+	    		}else {
+	    			var translateVal = width / iWidth;
+	    			var translateHeight = iHeight * translateVal;
+	    			var margin = Math.floor((height-translateHeight)/2);
+	    			if(margin>0) {
+	    				margin = 0;
+	    				translateHeight = height;
+	    			}
+	    			imgBox.css({
+	    				width : width,
+	    				height : translateHeight,
+	    				"margin-top" : margin
 	    			});
 	    		}
 	    		
@@ -74,7 +81,7 @@ var ImageChange = function(ele){
 	var height = parseInt($(".imgChangeBox").css("height"));
     var view_port = $(boxs[idx]).find("#view_port");
     var new_view_port = $("<div id='view_port'></div>").css({
-        "width" : width*2,
+        "width" : width,
         "height" : "100%",
         "position" : "absolute",
         "opacity" : "0"
@@ -90,23 +97,30 @@ var ImageChange = function(ele){
     		
     		
     		if(iWidth > iHeight) {
-    			var translateVal = width / iWidth;
-    			var translateHeight = iHeight * translateVal;
-    			var margin = Math.floor((height-translateHeight)/2);
-    			
-    			imgBox.css({
-    				width : width,
-    				height : "auto",
-    				"margin-top" : margin
-    			});
-    		}else {
     			var translateVal = height / iHeight;
     			var translateWidth = iWidth * translateVal;
     			var margin = Math.floor((width-translateWidth)/2);
+    			if(margin>0) {
+    				margin = 0;
+    				translateWidth = width;
+    			}
     			imgBox.css({
-    				width : "auto",
+    				width : translateWidth,
     				height : height,
     				"margin-left" : margin
+    			});
+    		}else {
+    			var translateVal = width / iWidth;
+    			var translateHeight = iHeight * translateVal;
+    			var margin = Math.floor((height-translateHeight)/2);
+    			if(margin>0) {
+    				margin = 0;
+    				translateHeight = height;
+    			}
+    			imgBox.css({
+    				width : width,
+    				height : translateHeight,
+    				"margin-top" : margin
     			});
     		}
     		

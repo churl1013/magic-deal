@@ -21,7 +21,6 @@ var modalOpen = function(proIdx, callback) {
 	}else {
 		closeCallback = normalClose;
 	}
-	
 	$(".viewItemWrap").on("click",">.viewItemPaddingBox>.viewCloseBtn", closeCallback);
 	
 	$(".viewItemWrap").css("display","block");
@@ -210,12 +209,25 @@ var drawViewModal = function(data) {
 
 	// 공유버튼 이벤트 걸기
 	$(".facebook_btn").on("click", function() {
-		var popOption = "width=700, height=500, resizable=no, scrollbars=no, status=no;";
-		
-		window.open( 
-			"http://www.facebook.com/sharer/sharer.php?u="
-		   +"http://192.168.0.11:8008/magic-deal/page/detail.html?n="+data.pNo, "", popOption);
+		sendSns("facebook", "http://119.196.49.48:8008/magic-deal/product/share.do?n="+data.pNo);
 	});
+
+	$(".twitter_btn").on("click", function() {
+		sendSns("twitter", "http://119.196.49.48:8008/magic-deal/product/share.do?n="+data.pNo, "MAGIC DEAL");
+	});
+	
+	$(".kakao_btn").on("click", function() {
+		sendSns("kakaotalk", "http://119.196.49.48:8008/magic-deal/product/share.do?n="+data.pNo, "MAGIC DEAL");
+	});
+	
+	$(".kakaostory_btn").on("click", function() {
+		sendSns("kakaostory", "http://119.196.49.48:8008/magic-deal/product/share.do?n="+data.pNo, "MAGIC DEAL");
+	});
+	
+	$(".url_btn").on("click", function() {
+		window.open("http://119.196.49.48:8008/magic-deal/product/share.do?n="+data.pNo);
+	});
+	
 	$("#viewLoadingWrap").css("display", "none");
 };
 
@@ -350,4 +362,79 @@ var pageNumDraw = function(maxCnt, currPage) {
 	}).eq(currPage-currMinPage).addClass("viewCurrPage").on("click", null);
 };
 
+
+var sendSns = function (sns, url, txt) {
+    var o;
+    var _url = encodeURIComponent(url);
+    var _txt = encodeURIComponent(txt);
+    var _br  = encodeURIComponent('\r\n');
+ 
+    switch(sns)
+    {
+        case 'facebook':
+            o = {
+                method:'popup',
+                url:'http://www.facebook.com/sharer/sharer.php?u=' + _url
+            };
+            break;
+ 
+        case 'twitter':
+            o = {
+                method:'popup',
+                url:'http://twitter.com/intent/tweet?text=' + _txt + '&url=' + _url
+            };
+            break;
+
+        case 'kakaotalk':
+            o = {
+                method:'web2app',
+                param:'sendurl?msg=' + _txt + '&url=' + _url + '&type=link&apiver=2.0.1&appver=2.0&appid=http://119.196.49.48:8008/magic-deal/page/main.html&appname=' + encodeURIComponent('MAGIC DEAL'),
+                a_store:'itms-apps://itunes.apple.com/app/id362057947?mt=8',
+                g_store:'market://details?id=com.kakao.talk',
+                a_proto:'kakaolink://',
+                g_proto:'scheme=kakaolink;package=com.kakao.talk'
+            };
+            break;
+ 
+        case 'kakaostory':
+            o = {
+                method:'web2app',
+                param:'posting?post=' + _txt + _br + _url + '&apiver=1.0&appver=2.0&appid=http://119.196.49.48:8008/magic-deal/page/main.html&appname=' + encodeURIComponent('MAGIC DEAL'),
+                a_store:'itms-apps://itunes.apple.com/app/id486244601?mt=8',
+                g_store:'market://details?id=com.kakao.story',
+                a_proto:'storylink://',
+                g_proto:'scheme=kakaolink;package=com.kakao.story'
+            };
+            break;
+
+        default:
+            alert('지원하지 않는 SNS입니다.');
+            return false;
+    }
+ 
+    switch(o.method)
+    {
+        case 'popup':
+            window.open(o.url);
+            break;
+ 
+        case 'web2app':
+            if(navigator.userAgent.match(/android/i))
+            {
+                // Android
+                setTimeout(function(){ location.href = 'intent://' + o.param + '#Intent;' + o.g_proto + ';end'}, 100);
+            }
+            else if(navigator.userAgent.match(/(iphone)|(ipod)|(ipad)/i))
+            {
+                // Apple
+                setTimeout(function(){ location.href = o.a_store; }, 200);          
+                setTimeout(function(){ location.href = o.a_proto + o.param }, 100);
+            }
+            else
+            {
+                alert('이 기능은 모바일에서만 사용할 수 있습니다.');
+            }
+            break;
+    }
+}
 

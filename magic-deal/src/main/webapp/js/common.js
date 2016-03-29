@@ -650,3 +650,15 @@ var getParameter = function(url) {
 		}
 		return value;
 	};
+	
+	var alertLoginCheck = function(msg, btn) {
+		$("#alertMsg").html(msg);
+		$("#alertBtn").html(btn);
+		$(".ui.modal.alertModal").modal( {
+			allowMultiple : true,
+			closable : false,
+			onApprove : function() {
+				document.location.href="main.html";
+			}
+		}).modal('show');
+	};
