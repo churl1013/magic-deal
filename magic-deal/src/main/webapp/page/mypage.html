@@ -1410,7 +1410,7 @@ footer {
 				proCard +=	'</div>';
 				
 				proCard += '<button class="ui circular mini icon blue button updateProduct"';
-				proCard += 'title="수정" style="font-size:13px;">';
+				proCard += 'title="수정" style="font-size:13px;" data-pidx="'+data.pNo+'">';
 				proCard += '<i class="edit icon"></i>';
 				proCard += '</button>';
 				proCard += '<button class="ui circular mini icon red button deleteProduct"';
@@ -1445,6 +1445,13 @@ footer {
 						return true;
 					}
 				}).modal('show');
+			});
+			
+			// 물품 수정 함수
+			$(".updateProduct").on("click", function() {
+				event.stopPropagation();
+				var pNo = $(this).attr("data-pidx");
+				document.location.href = contextPath + "/page/update.html#?n="+pNo;
 			});
 			
 			// 물품 상세정보 함수
