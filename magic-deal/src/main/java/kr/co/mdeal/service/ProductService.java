@@ -13,6 +13,7 @@ import kr.co.mdeal.domain.ProductPhoto;
 public interface ProductService {
 	List<Categorie> getCategorieKeyword(Categorie cate);
 	void registProduct(Product product, Categorie cate, ArrayList<ProductPhoto> photoList);
+	void updateProduct(Product product, Categorie cate, ArrayList<ProductPhoto> photoList, ArrayList<ProductPhoto> newPhotoList);
 	List<HashMap<String, Integer>> getCategorieVolume();
 	List<HashMap<String, String>> getCategoriesPhoto();
 	ProductPhoto getCategoriePhoto(Categorie cate);

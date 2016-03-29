@@ -206,6 +206,7 @@
 		overflow-x : hidden;
 		background-color : #e8e8e8;
 		overflow-y : scroll;
+		text-align : center;
 	}
 	
 	.chat-CardBox {
@@ -215,6 +216,7 @@
 		border : 1px solid #b8b8b8;
 		margin : 2px 0px 2px 0px;
 		cursor : pointer;
+		text-align : left;
 	}
 	
 	.chat-memPhoto {

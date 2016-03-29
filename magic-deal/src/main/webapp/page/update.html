@@ -16,29 +16,8 @@
 <!-- 기본 임폴트 css 파일 끝-->
 
 <!-- 해당 페이지 CSS 파일 -->
-<link rel="stylesheet" type="text/css" href="/magic-deal/css/regPro.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/update.css">
 
-
-<script type="text/javascript" src="/magic-deal/lib/jquery/jquery.js"></script>
-<script src="/magic-deal/semantic/semantic.min.js"></script>
-<script src="/magic-deal/js/common.js"></script>
-<script src="/magic-deal/js/socket.io.js"></script>
-<script src="/magic-deal/js/chat.js"></script> 
-<script>
-var loginCheck = function() {
-	console.log("loginCheck!!");
-	$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
-		var result = resultObj.ajaxResult;
-		loginBoxDraw(result.data);
-		if(result.data!=null) {
-			chatConnect(result.data);
-		}else {
-			alertLoginCheck("로그인 후 이용해주세요!", "확인");
-		}
-	});
-};
-loginCheck();
-</script>
 </head>
 <body>
 
@@ -91,7 +70,7 @@ loginCheck();
 					<i class="yellow cubes icon"></i>
 					<i class="corner wizard icon"></i>
 				</i>
-				 <span class="regSimpleTextHeader">구매 / 판매 등록</span>
+				 <span class="regSimpleTextHeader">물품 수정</span>
 			</div>
 			<div id="productRegistWrap">
 				<div class="photoRegBox">
@@ -248,7 +227,7 @@ loginCheck();
 					<div class="row">
 						<button id="productSubmitBtn" class="customIconBtn" style="background-color : #f2711c;">
 							<i class="cube icon"></i>
-							등록하기
+							수정하기
 						</button>
 					</div>
 				</div>
@@ -332,10 +311,14 @@ loginCheck();
 
 
 <!-- 기본 임폴트 js -->
-
+<script type="text/javascript" src="/magic-deal/lib/jquery/jquery.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
 <script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
+<script src="/magic-deal/js/common.js"></script>
+<script src="/magic-deal/js/socket.io.js"></script>
+<script src="/magic-deal/js/chat.js"></script> 
 <script src="/magic-deal/js/cate.js"></script>
 <!-- 기본 임폴트 js -->
 
@@ -383,9 +366,94 @@ daum.maps.event.addListener(map, 'click', function(mouseEvent) {
 	});
 });
 
+var pageCheck = function() {
+	pageParam = getParameter(document.location.href);
+	if(!pageParam.n) {
+		alertLoginCheck("비정상적인 접근입니다!!", "확인");
+	}else {
+		$.getJSON(contextPath + "/product/detail.do", {
+			pNo : pageParam.n
+		}, function(resultObj) {
+			var result = resultObj.ajaxResult;
+			if(result.data.lId == result.data.id) {
+				// 물품 주인 수정 가능
+				console.dir(result.data);
+				initUpdateForm(result.data);
+			}else {
+				// 비정상적인 경로로 접근
+				alertLoginCheck("비정상적인 접근입니다!!", "확인");
+			}
+		});
+	}
+}
 
-var appendLabel = function() {
-	$(".photoRegBox").find(">div").eq(0).append(label);
+var initUpdateForm = function(data) {
+	if(data.dealType == 's') {
+		// 팝니다
+		$("#dealFlag").prop("checked", true);
+		$("#price").val(data.price);
+		switch(data.quality) {
+		case "A" : 
+			$("input[name=quality]").eq(0).prop("checked", true);
+			break;
+		case "B" :
+			$("input[name=quality]").eq(1).prop("checked", true);
+			break;
+		case "C" :
+			$("input[name=quality]").eq(2).prop("checked", true);
+			break;
+		case "D" :
+			$("input[name=quality]").eq(0).prop("checked", true);
+			break;
+		default :
+			break;
+		}
+	}else {
+		// 삽니다
+		$("#dealFlag").prop("checked", false);
+	}
+	
+	$("#parent_selection>option").eq(data.cateHigh).prop("selected", true);
+	$("#parent_selection").trigger("change");
+	$("#child_selection>option").eq(data.cateLow).prop("selected", true);
+	$("#child_selection").trigger("change");
+	$("#regKeyword").val(data.cateKeyword);
+	$("#regContent").text(data.pContent.replace(/<br\/>/g,"\n"));
+	$("#regAddr").val(data.pAddr);
+	$("#regLat").val(data.pLat);
+	$("#regLon").val(data.pLon);
+	
+	if(data.dealOpt == 'y')
+		$("#regOpt").prop("checked", true);
+	
+	var i;
+	for(i=0;i<data.photoList.length;i++) {
+		var photo = data.photoList[i];
+		if(i==0) {
+			$(".photoRegBox").attr("data-path", photo.pPhotoPath);
+		}
+		var src = contextPath+"/upload/product/"+photo.pPhotoPath+"/"+photo.pPhotoName;
+		$(".fileInputOverlapBox").eq(i).css({
+			"background-image" : "url('" + src + "')"
+		});
+		$(".photoRegBox").find(">div").eq(i).attr("data-ppno", photo.pPhotoNo);
+		if(photo.pPhotoThum == "y")
+			$(".photoRegBox").find(">div").eq(i).attr("data-thum", "1");
+	}
+}
+
+
+
+var loginCheck = function() {
+	$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
+		var result = resultObj.ajaxResult;
+		loginBoxDraw(result.data);
+		if(result.data!=null) {
+			chatConnect(result.data);
+		}else {
+			alertLoginCheck("비정상적인 접근입니다!!", "확인");
+		}
+	});
 };
 
 var getLatLon = function(data) {
@@ -526,7 +594,8 @@ var list = function (array_list)
 
 // 실행부
 
-
+loginCheck();
+pageCheck();
 $(".scrollWrap").niceScroll();
 label = $("#thumbImgLabel");
 cloneBox = $(".photoRegBox").find(">div").eq(1).clone();
@@ -544,7 +613,6 @@ $(".photoRegBox").on("click", ">div>.fileInputHide", function(event) {
 		imgLength--;
 		event.preventDefault();
 	}
-	appendLabel();
 });
 
 $(".photoRegBox").on("change", ">div>.fileInputHide", function(event) {
@@ -565,7 +633,6 @@ $(".photoRegBox").on("change", ">div>.fileInputHide", function(event) {
 		
 		reader.readAsDataURL(input.files[0]);
 	}		
-	appendLabel();
 });
 
 // dealflag에 따라 구매, 판매 폼상태 변경
@@ -646,6 +713,8 @@ $("#child_selection").on("change", function() {
 	}
 });
 
+
+
 $("#regKeyword").on("keyup", keywordFilter);
 
 $("#regKeyword").on("focus", keywordFilter);
@@ -656,10 +725,12 @@ $("#price").on("click", function() {
 
 
 var checkValidate = function() {
+	/*
 	var existFiles = $(".photoRegBox").find("div[data-chk='true']");
 	if(existFiles.length==0) {
 		return "최소 한개의 사진을 등록해야 합니다!";
 	}
+	*/
 	return "ok";
 };
 
@@ -669,8 +740,21 @@ $("#productSubmitBtn").on("click", function() {
 		var data = new FormData();
 		var existFiles = $(".photoRegBox").find("div[data-chk='true']").find(".fileInputHide");
 		existFiles.each(function(i, file) {
-			data.append("file-"+i, file.files[0]);
+			var pPhotoNo = $(".photoRegBox").find(">div").eq(i).attr("data-ppno");
+			var pThumb = $(".photoRegBox").find(">div").eq(i).attr("data-thum");
+			console.log(pPhotoNo, pThumb);
+			if(pThumb=='1') {
+				data.append("p-t-"+pPhotoNo, file.files[0]);
+			}else {
+				if(pPhotoNo) {
+					data.append("p-"+pPhotoNo, file.files[0]);
+				}else {
+					data.append("p-n-"+i, file.files[0]);
+				}
+			}
 		});
+		
+		data.append("photoPath", $(".photoRegBox").attr("data-path"));
 		
 		var dealType = $("#dealFlag").prop("checked");	//true = 판매
 		var price = $("#price").val();
@@ -690,6 +774,8 @@ $("#productSubmitBtn").on("click", function() {
 				
 		var keyNum = cateNumSearch(keyword);
 		
+		console.log(keyNum);
+		data.append("pNo", pageParam.n);
 		data.append("dealType", dealType);
 		data.append("price", price);
 		data.append("quality", quality);
@@ -705,8 +791,9 @@ $("#productSubmitBtn").on("click", function() {
 			data.append("keyword", keyword);
 		}
 		
+		
 		$.ajax({
-			url : contextPath+"/product/auth/regist.do",
+			url : contextPath+"/product/auth/update.do",
 			type : "post",
 			dataType : "json",
 			data : data,
@@ -732,7 +819,17 @@ var cateNumSearch = function(keyword) {
 	return -1;
 };
 
-
+var alertLoginCheck = function(msg, btn) {
+	$("#alertMsg").html(msg);
+	$("#alertBtn").html(btn);
+	$(".ui.modal.alertModal").modal( {
+		allowMultiple : true,
+		closable : false,
+		onApprove : function() {
+			document.location.href="main.html";
+		}
+	}).modal('show');
+};
 
 </script>
 </body>

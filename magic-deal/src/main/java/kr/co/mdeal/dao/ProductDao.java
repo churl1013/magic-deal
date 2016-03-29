@@ -14,7 +14,10 @@ public interface ProductDao {
 	List<Categorie> selectCategories(Categorie cate);
 	void insertCategorie(Categorie cate);
 	void insertProduct(Product product);
+	void updateProduct(Product product);
 	void insertProductPhoto(ProductPhoto photo);
+	void updateProductPhoto(ProductPhoto photo);
+	void appendProductPhoto(ProductPhoto photo);
 	List<HashMap<String, Integer>> selectHighCateCount();
 	List<HashMap<String, String>> selectCategoriesPhoto();
 	ProductPhoto selectCategoriePhoto(Categorie cate);
@@ -31,4 +34,6 @@ public interface ProductDao {
 	void deleteProduct(Product pro);
 	void deleteMyListComment(Product pro);
 	void deleteProductPhoto(Product pro);
+	
+	
 }

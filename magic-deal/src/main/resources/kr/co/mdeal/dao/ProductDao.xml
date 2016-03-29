@@ -197,6 +197,7 @@
 		select *
 		  from pro_photo
 		 where p_no = #{pNo}
+		 order by p_ph_thum desc
 	</select>
 	
 	<select id="selectProductCommentCount" parameterType="int" resultType="int">
@@ -223,7 +224,7 @@
 	</insert>
 	
 	<select id="selectProductDetail" parameterType="product" resultMap="productDetailMap">
-		select pro.p_no, pro.p_c_no, pro.price, pro.p_content,
+		select pro.p_no, pro.p_c_no, pro.price, pro.p_content, pro.p_lat, pro.p_lon,
 			   pro.deal_opt, pro.quality, pro.p_addr, pro.deal_type,
 		       date_format(pro.p_reg_date, "%Y년 %c월 %e일 %H:%i") p_reg_date,
 		       cate.p_keyword, cate.p_high_cate, cate.p_low_cate,
@@ -256,9 +257,9 @@
 	   		   and cate.p_low_cate = #{pLowCate}
 	   		   </if>
 	   		   <if test="pKeyword != null">
-	   		   and cate.p_keyword like '%'||#{pKeyword}||'%'
+	   		   and cate.p_keyword like CONCAT('%', #{pKkeyword}, '%')
 	   		   </if>
-	   	 order by pro.p_no desc
+	   	 order by pro.p_no desc, pho.p_ph_thum desc
 	</select>
 	
 	<select id="selectCategories" parameterType="categorie" resultMap="categorieMap">
@@ -290,7 +291,34 @@
 		</selectKey>
 	</insert>
 	
+	<update id="updateProduct" parameterType="product">
+		update product
+			   set p_c_no = #{pCategorieNo},
+			   	   price = #{price},
+			   	   p_content = #{pContent},
+			   	   deal_type = #{dealType},
+			   	   quality = #{quality},
+			   	   deal_opt = #{dealOpt},
+			   	   p_addr = #{pAddr},
+			   	   p_lat = #{pLat},
+			   	   p_lon = #{pLon}
+		where p_no = #{pNo}
+	</update>
+	
 	<insert id="insertProductPhoto" parameterType="productPhoto">
+		insert into pro_photo
+			   (p_no, p_ph_path, p_ph_thum, p_ph_name)
+		values (#{pNo}, #{pPhotoPath}, #{pPhotoThum}, #{pPhotoName})
+	</insert>
+	
+	<update id="updateProductPhoto" parameterType="productPhoto">
+		update pro_photo
+			   p_ph_name = #{pPhotoName},
+			   p_ph_thum = #{pPhotoThum}
+		 where p_ph_no = #{pPhotoNo}
+	</update>
+	
+	<insert id="appendProductPhoto" parameterType="productPhoto">
 		insert into pro_photo
 			   (p_no, p_ph_path, p_ph_thum, p_ph_name)
 		values (#{pNo}, #{pPhotoPath}, #{pPhotoThum}, #{pPhotoName})
