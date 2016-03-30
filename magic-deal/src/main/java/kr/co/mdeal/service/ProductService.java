@@ -25,4 +25,5 @@ public interface ProductService {
 	List<HashMap<String, Object>> getAreaProduct(Member mem, Categorie cate);
 	HashMap<String, Object> getProductMyList(HashMap<String, Object> option);
 	void deleteProductDelete(Product pro);
+	void updateDealStep(Product pro);
 }

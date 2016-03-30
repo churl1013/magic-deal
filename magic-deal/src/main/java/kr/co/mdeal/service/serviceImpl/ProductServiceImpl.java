@@ -161,4 +161,10 @@ public class ProductServiceImpl implements ProductService{
 			dao.appendProductPhoto(np);
 		}
 	}
+
+	@Override
+	public void updateDealStep(Product pro) {
+		dao.deleteChatRoom(pro);
+		dao.updateDealStep(pro);
+	}
 }
