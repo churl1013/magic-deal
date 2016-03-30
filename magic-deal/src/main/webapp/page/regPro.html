@@ -18,27 +18,6 @@
 <!-- 해당 페이지 CSS 파일 -->
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/regPro.css">
 
-
-<script type="text/javascript" src="/magic-deal/lib/jquery/jquery.js"></script>
-<script src="/magic-deal/semantic/semantic.min.js"></script>
-<script src="/magic-deal/js/common.js"></script>
-<script src="/magic-deal/js/socket.io.js"></script>
-<script src="/magic-deal/js/chat.js"></script> 
-<script>
-var loginCheck = function() {
-	console.log("loginCheck!!");
-	$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
-		var result = resultObj.ajaxResult;
-		loginBoxDraw(result.data);
-		if(result.data!=null) {
-			chatConnect(result.data);
-		}else {
-			alertLoginCheck("로그인 후 이용해주세요!", "확인");
-		}
-	});
-};
-loginCheck();
-</script>
 </head>
 <body>
 
@@ -332,7 +311,26 @@ loginCheck();
 
 
 <!-- 기본 임폴트 js -->
-
+<script type="text/javascript" src="/magic-deal/lib/jquery/jquery.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
+<script src="/magic-deal/js/common.js"></script>
+<script src="/magic-deal/js/socket.io.js"></script>
+<script src="/magic-deal/js/chat.js"></script> 
+<script>
+var loginCheck = function() {
+	console.log("loginCheck!!");
+	$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
+		var result = resultObj.ajaxResult;
+		loginBoxDraw(result.data);
+		if(result.data!=null) {
+			chatConnect(result.data);
+		}else {
+			alertLoginCheck("로그인 후 이용해주세요!", "확인");
+		}
+	});
+};
+loginCheck();
+</script>
 <script src="/magic-deal/custom_lib/jquery.nicescroll.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript" src="http://apis.daum.net/maps/maps3.js?apikey=f395cc95b7a2033371e67babc4b49930&libraries=services"></script>
