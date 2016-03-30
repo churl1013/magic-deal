@@ -34,6 +34,8 @@ public interface ProductDao {
 	void deleteProduct(Product pro);
 	void deleteMyListComment(Product pro);
 	void deleteProductPhoto(Product pro);
+	void updateDealStep(Product pro);
+	void deleteChatRoom(Product pro);
 	
 	
 }

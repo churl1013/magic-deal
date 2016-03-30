@@ -185,6 +185,7 @@
 		 where p_no = #{pNo}
 	</delete>
 	
+	
 	<delete id="deleteMyListComment" parameterType="product">
 		delete 
 		 from pro_comment
@@ -358,4 +359,17 @@
 																				)
 										 ) order by rand() limit 1;
 	</select>
+	
+	<delete id="deleteChatRoom" parameterType="product">
+		delete 
+		 from chat_room
+		 where p_no = #{pNo}
+	</delete>
+	
+	<update id="updateDealStep" parameterType="product">
+		update product
+			   set deal_step = 'n'
+		where p_no = #{pNo}
+	</update>
+	
 </mapper>

@@ -226,6 +226,14 @@ footer {
 	line-height : 25px;
 	
 }
+
+.likedTextLabel {
+	float: right;
+	font-size : 12px;
+	font-weight : bold;
+	font-family: 'Noto Sans KR', sans-serif;
+	color: #db2828;
+}
 </style>
 </head>
 <body>
@@ -617,6 +625,35 @@ footer {
 </div>
 <!-- 물품 삭제 모달 끝 -->
 
+<!-- 물품 거래 상태 모달 -->
+<div class="ui basic modal" id="dealStepModal">
+  <div class="header">
+    	물품 상태 변경
+  </div>
+  <div class="image content">
+    <div class="image">
+      <i class="archive icon"></i>
+    </div>
+    <div class="description">
+      <p>한번 거래 완료를 클릭한 물품은 다시 대기 상태로 돌릴수 없습니다</p>
+      <p>계속하시겠습니까?</p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="two fluid ui inverted buttons">
+      <div class="ui red basic inverted deny button">
+        <i class="remove icon"></i>
+        No
+      </div>
+      <div class="ui green ok basic inverted button">
+        <i class="checkmark icon"></i>
+        Yes
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 물품 삭제 모달 끝 -->
+
 <!-- 상세보기 모달 시작 -->
 <div class="viewItemWrap">
 	
@@ -944,6 +981,8 @@ footer {
 						btnObj += '<i class="thumbs down icon"></i>&nbsp;&nbsp;';
 						btnObj += 'UNLIKE</div>';
 						$("#profilePhotoBtnBox").html(btnObj);
+						var mySecondDiv=$('<div class="likedTextLabel">LIKED</div>');
+						$('#mypageProfileLikeCount').append(mySecondDiv);
 						}
 					
 		});
@@ -1059,8 +1098,9 @@ footer {
 		$("#profile-tab-box").css("display", "none");
 		$("#activity-tab-box").css("display", "block");
 		$("#searchKeyword").val("");
+		if(toggle == "s"){
 		$("#dealStepHigh").prop("checked", true);
-		toggle = "s";
+		}
 		keyword = "";
 		getMyList(1);
 	});
@@ -1403,9 +1443,9 @@ footer {
 				proCard += '</div>';
 				proCard += '<div class="info-button-box">';
 				if(mNo!=null&&mNo==data.mNo) {
-					
+					if(data.dealStep=='y'){
 				proCard +=	'<div class="ui toggle checkbox" style="float:left; margin-left: 5px; margin-top: 10px;">';
-				proCard +=	'<input type="checkbox" name="public" id="dealStepLow">';
+				proCard +=	'<input type="checkbox" class="dealStepLow" name="public" id="proNo'+data.pNo+'" data-pidx="'+data.pNo+'">';
 				proCard +=	'<label>완료</label>';
 				proCard +=	'</div>';
 				
@@ -1413,6 +1453,7 @@ footer {
 				proCard += 'title="수정" style="font-size:13px;" data-pidx="'+data.pNo+'">';
 				proCard += '<i class="edit icon"></i>';
 				proCard += '</button>';
+					}
 				proCard += '<button class="ui circular mini icon red button deleteProduct"';
 				proCard += 'title="삭제" style="font-size:13px;" data-pidx="'+data.pNo+'">';
 				proCard += '<i class="trash icon"></i>';
@@ -1421,9 +1462,39 @@ footer {
 				proCard += '</div>';
 				proCard += '</div>';
 				$(proCard).appendTo("#productListBox");
-			
-				
 			}
+			
+			// 거래 완료 함수
+			$(".dealStepLow").on("click", function() {
+				event.stopPropagation();
+				if(this.checked) {
+					// 완료
+					var pNo = $(this).attr("data-pidx");
+				$(this).parent().parent().parent().parent()
+					   .trigger("mouseover");
+				$('#dealStepModal').modal({
+					closable : false,
+					onDeny : function(){
+						$('#proNo'+pNo).trigger("click");	
+						return true;
+					},
+					onApprove : function(){
+						$.getJSON(contextPath + "/product/dealStepChange.do", {
+							pNo : pNo
+						}, function(resultObj) {
+							moveActivityTap();
+						});
+						return true;
+					}
+				}).modal('show');
+				
+					console.log("완료");
+				}else {
+					// 대기
+					console.log("대기");
+				}
+			});
+			
 			
 			// 물품 삭제 함수
 			$(".deleteProduct").on("click", function() {
@@ -1468,17 +1539,6 @@ footer {
 	 			$(this).find(".product-card-info")
 	 				   .removeClass("product-card-info-open");
 	 		});
-			
-			
-			$("#dealStepLow").on("change", function() {
-				if(this.checked) {
-					// 완료
-					console.log("완료");
-				}else {
-					// 대기
-					console.log("대기");
-				}
-			});
 			
 		}
 				

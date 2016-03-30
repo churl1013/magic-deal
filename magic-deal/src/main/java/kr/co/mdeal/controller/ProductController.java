@@ -346,6 +346,15 @@ public class ProductController {
 		return new AjaxResult("success", null);
 	}
 	
+	@RequestMapping("dealStepChange.do")
+	public AjaxResult dealStepChange(Product pro) {
+		int pNo = pro.getpNo();
+		pro.setpNo(pNo);
+		
+		service.updateDealStep(pro);
+		return new AjaxResult("success", null);
+	}
+	
 	@RequestMapping("commentList.do")
 	public AjaxResult commentList(Product product, @RequestParam(defaultValue="1")int page, HttpSession session) {
 		HashMap<String, Object> option = new HashMap<>();
@@ -375,7 +384,6 @@ public class ProductController {
 	@RequestMapping("myList.do")
 	public AjaxResult getProductMyListtList(Member mem, @RequestParam(defaultValue="1")int page, HttpSession session, Product pro,@RequestParam(defaultValue="") String key) {
 		HashMap<String, Object> option = new HashMap<>();
-		System.out.println("keyword 값 : "+key);
 		option.put("mNo", mem.getmNo());
 		option.put("start", (page-1)*6);
 		option.put("dealType", pro.getDealType());
