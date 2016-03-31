@@ -1365,7 +1365,11 @@ footer {
     
  	// 자기소개 모달창 줄바꿈
     function replaceAll(str, target, replacement) {
-		return str.split(target).join(replacement);
+ 		if(typeof str == "string") {
+			return str.split(target).join(replacement);
+ 		}else {
+ 			return " ";
+ 		}
     };
     
    	$("#dealStepHigh").on("change", function() {
