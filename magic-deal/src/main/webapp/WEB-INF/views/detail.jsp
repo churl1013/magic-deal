@@ -20,7 +20,7 @@
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/view.css">
 <link rel="shortcut icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/magic-deal/img/favicon.ico" type="image/x-icon">
-<title>MAGIC DEAL</title>
+<title>Magic Deal</title>
 
 <style>
 body {
