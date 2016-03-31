@@ -74,17 +74,13 @@
 @media all and (min-width:1024px) {
     /* 1025px 이상 해상도 */
     .emptyBox {
-		background-color : black;
-		color : white;
-		font-size : 24px;
-		font-family : 'Doppio One';
-		text-shadow : 1px 1px 5px #c8c8c8;
-		text-align : center;
 		width : 20%;
 		display : inline-block;
 		position : relative;
 		overflow : hidden;
 		z-index : 0;
+		background-image : url('/magic-deal/img/emptyBox.png');
+		background-size : 100% 100%;
 	}
 	
 	.imgChangeBox {
