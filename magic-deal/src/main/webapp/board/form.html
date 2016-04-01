@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/mdtest01/semantic/semantic.min.css">
+<style type="text/css">
+	
+	#allWrap, .replyForm{
+			text-align: left;
+			margin-left: 15px;
+			margin-right: 15px;			
+	}
+	.ui form {
+		/*정렬하려는 요소의 넓이를 반드시 지정*/
+		width : 1024px;
+		margin: 0 auto;
+		
+	}
+	.fileDrop {
+			width : 100%;
+			height : 70px;
+			border : 1px dotted blue;
+	}
+	small {
+		margin-left : 3px;
+		font-weight: bold;
+		color : gray;
+	}
+	
+	.replyForm{
+		 text-align: center;	
+	}
+	
+</style>
+
+<script src="../js/upload.js"></script>
+
+</head>
+<body>
+<div id="allWrap">
+
+	<h4 class="ui header">Board Page</h4>
+	<form class="ui form" id="registForm">
+		<div class="detailForm">
+			<label>글 번호</label>
+			<div>
+				<input type="text" id='bNo' readonly />
+			</div>
+		</div>
+		<div class="form-group">
+			<label>작성자</label>
+			<div>
+				<input type="text" id='mNo' readonly="readonly" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label>제목</label>
+			<div>
+				<input type="text" id="bTitle" placeholder="제목" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label>내용</label>
+			<div>
+				<textarea id="bContent" rows='10' cols='50' placeholder="내용"></textarea>
+			</div>
+		</div>
+		<div class="newForm form-group photoRegBox">
+				<div class="fileDrop"></div>
+				<div class="box-footer">
+					
+					<ul class="mailbox-attachments clearfix uploadedList"></ul>
+				</div>
+			
+				<div class="hiddenTg"></div>
+
+				<!--  
+				<div>
+					<div class="fileInputOverlapBox"></div>
+					<input type="file" class="fileInputHide" />
+				</div>
+				<div>
+					<div class="fileInputOverlapBox"></div>
+					<input type="file" class="fileInputHide" />
+				</div>
+				<div>
+					<div class="fileInputOverlapBox"></div>
+					<input type="file" class="fileInputHide" />
+				</div>
+				-->
+
+			</div>
+
+		<button type="submit" class="newForm btn btn-primary">Submit</button>
+
+		<!--  20160322 , 1140 첨부파일용 템플릿 add -->
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+<script id="template" type="text/x-handlebars-template">
+	<li>
+		<span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
+		<div class="mailbox-attachment-info">
+		<a href="{{getLink}}" class="mailbox-attachment-name">{{filaName}}</a>
+		<a href="{{fullName}}" class="btn btn-default btn-xs pull-right delbtn"><i class="fa fa-fw fa-remove"></i></a>
+		
+		</div>
+	</li>
+</script>
+
+
+		<div class="detailForm">
+			<label>작성일</label>
+			<div>
+				<p id='bRegDate'></p>
+			</div>
+		</div>
+		<div class="detailForm">
+			<label>게시글 종류</label>
+			<div>
+				<p id='bCate'></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class='blue ui buttons'>
+				<div id='addBtn' class="newForm ui button">등록</div>
+				<div id='updateBtn' class="detailForm positive ui button">변경</div>
+				<div id='deleteBtn' class="detailForm negative ui button">삭제</div>
+			</div>
+		</div>
+	</form><!-- ui form -->
+	<div class='detailForm reply'>
+
+		<input type="text" id='bcContent' placeholder="댓글말하기" />
+		<div id="cmtRegistBtn" class='blue ui button'>댓글등록</div>
+	</div>
+	<form class='replyForm'>
+		<div id='commentList'></div>
+		<div class='pagination'></div>
+	</form>
+	
+</div><!-- all wrap -->	
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script src="/magic-deal/js/common.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>	
+
+<script>
+// /* 순서
+//  1.  새글 또는 상세폼으로 이동 >> 96라인~122라인
+//  2.  (상세폼일경우) 댓글 목록가져오기 >> 128라인 ~ 146라인
+//  3.  댓글삭제 >> ~ 175라인
+//  4.  댓글 수정폼으로 >> ~233라인
+//  5. 게시글 새글 등록 >>  ~268라인
+ 
+//  * 파일첨부 등록하기 관련 처리
+//  344라인~
+ 
+// 댓글 등록 371 line , cmtRegistBtn
+//  */
+
+var no = location.href.split('?')[1].split('=')[1];
+
+if( no < 0){  // 새글 폼으로 전환
+	$(".detailForm").css("display","none");  // 새글일때는 상세 폼 항목을 감추기
+	$(".newForm").css("display",""); // 새글 등록 버튼 보이기
+	console.log("글쓰기 호출됨");
+}else{
+	//상세 정보 출력폼
+	$('.detailForm').css('display','');
+	$('.newForm').css('display','none');
+	console.log("상세폼 호출됨");
+	//jQuery.getJSON( url [, data ] [, success ] )
+	$.getJSON(
+			contextPath + '/board/ajax/detail.do?no='+no,
+			function(resultObj , status ){
+				console.log("resultObj : ");
+				console.dir(resultObj);
+				console.log("status : ");
+				console.dir(status);
+				var board = resultObj.board;
+				console.dir("board :");
+				console.dir(board);
+				$("#bNo").val(board.bNo);
+				$("#mNo").val(board.mNo);
+				$("#bTitle").val(board.bTitle);
+				$("#bContent").val(board.bContent);
+				$("#bRegDate").text(board.bRegDate);
+				$("#bCate").text(board.bCate);
+			});
+	
+	// 댓글 목록 가져오기
+	// $(selector).getJSON(url,data,success(data,status,xhr))
+	$.getJSON(				
+			contextPath + '/board/ajax/cmtListPage.do',  
+			{
+ 				bNo : no,
+ 				page : 1
+ 			}, 		
+			function(resultObj, status){
+				console.log("boardCmt list in > getJSON > resultObj:");
+				console.dir(resultObj);
+				console.log("status");
+				console.dir(status);
+				// 댓글 목록
+				for ( var data of resultObj.cmtList){  // controller > resultMap.put("bcList", bcList);
+					$("#commentList").append(
+							"<div data-idx="+ data.bcNo + ">"								
+						
+							+"<input type='text' name='bcContent' value='"+ data.bcContent +"'readonly />"
+							+"<input type='text' name='bcRegDate' value='"+ data.bcRegDate +"'readonly />"
+							+"<input type='button' value='delete' class='commentDelBtn ui inverted red button'  />"
+							+"<input type='button' value='update' class='commentUpdateBtn ui inverted blue button' />"
+							+"</div>"
+					)
+				}				
+				// 댓글 페이징처리 160324, 1134
+				printPaging(resultObj.pageMaker);				
+				
+			} // function
+	);	// getJSON
+}// else 상세폼 출력끝
+
+// 댓글 페이징 처리 start --------------------------------------------
+function printPaging(pageMaker){
+	console.log("printPaging : in");
+	console.log("pageMaker :");
+	console.dir(pageMaker);
+	var str ="<div>";	
+	if ( pageMaker.prev){	
+		str += "<span><a href='#' onclick=replyFn("+no+","+ (pageMaker.startPage-1)+");> << </a></span>";
+	}
+	for ( var i=pageMaker.startPage, len=pageMaker.endPage; i <= len; i++){
+		var strClass = pageMaker.cri.page ==i?'class=active':'';	
+		str += "<span "+strClass+"><a href='#' onclick='replyFn("+no+"," +i+ ");'> " +i+ " </a></span>"; 
+	}
+	if(pageMaker.next){		
+		str += "<span><a href='#' onclick=replyFn("+no+","+(pageMaker.endPage+1)+");> >> </a></span>";
+	}
+	$('.pagination').html(str);
+	
+}
+
+// 댓글 페이징을 위한 함수 20160324/ 1839- bNo와 페이지를 받아 처리한다.------------------------------------------------------
+function replyFn(no, page){
+	console.log("replyFn in > no :"+no);
+	console.log("replyFn in > page :"+page);
+	$.getJSON(						
+			contextPath + '/board/ajax/cmtListPage.do',  
+			{
+ 				bNo : no,
+ 				page : page
+ 			}, 		
+			function(resultObj, status){
+				console.log("boardCmt list in > getJSON > resultObj:");
+				console.dir(resultObj);
+				console.log("status");
+				console.dir(status);
+				// 댓글 목록
+				$("#commentList").empty(); // 기존 내용 지운다 : remove()는 아예 태그가 삭제된다?
+				for ( var data of resultObj.cmtList){  // controller > resultMap.put("bcList", bcList);
+					$("#commentList").append(
+							"<div data-idx="+ data.bcNo + ">"							
+							+"<input type='text' name='bcContent' value='"+ data.bcContent +"'readonly />"
+							+"<input type='text' name='bcRegDate' value='"+ data.bcRegDate +"'readonly />"
+							+"<input type='button' value='delete' class='commentDelBtn ui inverted red button'  />"
+							+"<input type='button' value='update' class='commentUpdateBtn ui inverted blue button' />"
+							+"</div>"
+					)
+				}								
+				// 댓글 페이징처리 160324, 1134
+				printPaging(resultObj.pageMaker);				
+				
+			} // function
+	);	// getJSON
+}; // replyFn
+
+// 댓글 페이징을 위한 함수 end ---------------------------------------------------------------------
+
+
+
+// 댓글 페이징 end ---------------------------------------------------
+
+// 댓글 삭제 start----------
+	$('#commentList').on('click','>div>.commentDelBtn', function () { 
+		console.dir(this);
+		console.dir($(this));
+		console.dir($(this).parent()[0]); // div 
+		// 현재 클릭한 상위 div 찾기 >> bcContent/bcRegDate/삭제/수정을 담고있는div
+		var box = $(this).parent()[0];
+		// 찾은 div 의 속성 data-idx에서 bcNo 값 찾기
+		var bcNo = $(box).attr('data-idx');
+		console.log("bcNo :"+bcNo);
+		// ajax로 삭제할 것을 넌지고
+		// $.get(URL,data,function(data,status,xhr),dataType)
+		$.getJSON(
+				contextPath + '/board/ajax/commentDelete.do?bcNo='+bcNo,				
+			   function (resultObj, status, xhr){
+				   console.log(" cmtDelete.do after resultObj : ");
+				   console.dir(resultObj);
+				   
+				   if ( status == "success"){
+					   //alert("성공이 날라왔나요?");
+					   $(box).remove();
+				   } else{
+					   console.log("댓글 삭제가 실패하였습니다.");
+				   }				  
+			   }	) // getJSON		
+	});
+// 댓글 삭제 end-----------
+
+
+// 댓글 수정 폼으로 이동
+		$("#commentList").on("click", ">div>.commentUpdateBtn", function() {
+			var box = $(this).parent()[0];
+			
+			// 삭제, 수정을 수정, 취소로 변경시킨다. 160314-1517
+			var delBtn = $(this).prev(); // update의 이전버튼을 수정버튼으로 변경
+			$(delBtn).attr('class','updateComplte ui blue button');
+			$(delBtn).attr('value','수정');
+			console.log("$(delBtn)");
+			console.dir($(delBtn));
+			
+			// update버튼은 취소버튼으로 변경
+			$(this).attr("class",'updateCancle ui red button');
+			$(this).attr('value','취소');
+			console.dir($(this));			
+			
+			// 첫번째 자식이 내용일 경우에는 이렇게 하면됨
+			/*
+			$(box).children().eq(0).prop('readonly', false);
+			$(box).children().eq(0).focus();
+			console.dir( $(box).children().eq(0) );
+			*/
+			
+			// 첫번째 자식의 위치가 변경되었을 경우 update 160328, 1145
+			content=$(box).children("input[name=bcContent]");
+			console.log("content : "+content);
+			content.prop('readonly', false);
+			content.focus();		
+		
+		});
+			
+		$("#commentList").on("click", ">div>.updateComplte", function() {
+			var box = $(this).parent()[0]; 			
+			var bcNo = $(box).attr("data-idx");
+			console.log("bcNo :"+bcNo);
+			var bcContent = $(box).children("input[type=text]")[0];
+					
+			// $(selector).post(URL,data,function(data,status,xhr),dataType)
+			$.post(
+					contextPath + "/board/ajax/commentUpdate.do",				
+				 {
+					bcNo : bcNo,
+					bcContent : bcContent.value
+				} ,
+				function(data,status,xhr) {						
+				$(box).children().eq(2).attr( { 'value' : 'delete' , 'class' : 'commentDelBtn ui inverted red button'  } );
+				$(box).children().eq(3).attr( { 'value' : 'update' , 'class' : 'commentUpdateBtn ui inverted blue button'  } );
+				$(box).children().eq(0).prop('readonly', true);				
+						
+			},'json');
+		});
+		
+		$("#commentList").on("click", ">div>.updateCancle", function() {
+			var box = $(this).parent();	
+			box.parent().prop("disabled", false);
+			$(this).prev().attr('class','commentDelBtn ui inverted red button');
+			$(this).prev().attr('value','delete');
+			$(this).attr('class','commentUpdateBtn ui inverted blue button');
+			$(this).attr('value','update');			
+			
+			//box.remove();
+		});
+
+// 댓글 수정 관련 코딩 end----------------160313	
+
+// 새글 , 등록을 클릭했을때
+	$("#addBtn").click( function () { 		
+		console.log("addBtn click in");
+		
+		if( $('#bTitle').val() == "" ){
+			alert("게시글 제목을 입력하세요");
+			return;
+		}
+		if( $('#bContent').val() == "" ){
+			alert('게시글 내용을 입력하세요');
+			return;
+		}
+		// jQuery.post( url [, data ] [, success ] [, dataType ] )
+		// url : String,  data : PlainObject or String , success : Function(Object data, String textStatus, jqXHR jqXHR){}, datyType : String
+		var imgsUrl = "";
+		var imgCount = $("div.hiddenTg").children().length;
+	
+		// imgsStr 문자열에 ? 구분자로 파일 경로 +
+		var imgsStr = "";
+		for(var i = 0; i < imgCount; i++) {
+			imgsStr += $("input[name=files" + i + "]").val();
+			if(i != imgCount - 1) imgsStr += "?";
+		}
+		
+		$.ajax({	url : contextPath + "/board/ajax/regist.do" ,
+					type : 'post',
+					dataType : 'json',
+					data : {
+						mNo : 1,
+						bTitle : $("#bTitle").val(),
+						bContent : $("#bContent").val(),
+						files : imgsStr
+					}
+				
+				}).done(
+				function( resultObj , status, xhr ){					
+					console.log("resultObj : "+resultObj);
+					console.log("fn : status : "+status);
+					console.log("xhr : "+xhr);			
+					if( status != "success"){						
+						alert('게시물 등록 실패');
+					}
+					else{
+						alert("게시글 등록 성공 ! 페이지 이동합니다.");
+						location.href="list.html";
+					}
+				});
+				
+	});  // addBtn end---
+	
+	// 글변경버튼을 클릭했을때
+	$("#updateBtn").click(function(){
+	
+		// jQuery.post( url [, data ] [, success ] [, dataType ] )
+
+		$.post( contextPath + '/board/ajax/update.do?no='+no				
+				, {
+			bNo : $("#bNo").val(),  bTitle : $("#bTitle").val(),  bContent : $("#bContent").val()		
+		}, function(data, status, xhr){
+			console.dir("data :"+data);
+			console.dir("status :"+status);
+			console.dir("xhr :"+xhr);		
+			if( status == "success"){
+				location.href = 'list.html';
+			}else{
+				alert('게시글 변경이 실패했습니다.');
+			}
+		}, 'json');		
+	});  // updateBtn end----
+	
+	// 글삭제버튼
+	$('#deleteBtn').click( function (){
+		//jQuery.getJSON( url [, data ] [, success ] )
+		console.log("삭제버튼 호출됨");
+		console.log('bNo : $("#bNo").val():' +$('#bNo').val());
+		$.getJSON( '/mdtest01/board/ajax/delete.do?no='+$('#bNo').val(),
+				function (resultObj, status){
+					console.log("resultObj : "+resultObj);
+					console.log("fn : status : "+status);
+					alert("delete 누르고 목록넘어가기전 :");
+					if ( status == "success"){
+						location.href ='list.html';
+					}else{
+						alert("게시글 삭제 실패!");
+					}
+		})
+	});  // deleteBtn end----
+	
+	// 댓글 등록
+	$("#cmtRegistBtn").click(  function () {
+		console.dir("cmtRegistBtn in");
+		// $(selector).post(URL,data,function(data,status,xhr),dataType)
+		$.post( 
+				contextPath + '/board/ajax/cmtRegist.do',
+				{
+					bNo : no,
+					bcContent : $('#bcContent').val()					
+				}
+		, function(resultObj, status){
+			console.log("comment Regist Btn click > resultObj >")
+			console.dir(resultObj);
+			console.log("cmtReigist status > ");
+			console.dir(status);
+			var now = new Date();
+			var nowAll = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + " ";
+		      console.log("nowAll :"+ nowAll);
+			var data = resultObj.boardComment;
+			$("#commentList").prepend(
+					"<div data-idx="+ data.bcNo + ">"					
+					+"<input type='text' value='"+ data.bcContent +"'readonly />"
+					+"<input type='text' value='"+ nowAll +"'readonly />"
+// 					+"<input type='text' value='"+ data.bcRegDate +"'readonly />"
+					+"<input type='button' value='delete' class='commentDelBtn'  />"
+					+"<input type='button' value='update' class='commentUpdateBtn' />"
+					+"</div>"
+			)
+		 }, 'json'); // $.post()
+		 $('input[id="bcContent"]').val('');
+	}); // cmtRegistBtn end----
+	
+	// --------------2016-03-15 fileupload add
+	//********************************************************************************************************************
+	// 파일 업로드 관련 처리 : 시작 ----------
+	//********************************************************************************************************************
+	
+
+	var template = Handlebars.compile($("#template").html());
+
+	$('.fileDrop').on('dragenter dragover', function (event){
+		event.preventDefault();
+		console.log("dragenter or dragover event !");
+	});
+	$('.fileDrop').on('drop', function(event){
+		event.preventDefault();
+		console.log("drop event !");
+		var files = event.originalEvent.dataTransfer.files; // 이벤트를 통해 전달된 파일들을 담을 변수 설정
+		var file = files[0];
+		
+		var bNo =no; // add 160329, 1723
+	
+		//console.log(files);
+		var formData = new FormData(); // html5에서 지원 ie10ver~
+		formData.append('file',file);
+		formData.append('bNo',no); // add 160329, 1723
+		// 새글입력이라면 첨부파일 입력금지
+// 		if (no == -1){
+// 			alert("현재, 새글에서는 첨부가 안됩니다.");
+// 			return;
+// 		}
+		//formData.append('files',files); 
+		
+		$.ajax ( { url : contextPath + '/file/uploadAjax.do',
+				data : formData,
+				dataType : 'text',
+				processData : false,
+				contentType : false,
+				type : 'POST',
+				success : function(data){					
+					console.log("uploadAjax after > data :");
+					console.log(data); // ex) /2016/03/17/s_895cd4d4-bcae-476b-8176-aa779ea322f0_woman03.jpg
+					console.log(checkImageType(data)); // upload.js > checkImageType(data)
+		
+					// 2016-3-21 : 업로드된 파일 이름의 처리를 위한 스크립트
+					var fileInfo = getFileInfo(data);	 // upload.js > getFileInfo(data)
+					// gefFileInfo : 저장된 폴더와 파일명을 파라미터로 받아서
+					// fileName, imgsrc, getLink, fullName의 결과를 만들어서 리턴한다.
+					
+					// fileinfo : "sun_child.jpg"
+					// fileName : 
+					// fullName : "/2016/03/22/s_6f5f1b4d-2bbf-4138-ac0a-e4667890b036_sun_child.jpg"
+					// getLink : "/mdtest01/file/displayFile?fileName=/2016/03/22/6f5f1b4d-2bbf-4138-ac0a-e4667890b036_sun_child.jpg"
+					// imgsrc : "/mdtest01/file/displayFile?fileName=/2016/03/22/s_6f5f1b4d-2bbf-4138-ac0a-e4667890b036_sun_child.jpg"
+					console.log("form.html 399line > fileInfo :")
+					console.dir(fileInfo);
+		
+					var html = template(fileInfo);
+					console.log("form.html 402line > html :"+html);
+					$(".uploadedList").append(html);
+					
+					var str = "";
+					// hidden 태그 append
+					$(".uploadedList .delbtn").each(function(index){
+						str = "<input type='hidden' name='files"+ index +"' value='" + $(this).siblings("[name=fileName]").val() + "'>";
+					});
+
+					$(".hiddenTg").append(str);
+					
+		
+					/*
+					var str ="";
+					if ( checkImageType(data)){
+						str ="<div><a href='/mdtest01/file/displayFile.do?fineName="+getImageLink(data)+"'/>"
+								+"<img src='/mdtest01/file/displayFile.do?fileName="+data+"'/></a>"
+								+"<small data-src='"+data+"'>X</small></div>";								
+					} else{
+						str ="<div><a href='/mdtest01/file/displayFile.do?fileName="+data+"'/>"
+							+getOriginalName(data)+"</a>"
+							+"<small data-src='"+data+"'/>X</small></div>";
+					}					
+					$(".uploadedList").append(str);
+					*/
+					
+				} // function
+		}); // $.ajax
+	});
+	
+		
+	// 파일이름을 줄이기 : 파일이름 중복을 위해 임의로 만든 앞에 이름 잘라버림
+	function getOriginalName(fileName){
+		// 이미지 파일이 아닐경우 원래 파일이름으로 돌릴필요가 없으므로 바로 리턴
+		if( checkImageType(fileName)){
+			return;
+		}
+		var idx = fileName.indexOf("_")+1;
+		return fileName.substr(idx);
+	}
+	
+	// 이미지파일의 원본찾기 : 이미지일 경우 > 날짜 폴더와 UUID로 주어진 이름 삭제하기
+	function getImageLink(fileName){
+		if ( ! checkImageType(fileName) ){
+			return;
+		}
+		var front = fileName.substr(0, 12);
+		var end = fileName.substr(14);
+		return front+end;
+	}
+	
+	// 첨부파일의 삭제처리
+	$('.uploadedList').on('click', 'small', function(event){
+		var that = $(this);
+		console.log(".uploaddList small click :");
+		// jQuery.ajax( [settings ] )  >> $.ajax({name:value, name:value, ... })
+		$.ajax({
+			url : contextPath + '/file/deleteFile.do',
+			type : 'post',
+			data : { 
+				fileName : $(this).attr('data-src'),
+				bNo : no
+				},
+			//data : { fileName : $(this).attr('data-src') },
+			dataType : 'text',
+			success : function(result){
+				if ( result == 'deleted'){
+					console.log("파일 삭제 성공!");
+					that.parent("div").remove();
+				}
+			}			
+		});
+	});
+	//********************************************************************************************************************
+	// 파일 업로드 관련 처리 끝-------------
+	//********************************************************************************************************************
+	
+	// 이미지 파일이 아닌경우는 파일 아이콘을 보여준다.
+	
+
+	
+	// fileupload end---------------------------
+	
+	// form submit 160322 tues 1620 : 업로드된 파일 이름의 처리를 위한 스크립트 2
+	$("#registForm").submit( function (event) {
+		event.preventDefault();
+		var that = $(this);
+		var str ="";
+		$(".uploadedList .delbtn").each( function (index) {
+			str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("href")+"'>'";
+		})
+			that.append(str);
+			that.get(0).submit();		
+	});
+
+</script>
+
+
+
+</body>
+</html>

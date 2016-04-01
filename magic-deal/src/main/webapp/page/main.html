@@ -45,7 +45,7 @@
     <a id="navChartSearchBtn" class="item">
       <i class="area chart yellow large icon"></i>차트검색
     </a>
-    <a id="navBoardDirectBtn" class="item">
+    <a id="navBoardDirectBtn" class="item" >
       <i class="info circle large yellow icon"></i>커뮤니티
     </a>
 </nav>
@@ -796,7 +796,7 @@
 	
 	
 	var categorieLoad = function() {
-		$.get(contextPath + "/product/categorieVolume.do", function(resultObj) {
+		$.get(SearchCriteria.java "/product/categorieVolume.do", function(resultObj) {
 			var result = resultObj.ajaxResult;
 			var i;
 			var volumes = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];

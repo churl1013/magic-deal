@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/mdtest01/semantic/semantic.min.css">
+
+<style type="text/css">
+/*
+	div{
+			display: block;	
+	}
+	
+ 	*/
+	.allCover {
+				text-align: center;
+	}
+	.menuAndBoard	{ 
+			width : 1024px;
+		 	display: inline-block;
+/* 		 	background-color: #9BA3AE;  */
+			border : 1px solid black;
+ 	} 
+	.boardMenu {
+		margin-top: 50px;
+		width: 15%;
+		float : left;
+		border: red dotted 1px;
+		text-align: left;
+		
+	}
+	
+	.marginMid{
+		float : left;		
+		margin: 10px;
+/* 		border : gray dotted 1px; */
+		background-color: #9BA3AE;
+	}
+	.boardList {		
+		width: 85%;
+		float : right;
+		border: blue dotted 1px;
+/* 		text-align: right; */
+	}
+	
+	.bbs{
+		margin-left: 50px;
+		margin-top: 15px;
+		width: 200px;
+		height: 53px;
+		display: block;
+	}
+	
+
+	
+	
+	
+	html, body, div, span, applet, object, iframe, select, input, textarea, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, textarea, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font-weight: normal;
+    color: #333;
+    font-family: '돋움',Dotum,Arial;
+}
+	img {
+    vertical-align: top;
+}
+	.post_list {
+    width: 730px;
+    height: 115px;
+    margin-top: 10px;
+    background: url("//image.hellomarket.com/web/background/img_mymenu_post_list_bg.png");
+    cursor: pointer;
+}
+.post_list a {
+    width: 730px;
+    height: 115px;
+}
+.post_title {
+    margin: 18px 0 0 20px;
+    width: 597px;
+    height: 20px;
+    float: left;
+}
+	.post_title_text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    width: 457px;
+    overflow: hidden!important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.post_category_text {
+    font-size: 12px;
+    font-weight: bold;
+    color: #9d9d9d;
+    float: right;
+    margin-right: 19px;
+    margin-top: -20px;
+}
+.post_content {
+    margin: 6px 0 0 20px;
+    width: 457px;
+    overflow: hidden!important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    float: left;
+    line-height: 15px;
+}
+.comment_count {
+    font-size: 12px;
+    color: #666;
+}
+.recommend_count {
+    font-size: 12px;
+    color: #666;
+    margin-left: 10px;
+}
+.post_img {
+    padding: 1px 0 2px 1px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    float: left;
+    background: url("//image.hellomarket.com/web/common/img_itemdetail_noimage_20160104.png");
+    background-size: 112px 112px;  
+}
+.post_content span {
+    width: 457px;
+    font-size: 12px;
+    color: #9d9d9d;
+}
+
+.post_bottom {
+    width: 597px;
+    margin-left: 20px;
+    margin-top: 18px;
+    float: left;
+}
+.time_ago {
+    margin-right: 20px;
+    float: right;
+    font-size: 12px;
+    color: #9d9d9d;
+}
+div.ui primary button{
+		text-align: left;
+}
+
+</style>
+</head>
+<body>
+<h4 class="ui header"> Board List </h4>
+
+<div class="allCover">
+	
+	<div class="menuAndBoard">
+		<div class="boardMenu">
+				<div>
+						<a href="#"  onclick=''><span class='bbs'>전체</span></a>
+						<a href="#"><span class='bbs'>리뷰</span></a>
+						<a href="#"><span class='bbs'>자유게시판</span></a>
+				</div>
+		
+		</div>
+		<div class="marginMid">
+		</div>
+		
+		<div class="boardList">
+			<div id="newBtn" class='ui primary button'>글쓰기</div>
+			<div id='listTable' class="ui celled table">
+				<div id="comunity">
+					
+					<ul>
+						<!-- example 
+						<li class="post_list" id="108550">
+							<a href="/post/108550">
+								<img width="112" height="112" class="post_img"
+									text="조인성과 함께 친구초대해봄"
+									src="//img.hellomarket.com/images8/2016/document/s3/03/10/17/4626_108550_1.png"
+									alt="조인성과 함께 친구초대해봄" /> 
+								<span class="post_title"> 
+									<span class="post_title_text">조인성과 함께 친구초대해봄</span> 
+										<span class="post_category_text">헬마뉴스</span>
+								</span> 
+								<span class="post_content"> 
+									<span> 안녕하세요.
+											헬로마켓입니다.친구초대 기능을 이용해보세요.친구에게 보낸 코드로 친구분이 회원가입시 나도 친구도 헬로포인트
+											2,000원씩 받게 됩니다.단, 최대 금액은 10만원...</span>
+								</span> 
+								<span class="post_bottom"> 
+									<span class="comment_count">댓글(0)</span>
+									<span class="recommend_count">추천(90)</span> 
+									<span class="time_ago">7일전</span>
+								</span>
+							</a>
+						</li>
+						-->
+					</ul>
+					
+				</div> 
+				
+				<div class='pagination'></div>
+	
+			</div><!-- listTable -->
+		</div><!-- boardList -->
+	</div><!--  class=wrap -->
+</div>
+<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>	
+<script src="/magic-deal/js/common.js"></script>
+<script>
+
+		
+		// 전체목록 보기 ----------
+		$.getJSON(
+				contextPath + '/board/ajax/list.do',				 
+					{		 				
+		 				page : 1
+		 			}, 	
+				function(resultObj, status, xhr){
+					console.log("board list resutObj : ");
+					console.dir(resultObj);
+					console.log("status : ");
+					console.dir(status);
+					console.log("xhr : ");
+					console.dir(xhr);
+					var table = $("#listTable div ul");
+					
+					for(var board of resultObj.data){
+						$("<li class='post_list' id='"+board.bNo+"'>")
+						.html("<a class='detailLink' href='#' boardNo='"+board.bNo+"'>"
+								+"	 <img width='112' height='112' class='post_img' src='aa.png'"
+								+			"text='"+board.bTitle+"' alt='"+board.bTitle+"' />"
+								+"	 <span class='post_title'>"
+								+		"<span class='post_title_text'>"+board.bTitle+"</span> "
+								+		"<span class='post_category_text'>"+board.bCate+"</span> "
+								+"	 </span>"
+								+"	 <span class='post_content'>"
+								+		"<span>"+board.bContent+"</span> "							
+								+"	 </span>"
+								+"	 <span class='post_bottom'>"
+								+		"<span class='comment_count'>댓글("+board.commentCnt+")</span> "							
+								+		"<span class='recommend_count'>추천("+board.commentCnt+")</span> "							
+								+		"<span class='time_ago'>"+board.bRegDate+"</span> "							
+								+"	 </span>"
+								+"</a>"					
+								).appendTo(table);
+					} // for				
+					
+					// paging add 160328, 17:45---------
+					printPaging(resultObj.pageMaker);		
+					
+					// paging add ------------------------
+					
+					
+					// 제목 링크에 클릭 이벤트 리스너를 등록한다.
+					$("a.detailLink").click(clickDetailLink);
+				}
+		);
+		
+		// paging 실제 구현 함수 start----------*****************************************************************
+		//*******************************start*********************************************************************
+		//printPaging(pageMaker);
+		//replyFn(page);
+		// 댓글 페이징을 위한 함수 20160324/ 1839- bNo와 페이지를 받아 처리한다.------------------------------------------------------
+		
+		//*******************************end*********************************************************************
+		// paging 실제 구현 함수 end ----------*****************************************************************
+		
+		$("#newBtn").on("click",function(){
+			//location.href="boardForm.html";
+			location.href='form.html?no=-1';
+		});
+		
+		// 게시글 제목을 클릭했을때 호출 되는 함수
+		function clickDetailLink(event){
+			event.preventDefault();
+			//location.href="form.html?no="+  $(event.target).attr("boardNo");			
+			location.href="form.html?no="+  $(this).attr("boardNo");			
+		}		
+
+	
+	function replyFn(page){			
+		console.log("replyFn in > page :"+page);
+		$.getJSON(						
+				contextPath + '/board/ajax/list.do',  
+				{		 				
+	 				page : page
+	 			}, 		
+				function(resultObj, status){
+	 				console.log("board list resutObj : ");
+					console.dir(resultObj);
+					console.log("status : ");
+					console.dir(status);
+					console.log("xhr : ");
+//					console.dir(xhr);
+					var table = $("#listTable div ul");
+					// 댓글 목록
+					$("#listTable div ul").empty(); // 기존 내용 지운다 : remove()는 아예 태그가 삭제된다?
+					for(var board of resultObj.data){
+						$("<li class='post_list' id='"+board.bNo+"'>")
+						.html("<a class='detailLink'  href='#' boardNo='"+board.bNo+"'>"
+								+"	 <img width='112' height='112' class='post_img' src='aa.png'"
+								+			"text='"+board.bTitle+"' alt='"+board.bTitle+"' />"
+								+"	 <span class='post_title'>"
+								+		"<span class='post_title_text'>"+board.bTitle+"</span> "
+								+		"<span class='post_category_text'>"+board.bCate+"</span> "
+								+"	 </span>"
+								+"	 <span class='post_content'>"
+								+		"<span>"+board.bContent+"</span> "							
+								+"	 </span>"
+								+"	 <span class='post_bottom'>"
+								+		"<span class='comment_count'>댓글("+board.commentCnt+")</span> "							
+								+		"<span class='recommend_count'>추천("+board.commentCnt+")</span> "							
+								+		"<span class='time_ago'>"+board.bRegDate+"</span> "							
+								+"	 </span>"
+								+"</a>"					
+								).appendTo(table);
+					} // for					
+					// 댓글 페이징처리 160324, 1134
+					printPaging(resultObj.pageMaker);	
+					
+					$("a.detailLink").click(clickDetailLink);
+					
+				} // function
+		);	// getJSON
+	}; // replyFn
+	
+	// 댓글 페이징 처리 start --------------------------------------------
+	function printPaging(pageMaker){
+		console.log("printPaging : in");
+		console.log("pageMaker :");
+		console.dir(pageMaker);
+		var str ="<div>";	
+		if ( pageMaker.prev){	
+			str += "<span><a href='#' onclick=replyFn("+ (pageMaker.startPage-1)+");> << </a></span>";
+		}
+		for ( var i=pageMaker.startPage, len=pageMaker.endPage; i <= len; i++){
+			var strClass = pageMaker.cri.page ==i?'class=active':'';	
+			str += "<span "+strClass+"><a href='#' onclick='replyFn(" +i+ ");'> " +i+ " </a></span>"; 
+		}
+		if(pageMaker.next){		
+			str += "<span><a href='#' onclick=replyFn("+(pageMaker.endPage+1)+");> >> </a></span>";
+		}
+		$('.pagination').html(str);
+		
+	} // pringPaging() end---------
+	
+</script>
+</body>
+</html>

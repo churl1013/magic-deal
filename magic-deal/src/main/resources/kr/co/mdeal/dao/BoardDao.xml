@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.mdeal.dao.BoardDao">
+
+  <resultMap type="board"  id="boardMap">
+    <result column="b_no" 		property="bNo" />
+    <result column="m_no" 	property="mNo" />
+    <result column="b_title" 		property="bTitle" />
+    <result column="b_content" 		property="bContent" />
+    <result column="b_reg_date" 		property="bRegDate" />
+    <result column="b_cate" 		property="bCate" />
+  </resultMap>
+  
+  <resultMap type="boardComment" id="cmtMap">
+  	<result column="b_c_no"  property="bcNo" />
+  	<result column="m_no"  property="mNo"  />
+  	<result column="b_no"  property="bNo"  />
+  	<result column="b_c_content"  property="bcContent"  />
+  	<result column="b_c_reg_date"  property="bcRegDate"  />  	
+  </resultMap>
+  
+  <resultMap type="boardPhoto"  id="boardPhoMap">
+  		<result column="b_ph_no" property="bPhNo"/>
+  		<result column="b_no" property="bNo"/>
+  		<result column="b_ph_path" property="bPhPath"/>
+  		<result column="b_ph_thum" property="bPhThum"/>
+  </resultMap>
+  
+  <resultMap type="hashMap" id="pageReplyAllMap">
+  	<result column="b_c_no"  property="bcNo" />
+  	<result column="m_no"  property="mNo"  />
+  	<result column="b_no"  property="bNo"  />
+  	<result column="b_c_content"  property="bcContent"  />
+  	<result column="b_c_reg_date"  property="bcRegDate"  />  
+  	<result column="page"  property="page"/>
+  	<result column="perPageNum"  property="perPageNum"/>
+  	<result column="totalCount" property="totalCount" />
+  	<result column="startPage" property="startPage" />
+  	<result column="endPage" property="endPage" />
+  	<result column="prev" property="prev" />
+  	<result column="next" property="next" />
+  </resultMap>
+  
+  <resultMap type="hashMap" id="pageBoardAllMap">  
+  	<result column="b_no"  property="bNo"  />
+  	<result column="m_no"  property="mNo"  />
+  	<result column="b_title"  property="bTitle"  />
+  	<result column="b_content"  property="bContent"  />
+  	<result column="b_reg_date"  property="bRegDate"  />  
+  	<result column="b_cate"  property="bCate"  />  
+  	<result column="page"  property="page"/>
+  	<result column="perPageNum"  property="perPageNum"/>
+  	<result column="totalCount" property="totalCount" />
+  	<result column="startPage" property="startPage" />
+  	<result column="endPage" property="endPage" />
+  	<result column="prev" property="prev" />
+  	<result column="next" property="next" />
+  </resultMap>
+  
+  <select id="listPage"  resultType="board"  parameterType="int">
+  		select b_no, m_no, b_title, b_content, date_format(b_reg_date, "%Y/%c/%d %H:%i" ) bcRegDate, b_cate ,
+  					( select count(*) from board_comment
+  								where  b_no = a.b_no ) as commentCnt,
+  					( select nname from member
+  								 where m_no = a.m_no ) as name
+  					from board as a	
+  					limit #{page}, 10  
+  
+  </select>
+  
+     <!--  paging 추가 보드 160328 1928 add -->
+   <select id="boardListPage"  resultMap="pageBoardAllMap"  parameterType="hashMap">
+   		select b_no, m_no, b_title, b_content, date_format(b_reg_date, "%Y/%c/%d %H:%i" ) b_reg_date, b_cate ,
+  					( select count(*) from board_comment
+  								where  b_no = a.b_no ) as commentCnt,
+  					( select nname from member
+  								 where m_no = a.m_no ) as name
+  					from board as a
+  					order by b_no desc
+  					limit #{cri.pageStart}, #{cri.perPageNum}
+   </select>
+    <select id="boardCount" resultType="int">
+   		select count(*) from board 
+   </select>
+  
+  <select id="listCriteria"  resultType="board" >
+  		select b_no, m_no, b_title, b_content, date_format(b_reg_date, "%Y/%c/%d %H:%i" ) b_reg_date, b_cate ,
+  					( select count(*) from board_comment
+  								where  b_no = a.b_no ) as commentCnt,
+  					( select nname from member
+  								 where m_no = a.m_no ) as name
+  					from board as a	
+  					limit #{pageStart}, #{perPageNum} 
+  
+  </select>
+  
+<!-- 글목록 20160317m 1640 before -->
+<!--   <select id="selectList"  resultMap="boardMap">  		 -->
+<!--   		select b_no, m_no, b_title, b_content, b_reg_date, b_cate , -->
+<!--   					( select count(*) from board_comment -->
+<!--   								where  b_no = a.b_no ) as commentCnt -->
+<!--   					from board as a	   -->
+<!--   </select>  -->
+
+  <!-- 글쓴이 추가 20160317 , 1640 -->   
+  <select id="selectList"  resultMap="boardMap">  		
+  		select b_no, m_no, b_title, b_content, date_format(b_reg_date, "%Y/%c/%d %H:%i" ) b_reg_date, b_cate ,
+  					( select count(*) from board_comment
+  								where  b_no = a.b_no ) as commentCnt,
+  					( select nname from member
+  								 where m_no = a.m_no ) as name
+  					from board as a	  
+  </select>    
+ 
+ <!-- 글등록 -->
+  <insert id="insertBoard" parameterType="board" >
+    insert into board
+             ( m_no, b_title, b_content, b_reg_date, b_cate) 
+    values  ( #{mNo}, #{bTitle},#{bContent},now(),#{bCate} )
+  </insert>
+  
+ <!-- 상세페이지-->
+ 	<select id="selectOne"  parameterType="int"  resultMap="boardMap">
+ 		select * from board
+ 				where b_no = #{bNo}
+ 	</select>
+ 	
+ <!-- 글 수정 -->
+ 	<update id="updateBoard"  parameterType="board">
+ 			update board 
+ 					set   b_title = #{bTitle},  b_content = #{bContent}
+ 					where  b_no = #{bNo}
+ 	</update>
+  
+  <!-- 글 삭제 -->
+  <delete id="deleteBoard"  parameterType="int">
+  		delete from board
+  				where b_no = #{bNo}
+  </delete>
+  
+  <!-- 새 글 입력시 파일첨부할때 넣을 게시물번호 -->
+  <select id="boardbNoMax" resultType="int">
+  		SELECT max(B_NO) from board
+  </select>
+  
+  
+  <!--  *******************댓글 관련 ****************** -->
+  <select id="selectCommentList"  parameterType="int"  resultMap="cmtMap">
+  		select date_format(b_c_reg_date, "%Y/%c/%d %H:%i" ) b_reg_date from board_comment  
+  				 where b_no = #{bNo}
+  </select>
+<!--   <select id="selectCommentList"  parameterType="int"  resultMap="cmtMap"> -->
+<!--   		select * from board_comment   -->
+<!--   				 where b_no = #{bNo} -->
+<!--   </select> -->
+  
+  <insert id="insertComment" parameterType="boardComment"  >
+  		insert into board_comment
+  				( b_no, b_c_content , b_c_reg_date )
+  				values ( #{bNo},  #{bcContent}, now() )
+  </insert>
+  
+  <select id='selectCommentMaxbcNo'  parameterType="int"  resultType="int">
+  		select max(b_c_no) from board_comment
+  				  where b_no = #{bNo}
+  </select>
+  
+  <delete id="deleteComment"  parameterType="int">
+  	 		delete from board_comment
+  	 			  where b_c_No = #{bcNo}
+  </delete>
+  
+  <update id="updateComment"  parameterType="boardComment">
+  				update board_comment 
+ 					set    b_c_content = #{bcContent}
+ 					where  b_c_no = #{bcNo}
+  </update>
+  
+  <!--  첨부파일저장하기 160317, 1832 -->
+  <insert id="boardAddAttach"  parameterType="boardPhoto" >
+  		insert into board_photo (b_no, b_ph_path, b_ph_thum, b_ph_name ) 
+  				values ( #{bNo}, #{bPhPath}, #{bPhThum} , #{bPhName} )
+  </insert>
+  
+  <!--  reply paging 160321 -->
+<!--    <select id="replyListPage"  resultType="boardComment"> -->
+   <select id="replyListPage"  resultMap="pageReplyAllMap"  parameterType="hashMap">
+   		select b_c_no, m_no, b_no, b_c_content, date_format(b_c_reg_date, "%Y/%c/%d %H:%i" ) bcRegDate from board_comment 
+   					where b_no = #{bNo}
+   					order by b_c_no desc
+   					limit #{cri.pageStart}, #{cri.perPageNum}   					
+   </select>
+   
+
+   
+   <select id="count" resultType="int">
+   		select count(b_no) from board_comment where b_no = #{bNo}
+   </select>
+   
+  
+   
+</mapper>
