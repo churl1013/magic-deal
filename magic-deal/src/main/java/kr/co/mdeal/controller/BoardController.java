@@ -42,36 +42,10 @@ public class BoardController {
 	@RequestMapping("regist.do")
 	public void boardRegist(Board board) throws Exception{
 		System.out.println("boardRegist in : bTitle "+board.getbTitle());
-		boardservice.registBoard(board);
+		boardservice.registBoard(board);		
 		
-		/*
-		// 160317 file attach add
-		String[] files = board.getFiles();
-		if ( files == null ){ 
-			return;
-		}
-		for( String fileName : files ){
-			boardservice.boardAddAttach(fileName);
-		}
-		*/
 	}
-	// board List : AllBoard
-	/*  160328 before
-	@RequestMapping("list.do")
-	public Object boardList(){
-		// page 처리
-//		List<board> boards = boardservice.getSelecetBoardList(page);		
-		
-		List<Board> boards = boardservice.selectList();	
-		
-		HashMap<String,Object>  resultMap = new HashMap<>();
-		resultMap.put("status", "success");
-		resultMap.put("data", boards);
-		System.out.println("list.do : boards"+boards);
-		return resultMap;		
-	}
-	*/
-	
+
 	@RequestMapping("list.do")
 	public Object boardList(@RequestParam int page){
 		System.out.println("paging list 0328 in > page :"+page);
@@ -128,20 +102,7 @@ public class BoardController {
 		System.out.println("컨트롤러 > deleteBoard no :"+no);
 		boardservice.deleteBoard(no);
 	}
-	
-	//=====댓글 관련 =============================
-	/* 160324 / 1631 before
-	@RequestMapping("commentList.do")
-	public Object selectCommentList(int bno){
-		System.out.println("댓글 list에 넘어온 bno : "+bno);
-		List<BoardComment> bcList = boardservice.selectCommentList(bno);
-		 HashMap<String,Object> resultMap = new HashMap<>();
-//		  resultMap.put("status", "success");
-		  resultMap.put("bcList", bcList);
-		return resultMap;
-	}
-	*/
-	
+		
 	// test용 적용 안함
 	@RequestMapping(value="/all/{bNo}", method=RequestMethod.GET)
 	public ResponseEntity<List<BoardComment>> cmtList(@PathVariable("bNo") int bNo){
@@ -149,10 +110,7 @@ public class BoardController {
 		try{
 		System.out.println("댓글 list에 넘어온 bno : "+bNo);
 		entity = new ResponseEntity<>(boardservice.selectCommentList(bNo), HttpStatus.OK);
-//		List<BoardComment> bcList = boardservice.selectCommentList(bNo);
-//		HashMap<String,Object> resultMap = new HashMap<>();
-////		  resultMap.put("status", "success");
-//		resultMap.put("bcList", bcList);
+
 		} catch(Exception e){
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -163,14 +121,7 @@ public class BoardController {
 	
 	@RequestMapping("cmtRegist")
 	public BoardComment registComment(BoardComment bcmt){
-		System.out.println("controller > cmtRegist.do in > bNo :"+bcmt.getbNo());  // ex) bNo : 2 Okay
-						
-//		boardservice.registComment(bcmt); // 등록
-		
-//		int bcNoMax =boardservice.selectCommentMaxbcNo(bcmt.getbNo()); // board_comment No 최고값, 등록하면 증가하므로+1
-//		System.out.println(bcmt.getbNo() +"중에 bcNo의 최고값+1 = 등록될 번호 :"+(bcNoMax+1));
-//		BoardComment resultCmt = boardservice.selectCommentBybNo(bcmt.getbNo()); // 등록한 것을 바로 출력하기 위해
-//		System.out.println("cmtMapper after boardcommnet : "+resultCmt);
+		System.out.println("controller > cmtRegist.do in > bNo :"+bcmt.getbNo());  
 		return boardservice.registComment(bcmt);
 	}
 	
@@ -217,21 +168,14 @@ public class BoardController {
 				
 			List<BoardComment> cmtList = boardservice.replyListPage(bNo, cri);
 			System.out.println("boardservice.replyListPage 호출후 cmtList : ");
-//			for(BoardComment cmt : cmtList){
-//				System.out.println("BcNO :"+cmt.getBcNo());
-//				System.out.println("bNO : "+cmt.getbNo());
-//				System.out.println("mNo : "+cmt.getmNo());
-//				System.out.println("BcContent : "+cmt.getBcContent());
-//			}
-			
+
 			map.put("cmtList", cmtList);
 			System.out.println("boardservice.count 호출전 : ");
 			int replyCount = boardservice.count(bNo);
 			System.out.println("boardservice.count 호출후 : ");
 			pageMaker.setTotalCount(replyCount);
 			
-			map.put("pageMaker", pageMaker);
-			
+			map.put("pageMaker", pageMaker);			
 			entity = new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 			
 		} catch(Exception e){
@@ -240,9 +184,5 @@ public class BoardController {
 		}		
 		return entity;
 	}
-//	public int count(int bNo) throws Exception{
-//		
-//	}
-	
 
 }
