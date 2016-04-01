@@ -24,6 +24,7 @@ import com.mysql.fabric.xmlrpc.base.Param;
 import kr.co.mdeal.domain.Board;
 import kr.co.mdeal.domain.BoardComment;
 import kr.co.mdeal.domain.Criteria;
+import kr.co.mdeal.domain.Member;
 import kr.co.mdeal.domain.PageMaker;
 import kr.co.mdeal.service.BoardService;
 
@@ -39,10 +40,12 @@ public class BoardController {
 	
 	// board Regist
 	@Transactional  // 2016-3-17 20:00 add
-	@RequestMapping("regist.do")
-	public void boardRegist(Board board) throws Exception{
+	@RequestMapping("auth/regist.do")
+	public void boardRegist(Board board, HttpServletRequest req) throws Exception{
 		System.out.println("boardRegist in : bTitle "+board.getbTitle());
-		boardservice.registBoard(board);		
+		Member login = (Member)req.getAttribute("auth");
+		board.setmNo(login.getmNo());
+		boardservice.registBoard(board);
 		
 	}
 
@@ -119,8 +122,10 @@ public class BoardController {
 	}
 	
 	
-	@RequestMapping("cmtRegist")
-	public BoardComment registComment(BoardComment bcmt){
+	@RequestMapping("auth/cmtRegist.do")
+	public BoardComment registComment(BoardComment bcmt, HttpServletRequest req){
+		Member login = (Member)req.getAttribute("auth");
+		bcmt.setmNo(login.getmNo());
 		System.out.println("controller > cmtRegist.do in > bNo :"+bcmt.getbNo());  
 		return boardservice.registComment(bcmt);
 	}

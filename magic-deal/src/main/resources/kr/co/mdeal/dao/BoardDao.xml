@@ -159,8 +159,8 @@
   
   <insert id="insertComment" parameterType="boardComment"  >
   		insert into board_comment
-  				( b_no, b_c_content , b_c_reg_date )
-  				values ( #{bNo},  #{bcContent}, now() )
+  				( b_no, b_c_content , b_c_reg_date, m_no )
+  				values ( #{bNo},  #{bcContent}, now(), #{mNo} )
   </insert>
   
   <select id='selectCommentMaxbcNo'  parameterType="int"  resultType="int">

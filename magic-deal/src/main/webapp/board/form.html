@@ -447,7 +447,7 @@ function replyFn(no, page){
 		//jQuery.getJSON( url [, data ] [, success ] )
 		console.log("삭제버튼 호출됨");
 		console.log('bNo : $("#bNo").val():' +$('#bNo').val());
-		$.getJSON( '/mdtest01/board/ajax/delete.do?no='+$('#bNo').val(),
+		$.getJSON( contextPath + '/board/ajax/delete.do?no='+$('#bNo').val(),
 				function (resultObj, status){
 					console.log("resultObj : "+resultObj);
 					console.log("fn : status : "+status);
@@ -465,7 +465,7 @@ function replyFn(no, page){
 		console.dir("cmtRegistBtn in");
 		// $(selector).post(URL,data,function(data,status,xhr),dataType)
 		$.post( 
-				contextPath + '/board/ajax/cmtRegist.do',
+				contextPath + '/board/ajax/auth/cmtRegist.do',
 				{
 					bNo : no,
 					bcContent : $('#bcContent').val()					
