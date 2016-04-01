@@ -48,12 +48,7 @@
 				<input type="text" id='bNo' readonly />
 			</div>
 		</div>
-		<div class="form-group">
-			<label>작성자</label>
-			<div>
-				<input type="text" id='mNo' readonly="readonly" />
-			</div>
-		</div>
+	
 		<div class="form-group">
 			<label>제목</label>
 			<div>
@@ -66,47 +61,6 @@
 				<textarea id="bContent" rows='10' cols='50' placeholder="내용"></textarea>
 			</div>
 		</div>
-		<div class="newForm form-group photoRegBox">
-				<div class="fileDrop"></div>
-				<div class="box-footer">
-					
-					<ul class="mailbox-attachments clearfix uploadedList"></ul>
-				</div>
-			
-				<div class="hiddenTg"></div>
-
-				<!--  
-				<div>
-					<div class="fileInputOverlapBox"></div>
-					<input type="file" class="fileInputHide" />
-				</div>
-				<div>
-					<div class="fileInputOverlapBox"></div>
-					<input type="file" class="fileInputHide" />
-				</div>
-				<div>
-					<div class="fileInputOverlapBox"></div>
-					<input type="file" class="fileInputHide" />
-				</div>
-				-->
-
-			</div>
-
-		<button type="submit" class="newForm btn btn-primary">Submit</button>
-
-		<!--  20160322 , 1140 첨부파일용 템플릿 add -->
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
-<script id="template" type="text/x-handlebars-template">
-	<li>
-		<span class="mailbox-attachment-icon has-img"><img src="{{imgsrc}}" alt="Attachment"></span>
-		<div class="mailbox-attachment-info">
-		<a href="{{getLink}}" class="mailbox-attachment-name">{{filaName}}</a>
-		<a href="{{fullName}}" class="btn btn-default btn-xs pull-right delbtn"><i class="fa fa-fw fa-remove"></i></a>
-		
-		</div>
-	</li>
-</script>
-
 
 		<div class="detailForm">
 			<label>작성일</label>
@@ -366,9 +320,8 @@ function replyFn(no, page){
 			$(this).prev().attr('class','commentDelBtn ui inverted red button');
 			$(this).prev().attr('value','delete');
 			$(this).attr('class','commentUpdateBtn ui inverted blue button');
-			$(this).attr('value','update');			
+			$(this).attr('value','update');						
 			
-			//box.remove();
 		});
 
 // 댓글 수정 관련 코딩 end----------------160313	
@@ -387,15 +340,6 @@ function replyFn(no, page){
 		}
 		// jQuery.post( url [, data ] [, success ] [, dataType ] )
 		// url : String,  data : PlainObject or String , success : Function(Object data, String textStatus, jqXHR jqXHR){}, datyType : String
-		var imgsUrl = "";
-		var imgCount = $("div.hiddenTg").children().length;
-	
-		// imgsStr 문자열에 ? 구분자로 파일 경로 +
-		var imgsStr = "";
-		for(var i = 0; i < imgCount; i++) {
-			imgsStr += $("input[name=files" + i + "]").val();
-			if(i != imgCount - 1) imgsStr += "?";
-		}
 		
 		$.ajax({	url : contextPath + "/board/ajax/auth/regist.do" ,
 					type : 'post',
@@ -492,156 +436,6 @@ function replyFn(no, page){
 		 $('input[id="bcContent"]').val('');
 	}); // cmtRegistBtn end----
 	
-	// --------------2016-03-15 fileupload add
-	//********************************************************************************************************************
-	// 파일 업로드 관련 처리 : 시작 ----------
-	//********************************************************************************************************************
-	
-
-	var template = Handlebars.compile($("#template").html());
-
-	$('.fileDrop').on('dragenter dragover', function (event){
-		event.preventDefault();
-		console.log("dragenter or dragover event !");
-	});
-	$('.fileDrop').on('drop', function(event){
-		event.preventDefault();
-		console.log("drop event !");
-		var files = event.originalEvent.dataTransfer.files; // 이벤트를 통해 전달된 파일들을 담을 변수 설정
-		var file = files[0];
-		
-		var bNo =no; // add 160329, 1723
-	
-		//console.log(files);
-		var formData = new FormData(); // html5에서 지원 ie10ver~
-		formData.append('file',file);
-		formData.append('bNo',no); // add 160329, 1723
-		// 새글입력이라면 첨부파일 입력금지
-// 		if (no == -1){
-// 			alert("현재, 새글에서는 첨부가 안됩니다.");
-// 			return;
-// 		}
-		//formData.append('files',files); 
-		
-		$.ajax ( { url : contextPath + '/file/uploadAjax.do',
-				data : formData,
-				dataType : 'text',
-				processData : false,
-				contentType : false,
-				type : 'POST',
-				success : function(data){					
-					console.log("uploadAjax after > data :");
-					console.log(data); // ex) /2016/03/17/s_895cd4d4-bcae-476b-8176-aa779ea322f0_woman03.jpg
-					console.log(checkImageType(data)); // upload.js > checkImageType(data)
-		
-					// 2016-3-21 : 업로드된 파일 이름의 처리를 위한 스크립트
-					var fileInfo = getFileInfo(data);	 // upload.js > getFileInfo(data)
-					// gefFileInfo : 저장된 폴더와 파일명을 파라미터로 받아서
-					// fileName, imgsrc, getLink, fullName의 결과를 만들어서 리턴한다.
-					
-					// fileinfo : "sun_child.jpg"
-					// fileName : 
-					// fullName : "/2016/03/22/s_6f5f1b4d-2bbf-4138-ac0a-e4667890b036_sun_child.jpg"
-					// getLink : "/mdtest01/file/displayFile?fileName=/2016/03/22/6f5f1b4d-2bbf-4138-ac0a-e4667890b036_sun_child.jpg"
-					// imgsrc : "/mdtest01/file/displayFile?fileName=/2016/03/22/s_6f5f1b4d-2bbf-4138-ac0a-e4667890b036_sun_child.jpg"
-					console.log("form.html 399line > fileInfo :")
-					console.dir(fileInfo);
-		
-					var html = template(fileInfo);
-					console.log("form.html 402line > html :"+html);
-					$(".uploadedList").append(html);
-					
-					var str = "";
-					// hidden 태그 append
-					$(".uploadedList .delbtn").each(function(index){
-						str = "<input type='hidden' name='files"+ index +"' value='" + $(this).siblings("[name=fileName]").val() + "'>";
-					});
-
-					$(".hiddenTg").append(str);
-					
-		
-					/*
-					var str ="";
-					if ( checkImageType(data)){
-						str ="<div><a href='/mdtest01/file/displayFile.do?fineName="+getImageLink(data)+"'/>"
-								+"<img src='/mdtest01/file/displayFile.do?fileName="+data+"'/></a>"
-								+"<small data-src='"+data+"'>X</small></div>";								
-					} else{
-						str ="<div><a href='/mdtest01/file/displayFile.do?fileName="+data+"'/>"
-							+getOriginalName(data)+"</a>"
-							+"<small data-src='"+data+"'/>X</small></div>";
-					}					
-					$(".uploadedList").append(str);
-					*/
-					
-				} // function
-		}); // $.ajax
-	});
-	
-		
-	// 파일이름을 줄이기 : 파일이름 중복을 위해 임의로 만든 앞에 이름 잘라버림
-	function getOriginalName(fileName){
-		// 이미지 파일이 아닐경우 원래 파일이름으로 돌릴필요가 없으므로 바로 리턴
-		if( checkImageType(fileName)){
-			return;
-		}
-		var idx = fileName.indexOf("_")+1;
-		return fileName.substr(idx);
-	}
-	
-	// 이미지파일의 원본찾기 : 이미지일 경우 > 날짜 폴더와 UUID로 주어진 이름 삭제하기
-	function getImageLink(fileName){
-		if ( ! checkImageType(fileName) ){
-			return;
-		}
-		var front = fileName.substr(0, 12);
-		var end = fileName.substr(14);
-		return front+end;
-	}
-	
-	// 첨부파일의 삭제처리
-	$('.uploadedList').on('click', 'small', function(event){
-		var that = $(this);
-		console.log(".uploaddList small click :");
-		// jQuery.ajax( [settings ] )  >> $.ajax({name:value, name:value, ... })
-		$.ajax({
-			url : contextPath + '/file/deleteFile.do',
-			type : 'post',
-			data : { 
-				fileName : $(this).attr('data-src'),
-				bNo : no
-				},
-			//data : { fileName : $(this).attr('data-src') },
-			dataType : 'text',
-			success : function(result){
-				if ( result == 'deleted'){
-					console.log("파일 삭제 성공!");
-					that.parent("div").remove();
-				}
-			}			
-		});
-	});
-	//********************************************************************************************************************
-	// 파일 업로드 관련 처리 끝-------------
-	//********************************************************************************************************************
-	
-	// 이미지 파일이 아닌경우는 파일 아이콘을 보여준다.
-	
-
-	
-	// fileupload end---------------------------
-	
-	// form submit 160322 tues 1620 : 업로드된 파일 이름의 처리를 위한 스크립트 2
-	$("#registForm").submit( function (event) {
-		event.preventDefault();
-		var that = $(this);
-		var str ="";
-		$(".uploadedList .delbtn").each( function (index) {
-			str += "<input type='hidden' name='files["+index+"]' value='"+$(this).attr("href")+"'>'";
-		})
-			that.append(str);
-			that.get(0).submit();		
-	});
 
 </script>
 
