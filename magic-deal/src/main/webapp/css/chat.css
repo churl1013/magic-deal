@@ -238,6 +238,10 @@
 	
 	.chat-chatInfo>span {
 		display : block;	
+		width : 200px;
+		overflow : hidden;
+		text-overflow: ellipsis;
+   	 	white-space: nowrap;
 	}
 	
 	.chat-regDate {
@@ -306,3 +310,5 @@
 		line-height : 58px;	
 		cursor : default;
 	}
+	
+	
