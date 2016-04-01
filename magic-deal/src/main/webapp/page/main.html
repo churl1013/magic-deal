@@ -796,7 +796,7 @@
 	
 	
 	var categorieLoad = function() {
-		$.get(SearchCriteria.java "/product/categorieVolume.do", function(resultObj) {
+		$.get(contextPath + "/product/categorieVolume.do", function(resultObj) {
 			var result = resultObj.ajaxResult;
 			var i;
 			var volumes = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];

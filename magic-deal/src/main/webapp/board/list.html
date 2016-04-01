@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/mdtest01/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/global.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/header.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
 
 <style type="text/css">
 /*
@@ -12,15 +15,15 @@
 	}
 	
  	*/
-	.allCover {
-				text-align: center;
-	}
+ 	.allCover {
+ 		width : 1024px;
+ 		margin : 0px auto;
+ 	}
+ 	
 	.menuAndBoard	{ 
-			width : 1024px;
-		 	display: inline-block;
-/* 		 	background-color: #9BA3AE;  */
-			border : 1px solid black;
- 	} 
+		width : 100%;
+	 	display: inline-block;
+	} 
 	.boardMenu {
 		margin-top: 50px;
 		width: 15%;
@@ -29,13 +32,7 @@
 		text-align: left;
 		
 	}
-	
-	.marginMid{
-		float : left;		
-		margin: 10px;
-/* 		border : gray dotted 1px; */
-		background-color: #9BA3AE;
-	}
+
 	.boardList {		
 		width: 85%;
 		float : right;
@@ -150,11 +147,68 @@ div.ui primary button{
 		text-align: left;
 }
 
+header {
+	border-bottom : 1px solid #c8c8c8!important;
+}
+
+footer {
+	width: 100%;
+	height: 50px;
+	background: #222;
+	line-height: 50px;
+	text-align: center;
+	color: white;
+	font-size : 12px;
+	font-weight: 600;
+	position : absolute;
+	bottom : 0px;
+}
+
+section {
+	width : 100%;
+	padding-top : 70px;
+	padding-bottom : 50px;
+	min-height : 100%;
+}
+
 </style>
 </head>
 <body>
-<h4 class="ui header"> Board List </h4>
+<!-- 헤더부 -->
+<header>
+	<div id="loginStatusWrap">
+		<!-- 로그인 관련 내용 헤더 -->
+	</div>
+	<div id="headerLogo">
+		<img src="../img/fontlogo.png"/>
+	</div>
+</header>
+<!-- 헤더끝 -->
 
+<!-- 네비게이션 -->
+<div id="navBtn" class="ui icon button small black">
+	<i class="sidebar icon"></i>
+</div>
+<nav class="ui vertical menu">
+	<a id="navMainDirectBtn" class="item">
+      <i class="home yellow large icon"></i>메인
+    </a>
+    <a id="navProductRegistBtn" class="item">
+      <i class="cubes yellow large icon"></i>물품등록
+    </a>
+    <a id="navMapSearchBtn" class="item">
+      <i class="marker yellow large icon"></i>지도검색
+    </a>
+    <a id="navChartSearchBtn" class="item">
+      <i class="area chart yellow large icon"></i>차트검색
+    </a>
+    <a id="navBoardDirectBtn" class="item">
+      <i class="info circle large yellow icon"></i>커뮤니티
+    </a>
+</nav>
+<!-- 네비게이션 끝 -->
+
+<section>
 <div class="allCover">
 	
 	<div class="menuAndBoard">
@@ -165,8 +219,6 @@ div.ui primary button{
 						<a href="#"><span class='bbs'>자유게시판</span></a>
 				</div>
 		
-		</div>
-		<div class="marginMid">
 		</div>
 		
 		<div class="boardList">
@@ -209,8 +261,120 @@ div.ui primary button{
 		</div><!-- boardList -->
 	</div><!--  class=wrap -->
 </div>
-<script type="text/javascript" src="../lib/jquery/jquery.js"></script>
-<script type="text/javascript" src="../js/common.js"></script>	
+</section>
+<footer>
+	Copyright© 2016 Respond 404 
+</footer>
+
+<!-- 헤더 관련 팝업 모달 -->
+<!-- 로그인 모달 -->
+<div class="ui modal loginModal">
+  <i class="close icon" id="loginCloseBtn" onclick="loginClose();"></i>
+  <div class="header">
+    	로그인 및 회원가입
+  </div>
+  <div class="content" style="text-align:center;">
+        <div class="ui small left icon input" style="margin-bottom:15px;">
+			<input type="text" id="loginId" placeholder="아이디를 입력하세요"/>
+			<i class="user icon"></i>
+		</div>
+		<div class="ui small left icon input">
+			<input type="password" id="loginPass" placeholder="비밀번호를 입력하세요"/>
+			<i class="privacy icon"></i>
+		</div>
+  </div>
+  <div class="actions">
+    <div class="ui ok orange button">
+      Sign up
+    </div>
+    <div class="ui teal deny icon button">
+      Log in
+      <i class="sign in icon"></i>
+    </div>
+  </div>
+</div>
+<!-- 로그인 모달 끝 -->
+
+<!-- 회원가입 모달 -->
+<div class="ui modal signUpModal">
+  <div id="signUpHeader" class="header">
+	  <i class="large icons">
+		  <i class="user icon"></i>
+		  <i class="add corner orange icon"></i>
+	  </i>
+  	Welcome Magic Deal !!!
+  </div>
+  <div class="content">
+	<label>아이디
+       <span style="font-size:12px; color:#444">
+         (영문, 숫자 혼합 8자리 이상)
+       </span>
+     </label>
+     <div class="ui small input">
+		<input type="text" id="signId" style="width:150px;"/>&nbsp;
+		<span id="signIdChkResult">아이디를 입력하세요!</span>
+	</div>
+      <label>비밀번호
+         <span style="font-size:12px; color:#444">
+           (숫자, 특수문자 포함 8자 이상)
+         </span>
+       </label>
+       <div class="ui small input">
+ 			<input type="password" id="signPass" style="width:200px;"/>
+	</div>
+
+       <label>비밀번호 확인</label>
+       <div class="ui small input">
+ 			<input type="password" id="signPassChk" style="width:200px;"/>
+	</div>
+
+       <label>닉네임</label>
+       <div class="ui small input">
+ 			<input type="text" id="signNickName" style="width:150px;"/> &nbsp;
+		<span id="signNickChkResult">닉네임을 입력하세요!</span>
+	</div>
+	
+	<label>주소</label>
+       <div class="ui small input">
+ 			<input type="text" id="signAddr" style="width:350px;" readonly/>&nbsp;
+ 			<button class="ui orange button" onclick="execDaumPostcode()">주소검색</button>
+ 			<input type="hidden" id="signLat" value=""/>
+ 			<input type="hidden" id="signLon" value=""/>
+	</div>
+	<div id="popupLayer" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
+	<img src="http://i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+	</div>
+  </div>
+  <div id="signUpFooter" class="actions">
+  	<button class="ui red deny inverted icon button" id="signUpCloseBtn">
+  		<i class="close icon"></i> 닫기
+  	</button>
+    <button class="ui violet ok inverted right labeled icon button" onclick="signUpSubmitChk();">
+      	회원가입
+      <i class="sign in icon"></i>
+    </button>
+  </div>
+</div>
+<!-- 회원가입 모달 끝 -->
+
+<!-- 알림창 모달 -->
+<div class="ui modal alertModal">
+  <i class="close icon"></i>
+  <div class="header">
+    	알림
+  </div>
+  <div id="alertMsg" class="content" style="text-align:center;">
+        
+  </div>
+  <div class="actions">
+     <div id="alertBtn" class="ui ok right grey labeled icon button">
+    </div>
+  </div>
+</div>
+<!-- 알림창 모달 끝 -->
+
+<script type="text/javascript" src="/magic-deal/lib/jquery/jquery.js"></script>
+<script src="/magic-deal/semantic/semantic.min.js"></script>
 <script src="/magic-deal/js/common.js"></script>
 <script>
 
@@ -350,6 +514,16 @@ div.ui primary button{
 		
 	} // pringPaging() end---------
 	
+	
+	// 로그인 체크 
+	var loginCheck = function() {
+		$.getJSON(contextPath + "/member/loginCheck.do", function(resultObj) {
+			var result = resultObj.ajaxResult;
+			loginBoxDraw(result.data);
+		});
+	};
+	
+	loginCheck();
 </script>
 </body>
 </html>

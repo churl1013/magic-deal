@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/mdtest01/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/magic-deal/semantic/semantic.min.css">
 <style type="text/css">
 	
 	#allWrap, .replyForm{
@@ -397,14 +397,13 @@ function replyFn(no, page){
 			if(i != imgCount - 1) imgsStr += "?";
 		}
 		
-		$.ajax({	url : contextPath + "/board/ajax/regist.do" ,
+		$.ajax({	url : contextPath + "/board/ajax/auth/regist.do" ,
 					type : 'post',
 					dataType : 'json',
 					data : {
 						mNo : 1,
 						bTitle : $("#bTitle").val(),
-						bContent : $("#bContent").val(),
-						files : imgsStr
+						bContent : $("#bContent").val()
 					}
 				
 				}).done(

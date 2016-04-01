@@ -93,9 +93,6 @@
 		position : relative;
 		overflow : hidden;
 		z-index : 0;
-		border-right : 1px solid #c8c8c8;
-		border-top : 1px solid #c8c8c8;
-		background-color : #000;
 	}
 	
 	.logoBox {
