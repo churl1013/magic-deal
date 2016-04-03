@@ -9,12 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/magic-deal/css/nav.css">
 
 <style type="text/css">
-/*
-	div{
-			display: block;	
-	}
-	
- 	*/
+
  	.allCover {
  		width : 1024px;
  		margin : 0px auto;
@@ -24,19 +19,21 @@
 		width : 100%;
 	 	display: inline-block;
 	} 
-	.boardMenu {
-		margin-top: 50px;
-		width: 15%;
-		float : left;
-		border: red dotted 1px;
-		text-align: left;
+/* 	.boardMenu { */
+/* 		margin-top: 50px; */
+/* 		width: 15%; */
+/* 		float : left; */
+/* 		border: red dotted 1px; */
+/* 		text-align: left; */
 		
-	}
+/* 	} */
 
 	.boardList {		
-		width: 85%;
+		width: 1024px;
 		float : right;
-		border: blue dotted 1px;
+		position: absolute;
+		top: 50%;
+		margin-top: -250px;
 /* 		text-align: right; */
 	}
 	
@@ -47,29 +44,15 @@
 		height: 53px;
 		display: block;
 	}
-	
-
-	
-	
-	
-	html, body, div, span, applet, object, iframe, select, input, textarea, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, textarea, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    vertical-align: baseline;
-    font-weight: normal;
-    color: #333;
-    font-family: '돋움',Dotum,Arial;
-}
-	img {
-    vertical-align: top;
-}
-	.post_list {
-    width: 730px;
-    height: 115px;
-    margin-top: 10px;
-    background: url("//image.hellomarket.com/web/background/img_mymenu_post_list_bg.png");
-    cursor: pointer;
+ 	img { 
+     vertical-align: top; 
+ } 
+ 	.post_list { 
+     width: 730px; 
+     height: 115px; 
+     margin-top: 10px; 
+      background: url("//image.hellomarket.com/web/background/img_mymenu_post_list_bg.png");  
+     cursor: pointer; 
 }
 .post_list a {
     width: 730px;
@@ -160,7 +143,7 @@ footer {
 	color: white;
 	font-size : 12px;
 	font-weight: 600;
-	position : absolute;
+	position : fixed;
 	bottom : 0px;
 }
 
@@ -170,7 +153,16 @@ section {
 	padding-bottom : 50px;
 	min-height : 100%;
 }
-
+.btn_right {
+	position: absolute;
+	right: 0;
+	bottom: 20px;
+	margin-top: -120px;
+}
+.pagic {
+	text-align: center;
+	padding: 20px 0;
+}
 </style>
 </head>
 <body>
@@ -212,51 +204,29 @@ section {
 <div class="allCover">
 	
 	<div class="menuAndBoard">
-		<div class="boardMenu">
-				<div>
-						<a href="#"  onclick=''><span class='bbs'>전체</span></a>
-						<a href="#"><span class='bbs'>리뷰</span></a>
-						<a href="#"><span class='bbs'>자유게시판</span></a>
-				</div>
-		
-		</div>
 		
 		<div class="boardList">
-			<div id="newBtn" class='ui primary button'>글쓰기</div>
-			<div id='listTable' class="ui celled table">
+			
+			<div id='listTable'>
 				<div id="comunity">
 					
-					<ul>
-						<!-- example 
-						<li class="post_list" id="108550">
-							<a href="/post/108550">
-								<img width="112" height="112" class="post_img"
-									text="조인성과 함께 친구초대해봄"
-									src="//img.hellomarket.com/images8/2016/document/s3/03/10/17/4626_108550_1.png"
-									alt="조인성과 함께 친구초대해봄" /> 
-								<span class="post_title"> 
-									<span class="post_title_text">조인성과 함께 친구초대해봄</span> 
-										<span class="post_category_text">헬마뉴스</span>
-								</span> 
-								<span class="post_content"> 
-									<span> 안녕하세요.
-											헬로마켓입니다.친구초대 기능을 이용해보세요.친구에게 보낸 코드로 친구분이 회원가입시 나도 친구도 헬로포인트
-											2,000원씩 받게 됩니다.단, 최대 금액은 10만원...</span>
-								</span> 
-								<span class="post_bottom"> 
-									<span class="comment_count">댓글(0)</span>
-									<span class="recommend_count">추천(90)</span> 
-									<span class="time_ago">7일전</span>
-								</span>
-							</a>
-						</li>
-						-->
-					</ul>
+					<table class="ui striped selectable table">
+					  <thead>
+					    <tr>
+					      <th width="120">No</th>
+					      <th>Title</th>
+					      <th width="180">Nickname</th>
+					      <th width="180">Time</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  </tbody>
+					</table>
 					
 				</div> 
 				
-				<div class='pagination'></div>
-	
+				<div class='pagination pagic'></div>
+				<div id="newBtn" class='ui primary button btn_right'>글쓰기</div>
 			</div><!-- listTable -->
 		</div><!-- boardList -->
 	</div><!--  class=wrap -->
@@ -392,26 +362,20 @@ section {
 					console.dir(status);
 					console.log("xhr : ");
 					console.dir(xhr);
-					var table = $("#listTable div ul");
+					var table = $("#listTable div tbody");
 					
+// 					var memberInfo = '<span class="view-clickable" onclick="document.location.href=\'mypage.html?ow='+data.id+'\'">';
+// 					memberInfo += data.nickName;
+// 					memberInfo += '<span class="view-annotation">마이페이지</span>';
+// 					memberInfo += '</span>';
+					console.log(document.location);
 					for(var board of resultObj.data){
-						$("<li class='post_list' id='"+board.bNo+"'>")
-						.html("<a class='detailLink' href='#' boardNo='"+board.bNo+"'>"
-								+"	 <img width='112' height='112' class='post_img' src='aa.png'"
-								+			"text='"+board.bTitle+"' alt='"+board.bTitle+"' />"
-								+"	 <span class='post_title'>"
-								+		"<span class='post_title_text'>"+board.bTitle+"</span> "
-								+		"<span class='post_category_text'>"+board.bCate+"</span> "
-								+"	 </span>"
-								+"	 <span class='post_content'>"
-								+		"<span>"+board.bContent+"</span> "							
-								+"	 </span>"
-								+"	 <span class='post_bottom'>"
-								+		"<span class='comment_count'>댓글("+board.commentCnt+")</span> "							
-								+		"<span class='recommend_count'>추천("+board.commentCnt+")</span> "							
-								+		"<span class='time_ago'>"+board.bRegDate+"</span> "							
-								+"	 </span>"
-								+"</a>"					
+						$("<tr class='helloList' id='"+board.bNo+"'>")
+						.html("	 <td>"+board.bNo+"</td> "
+								+"	 <td><a href='form.html?no="+board.bNo+"'>"+board.bTitle+"</a></td> "
+								+'	 <td style="cursor:pointer; color: #1e70bf;" onclick="document.location.href=\'../page/mypage.html?ow='+board.name+'\'">'+board.name+'</td>'
+								+"	 <td>"+board.bRegDate+"</td> "
+								+"</tr>"
 								).appendTo(table);
 					} // for				
 					
@@ -422,7 +386,7 @@ section {
 					
 					
 					// 제목 링크에 클릭 이벤트 리스너를 등록한다.
-					$("a.detailLink").click(clickDetailLink);
+					$("tr.detailLink").click(clickDetailLink);
 				}
 		);
 		
@@ -444,7 +408,7 @@ section {
 		function clickDetailLink(event){
 			event.preventDefault();
 			//location.href="form.html?no="+  $(event.target).attr("boardNo");			
-			location.href="form.html?no="+  $(this).attr("boardNo");			
+			location.href="form.html?no="+  $(this).attr("boardno");			
 		}		
 
 	
@@ -462,27 +426,16 @@ section {
 					console.dir(status);
 					console.log("xhr : ");
 //					console.dir(xhr);
-					var table = $("#listTable div ul");
+					var table = $("#listTable div tbody");
 					// 댓글 목록
-					$("#listTable div ul").empty(); // 기존 내용 지운다 : remove()는 아예 태그가 삭제된다?
+					$("#listTable div tbody").empty(); // 기존 내용 지운다 : remove()는 아예 태그가 삭제된다?
 					for(var board of resultObj.data){
-						$("<li class='post_list' id='"+board.bNo+"'>")
-						.html("<a class='detailLink'  href='#' boardNo='"+board.bNo+"'>"
-								+"	 <img width='112' height='112' class='post_img' src='aa.png'"
-								+			"text='"+board.bTitle+"' alt='"+board.bTitle+"' />"
-								+"	 <span class='post_title'>"
-								+		"<span class='post_title_text'>"+board.bTitle+"</span> "
-								+		"<span class='post_category_text'>"+board.bCate+"</span> "
-								+"	 </span>"
-								+"	 <span class='post_content'>"
-								+		"<span>"+board.bContent+"</span> "							
-								+"	 </span>"
-								+"	 <span class='post_bottom'>"
-								+		"<span class='comment_count'>댓글("+board.commentCnt+")</span> "							
-								+		"<span class='recommend_count'>추천("+board.commentCnt+")</span> "							
-								+		"<span class='time_ago'>"+board.bRegDate+"</span> "							
-								+"	 </span>"
-								+"</a>"					
+						$("<tr class='helloList' id='"+board.bNo+"'>")
+						.html("	 <td>"+board.bNo+"</td> "
+								+"	 <td><a href='form.html?no="+board.bNo+"'>"+board.bTitle+"</a></td> "
+								+'	 <td style="cursor:pointer; color: #1e70bf;" onclick="document.location.href=\'../page/mypage.html?ow='+board.name+'\'">'+board.name+'</td>'
+								+"	 <td>"+board.bRegDate+"</td> "
+								+"</tr>"
 								).appendTo(table);
 					} // for					
 					// 댓글 페이징처리 160324, 1134
@@ -499,16 +452,16 @@ section {
 		console.log("printPaging : in");
 		console.log("pageMaker :");
 		console.dir(pageMaker);
-		var str ="<div>";	
+		var str ="<div class='ui pagination menu'>";	
 		if ( pageMaker.prev){	
-			str += "<span><a href='#' onclick=replyFn("+ (pageMaker.startPage-1)+");> << </a></span>";
+			str += "<a class='item' onclick=replyFn("+ (pageMaker.startPage-1)+");> << </a>";
 		}
 		for ( var i=pageMaker.startPage, len=pageMaker.endPage; i <= len; i++){
-			var strClass = pageMaker.cri.page ==i?'class=active':'';	
-			str += "<span "+strClass+"><a href='#' onclick='replyFn(" +i+ ");'> " +i+ " </a></span>"; 
+			var strClass = pageMaker.cri.page ==i?'active':'';	
+			str += "<a class='"+strClass+" item' onclick='replyFn(" +i+ ");'> " +i+ " </a>"; 
 		}
 		if(pageMaker.next){		
-			str += "<span><a href='#' onclick=replyFn("+(pageMaker.endPage+1)+");> >> </a></span>";
+			str += "<a class='item' onclick=replyFn("+(pageMaker.endPage+1)+");> >> </a>";
 		}
 		$('.pagination').html(str);
 		
