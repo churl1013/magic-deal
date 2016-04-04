@@ -6,6 +6,12 @@ var writerInfo = {};
 var rooms = {};
 var currOpenChatRno = -1;
 
+var moveMyPage = function(event, ow) {
+	event.stopPropagation();
+	console.log(ow);
+	document.location.href = "/magic-deal/page/mypage.html?ow="+ow;
+};
+
 // 채팅버튼 클릭 이벤트
 $("#loginStatusWrap").on("click", ">#chatBtn", function() {
 	if(!chatListOpenFlag) {
@@ -59,8 +65,8 @@ var drawChatList = function(data) {
 			card += ' > ' + data[i].p_keyword;
 			card += '</span>';
 			card += '<span class="chat-memInfo">';
-			card += '<label class="ui basic label" onclick="document.location.href=\'mypage.html?ow='+data[i].id+'\'">';
-			card += data[i].nname + " : 마이페이지";
+			card += '<label class="ui basic label" style="cursor:pointer;" onclick="moveMyPage(event, \''+data[i].id+'\')">';
+			card += data[i].nname;
 			card += '</label>';
 			card += '</span>';
 			if(data[i].new_cnt > 999) data[i].new_cnt = 999;

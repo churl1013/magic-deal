@@ -139,6 +139,12 @@ section {
 
 #mainBox>.slideDownBtnWrap>#slideDownBtn {
 	cursor : pointer;
+	animation : slideDown 1.5s linear 0s infinite alternate;
+}
+
+@keyframes slideDown {
+	from {opacity : 1}
+	to {opacity : 0}
 }
 
 #mainBox>.ui.inverted.dimmer {
@@ -241,23 +247,6 @@ section {
 	top : 0!important;
 	padding-top : 60px!important;
 	margin-top : 0px!important;
-}
-
-
-.focusAnimation {
-	animation : focusAni 1s ease-in-out 0.5s infinite alternate; 
-}
-
-
-@keyframes focusAni {
-	from {
-		color : #222;
-	}
-	
-	to {
-		color : #ffe21f;
-		text-shadow : 1px 1px 3px black;
-	}
 }
 
 .moveTopBtn {

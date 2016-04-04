@@ -542,8 +542,17 @@
 	font-weight : 600;
 	font-size : 12px;
 	line-height : 25px;
-	
 }
+
+.ui.comments .comment .avatar {
+	max-height : 40px;
+}
+
+.ui.comments .comment .avatar>img {
+	max-height : 40px;
+}
+
+
 
 
 
