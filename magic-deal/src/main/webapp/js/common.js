@@ -373,7 +373,7 @@ var getParameter = function(url) {
 	});
 	
 	$("#navBoardDirectBtn").on("click", function() {
-		
+		document.location.href = contextPath+'/board/list.html';
 	});
 	
 	popup_layer = document.getElementById('popupLayer');

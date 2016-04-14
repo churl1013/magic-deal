@@ -177,9 +177,19 @@ var LocUtil = function(map) {
 var getBoundNodes = function(clusters) {
 	var nodes = clusters.filter(function(cluster) {
 					var center = cluster.getCenter();
-					return (mBound.T<center.zb&&mBound.aa>center.zb
-								&&mBound.ba>center.Ab&&mBound.ca<center.Ab)
+					
+					var cLat = center.getLat(); // 중앙 위도
+					var cLon = center.getLng(); // 중앙 경도
+						
+					
+					var southWest = mBound.getSouthWest();
+					var northEast = mBound.getNorthEast();
+
+					return (southWest.getLat()<cLat&&northEast.getLat()>cLat
+							&&southWest.getLng()<cLon&&northEast.getLng()>cLon);
 				});
+	
+	
 	return nodes;
 };
 
